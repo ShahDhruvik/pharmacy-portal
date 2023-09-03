@@ -1,13 +1,7 @@
-import Card from './components/Card'
-import Hello from './pages/Hello'
+import AppRoutes from './Approutes'
 
 function App() {
-  return (
-    <div className='textRed'>
-      <Card />
-      <Hello />
-    </div>
-  )
+  return <AppRoutes />
 }
 
 export default App
