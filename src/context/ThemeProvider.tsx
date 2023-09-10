@@ -1,3 +1,5 @@
+// All the context regarding the web are defined here
+// This particular context states the override styles for MUI components and other sufficient style requirements
 'use client'
 import React, { ReactNode } from 'react'
 import { createTheme, Theme } from '@mui/material/styles'

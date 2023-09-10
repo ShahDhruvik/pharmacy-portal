@@ -1,4 +1,4 @@
-// ALl your constants and enums
+// ALl your constants and enums. This includes pre-defined functions and other commonly used variables. ex: date-format functions, other standarad maintaining function
 export const x = 10
 
 export const BlogPosts: Record<string, { title: string, description: string }> = {

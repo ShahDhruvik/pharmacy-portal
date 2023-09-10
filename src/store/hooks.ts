@@ -1,3 +1,4 @@
+// Two hooks useAppDispatch and useAppSelector for accessing the states and defined functions
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from './store';
 

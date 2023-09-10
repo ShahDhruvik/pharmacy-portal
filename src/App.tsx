@@ -1,3 +1,4 @@
+// This resembles whole 'APP'.
 import AppRoutes from './Approutes'
 
 function App() {

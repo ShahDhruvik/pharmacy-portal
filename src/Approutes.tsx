@@ -1,3 +1,6 @@
+// This maintains the routes of the App.
+// It will be separated as the routes are more complexed.
+// This has an example for nested routing and some normal routes
 import { Routes, Route, Link } from 'react-router-dom'
 import Dashboard from './pages/dashboard/Dashboard'
 import NotFound from './components/NotFound'

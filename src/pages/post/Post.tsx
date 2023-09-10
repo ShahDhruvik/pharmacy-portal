@@ -11,10 +11,12 @@ const Post = ({}: Props) => {
   }
   const { title, description } = post
   return (
-    <div style={{ padding: 20 }}>
-      <h3>{title}</h3>
-      <p>{description}</p>
-    </div>
+    <section className='min-h-screen bg-blue-400 '>
+      <div style={{ padding: 20 }}>
+        <h3 className='text-2xl font-semibold'>{title}</h3>
+        <p className='text-2xl font-medium'>{description}</p>
+      </div>
+    </section>
   )
 }
 

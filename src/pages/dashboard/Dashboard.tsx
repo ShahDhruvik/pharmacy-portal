@@ -6,8 +6,8 @@ type Props = {}
 const Dashboard = ({}: Props) => {
   console.log(VITE_APP_TITLE)
   return (
-    <div>
-      <h1>Dashboard</h1>
+    <div className='min-h-screen bg-red-400 flex justify-center items-center'>
+      <h1 className='text-4xl'>Dashboard </h1>
       <Card />
     </div>
   )
