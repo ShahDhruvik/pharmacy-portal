@@ -2,6 +2,3 @@
 export const numberOfcards = () => {
     return 100
 }
-export const limmitOfcards = () => {
-    return 10
-}
