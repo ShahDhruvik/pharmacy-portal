@@ -1,5 +1,5 @@
-import Card from '../../components/Card'
-import { VITE_APP_TITLE } from '../../utils/envVariables'
+import Card from '../../../components/Card'
+import { VITE_APP_TITLE } from '../../../utils/envVariables'
 
 type Props = {}
 

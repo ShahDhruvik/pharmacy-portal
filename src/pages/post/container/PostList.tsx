@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { BlogPosts } from '../../utils/constants'
+import { BlogPosts } from '../../../utils/constants'
 
 type Props = {}
 

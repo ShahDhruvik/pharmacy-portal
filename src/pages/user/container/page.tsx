@@ -1,4 +1,4 @@
-import { x } from '../../utils/constants'
+import { x } from '../../../utils/constants'
 
 type Props = {}
 
