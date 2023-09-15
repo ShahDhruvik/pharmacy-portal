@@ -8,12 +8,12 @@ import { PaletteColor } from '../types/common'
 
 declare module '@mui/material/styles' {
   interface Palette {
-    customYellow?: PaletteColor
-    customViolet?: PaletteColor
+    mYellow?: PaletteColor
+    mViolet?: PaletteColor
   }
   interface PaletteOptions {
-    customYellow?: PaletteColor
-    customViolet?: PaletteColor
+    mYellow?: PaletteColor
+    mViolet?: PaletteColor
   }
   interface TypographyVariants {
     btnTxt: React.CSSProperties
@@ -35,10 +35,10 @@ type Props = {
 
 export const theme: Theme = createTheme({
   palette: {
-    customYellow: {
+    mYellow: {
       main: '#F0C51A',
     },
-    customViolet: {
+    mViolet: {
       main: '#3441A3',
     },
   },

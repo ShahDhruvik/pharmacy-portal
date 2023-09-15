@@ -1,3 +1,12 @@
+@import './font.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  section {
+    & > div {
+      @apply p-container font-sans font-medium;
+    }
+  }
+}

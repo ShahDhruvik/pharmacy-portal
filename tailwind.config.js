@@ -2,12 +2,6 @@
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    screens: {
-      sm: '480px',
-      md: '768px',
-      lg: '976px',
-      xl: '1440px',
-    },
     // colors: {
     //   blue: '#1fb6ff',
     //   pink: '#ff49db',
@@ -17,11 +11,38 @@ export default {
     //   gray: '#8492a6',
     //   'gray-light': '#d3dce6',
     // },
-    fontFamily: {
-      sans: ['Graphik', 'sans-serif'],
-      serif: ['Merriweather', 'serif'],
+    backgroundImage: {
+      // banner: "url('../../public/images/bannerImage.png')",
+      // bannerLaserSkin: "url('../../public/images/laser-skin.png')",
     },
-    extend: {},
+
+    extend: {
+      spacing: {
+        container: `max(
+            1rem,
+            calc((100vw - calc(1440px - 1rem * 2)) / 2)
+            )`,
+        'btw-container': `max(
+              1rem,
+              calc((100vw - calc(1440px - 0.5rem * 2)) / 2)
+              )`,
+      },
+      gridTemplateColumns: {
+        'auto-fit': 'repeat(auto-fit, minmax(300px,1fr))',
+      },
+      screens: {
+        csm: '480px',
+        cmd: '768px',
+        clg: '976px',
+        cxl: '1440px',
+      },
+      aspectRatio: {
+        sliderDragableImage: '3/1',
+      },
+      fontFamily: {
+        sans: ['Poppins', 'sans'], // Set 'Poppins' as the default sans-serif font
+      },
+    },
   },
   plugins: [],
 }

@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { BlogPosts } from '../../../utils/constants'
 
 type Props = {}
@@ -13,6 +13,9 @@ const Post = ({}: Props) => {
   return (
     <section className='min-h-screen bg-blue-400 '>
       <div style={{ padding: 20 }}>
+        <Link to={'/posts'}>
+          <p className={`hover:underline text-yellow-900 font-bold`}>back</p>
+        </Link>
         <h3 className='text-2xl font-semibold'>{title}</h3>
         <p className='text-2xl font-medium'>{description}</p>
       </div>

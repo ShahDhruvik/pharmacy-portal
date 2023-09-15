@@ -7,7 +7,7 @@ const PostList = ({}: Props) => {
   return (
     <ul className='min-h-screen bg-blue-400 p-5'>
       {Object.entries(BlogPosts).map(([slug, { title }]) => (
-        <li key={slug} className='text-xl font-semibold underline'>
+        <li key={slug} className='text-xl font-semibold hover:underline'>
           <Link to={`/posts/${slug}`}>
             <h3>{title}</h3>
           </Link>
