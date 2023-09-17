@@ -4,10 +4,10 @@
 import { userSetState } from './user.slice';
 export const fetchUsers = () => async (dispatch: (arg0: { payload: any; type: "user/userSetState"; }) => void) => {
     try {
+        console.log("object")
         dispatch(userSetState([{ key: 'users.loading', value: true }]));
-        const res = await fetch('/api/users', {
-            cache: 'no-store',
-        });
+        const res = await fetch('https://jsonplaceholder.typicode.com/todos',);
+        console.log(res)
         const { data } = await res.json();
         dispatch(
             userSetState([
@@ -23,6 +23,6 @@ export const fetchUsers = () => async (dispatch: (arg0: { payload: any; type: "u
             ]),
         );
     } catch (error) {
-        console.log(error);
+        console.log(error, 'error');
     }
 };
