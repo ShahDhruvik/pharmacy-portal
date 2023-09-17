@@ -11,3 +11,8 @@ export const BlogPosts: Record<string, { title: string, description: string }> =
         description: 'Hello React Router v6'
     }
 };
+
+export const enum ROLES {
+    ADMIN = "ADMIN",
+    USER = "USER"
+}

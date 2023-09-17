@@ -5,7 +5,6 @@ import AppRoutes from './Approutes'
 function App() {
   return (
     <>
-      {/** Header or any sidebar layout */}
       <nav style={{ margin: 10 }}>
         <Link to='/' style={{ padding: 5 }}>
           Home
@@ -19,9 +18,14 @@ function App() {
         <Link to='/user' style={{ padding: 5 }}>
           User
         </Link>
+        <Link to='/auth/log-out' style={{ padding: 5 }}>
+          Logout
+        </Link>
+        <Link to='/auth/log-in' style={{ padding: 5 }}>
+          Login
+        </Link>
       </nav>
       <AppRoutes />
-      {/** Footer */}
     </>
   )
 }

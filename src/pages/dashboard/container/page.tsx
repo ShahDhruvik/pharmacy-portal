@@ -1,26 +1,32 @@
 import Card from '../../../components/Card'
 import { VITE_APP_TITLE } from '../../../utils/envVariables'
-// import { useEffect } from 'react'
-// import { useAppDispatch, useAppSelector } from '../../../store/hooks'
-// import { fetchUsers } from '../../../store/slices/User/user.fetch'
-
+import { useEffect } from 'react'
+import { useAppDispatch, useAppSelector } from '../../../store/hooks'
+import { fetchTodos } from '../../../store/slices/User/todo.fetch'
 type Props = {}
-
 const Dashboard = ({}: Props) => {
-  // const { users } = useAppSelector((state) => state.user)
-  // const dispatch = useAppDispatch()
-  // const storeRolesGroups = async () => await dispatch(fetchUsers())
-  // useEffect(() => {
-  //   console.log('object use')
-  //   storeRolesGroups()
-  // }, [])
-  // console.log(users)
+  const { todos } = useAppSelector((state) => state.todos)
+  const dispatch = useAppDispatch()
+  const storeRolesGroups = async () => await dispatch(fetchTodos())
+  useEffect(() => {
+    storeRolesGroups()
+  }, [])
   console.log(VITE_APP_TITLE)
   return (
-    <div className='min-h-screen bg-red-400 flex justify-center items-center'>
-      <h1 className='text-4xl'>Dashboard </h1>
-      <Card />
-    </div>
+    <>
+      <section>
+        <div className='min-h-screen bg-red-400  '>
+          {todos.records.map((x) => {
+            return (
+              <h4 className='' key={x.id}>
+                {`${x.id}) ${x.title}`}
+              </h4>
+            )
+          })}
+          <Card />
+        </div>
+      </section>
+    </>
   )
 }
 

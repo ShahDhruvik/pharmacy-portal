@@ -1,16 +1,17 @@
 // Definition of the user state that is to be used
 import { createSlice } from '@reduxjs/toolkit';
 import _ from 'lodash';
+import { Todo } from '../../../types/todo';
 
-export const userSlice = createSlice({
+export const todoSlice = createSlice({
     name: 'user',
     initialState: {
-        users: {
+        todos: {
             loading: false,
             current: 0,
             from: 0,
             pages: 0,
-            records: [] as any[],
+            records: [] as Todo[],
             to: 0,
             total: 0,
             adminUsers: 0,
@@ -18,7 +19,7 @@ export const userSlice = createSlice({
         },
     },
     reducers: {
-        userSetState: (state, { payload }) => {
+        todoSetState: (state, { payload }) => {
             if (Array.isArray(payload)) {
                 for (const obj of payload) {
                     _.set(state, obj.key, obj.value);
@@ -30,6 +31,6 @@ export const userSlice = createSlice({
     },
 });
 
-export const { userSetState } = userSlice.actions;
+export const { todoSetState } = todoSlice.actions;
 
-export default userSlice.reducer;
+export default todoSlice.reducer;
