@@ -12,3 +12,8 @@ export type AuthState = {
     isAuthenticated: boolean;
     setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
 };
+
+export type AuthParams = {
+    isAuth: boolean;
+    role: string;
+};

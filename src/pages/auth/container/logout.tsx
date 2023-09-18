@@ -1,17 +1,19 @@
 import { useNavigate } from 'react-router-dom'
+import { AUTH_PATH, MAIN_PATH } from '../../../Paths'
+import { useAuth } from '../../../context/AuthContext'
 
 interface Props {}
 
 const LogOut = ({}: Props) => {
+  const { clearStorage } = useAuth()
   const nav = useNavigate()
   return (
     <section className='bg-red-400'>
       <div className='flex justify-center items-center'>
         <button
           onClick={() => {
-            localStorage.clear()
-            nav('/auth/log-in')
-            alert('SuccesFull LogOut')
+            clearStorage()
+            nav(`${MAIN_PATH.AUTH.split('/*')[0]}${AUTH_PATH.LOGIN}`)
           }}
         >
           signOut

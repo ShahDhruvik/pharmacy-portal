@@ -4,7 +4,7 @@ export const enum MAIN_PATH {
     ABOUT = '/about/*',
     POST = '/posts/*',
     USER = '/user/*',
-    UNAUTHORIZED = '/user/*',
+    UNAUTHORIZED = '/unauthorized',
 }
 
 export const enum COMMON_PATH {

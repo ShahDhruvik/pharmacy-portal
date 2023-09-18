@@ -1,33 +1,26 @@
-import { ReactNode } from 'react'
+import React, { useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
+import { AUTH_PATH, MAIN_PATH } from '../Paths'
 
-const auth = () => {
-  return localStorage.getItem('token') !== null
-}
-const withAuthen = (Component: any) => {
-  const isAuth = auth()
+const withAuth = (Component: React.ComponentType, allowedRoles?: string[]) => {
   return (props: any) => {
-    if (isAuth) {
-      return (<Component {...props} />) as ReactNode
-    } else {
-      return <Navigate to='/auth/log-in' />
-    }
-  }
-}
-const withAutho = (Component: any, allowedRoles: String[]) => {
-  const isAuth = auth()
-  const isRoleValid = allowedRoles.includes(localStorage.getItem('role') as string)
-  return (props: any) => {
-    if (isAuth && isRoleValid) {
-      return (<Component {...props} />) as ReactNode
-    } else {
-      if (!isAuth) {
-        return <Navigate to='/auth/log-in' />
+    const { authParams } = useAuth()
+    const auth = () => {
+      if (authParams === undefined || !authParams.isAuth) {
+        return <Navigate to={`${MAIN_PATH.AUTH.split('/*')[0]}${AUTH_PATH.LOGIN}`} />
+      } else if (allowedRoles && !allowedRoles.includes(authParams?.role)) {
+        return <Navigate to={MAIN_PATH.UNAUTHORIZED} />
       } else {
-        return <Navigate to='/unauthorized' />
+        return <Component {...props} />
       }
     }
+    useEffect(() => {
+      auth()
+    }, [authParams])
+
+    return auth()
   }
 }
 
-export { withAuthen, withAutho }
+export default withAuth

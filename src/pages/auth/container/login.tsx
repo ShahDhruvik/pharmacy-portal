@@ -1,22 +1,29 @@
 import { useRef } from 'react'
 import { users } from '../../user/container/data'
+import { useNavigate } from 'react-router-dom'
+import { COMMON_PATH } from '../../../Paths'
+import { useAuth } from '../../../context/AuthContext'
 interface Props {}
 
 const LogIn = ({}: Props) => {
+  const { addStorage } = useAuth()
+  const nav = useNavigate()
   const emailRef = useRef<HTMLInputElement | null>(null)
   const passRef = useRef<HTMLInputElement | null>(null)
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault()
-    console.log(emailRef.current?.value)
-    console.log(passRef.current?.value)
-    const email = emailRef.current?.value
-    const user = users.find((x) => x.email === email)
-    if (user) {
-      localStorage.setItem('token', String(Math.random()))
-      localStorage.setItem('role', 'USER')
-      console.log('authenticated')
-    } else {
-      console.log('please authenticate')
+    try {
+      const email = emailRef.current?.value
+      const user = users.find((x) => x.email === email)
+      if (user) {
+        addStorage(String(Math.random()), 'USER')
+        nav(COMMON_PATH.DEFAULT)
+        console.log('authenticated')
+      } else {
+        console.log('please authenticate')
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
   return (
