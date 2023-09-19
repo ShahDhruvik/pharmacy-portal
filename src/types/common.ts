@@ -17,3 +17,9 @@ export type AuthParams = {
     isAuth: boolean;
     role: string;
 };
+
+export type CacheType = {
+    cacheData: Record<string, any>
+    cacheExpDate: Record<string, string | undefined>
+}
+

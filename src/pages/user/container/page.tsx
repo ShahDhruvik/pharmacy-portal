@@ -1,16 +1,26 @@
-import { x } from '../../../utils/constants'
+import { useEffect } from 'react'
+import { CACHE_KEYS } from '../../../utils/constants'
+import { useAppDispatch, useAppSelector } from '../../../store/hooks'
+import { fetchCachedData } from '../../../store/slices/cacheAPI/cache.fetch'
 
 type Props = {}
 
 const UserPage = ({}: Props) => {
+  const dispatch = useAppDispatch()
+  const { cache } = useAppSelector((state) => state.cache)
+  const cacheData = async () => {
+    await dispatch(
+      fetchCachedData('https://jsonplaceholder.typicode.com/todos/1', CACHE_KEYS.TODO1, cache),
+    )
+  }
+  useEffect(() => {
+    cacheData()
+    console.log('object')
+  }, [])
   return (
     <section className='bg-green-400'>
       <div className='flex flex-col gap-btw-container'>
-        <h1 className='bg-red-400'>
-          {x} Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti laboriosam, quos
-          incidunt voluptates quidem nobis aperiam magnam dolores nam repellat temporibus voluptatem
-          autem dicta, consequuntur ab eligendi quod! Quos, facere?
-        </h1>
+        {cache.cacheData[CACHE_KEYS.TODO1] && <h1>{cache.cacheData[CACHE_KEYS.TODO1].title}</h1>}
         <div className='w-full aspect-sliderDragableImage bg-slate-500'>
           <p className='font-sans font-thin'>hello</p>
           <p className='font-sans font-extralight'>hello</p>

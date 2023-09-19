@@ -1,25 +1,20 @@
 // Definition of the user state that is to be used
 import { createSlice } from '@reduxjs/toolkit';
 import _ from 'lodash';
-import { Todo } from '../../../types/todo';
+import { CacheType } from '../../../types/common';
+
+
 
 export const todoSlice = createSlice({
-    name: 'todo',
+    name: 'cache',
     initialState: {
-        todos: {
-            loading: false,
-            current: 0,
-            from: 0,
-            pages: 0,
-            records: [] as Todo[],
-            to: 0,
-            total: 0,
-            adminUsers: 0,
-            activeUsers: 0,
-        },
+        cache: {
+            cacheData: { post: [], user: [], todo1: undefined },
+            cacheExpDate: { post: undefined, user: undefined, todo1: undefined }
+        } as CacheType
     },
     reducers: {
-        todoSetState: (state, { payload }) => {
+        cacheSetState: (state, { payload }) => {
             if (Array.isArray(payload)) {
                 for (const obj of payload) {
                     _.set(state, obj.key, obj.value);
@@ -31,6 +26,6 @@ export const todoSlice = createSlice({
     },
 });
 
-export const { todoSetState } = todoSlice.actions;
+export const { cacheSetState } = todoSlice.actions;
 
 export default todoSlice.reducer;

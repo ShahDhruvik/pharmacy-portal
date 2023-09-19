@@ -2,7 +2,7 @@
 // Other manipulation can be performed too.
 // A slice is created for individual entity.
 import { todoSetState } from './todo.slice';
-export const fetchTodos = () => async (dispatch: (arg0: { payload: any; type: "user/todoSetState"; }) => void) => {
+export const fetchTodos = () => async (dispatch: (arg0: { payload: any; type: "todo/todoSetState"; }) => void) => {
     try {
         dispatch(todoSetState([{ key: 'todos.loading', value: true }]));
         const res = await fetch('https://jsonplaceholder.typicode.com/todos',);

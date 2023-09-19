@@ -16,3 +16,9 @@ export const enum ROLES {
     ADMIN = "ADMIN",
     USER = "USER"
 }
+
+export const enum CACHE_KEYS {
+    POST = "post",
+    USER = "user",
+    TODO1 = 'todo1'
+}
