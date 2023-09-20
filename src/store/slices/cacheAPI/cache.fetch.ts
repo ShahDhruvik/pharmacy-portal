@@ -1,7 +1,8 @@
 // Data regarding the store are fetched through an API and state is set for further usage
 // Other manipulation can be performed too.
 // A slice is created for individual entity.
-import { CacheType, cacheSetState } from './cache.slice';
+import { CacheType } from '../../../types/common';
+import { cacheSetState } from './cache.slice';
 const getCachedData = (key: string, cache: CacheType) => {
     const cachedData = cache.cacheData[key];
     const cacheExpDate = cache.cacheExpDate[key];
