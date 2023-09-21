@@ -27,6 +27,19 @@ export default {
               calc((100vw - calc(1440px - 0.5rem * 2)) / 2)
               )`,
       },
+      keyframes: {
+        spin: {
+          '0%': {
+            transform: 'rotate(0deg)',
+          },
+          '100%': {
+            transform: 'rotate(360deg)',
+          },
+        },
+      },
+      animation: {
+        loading: 'spin 1.3s linear infinite', // 'spin-custom' is your custom animation class
+      },
       gridTemplateColumns: {
         'auto-fit': 'repeat(auto-fit, minmax(300px,1fr))',
       },

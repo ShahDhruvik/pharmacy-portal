@@ -2,10 +2,11 @@ import { useEffect } from 'react'
 import { CACHE_KEYS } from '../../../utils/constants'
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
 import { fetchCachedData } from '../../../store/slices/cacheAPI/cache.fetch'
-
+import SvgIcon from '../../../components/SvgIcon'
 type Props = {}
 
 const UserPage = ({}: Props) => {
+  // const ImportedSvg = useSvgImport('ser')
   const dispatch = useAppDispatch()
   const { cache } = useAppSelector((state) => state.cache)
   const cacheData = async () => {
@@ -15,7 +16,6 @@ const UserPage = ({}: Props) => {
   }
   useEffect(() => {
     cacheData()
-    console.log('object')
   }, [])
   return (
     <section className='bg-green-400'>
@@ -32,7 +32,7 @@ const UserPage = ({}: Props) => {
           <p className='font-sans font-extrabold'>hello</p>
           <p className='font-sans font-black'>hello</p>
         </div>
-        <div className='grid grid-cols-auto-fit gap-btw-container '>
+        <div className='grid grid-cols-auto-fit gap-btw-container text-gray-700'>
           <div className='bg-red-400'>
             <h1>hello</h1>
           </div>
@@ -46,6 +46,11 @@ const UserPage = ({}: Props) => {
             <h1>1</h1>
           </div>
         </div>
+        <SvgIcon
+          iconName='loading'
+          svgProp={{ className: 'w-8 h-8 animate-loading text-gray-950' }}
+        />
+        <SvgIcon iconName='ser' />
       </div>
     </section>
   )
