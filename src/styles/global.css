@@ -24,9 +24,7 @@
 .example {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-
 }
-
 
 .loader--spinner {
   display: inline-block;
@@ -121,3 +119,4 @@
   100% {
     opacity: 0;
   }
+}
