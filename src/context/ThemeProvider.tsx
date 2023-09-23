@@ -49,6 +49,7 @@ export const theme: Theme = createTheme({
         root: {
           minHeight: 30,
           minWidth: 200,
+          maxWidth: 200,
           lineHeight: 2,
           textTransform: 'none',
           color: '#ffffff',

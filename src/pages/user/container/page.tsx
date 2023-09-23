@@ -78,7 +78,7 @@ const UserPage = ({}: Props) => {
         </div>
       </section>
       <section className='py-5'>
-        <div className='flex flex-col min-[520]:flex-row gap-4'>
+        <div className='flex flex-col sm:flex-row gap-4'>
           <Button variant='contained' color='mPink' onClick={handleClickOpen()}>
             Book Online Consultation
           </Button>

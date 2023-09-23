@@ -43,12 +43,12 @@ export default {
       gridTemplateColumns: {
         'auto-fit': 'repeat(auto-fit, minmax(300px,1fr))',
       },
-      screens: {
-        csm: '480px',
-        cmd: '768px',
-        clg: '976px',
-        cxl: '1440px',
-      },
+      // screens: {
+      //   csm: '480px',
+      //   cmd: '768px',
+      //   clg: '976px',
+      //   cxl: '1440px',
+      // },
       aspectRatio: {
         sliderDragableImage: '3/1',
       },
