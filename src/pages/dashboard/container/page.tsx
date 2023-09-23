@@ -1,10 +1,16 @@
+/* eslint-disable no-empty-pattern */
 import { VITE_APP_TITLE } from '../../../utils/envVariables'
 import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
 import { fetchTodos } from '../../../store/slices/User/todo.fetch'
 import { fetchCachedData } from '../../../store/slices/cacheAPI/cache.fetch'
 import { CACHE_KEYS } from '../../../utils/constants'
+import Delivery from './delivery'
+import PlantTrees from './plantTrees'
+import SvgIcon from '../../../components/SvgIcon'
+
 type Props = {}
+
 const Dashboard = ({}: Props) => {
   const { cache } = useAppSelector((state) => state.cache)
   const dispatch = useAppDispatch()
@@ -24,9 +30,9 @@ const Dashboard = ({}: Props) => {
   console.log(VITE_APP_TITLE)
   return (
     <>
-      <section>
-        <div className='min-h-screen bg-red-400  '>
-          <div>
+      {/* <section>
+        <div className='min-h-screen'> */}
+      {/* <div>
             <h1 className='text-4xl text-emerald-800'>Users</h1>
             {cache.cacheData[CACHE_KEYS.USER].map((x: any) => {
               return (
@@ -45,9 +51,11 @@ const Dashboard = ({}: Props) => {
                 </h4>
               )
             })}
-          </div>
-        </div>
-      </section>
+          </div> */}
+      <Delivery />
+      {/* <PlantTrees /> */}
+      {/* </div>
+      </section> */}
     </>
   )
 }

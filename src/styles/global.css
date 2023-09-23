@@ -6,7 +6,17 @@
 @layer base {
   section {
     & > div {
-      @apply p-container font-sans font-medium;
+      @apply p-container py-0 font-sans font-medium;
     }
   }
+}
+
+.example::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.example {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
