@@ -8,25 +8,28 @@ import { PaletteColor } from '../types/common'
 
 declare module '@mui/material/styles' {
   interface Palette {
-    mYellow?: PaletteColor
-    mViolet?: PaletteColor
+    mPink?: PaletteColor
   }
   interface PaletteOptions {
-    mYellow?: PaletteColor
-    mViolet?: PaletteColor
+    mPink?: PaletteColor
   }
   interface TypographyVariants {
     btnTxt: React.CSSProperties
   }
-  interface TypographyVariantsOptions {
-    btnTxt?: React.CSSProperties
+  interface TypographyVariantsOptions {}
+}
+
+declare module '@mui/material/Button' {
+  interface ButtonPropsVariantOverrides {
+    dashed: true
+  }
+  interface ButtonPropsColorOverrides {
+    mPink: true
   }
 }
 
 declare module '@mui/material/Typography' {
-  interface TypographyPropsVariantOverrides {
-    btnTxt: true
-  }
+  interface TypographyPropsVariantOverrides {}
 }
 
 type Props = {
@@ -35,15 +38,28 @@ type Props = {
 
 export const theme: Theme = createTheme({
   palette: {
-    mYellow: {
-      main: '#F0C51A',
-    },
-    mViolet: {
-      main: '#3441A3',
+    mPink: {
+      main: '#e20074',
     },
   },
   typography: {},
-  components: {},
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          minHeight: 30,
+          minWidth: 200,
+          lineHeight: 2,
+          textTransform: 'none',
+          color: '#ffffff',
+        },
+      },
+      defaultProps: {
+        disableRipple: false,
+        color: 'error',
+      },
+    },
+  },
 })
 
 const AppThemeProvider = ({ children }: Props) => {

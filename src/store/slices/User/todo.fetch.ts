@@ -1,6 +1,7 @@
 // Data regarding the store are fetched through an API and state is set for further usage
 // Other manipulation can be performed too.
 // A slice is created for individual entity.
+
 import { todoSetState } from './todo.slice';
 export const fetchTodos = () => async (dispatch: (arg0: { payload: any; type: "todo/todoSetState"; }) => void) => {
     try {
@@ -18,8 +19,7 @@ export const fetchTodos = () => async (dispatch: (arg0: { payload: any; type: "t
                 { key: 'todos.total', value: data?.length },
                 { key: 'todos.adminUsers', value: data?.length },
                 { key: 'todos.activeUsers', value: data?.length },
-            ]),
-        );
+            ]),)
     } catch (error) {
         console.log(error, 'error');
     }

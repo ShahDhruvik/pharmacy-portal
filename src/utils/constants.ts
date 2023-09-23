@@ -22,3 +22,17 @@ export const enum CACHE_KEYS {
     USER = "user",
     TODO1 = 'todo1'
 }
+
+export const enum TOAST_TYPES {
+    SUCCESS = "Success",
+    ERROR = "Error",
+    WARN = "Warning",
+    INFO = "Info",
+}
+
+export const enum ALIGN_DIALOG {
+    TOP_LEFT = 'top-left',
+    TOP_RIGHT = 'top-right',
+    BOTTOM_LEFT = 'bottom-left',
+    BOTTOM_RIGHT = 'bottom-right',
+}

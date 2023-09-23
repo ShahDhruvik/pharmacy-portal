@@ -53,7 +53,14 @@ export default {
         sliderDragableImage: '3/1',
       },
       fontFamily: {
-        sans: ['Poppins', 'sans'], // Set 'Poppins' as the default sans-serif font
+        sans: ['Poppins', 'sans'],
+      },
+      colors: {
+        'blue-main': '#0a3876 ',
+        'grey-light': '#f4f4f4',
+        'green-success': '#0f9d58',
+        'yellow-error': '#ffbb00',
+        'violet-warn': '#3441A3',
       },
     },
   },
