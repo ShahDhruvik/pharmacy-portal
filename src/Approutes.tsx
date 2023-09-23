@@ -10,18 +10,25 @@ import PostRoute from './pages/post/route'
 import UserRoute from './pages/user/route'
 import UnAuthorized from './components/UnAuthorized'
 import { COMMON_PATH, MAIN_PATH } from './Paths'
+import Loader from './components/Loader'
+import { useLoading } from './context/LoadingContext'
 type Props = {}
 const AppRoutes = ({}: Props) => {
+  const { loading } = useLoading()
   return (
-    <Routes>
-      <Route path={MAIN_PATH.AUTH} element={<AuthRoute />} />
-      <Route path={MAIN_PATH.DASHBOARD} element={<DashboardRoute />} />
-      <Route path={MAIN_PATH.ABOUT} element={<AboutRoute />} />
-      <Route path={MAIN_PATH.POST} element={<PostRoute />} />
-      <Route path={MAIN_PATH.USER} element={<UserRoute />} />
-      <Route path={COMMON_PATH.NOTFOUND} element={<NotFound />} />
-      <Route path={MAIN_PATH.UNAUTHORIZED} element={<UnAuthorized />} />
-    </Routes>
+    <>
+      {' '}
+      <Routes>
+        <Route path={MAIN_PATH.AUTH} element={<AuthRoute />} />
+        <Route path={MAIN_PATH.DASHBOARD} element={<DashboardRoute />} />
+        <Route path={MAIN_PATH.ABOUT} element={<AboutRoute />} />
+        <Route path={MAIN_PATH.POST} element={<PostRoute />} />
+        <Route path={MAIN_PATH.USER} element={<UserRoute />} />
+        <Route path={COMMON_PATH.NOTFOUND} element={<NotFound />} />
+        <Route path={MAIN_PATH.UNAUTHORIZED} element={<UnAuthorized />} />
+      </Routes>
+      <Loader loading={loading} />
+    </>
   )
 }
 

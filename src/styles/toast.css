@@ -1,0 +1,19 @@
+.Toastify__toast-theme--colored.Toastify__toast--default {
+  background-color: #your_custom_default_color;
+  color: #your_custom_default_text_color;
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--info {
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--success {
+  @apply bg-green-success text-white font-sans font-light text-lg;
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--error {
+  @apply bg-yellow-error text-blue-main font-sans font-light text-lg;
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--warning {
+  @apply bg-violet-warn text-white font-sans font-light text-lg;
+}
