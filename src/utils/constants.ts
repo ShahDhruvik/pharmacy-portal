@@ -36,3 +36,12 @@ export const enum ALIGN_DIALOG {
     BOTTOM_LEFT = 'bottom-left',
     BOTTOM_RIGHT = 'bottom-right',
 }
+
+export const splitDescription = (description: string, length?: number) => {
+    const maxCharac = length ? length : 15;
+    if (description.length > maxCharac) {
+        return description.slice(0, maxCharac).concat('...');
+    } else {
+        return description;
+    }
+};

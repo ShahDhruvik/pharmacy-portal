@@ -10,7 +10,7 @@ const HeadContent = ({ heading, wrapperClass }: Props) => {
     <section>
       <div className={wrapperClass}>
         <div className='flex flex-col items-center justify-center text-blue-800 text-center'>
-          <ul className='flex list-disc gap-8 text-2xl font-normal flex-wrap'>
+          <ul className='flex flex-col sm:flex-row list-disc gap-8 text-2xl font-normal flex-wrap'>
             <li className='list-none'>Holistic </li>
             <li>Judgement-free</li>
             <li>Discreet </li>

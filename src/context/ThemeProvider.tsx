@@ -10,8 +10,14 @@ declare module '@mui/material/styles' {
   interface Palette {
     mPink?: PaletteColor
   }
+  interface Palette {
+    mGrey?: PaletteColor
+  }
   interface PaletteOptions {
     mPink?: PaletteColor
+  }
+  interface PaletteOptions {
+    mGrey?: PaletteColor
   }
   interface TypographyVariants {
     btnTxt: React.CSSProperties
@@ -41,6 +47,9 @@ export const theme: Theme = createTheme({
     mPink: {
       main: '#e20074',
     },
+    mGrey: {
+      main: '#787d78',
+    },
   },
   typography: {},
   components: {
@@ -58,6 +67,42 @@ export const theme: Theme = createTheme({
       defaultProps: {
         disableRipple: false,
         color: 'error',
+        variant: 'contained',
+      },
+    },
+    MuiInputBase: {},
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          '&.Mui-focused': {
+            '& .MuiOutlinedInput-notchedOutline': {
+              border: `2px solid black`,
+            },
+          },
+          '&.Mui-error': {
+            '& .MuiOutlinedInput-notchedOutline': {
+              border: `2px solid #e20074`,
+            },
+          },
+          '&.Mui-hover': {
+            '& .MuiOutlinedInput-notchedOutline': {
+              border: `1px solid black`,
+            },
+          },
+          borderRadius: '8px',
+          maxWidth: 250,
+        },
+        input: {
+          padding: '8px 10px',
+        },
+        notchedOutline: {
+          border: `1px solid #787d78`,
+        },
+      },
+    },
+    MuiTextField: {
+      defaultProps: {
+        variant: 'outlined',
       },
     },
   },

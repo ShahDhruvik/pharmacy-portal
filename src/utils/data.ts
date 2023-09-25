@@ -53,3 +53,5 @@ export const headerLinks: HeaderLinkType[] = [
     path: `${MAIN_PATH.AUTH.split('/*')[0]}${AUTH_PATH.LOGIN}`,
   },
 ]
+
+export const countryCodes = ['+1', '+91', '+44']
