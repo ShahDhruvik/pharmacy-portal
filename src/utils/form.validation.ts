@@ -89,13 +89,13 @@ export const numberFieldValidation = (isRequired: boolean, type?: 'Phone' | 'Pin
             }
     }
 };
-export const searchSelectValidation = (name: string, notRequired?: boolean) => {
+export const searchSelectValidation = (label: string, notRequired?: boolean) => {
     if (notRequired) {
         return {};
     } else {
         return {
             validate: (value: any) => {
-                return value._id !== acDefaultValue._id || `Select ${name}`;
+                return value._id !== acDefaultValue._id || `Select ${label}`;
             },
         };
     }

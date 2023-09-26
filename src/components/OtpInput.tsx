@@ -1,4 +1,5 @@
-import { TextField, FormHelperText } from '@mui/material'
+import { useEffect, useState } from 'react'
+import { TextField } from '@mui/material'
 import { Control, Controller } from 'react-hook-form'
 import { txtFieldValidation } from '../utils/form.validation'
 type Props = {
@@ -7,7 +8,47 @@ type Props = {
 }
 
 const OtpInput = ({ name, control }: Props) => {
-  let errorMessage = ''
+  const [errMessage, setErrMessage] = useState('')
+  const focusNextInput = (nextIndex: number) => {
+    const nextInput = document.getElementById(name[nextIndex])
+    if (nextInput) {
+      nextInput.focus()
+    }
+  }
+  const blurInput = (currentIndex: number) => {
+    const currentInput = document.getElementById(name[currentIndex])
+    if (currentInput) {
+      currentInput.blur()
+    }
+  }
+  useEffect(() => {
+    const handleInput = (event: React.ChangeEvent<HTMLInputElement>, currentIndex: number) => {
+      const { value } = event.target
+      if (value.length === 1 && currentIndex < name.length - 1) {
+        focusNextInput(currentIndex + 1)
+      }
+      if (value.length === 0 && currentIndex > 0) {
+        focusNextInput(currentIndex - 1)
+      }
+      if (value.length === 1 && currentIndex === name.length - 1) {
+        blurInput(currentIndex)
+      }
+    }
+    name.forEach((fieldName, index) => {
+      const inputElement = document.getElementById(fieldName)
+      if (inputElement) {
+        inputElement.addEventListener('input', (e: any) => handleInput(e, index))
+      }
+    })
+    return () => {
+      name.forEach((fieldName) => {
+        const inputElement = document.getElementById(fieldName)
+        if (inputElement) {
+          inputElement.removeEventListener('input', (e: any) => handleInput(e, 0))
+        }
+      })
+    }
+  }, [name])
   const defaultProps = {
     inputProps: { maxLength: 1 },
     sx: {
@@ -25,16 +66,16 @@ const OtpInput = ({ name, control }: Props) => {
   }
   return (
     <>
-      {' '}
       <div>
         <Controller
           name={name[0]}
           control={control}
           render={({ field, fieldState }) => {
-            errorMessage = fieldState.error?.message as string
+            setErrMessage(fieldState.error?.message ?? '')
             return (
               <TextField
                 {...field}
+                id={name[0]}
                 inputProps={{ maxLength: 1 }}
                 sx={{
                   maxWidth: 40,
@@ -56,7 +97,10 @@ const OtpInput = ({ name, control }: Props) => {
           name={name[1]}
           control={control}
           render={({ field, fieldState }) => {
-            return <TextField {...field} {...defaultProps} error={fieldState.invalid} />
+            setErrMessage(fieldState.error?.message ?? '')
+            return (
+              <TextField id={name[1]} {...field} {...defaultProps} error={fieldState.invalid} />
+            )
           }}
           rules={{ ...txtFieldValidation(true, 'PositiveNumbers') }}
         />
@@ -64,7 +108,10 @@ const OtpInput = ({ name, control }: Props) => {
           name={name[2]}
           control={control}
           render={({ field, fieldState }) => {
-            return <TextField {...defaultProps} {...field} error={fieldState.invalid} />
+            setErrMessage(fieldState.error?.message ?? '')
+            return (
+              <TextField id={name[2]} {...defaultProps} {...field} error={fieldState.invalid} />
+            )
           }}
           rules={{ ...txtFieldValidation(true, 'PositiveNumbers') }}
         />
@@ -72,7 +119,10 @@ const OtpInput = ({ name, control }: Props) => {
           name={name[3]}
           control={control}
           render={({ field, fieldState }) => {
-            return <TextField {...defaultProps} {...field} error={fieldState.invalid} />
+            setErrMessage(fieldState.error?.message ?? '')
+            return (
+              <TextField id={name[3]} {...defaultProps} {...field} error={fieldState.invalid} />
+            )
           }}
           rules={{ ...txtFieldValidation(true, 'PositiveNumbers') }}
         />
@@ -80,7 +130,10 @@ const OtpInput = ({ name, control }: Props) => {
           name={name[4]}
           control={control}
           render={({ field, fieldState }) => {
-            return <TextField {...defaultProps} {...field} error={fieldState.invalid} />
+            setErrMessage(fieldState.error?.message ?? '')
+            return (
+              <TextField id={name[4]} {...defaultProps} {...field} error={fieldState.invalid} />
+            )
           }}
           rules={{ ...txtFieldValidation(true, 'PositiveNumbers') }}
         />
@@ -88,10 +141,12 @@ const OtpInput = ({ name, control }: Props) => {
           name={name[5]}
           control={control}
           render={({ field, fieldState }) => {
+            setErrMessage(fieldState.error?.message ?? '')
             return (
               <TextField
                 {...field}
                 inputProps={{ maxLength: 1 }}
+                id={name[5]}
                 sx={{
                   maxWidth: 40,
                   '.MuiOutlinedInput-notchedOutline': {
@@ -109,7 +164,7 @@ const OtpInput = ({ name, control }: Props) => {
           rules={{ ...txtFieldValidation(true, 'PositiveNumbers') }}
         />
       </div>
-      <FormHelperText>{errorMessage}</FormHelperText>
+      <p>{errMessage}</p>
     </>
   )
 }

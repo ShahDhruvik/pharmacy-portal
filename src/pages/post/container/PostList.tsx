@@ -5,14 +5,20 @@ import SvgIcon from '../../../components/SvgIcon'
 import { useForm } from 'react-hook-form'
 import MobileInput from '../../../components/MobileInput'
 import TxtInput from '../../../components/TxtInput'
-import { acDefaultValue, txtFieldValidation } from '../../../utils/form.validation'
+import {
+  acDefaultValue,
+  txtFieldValidation,
+  searchSelectValidation,
+  dateSelectValidation,
+} from '../../../utils/form.validation'
 import OtpInput from '../../../components/OtpInput'
 import SelectInput from '../../../components/SelectInput'
+import { DateInput } from '../../../components/DateInput'
 
 type Props = {}
 
 const PostList = ({}: Props) => {
-  const { control, handleSubmit, watch, setValue } = useForm({
+  const { control, handleSubmit, watch, setValue, setError, clearErrors } = useForm({
     defaultValues: {
       phone: 0,
       contryCode: '+1',
@@ -24,6 +30,7 @@ const PostList = ({}: Props) => {
       otp4: '',
       otp5: '',
       drpVal: acDefaultValue,
+      dateVal: null as Date | null,
     },
   })
   const onSubmitHandle = (data: any) => {
@@ -70,13 +77,30 @@ const PostList = ({}: Props) => {
             watch={watch}
             handleChange={() => {}}
           />
-          <SelectInput />
+          <SelectInput
+            control={control}
+            name='drpVal'
+            label='Drp'
+            setValue={setValue}
+            setError={setError}
+            clearErrors={clearErrors}
+            validation={{ ...searchSelectValidation('Drp') }}
+          />
           <TxtInput
             name='firstName'
             control={control}
             handleChange={() => {}}
             placeholder='Enter name'
             validation={{ ...txtFieldValidation(true) }}
+          />
+          <DateInput
+            name='dateVal'
+            control={control}
+            clearErrors={clearErrors}
+            handleChange={() => {}}
+            label='Renewal date'
+            setError={setError}
+            validation={{ ...dateSelectValidation('Renewal Date') }}
           />
           <Button type='submit' color='mPink'>
             Submit

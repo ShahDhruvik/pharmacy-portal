@@ -100,6 +100,15 @@ export const theme: Theme = createTheme({
         },
       },
     },
+    MuiAutocomplete: {
+      styleOverrides: {
+        root: {
+          '.MuiOutlinedInput-root': {
+            padding: '0px 5px',
+          },
+        },
+      },
+    },
     MuiTextField: {
       defaultProps: {
         variant: 'outlined',
