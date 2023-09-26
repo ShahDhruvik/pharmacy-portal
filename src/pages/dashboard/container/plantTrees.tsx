@@ -1,4 +1,3 @@
-/* eslint-disable no-empty-pattern */
 import img1 from '../../../assets/images/Aspect_Ratio.jpg'
 import SvgIcon from '../../../components/SvgIcon'
 import { PlantTree } from '../../../utils/data'
@@ -23,7 +22,7 @@ const PlantTrees = ({}: Props) => {
               {PlantTree.map((x) => (
                 <div className='flex my-7 gap-2' key={Math.random()}>
                   <div>
-                    <SvgIcon iconName={x.icon} />
+                    <SvgIcon iconName={x.icon as string} />
                   </div>
                   <div>
                     <h3 className='font-normal'>{x.que}</h3>

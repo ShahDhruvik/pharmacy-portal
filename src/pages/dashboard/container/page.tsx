@@ -1,4 +1,3 @@
-/* eslint-disable no-empty-pattern */
 import { VITE_APP_TITLE } from '../../../utils/envVariables'
 import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
@@ -6,14 +5,15 @@ import { fetchTodos } from '../../../store/slices/User/todo.fetch'
 import { fetchCachedData } from '../../../store/slices/cacheAPI/cache.fetch'
 import { CACHE_KEYS } from '../../../utils/constants'
 import Delivery from './delivery'
-
-import { useToast } from '../../../hooks/useToast'
+// import { useToast } from '../../../hooks/useToast'
 import { useLoading } from '../../../context/LoadingContext'
+// import OnlineScheduling from './onlineScheduling'
+// import InPerson from './inPerson'
 type Props = {}
 
 const Dashboard = ({}: Props) => {
   const { setLoading } = useLoading()
-  const showToast = useToast()
+  // const showToast = useToast()
   const { cache } = useAppSelector((state) => state.cache)
   const dispatch = useAppDispatch()
   const storeRolesGroups = async () => {
@@ -37,6 +37,16 @@ const Dashboard = ({}: Props) => {
   return (
     <>
       <Delivery />
+    </>
+  )
+}
+
+export default Dashboard
+
+{
+  /* <Delivery />
+      <OnlineScheduling />
+      <InPerson />
       <section>
         <div className='min-h-screen bg-white  '>
           <div>
@@ -78,9 +88,5 @@ const Dashboard = ({}: Props) => {
             </button>
           </div>
         </div>
-      </section>
-    </>
-  )
+      </section> */
 }
-
-export default Dashboard
