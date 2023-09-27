@@ -11,13 +11,67 @@ declare module '@mui/material/styles' {
     mPink?: PaletteColor
   }
   interface Palette {
-    mGrey?: PaletteColor
+    mDarkBlue?: PaletteColor
+  }
+  interface Palette {
+    mBlue?: PaletteColor
+  }
+  interface Palette {
+    mLightBlue?: PaletteColor
+  }
+  interface Palette {
+    mLightGray?: PaletteColor
+  }
+  interface Palette {
+    mGray?: PaletteColor
+  }
+  interface Palette {
+    mDarkGray?: PaletteColor
+  }
+  interface Palette {
+    mOrange?: PaletteColor
+  }
+  interface Palette {
+    mGreen?: PaletteColor
+  }
+  interface Palette {
+    mYellow?: PaletteColor
+  }
+  interface Palette {
+    mWhite?: PaletteColor
   }
   interface PaletteOptions {
     mPink?: PaletteColor
   }
   interface PaletteOptions {
-    mGrey?: PaletteColor
+    mDarkBlue?: PaletteColor
+  }
+  interface PaletteOptions {
+    mBlue?: PaletteColor
+  }
+  interface PaletteOptions {
+    mLightBlue?: PaletteColor
+  }
+  interface PaletteOptions {
+    mLightGray?: PaletteColor
+  }
+  interface PaletteOptions {
+    mGray?: PaletteColor
+  }
+  interface PaletteOptions {
+    mDarkGray?: PaletteColor
+  }
+  interface PaletteOptions {
+    mOrange?: PaletteColor
+  }
+  interface PaletteOptions {
+    mGreen?: PaletteColor
+  }
+  interface PaletteOptions {
+    mYellow?: PaletteColor
+  }
+  interface PaletteOptions {
+    mWhite?: PaletteColor
   }
   interface TypographyVariants {
     btnTxt: React.CSSProperties
@@ -46,9 +100,58 @@ export const theme: Theme = createTheme({
   palette: {
     mPink: {
       main: '#e20074',
+      dark: '#e20074',
+      light: '#e20074',
     },
-    mGrey: {
+    mDarkBlue: {
+      main: '#0a3876',
+      light: '#0a3876',
+      dark: '#0a3876',
+    },
+    mBlue: {
+      main: '#00a1f1',
+      light: '#00a1f1',
+      dark: '#00a1f1',
+    },
+    mLightBlue: {
+      main: '#d9e3f8',
+      light: '#d9e3f8',
+      dark: '#d9e3f8',
+    },
+    mLightGray: {
+      main: '#f4f4f4',
+      light: '#f4f4f4',
+      dark: '#f4f4f4',
+    },
+    mGray: {
+      main: '#d4d4d4',
+      light: '#d4d4d4',
+      dark: '#d4d4d4',
+    },
+    mDarkGray: {
       main: '#787d78',
+      light: '#787d78',
+      dark: '#787d78',
+    },
+    mOrange: {
+      main: '#db4437',
+      light: '#db4437',
+      dark: '#db4437',
+    },
+    mGreen: {
+      main: '#0f9d58',
+      light: '#0f9d58',
+      dark: '#0f9d58',
+    },
+    mYellow: {
+      main: '#ffbb00',
+      light: '#ffbb00',
+      dark: '#ffbb00',
+    },
+    mWhite: {
+      main: '#ffffff',
+      light: '#ffffff',
+      dark: '#ffffff',
     },
   },
   typography: {},

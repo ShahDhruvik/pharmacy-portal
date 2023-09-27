@@ -2,6 +2,7 @@ import { ReactNode } from 'react'
 import { DialogContent, DialogProps, Dialog } from '@mui/material'
 import { ALIGN_DIALOG } from '../utils/constants'
 import { AlignDialogProp } from '../types/common'
+import { theme } from '../context/ThemeProvider'
 interface Props {
   open: boolean
   handleClose: () => void
@@ -85,6 +86,7 @@ const CustomDialog = ({
         '.MuiPaper-root ': {
           borderRadius: '7px',
           minWidth: minWidth ?? 0,
+          background: theme.palette.mLightGray?.main,
         },
       }}
       aria-labelledby='scroll-dialog-title'

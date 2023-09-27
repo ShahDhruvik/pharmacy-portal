@@ -13,7 +13,7 @@ const AssessmentWhiteBox = ({ iconName, children, left }: Props) => {
     <>
       {!left ? (
         <div className='flex items-baseline gap-1'>
-          <div className='border-2 border-black flex w-fit pr-10 mb-5 py-1 gap-2 px-3 rounded-md bg-slate-200 '>
+          <div className='flex w-fit pr-10 mb-5 py-3 gap-2 px-3 rounded-md bg-white-main'>
             {children}
           </div>
           <div>
@@ -25,7 +25,7 @@ const AssessmentWhiteBox = ({ iconName, children, left }: Props) => {
           <div>
             <SvgIcon iconName={iconName} />
           </div>
-          <div className='border-2 border-black flex w-fit pr-10 mb-5 py-1 gap-2 px-3 rounded-md bg-slate-200'>
+          <div className='flex w-fit pr-10 mb-5 py-1 gap-2 px-3 rounded-md bg-white-main'>
             {children}
           </div>
         </div>

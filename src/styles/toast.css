@@ -8,7 +8,7 @@
 }
 
 .Toastify__toast-theme--colored.Toastify__toast--success {
-  @apply bg-green-main text-white font-sans font-light text-lg;
+  @apply bg-green-main text-white-main font-sans font-light text-lg;
 }
 
 .Toastify__toast-theme--colored.Toastify__toast--error {
@@ -16,5 +16,5 @@
 }
 
 .Toastify__toast-theme--colored.Toastify__toast--warning {
-  @apply bg-violet-warn text-white font-sans font-light text-lg;
+  @apply bg-violet-warn text-white-main font-sans font-light text-lg;
 }

@@ -8,6 +8,7 @@ type Props = {
   validation: any
   isDisabled?: boolean
   sx?: SxProps<Theme>
+  multiline?: number
 }
 
 const TxtInput = ({
@@ -18,6 +19,7 @@ const TxtInput = ({
   validation,
   isDisabled,
   sx,
+  multiline,
 }: Props) => {
   return (
     <Controller
@@ -37,6 +39,7 @@ const TxtInput = ({
             helperText={fieldState.error?.message || ''}
             disabled={isDisabled ?? false}
             sx={sx ?? {}}
+            multiline={multiline ?? 0}
           />
         )
       }}

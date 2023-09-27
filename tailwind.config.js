@@ -67,7 +67,21 @@ export default {
         light: '#ffbb00',
         dark: '#ffbb00',
       },
-      white: '#ffffff',
+      lime: {
+        main: '#f6f9f7',
+        light: '#f6f9f7',
+        dark: '#f6f9f7',
+      },
+      white: {
+        main: '#ffffff',
+        light: '#ffffff',
+        dark: '#ffffff',
+      },
+      black: {
+        main: '#000000',
+        light: '#000000',
+        dark: '#000000',
+      },
     },
     extend: {
       spacing: {

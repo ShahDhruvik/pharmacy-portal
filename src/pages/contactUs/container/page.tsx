@@ -2,11 +2,13 @@ import { useForm } from 'react-hook-form'
 import img1 from '../../../assets/images/Aspect_Ratio.jpg'
 import TxtInput from '../../../components/TxtInput'
 import { Button } from '@mui/material'
+import SelectInput from '../../../components/SelectInput'
+import PermissionForm from '../../dashboard/container/signIn/permission-form'
 
 interface Props {}
 
 const Contact = ({}: Props) => {
-  const { control } = useForm({
+  const { control, setValue } = useForm({
     defaultValues: {
       type: '',
       code: '',
@@ -32,13 +34,22 @@ const Contact = ({}: Props) => {
                   control={control}
                   handleChange={() => {}}
                   validation={'Required'}
+                  sx={{
+                    minWidth: '50%',
+                  }}
                 />
-                <TxtInput
-                  placeholder={'Select primary reason for contact'}
+                <SelectInput
+                  options={[]}
                   name={'name'}
                   control={control}
-                  handleChange={() => {}}
+                  label={'Select primary reason for contact'}
+                  setValue={setValue}
+                  setError={() => {}}
+                  clearErrors={() => {}}
                   validation={'Required'}
+                  sx={{
+                    minWidth: '50%',
+                  }}
                 />
               </div>
               <div className='flex gap-5 mb-5'>
@@ -48,6 +59,9 @@ const Contact = ({}: Props) => {
                   control={control}
                   handleChange={() => {}}
                   validation={'Required'}
+                  sx={{
+                    minWidth: '50%',
+                  }}
                 />
                 <TxtInput
                   placeholder={'Enter email here'}
@@ -55,26 +69,28 @@ const Contact = ({}: Props) => {
                   control={control}
                   handleChange={() => {}}
                   validation={'Required'}
+                  sx={{
+                    minWidth: '50%',
+                  }}
                 />
               </div>
-              <div className='flex text-sm gap-10 justify-end items-center'>
-                <div className='flex items-center'>
-                  <input type='checkbox' name='' id='' />
-                  <span>I am not a robot</span>
-                </div>
-                <div className='flex items-center'>
-                  <input type='checkbox' name='' id='' />
-                  <span>
-                    Agree to{' '}
-                    <a
-                      href='
-                    '
-                    ></a>
-                    terms and condition
-                  </span>
-                </div>
+              <div className='mb-5'>
+                <TxtInput
+                  placeholder={'Type message here...'}
+                  name={'name'}
+                  control={control}
+                  handleChange={() => {}}
+                  validation={'Required'}
+                  sx={{
+                    minWidth: '102.5%',
+                  }}
+                  multiline={15}
+                />
               </div>
-              <div className='flex justify-end py-5'>
+              <div className='flex text-sm gap-10 justify-end items-center w-full'>
+                <PermissionForm signType={[]} />
+              </div>
+              <div className='flex justify-end py-5 w-full'>
                 <Button variant='contained' color='mPink'>
                   Send Message
                 </Button>
@@ -82,7 +98,7 @@ const Contact = ({}: Props) => {
             </form>
           </div>
         </div>
-        <div className='border-b-2 border-gray-300'></div>
+        <div className='border-b-2 border-gray-main'></div>
       </div>
     </section>
   )

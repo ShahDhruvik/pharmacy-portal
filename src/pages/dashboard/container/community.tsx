@@ -20,10 +20,10 @@ const Community = ({}: Props) => {
               <img src={img1} alt='' width={'200px'} />
             </div>
           </div>
-          <div className='flex justify-around items-center w-full py-20 gap-5 text-white flex-wrap'>
+          <div className='flex justify-around items-center w-full py-20 gap-5 text-white-main flex-wrap'>
             {communityArr.map((x) => (
               <div
-                className=' w-[320px] max-h-60 rounded-md h-40'
+                className=' w-[320px] max-h-60 rounded-md h-40 bg-${x.color}'
                 style={{ backgroundColor: x.color }}
               >
                 <h2 className='border-b-2 px-5 py-2'>{x.heading}</h2>

@@ -27,11 +27,11 @@ const Assessment = ({ handleClose, open }: Props) => {
         header={{
           isHeader: true,
           component: (
-            <DialogTitle id='scroll-dialog-title' className='border-b-2 border-black'>
+            <DialogTitle id='scroll-dialog-title'>
               <div className='flex justify-between items-center'>
                 <div>
                   <h1 className='leading-3'>Welcome to Virtual Assessment</h1>
-                  <span className='text-sm text-blue-950'>Daisy: Your virtual health agent</span>
+                  <span className='text-sm text-blue-main'>Daisy: Your virtual health agent</span>
                 </div>
                 <div>
                   <button
@@ -124,13 +124,13 @@ const Assessment = ({ handleClose, open }: Props) => {
                 )}
               </div>
             </div>
-            <div className='border-x-2 border-gray-300 mx-5 '></div>
+            <div className='border-x-2 border-gray-main mx-5 '></div>
             <div className='w-2/5'>
               <h2>Frequently Asked Questions</h2>
               {frequentlyAskedQuestions.map((x) => (
                 <Link to={'/faq'}>
                   <div className='flex flex-col'>
-                    <div className='border-2 border-black flex w-full mt-3 py-1 gap-2 px-3 rounded-md bg-slate-200'>
+                    <div className='border-[1px] border-black-main flex w-full mt-3 py-1 gap-2 px-3 rounded-md bg-white-main'>
                       <div>
                         <SvgIcon iconName={'ser'} />
                       </div>
@@ -139,7 +139,7 @@ const Assessment = ({ handleClose, open }: Props) => {
                   </div>
                 </Link>
               ))}
-              <span className='text-blue-950 flex justify-end py-3'>read more....</span>
+              <span className='text-blue-main flex justify-end py-3'>read more....</span>
             </div>
           </div>
         </DialogContentText>

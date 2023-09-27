@@ -139,18 +139,18 @@ export const communityArr: Community[] = [
   {
     heading: 'Release Notes',
     para: 'Stay updated on new features, enhancements and bug fixes in Oopchar',
-    color: '#32CD32',
+    color: '#0f9d58',
   },
   {
     heading: 'Ideas',
     para: `If you have got an idea or suggestion on what you'd like to see in Oopchar, leave
     your thoughts here`,
-    color: '#FF1493',
+    color: '#e20074',
   },
   {
     heading: 'Ask the Community',
     para: `Have a question about Oopchar? Post here and a community member will be happy to
     help you.`,
-    color: '#4682B4',
+    color: '#00a1f1',
   },
 ]

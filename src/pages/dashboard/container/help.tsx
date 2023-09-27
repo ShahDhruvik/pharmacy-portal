@@ -13,7 +13,7 @@ const Help = ({}: Props) => {
           <h1 className='text-3xl pb-5'>How can we help you?</h1>
           <input
             type='text'
-            className='bg-[#f6f9f7] border-2 border-gray-500 w-8/12'
+            className='bg-[#f6f9f7] border-2 border-gray-main w-8/12'
             placeholder='Describe your issue'
           />
           <div className='flex justify-between items-baseline w-full pt-1'>

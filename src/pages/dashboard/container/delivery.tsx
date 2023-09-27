@@ -71,21 +71,21 @@ const Delivery = ({}: Props) => {
   }
   return (
     <>
-      <section className='bg-[#f6f9f7] mt-2 mb-14'>
+      <section className='bg-lime-main mt-2 mb-14'>
         <div>
           <div className='flex justify-between items-center py-2 flex-wrap'>
             <div className='font-normal'>
               Earn Rewards and Loyalty points,{' '}
-              <a href='' className='underline text-blue-600'>
+              <a href='' className='underline text-blue-main'>
                 learn more
               </a>
             </div>
             <div className='flex gap-3 items-center flex-wrap'>
               <span className='font-normal'>To speak to an advisor for free</span>
-              <button className='text-sm bg-red-600 text-white rounded-2xl px-2 py-1'>
+              <button className='text-sm bg-orange-main text-white-main rounded-2xl px-2 py-1'>
                 CALL TODAY
               </button>
-              <span className='font-semibold text-2xl text-blue-800'>90000 00000</span>
+              <span className='font-semibold text-2xl text-darkBlue-main'>90000 00000</span>
             </div>
           </div>
         </div>
@@ -174,7 +174,7 @@ const Delivery = ({}: Props) => {
           <SvgIcon iconName='ser' />
         </div>
       </section>
-      <section className='bg-gray-400'>
+      <section className='bg-gray-main'>
         <div className='flex items-center justify-between'>
           <SvgIcon iconName={'arrow_back'} />
           <div className='flex items-center justify-center py-2 flex-wrap'>

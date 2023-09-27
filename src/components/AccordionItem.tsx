@@ -15,12 +15,12 @@ const AccordianItem = ({ handleToggle, active, faq }: Props) => {
     <div className='overflow-hidden max-w-4xl'>
       <div>
         <div
-          className={` flex items-center justify-between transition-all duration-1000 border-2 border-gray-500 border-opacity-60 px-6 py-2 ${
+          className={` flex items-center justify-between transition-all duration-1000 border-2 border-gray-main border-opacity-60 px-6 py-2 ${
             active === id ? 'active' : ''
           }`}
           onClick={() => handleToggle(id)}
         >
-          <h5 className='relative text-sm text-black font-semibold mb-0 transition-all duration-700 basis-3/4 '>
+          <h5 className='relative text-sm text-black-main font-semibold mb-0 transition-all duration-700 basis-3/4 '>
             {header}
           </h5>
           <SvgIcon iconName='ser' wrapperStyle=' transform rotate-180' />
@@ -29,7 +29,7 @@ const AccordianItem = ({ handleToggle, active, faq }: Props) => {
       <div className='flex items-center justify-center'>
         <div
           ref={contentEl}
-          className={`bg-grey-500 bg-blue-400 relative h-0 overflow-hidden transition-all duration-500 ease-in-out ${
+          className={`bg-grey-main bg-lightBlue-main relative h-0 overflow-hidden transition-all duration-500 ease-in-out ${
             active === id ? 'h-auto' : ''
           }`}
           style={active === id ? { height: contentEl?.current?.scrollHeight } : { height: '0px' }}

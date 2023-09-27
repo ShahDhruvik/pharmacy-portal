@@ -101,6 +101,7 @@ const SelectInput = ({
       rules={validation}
       render={({ fieldState, field }) => (
         <Autocomplete
+          sx={sx ?? {}}
           isOptionEqualToValue={(option, value) => option._id === value._id}
           options={options}
           disableClearable
@@ -132,7 +133,6 @@ const SelectInput = ({
                 error={fieldState.invalid}
                 placeholder={`Select ${label}`}
                 helperText={fieldState.error ? fieldState.error.message : ''}
-                sx={sx ?? {}}
               />
             )
           }}
