@@ -24,6 +24,8 @@ const MobileInput = ({
   isDisabled,
   sx,
 }: Props) => {
+  const inputStyleProps: SxProps<Theme> = { ...sx, width: '100%' }
+
   const contryCode = watch('contryCode')
   return (
     <Controller
@@ -38,7 +40,7 @@ const MobileInput = ({
               onChange(e)
               handleChange()
             }}
-            sx={sx ?? {}}
+            sx={inputStyleProps}
             disabled={isDisabled ?? false}
             placeholder={placeholder}
             InputProps={{

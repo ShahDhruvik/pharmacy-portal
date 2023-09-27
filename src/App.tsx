@@ -1,5 +1,5 @@
 // This resembles whole 'APP'.
-import AppRoutes from './AppRoutes'
+import AppRoutes from './Approutes'
 import Navbar from './components/Navbar'
 
 function App() {

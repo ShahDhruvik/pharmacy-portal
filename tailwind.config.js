@@ -16,7 +16,6 @@ export default {
       // bannerLaserSkin: "url('../../public/images/laser-skin.png')",
     },
     colors: {
-      'violet-warn': '#3441A3',
       pink: {
         main: '#e20074',
         light: '#e20074',

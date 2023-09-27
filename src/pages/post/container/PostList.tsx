@@ -3,7 +3,7 @@ import { BlogPosts } from '../../../utils/constants'
 import { InputAdornment, TextField, Button } from '@mui/material'
 import SvgIcon from '../../../components/SvgIcon'
 import { useForm } from 'react-hook-form'
-import MobileInput from '../../../components/MobileInput'
+// import MobileInput from '../../../components/MobileInput'
 import TxtInput from '../../../components/TxtInput'
 import {
   acDefaultValue,
@@ -11,14 +11,15 @@ import {
   searchSelectValidation,
   dateSelectValidation,
 } from '../../../utils/form.validation'
-import OtpInput from '../../../components/OtpInput'
+// import OtpInput from '../../../components/OtpInput'
 import SelectInput from '../../../components/SelectInput'
 import { DateInput } from '../../../components/DateInput'
+import { SelectDDL } from '../../../types/common'
 
 type Props = {}
 
 const PostList = ({}: Props) => {
-  const { control, handleSubmit, watch, setValue, setError, clearErrors } = useForm({
+  const { control, handleSubmit, setValue, setError, clearErrors } = useForm({
     defaultValues: {
       phone: 0,
       contryCode: '+1',
@@ -36,16 +37,17 @@ const PostList = ({}: Props) => {
   const onSubmitHandle = (data: any) => {
     console.log(data)
   }
-  // const drps = [
-  //   {
-  //     _id: 0,
-  //     label: 'hello',
-  //   },
-  //   {
-  //     _id: 1,
-  //     label: 'hey',
-  //   },
-  // ]
+  const drps: SelectDDL[] = [
+    acDefaultValue,
+    {
+      _id: '1',
+      label: 'hello',
+    },
+    {
+      _id: '2',
+      label: 'hey',
+    },
+  ]
   return (
     <>
       <ul className='min-h-screen  p-5 flex flex-col gap-5'>
@@ -56,7 +58,7 @@ const PostList = ({}: Props) => {
             </Link>
           </li>
         ))}
-        <form onSubmit={handleSubmit(onSubmitHandle)} className='flex flex-col gap-2'>
+        <form onSubmit={handleSubmit(onSubmitHandle)} className='flex justify-center  gap-2'>
           <TextField placeholder='Enter Name' />
           <TextField
             placeholder='Enter Name'
@@ -68,16 +70,15 @@ const PostList = ({}: Props) => {
               ),
             }}
           />
-          <OtpInput name={['otp0', 'otp1', 'otp2', 'otp3', 'otp4', 'otp5']} control={control} />
-          <MobileInput
+          {/* <OtpInput name={['otp0', 'otp1', 'otp2', 'otp3', 'otp4', 'otp5']} control={control} /> */}
+          {/* <MobileInput
             control={control}
             name={'phone'}
             placeholder='Enter whatsapp number here ...'
             setValue={setValue}
             watch={watch}
             handleChange={() => {}}
-            minWidth={200}
-          />
+          /> */}
           <SelectInput
             control={control}
             name='drpVal'
@@ -86,6 +87,8 @@ const PostList = ({}: Props) => {
             setError={setError}
             clearErrors={clearErrors}
             validation={{ ...searchSelectValidation('Drp') }}
+            handleChange={() => {}}
+            options={drps}
           />
           <TxtInput
             name='firstName'

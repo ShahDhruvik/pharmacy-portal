@@ -4,11 +4,12 @@ import TxtInput from '../../../components/TxtInput'
 import { Button } from '@mui/material'
 import SelectInput from '../../../components/SelectInput'
 import PermissionForm from '../../dashboard/container/signIn/permission-form'
+import { DateInput } from '../../../components/DateInput'
 
 interface Props {}
 
 const Contact = ({}: Props) => {
-  const { control, setValue } = useForm({
+  const { control, setValue, setError, clearErrors } = useForm({
     defaultValues: {
       type: '',
       code: '',
@@ -20,23 +21,20 @@ const Contact = ({}: Props) => {
   return (
     <section className='min-h-screen'>
       <div>
-        <div className='flex gap-10 px-5 items-center min-h-[600px] '>
-          <div className='w-2/5'>
+        <div className='flex gap-10 px-5  min-h-[600px] items-center'>
+          <div className='flex-1'>
             <img src={img1} alt='image' />
           </div>
-          <div className='w-3/5'>
+          <div className='flex-1'>
             <h1 className='text-3xl pb-5'>Get in Touch</h1>
             <form>
-              <div className='flex gap-5 mb-5'>
+              <div className='flex gap-4 mb-5'>
                 <TxtInput
                   placeholder={'Enter name here'}
                   name={'name'}
                   control={control}
                   handleChange={() => {}}
                   validation={'Required'}
-                  sx={{
-                    minWidth: '50%',
-                  }}
                 />
                 <SelectInput
                   options={[]}
@@ -47,31 +45,28 @@ const Contact = ({}: Props) => {
                   setError={() => {}}
                   clearErrors={() => {}}
                   validation={'Required'}
-                  sx={{
-                    minWidth: '50%',
-                  }}
                 />
               </div>
               <div className='flex gap-5 mb-5'>
-                <TxtInput
-                  placeholder={'Enter phone here'}
-                  name={'name'}
+                <SelectInput
                   control={control}
+                  name='drpVal'
+                  label='Drp'
+                  setValue={setValue}
+                  setError={setError}
+                  clearErrors={clearErrors}
+                  validation={{}}
                   handleChange={() => {}}
-                  validation={'Required'}
-                  sx={{
-                    minWidth: '50%',
-                  }}
+                  options={[]}
                 />
-                <TxtInput
-                  placeholder={'Enter email here'}
-                  name={'name'}
+                <DateInput
+                  name='dateVal'
                   control={control}
+                  clearErrors={clearErrors}
                   handleChange={() => {}}
                   validation={'Required'}
-                  sx={{
-                    minWidth: '50%',
-                  }}
+                  label={'Date'}
+                  setError={setError}
                 />
               </div>
               <div className='mb-5'>
@@ -81,10 +76,7 @@ const Contact = ({}: Props) => {
                   control={control}
                   handleChange={() => {}}
                   validation={'Required'}
-                  sx={{
-                    minWidth: '102.5%',
-                  }}
-                  multiline={15}
+                  multiline={3}
                 />
               </div>
               <div className='flex text-sm gap-10 justify-end items-center w-full'>

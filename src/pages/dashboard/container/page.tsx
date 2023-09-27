@@ -6,20 +6,20 @@ import { fetchCachedData } from '../../../store/slices/cacheAPI/cache.fetch'
 import { CACHE_KEYS } from '../../../utils/constants'
 import Delivery from './delivery'
 import { useToast } from '../../../hooks/useToast'
-import { useLoading } from '../../../context/LoadingContext'
+// import { useLoading } from '../../../context/LoadingContext'
 // import OnlineScheduling from './onlineScheduling'
 // import InPerson from './inPerson'
 type Props = {}
 
 const Dashboard = ({}: Props) => {
-  const { setLoading } = useLoading()
+  // const { setLoading } = useLoading()
   const showToast = useToast()
   const { cache } = useAppSelector((state) => state.cache)
   const dispatch = useAppDispatch()
   const storeRolesGroups = async () => {
-    setLoading({ isLoading: true, isPage: false })
+    // setLoading({ isLoading: true, isPage: false })
     await dispatch(fetchTodos())
-    setLoading({ isLoading: false, isPage: false })
+    // setLoading({ isLoading: false, isPage: false })
   }
   const cacheData = async () => {
     await dispatch(

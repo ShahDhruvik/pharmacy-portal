@@ -37,7 +37,7 @@ export type LoadingState = {
     setLoading: Dispatch<SetStateAction<{ isLoading: boolean, isPage: boolean, pageProps?: { image: any, pageTxt: string, } }>>;
 };
 
-export type FormType = FORMTYPE.SIGNIN | FORMTYPE.SIGNUP | FORMTYPE.OTP
+export type FormType = FORMTYPE.SIGNIN | FORMTYPE.SIGNUP | FORMTYPE.OTP | FORMTYPE.GUEST
 
 export type FormTypeArray = Array<FormType>
-export type SelectDDL = { label: string, _id: string | number }[]
+export type SelectDDL = { label: string, _id: string }

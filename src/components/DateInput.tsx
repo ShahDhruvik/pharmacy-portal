@@ -34,6 +34,7 @@ export const DateInput = ({
   isDisabled,
   sx,
 }: Props) => {
+  const inputStyleProps: SxProps<Theme> = { ...sx, width: '100%' }
   const [OpenClender, setOpenClender] = useState(false)
   const pickerProps = {
     minDate,
@@ -81,7 +82,7 @@ export const DateInput = ({
                 onClick: () => setOpenClender(!OpenClender),
                 placeholder: `Select ${label}`,
                 disabled: isDisabled ?? false,
-                sx: sx ?? {},
+                sx: inputStyleProps,
               },
               actionBar: {
                 actions: ['clear'],

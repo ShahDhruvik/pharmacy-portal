@@ -34,6 +34,7 @@ export const enum FORMTYPE {
   SIGNUP = 'SIGNUP',
   SIGNIN = 'SIGNIN',
   OTP = 'OTP',
+  GUEST = 'GUEST',
 }
 
 export const enum ALIGN_DIALOG {

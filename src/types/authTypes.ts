@@ -19,4 +19,11 @@ export type SignUpFormFields = {
     dob: Date | null
     email: string
 }
+export type GuestFormFields = {
+    phone: number | string
+    contryCode: string
+    name: string
+    dob: Date | null
+    email: string
+}
 

@@ -21,6 +21,7 @@ const TxtInput = ({
   sx,
   multiline,
 }: Props) => {
+  const inputStyleProps: SxProps<Theme> = { ...sx, width: '100%' }
   return (
     <Controller
       name={name}
@@ -38,8 +39,9 @@ const TxtInput = ({
             error={fieldState.invalid}
             helperText={fieldState.error?.message || ''}
             disabled={isDisabled ?? false}
-            sx={sx ?? {}}
-            multiline={multiline ?? 0}
+            sx={inputStyleProps}
+            multiline={multiline ? true : false}
+            minRows={multiline ?? 0}
           />
         )
       }}

@@ -165,6 +165,10 @@ export const theme: Theme = createTheme({
           lineHeight: 2,
           textTransform: 'none',
           color: '#ffffff',
+          ':disabled': {
+            backgroundColor: '#787d78',
+            color: '#ffffff',
+          },
         },
       },
       defaultProps: {
@@ -196,6 +200,7 @@ export const theme: Theme = createTheme({
         },
         input: {
           padding: '8px 10px',
+          width: '100%',
         },
         notchedOutline: {
           border: `1px solid #787d78`,

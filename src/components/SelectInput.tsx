@@ -94,6 +94,8 @@ const SelectInput = ({
   handleChange,
   sx,
 }: Props) => {
+  const inputStyleProps: SxProps<Theme> = { ...sx, width: '100%' }
+
   return (
     <Controller
       name={name}
@@ -101,7 +103,7 @@ const SelectInput = ({
       rules={validation}
       render={({ fieldState, field }) => (
         <Autocomplete
-          sx={sx ?? {}}
+          sx={inputStyleProps}
           isOptionEqualToValue={(option, value) => option._id === value._id}
           options={options}
           disableClearable

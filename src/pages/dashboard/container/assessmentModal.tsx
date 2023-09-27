@@ -10,6 +10,8 @@ import { FORMTYPE } from '../../../utils/constants'
 import SignInForm from './signIn/sign-in-form'
 import OTPForm from './signIn/otp-form'
 import SignUpForm from './signIn/sign-up-form'
+import GuestForm from './signIn/guest-form'
+import { theme } from '../../../context/ThemeProvider'
 type Props = {
   handleClose: () => void
   open: boolean
@@ -40,7 +42,7 @@ const Assessment = ({ handleClose, open }: Props) => {
                       setsignType([])
                     }}
                   >
-                    <SvgIcon iconName='ser' />
+                    <SvgIcon iconName='cancel' svgProp={{ fill: theme.palette.mDarkGray?.main }} />
                   </button>
                 </div>
               </div>
@@ -96,7 +98,11 @@ const Assessment = ({ handleClose, open }: Props) => {
                       </div>
                       <div>Need time to sign in or sign up, proceed as Guest</div>
                       <div className='pb-2'>
-                        <Button variant='contained' color='mPink'>
+                        <Button
+                          variant='contained'
+                          color='mPink'
+                          onClick={() => setsignType([FORMTYPE.GUEST])}
+                        >
                           Process As Guest
                         </Button>
                       </div>
@@ -111,6 +117,13 @@ const Assessment = ({ handleClose, open }: Props) => {
                   )}
                   {signType.includes(FORMTYPE.SIGNUP) && (
                     <SignUpForm
+                      setSignType={setsignType}
+                      handleClose={handleClose}
+                      signType={signType}
+                    />
+                  )}
+                  {signType.includes(FORMTYPE.GUEST) && (
+                    <GuestForm
                       setSignType={setsignType}
                       handleClose={handleClose}
                       signType={signType}

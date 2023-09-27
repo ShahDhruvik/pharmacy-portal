@@ -16,5 +16,5 @@
 }
 
 .Toastify__toast-theme--colored.Toastify__toast--warning {
-  @apply bg-violet-warn text-white-main font-sans font-light text-lg;
+  @apply bg-orange-main text-darkBlue-main font-sans font-light text-lg;
 }
