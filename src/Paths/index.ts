@@ -5,6 +5,7 @@ export const enum MAIN_PATH {
   POST = '/posts/*',
   USER = '/user/*',
   UNAUTHORIZED = '/unauthorized',
+  CONTACT_US = '/contactUs/*',
 }
 
 export const enum COMMON_PATH {

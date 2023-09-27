@@ -12,7 +12,10 @@ import UnAuthorized from './components/UnAuthorized'
 import { COMMON_PATH, MAIN_PATH } from './Paths'
 import Loader from './components/Loader'
 import { useLoading } from './context/LoadingContext'
+import Contact from './pages/contactUs/container/page'
+
 type Props = {}
+
 const AppRoutes = ({}: Props) => {
   const { loading } = useLoading()
   return (
@@ -26,6 +29,7 @@ const AppRoutes = ({}: Props) => {
         <Route path={MAIN_PATH.USER} element={<UserRoute />} />
         <Route path={COMMON_PATH.NOTFOUND} element={<NotFound />} />
         <Route path={MAIN_PATH.UNAUTHORIZED} element={<UnAuthorized />} />
+        <Route path={MAIN_PATH.CONTACT_US} element={<Contact />} />
       </Routes>
       <Loader loading={loading} />
     </>

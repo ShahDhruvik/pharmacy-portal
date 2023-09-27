@@ -46,6 +46,11 @@ export const headerLinks: HeaderLinkType[] = [
     name: 'Franchise',
     path: MAIN_PATH.USER.split('/*')[0],
   },
+  {
+    id: 4,
+    name: 'Contact us',
+    path: MAIN_PATH.CONTACT_US.split('/*')[0],
+  },
 ]
 
 export const countryCodes = ['+1', '+91', '+44']
