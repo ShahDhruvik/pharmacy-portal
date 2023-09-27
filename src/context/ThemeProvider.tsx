@@ -90,7 +90,6 @@ export const theme: Theme = createTheme({
             },
           },
           borderRadius: '8px',
-          maxWidth: 250,
         },
         input: {
           padding: '8px 10px',

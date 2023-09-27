@@ -1,4 +1,4 @@
-import { AUTH_PATH, COMMON_PATH, MAIN_PATH } from '../Paths'
+import { COMMON_PATH, MAIN_PATH } from '../Paths'
 import { HeaderLinkType } from '../types/common'
 type PlantTree = {
   icon?: string
@@ -45,11 +45,6 @@ export const headerLinks: HeaderLinkType[] = [
     id: 3,
     name: 'Franchise',
     path: MAIN_PATH.USER.split('/*')[0],
-  },
-  {
-    id: 4,
-    name: 'Sign in',
-    path: `${MAIN_PATH.AUTH.split('/*')[0]}${AUTH_PATH.LOGIN}`,
   },
 ]
 

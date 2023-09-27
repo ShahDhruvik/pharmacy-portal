@@ -74,7 +74,7 @@ export const DateInput = ({
                 InputLabelProps: { shrink: true },
                 onKeyDown: onKeyDown,
                 onClick: () => setOpenClender(!OpenClender),
-                placeholder: label,
+                placeholder: `Select ${label}`,
               },
               actionBar: {
                 actions: ['clear'],

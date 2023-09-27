@@ -10,9 +10,20 @@ type Props = {
   setValue: UseFormSetValue<any>
   watch: UseFormWatch<any>
   handleChange: () => void
+  minWidth: number
+  isDisabled?: boolean
 }
 
-const MobileInput = ({ placeholder, name, control, watch, setValue, handleChange }: Props) => {
+const MobileInput = ({
+  placeholder,
+  name,
+  control,
+  watch,
+  setValue,
+  handleChange,
+  minWidth,
+  isDisabled,
+}: Props) => {
   const contryCode = watch('contryCode')
   return (
     <Controller
@@ -27,6 +38,10 @@ const MobileInput = ({ placeholder, name, control, watch, setValue, handleChange
               onChange(e)
               handleChange()
             }}
+            sx={{
+              minWidth: minWidth,
+            }}
+            disabled={isDisabled ?? false}
             placeholder={placeholder}
             InputProps={{
               startAdornment: (
@@ -57,7 +72,7 @@ const MobileInput = ({ placeholder, name, control, watch, setValue, handleChange
           />
         )
       }}
-      rules={numberFieldValidation(true, 'Phone')}
+      rules={{ ...numberFieldValidation(true, 'Phone') }}
     />
   )
 }

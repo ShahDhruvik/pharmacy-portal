@@ -13,6 +13,7 @@ interface Props {
   children: ReactNode
   header: { isHeader: boolean; component: ReactNode }
   action: { isAction: boolean; component: ReactNode }
+  paddingOfContent?: string
 }
 
 const CustomDialog = ({
@@ -26,9 +27,10 @@ const CustomDialog = ({
   children,
   header,
   action,
+  paddingOfContent,
 }: Props) => {
   //Dialog Allignment
-  const otherProps = { m: 0.5 }
+  const otherProps = { m: '1rem 0.5rem ' }
   const alignFnc = (alignType: string | undefined, fScreen: boolean | undefined) => {
     if (fScreen) {
       return { PaperProps: { sx: {} } }
@@ -36,10 +38,18 @@ const CustomDialog = ({
       switch (alignType) {
         //Add the alignment accordingly
         case ALIGN_DIALOG.TOP_LEFT:
-          return { PaperProps: { sx: { position: 'fixed', top: 10, left: 10, ...otherProps } } }
+          return {
+            PaperProps: {
+              sx: { position: 'fixed', top: 10, left: 10, ...otherProps },
+            },
+          }
           break
         case ALIGN_DIALOG.TOP_RIGHT:
-          return { PaperProps: { sx: { position: 'fixed', top: 10, right: 10, ...otherProps } } }
+          return {
+            PaperProps: {
+              sx: { position: 'fixed', top: 10, right: 10, m: '5rem 2rem 0.5rem 0.5rem' },
+            },
+          }
           break
         case ALIGN_DIALOG.BOTTOM_LEFT:
           return { PaperProps: { sx: { position: 'fixed', bottom: 10, left: 10, ...otherProps } } }
@@ -69,6 +79,11 @@ const CustomDialog = ({
   return (
     <Dialog
       {...dialogProps}
+      sx={{
+        '.MuiPaper-root ': {
+          borderRadius: '7px',
+        },
+      }}
       aria-labelledby='scroll-dialog-title'
       aria-describedby='scroll-dialog-description'
     >
@@ -77,6 +92,7 @@ const CustomDialog = ({
         sx={{
           maxHeight: maxHeight ?? 400,
           overflowY: 'auto',
+          padding: paddingOfContent ?? '',
         }}
       >
         {children}

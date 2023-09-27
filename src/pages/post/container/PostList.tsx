@@ -76,6 +76,7 @@ const PostList = ({}: Props) => {
             setValue={setValue}
             watch={watch}
             handleChange={() => {}}
+            minWidth={200}
           />
           <SelectInput
             control={control}

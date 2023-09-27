@@ -5,7 +5,7 @@ import { fetchTodos } from '../../../store/slices/User/todo.fetch'
 import { fetchCachedData } from '../../../store/slices/cacheAPI/cache.fetch'
 import { CACHE_KEYS } from '../../../utils/constants'
 import Delivery from './delivery'
-// import { useToast } from '../../../hooks/useToast'
+import { useToast } from '../../../hooks/useToast'
 import { useLoading } from '../../../context/LoadingContext'
 // import OnlineScheduling from './onlineScheduling'
 // import InPerson from './inPerson'
@@ -13,7 +13,7 @@ type Props = {}
 
 const Dashboard = ({}: Props) => {
   const { setLoading } = useLoading()
-  // const showToast = useToast()
+  const showToast = useToast()
   const { cache } = useAppSelector((state) => state.cache)
   const dispatch = useAppDispatch()
   const storeRolesGroups = async () => {
@@ -36,6 +36,21 @@ const Dashboard = ({}: Props) => {
   console.log(VITE_APP_TITLE)
   return (
     <>
+      <div>
+        <h1 className='text-4xl text-emerald-800'>Toasts</h1>
+        <button onClick={() => showToast('info', 'hello', { closeButton: false })} className='mr-5'>
+          Notify
+        </button>
+        <button onClick={() => showToast('error', 'hello')} className='mr-5'>
+          Error
+        </button>
+        <button onClick={() => showToast('success', 'hello')} className='mr-5'>
+          Success
+        </button>
+        <button onClick={() => showToast('warning', 'hello')} className='mr-5'>
+          Warn
+        </button>
+      </div>
       <Delivery />
     </>
   )
