@@ -11,7 +11,7 @@
   }
   nav {
     & > div {
-      @apply p-container py-3 bg-grey-light font-sans font-medium;
+      @apply p-container py-3 bg-lightGray-main font-sans font-medium;
     }
   }
 }

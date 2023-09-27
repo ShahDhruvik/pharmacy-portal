@@ -1,20 +1,21 @@
 import MobileInput from '../../../../components/MobileInput'
-import { Box, Button, Checkbox, FormControlLabel } from '@mui/material'
-import { Link } from 'react-router-dom'
+import { Box, Button } from '@mui/material'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { txtFieldValidation, dateSelectValidation } from '../../../../utils/form.validation'
 import TxtInput from '../../../../components/TxtInput'
 import { DateInput } from '../../../../components/DateInput'
-type Props = {}
-
-type SignUpFormFields = {
-  phone: number | string
-  contryCode: string
-  name: string
-  dob: Date | null
-  email: string
+import { SignUpFormFields } from '../../../../types/authTypes'
+import { Dispatch, SetStateAction } from 'react'
+import { FORMTYPE } from '../../../../utils/constants'
+import { FormTypeArray } from '../../../../types/common'
+import PermissionForm from './permission-form'
+type Props = {
+  handleClose: () => void
+  signType: FormTypeArray
+  setSignType: Dispatch<SetStateAction<FormTypeArray>>
 }
-const SignUpForm = ({}: Props) => {
+
+const SignUpForm = ({ setSignType, signType }: Props) => {
   //form
   const { control, watch, setValue, clearErrors, setError, handleSubmit } = useForm({
     defaultValues: {
@@ -28,6 +29,7 @@ const SignUpForm = ({}: Props) => {
   //form submission
   const onSubmitHandle: SubmitHandler<SignUpFormFields> = (data) => {
     console.log(data)
+    setSignType([FORMTYPE.OTP, FORMTYPE.SIGNUP])
   }
   return (
     <form onSubmit={handleSubmit(onSubmitHandle)}>
@@ -39,7 +41,10 @@ const SignUpForm = ({}: Props) => {
           setValue={setValue}
           watch={watch}
           handleChange={() => {}}
-          minWidth={350}
+          sx={{
+            minWidth: 350,
+          }}
+          isDisabled={signType.includes(FORMTYPE.OTP)}
         />
         <TxtInput
           control={control}
@@ -47,6 +52,7 @@ const SignUpForm = ({}: Props) => {
           handleChange={() => {}}
           placeholder='Enter firstname and lastname'
           validation={{ ...txtFieldValidation(true) }}
+          isDisabled={signType.includes(FORMTYPE.OTP)}
         />
         <DateInput
           clearErrors={clearErrors}
@@ -56,6 +62,7 @@ const SignUpForm = ({}: Props) => {
           name='dob'
           setError={setError}
           validation={{ ...dateSelectValidation('date of birth') }}
+          isDisabled={signType.includes(FORMTYPE.OTP)}
         />
         <TxtInput
           control={control}
@@ -63,45 +70,9 @@ const SignUpForm = ({}: Props) => {
           handleChange={() => {}}
           placeholder='Enter email address (optional)'
           validation={{ ...txtFieldValidation(false, 'Email') }}
+          isDisabled={signType.includes(FORMTYPE.OTP)}
         />
-        <Box
-          display={'flex'}
-          justifyContent={'center'}
-          sx={{
-            '& .MuiFormControlLabel-root': {
-              mx: 0,
-            },
-          }}
-          gap={1}
-        >
-          <FormControlLabel
-            sx={{
-              '.MuiButtonBase-root': {
-                py: 0,
-                px: '2px',
-              },
-            }}
-            control={<Checkbox />}
-            label={<p className='text-sm'>I am not a robot</p>}
-          />
-          <FormControlLabel
-            sx={{
-              '.MuiButtonBase-root': {
-                py: 0,
-                px: '2px',
-              },
-            }}
-            control={<Checkbox />}
-            label={
-              <p className='text-sm'>
-                Agree to{' '}
-                <Link to={'/'}>
-                  <span className='text-blue-700'>terms and conditions</span>
-                </Link>
-              </p>
-            }
-          />
-        </Box>
+        <PermissionForm signType={signType} />
         <Box display={'flex'} justifyContent={'end'} gap={1} marginTop={1}>
           <Button
             variant='contained'
@@ -112,8 +83,9 @@ const SignUpForm = ({}: Props) => {
               minWidth: 'max-content',
             }}
             type='submit'
+            disabled={signType.includes(FORMTYPE.OTP)}
           >
-            Get otp
+            Submit
           </Button>
         </Box>
       </div>

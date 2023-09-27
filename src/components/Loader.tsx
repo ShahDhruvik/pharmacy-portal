@@ -51,7 +51,7 @@ const Loader = ({ loading }: Props) => {
               <div className='flex flex-col sm:flex-row items-center gap-btw-container mt-5'>
                 <img src={loading.pageProps?.image} alt='loading' width={300} height={300} />
                 <div className='max-w-xs'>
-                  <p className='max-sm:text-center text-2xl text-blue-main'>
+                  <p className='max-sm:text-center text-2xl text-darkBlue-main'>
                     {loading.pageProps?.pageTxt}
                   </p>
                 </div>

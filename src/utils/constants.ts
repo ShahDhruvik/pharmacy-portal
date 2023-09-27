@@ -30,6 +30,12 @@ export const enum TOAST_TYPES {
   INFO = 'Info',
 }
 
+export const enum FORMTYPE {
+  SIGNUP = 'SIGNUP',
+  SIGNIN = 'SIGNIN',
+  OTP = 'OTP',
+}
+
 export const enum ALIGN_DIALOG {
   TOP_LEFT = 'top-left',
   TOP_RIGHT = 'top-right',

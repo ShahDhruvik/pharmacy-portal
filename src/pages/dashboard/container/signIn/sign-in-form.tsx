@@ -1,19 +1,18 @@
 import MobileInput from '../../../../components/MobileInput'
-import { Box, Button, Checkbox, FormControlLabel } from '@mui/material'
-import { Link } from 'react-router-dom'
+import { Box, Button } from '@mui/material'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { FORMTYPE, FormType } from './auth-form'
 import { Dispatch, SetStateAction } from 'react'
+import { SignInFormFields } from '../../../../types/authTypes'
+import { FORMTYPE } from '../../../../utils/constants'
+import { FormTypeArray } from '../../../../types/common'
+import PermissionForm from './permission-form'
 type Props = {
   handleClose: () => void
-  signType: FormType
-  setSignType: Dispatch<SetStateAction<FormType>>
+  signType: FormTypeArray
+  setSignType: Dispatch<SetStateAction<FormTypeArray>>
 }
-export type SignInFormFields = {
-  phone: number | string
-  contryCode: string
-}
-const SignInForm = ({ signType }: Props) => {
+
+const SignInForm = ({ signType, setSignType }: Props) => {
   //form
   const { control, watch, setValue, handleSubmit } = useForm({
     defaultValues: {
@@ -24,6 +23,7 @@ const SignInForm = ({ signType }: Props) => {
   //form submission
   const onSubmitHandle: SubmitHandler<SignInFormFields> = (data) => {
     console.log(data)
+    setSignType([FORMTYPE.OTP, FORMTYPE.SIGNIN])
   }
 
   return (
@@ -36,50 +36,13 @@ const SignInForm = ({ signType }: Props) => {
           setValue={setValue}
           watch={watch}
           handleChange={() => {}}
-          minWidth={350}
-          isDisabled={signType === FORMTYPE.OTP}
-        />
-        <Box
-          display={'flex'}
-          justifyContent={'center'}
           sx={{
-            '& .MuiFormControlLabel-root': {
-              mx: 0,
-            },
+            minWidth: 350,
           }}
-          gap={1}
-        >
-          <FormControlLabel
-            sx={{
-              '.MuiButtonBase-root': {
-                py: 0,
-                px: '2px',
-              },
-            }}
-            disabled={signType === FORMTYPE.OTP}
-            control={<Checkbox />}
-            label={<p className='text-sm'>I am not a robot</p>}
-          />
-          <FormControlLabel
-            sx={{
-              '.MuiButtonBase-root': {
-                py: 0,
-                px: '2px',
-              },
-            }}
-            disabled={signType === FORMTYPE.OTP}
-            control={<Checkbox />}
-            label={
-              <p className='text-sm'>
-                Agree to{' '}
-                <Link to={'/'}>
-                  <span className='text-blue-700'>terms and conditions</span>
-                </Link>
-              </p>
-            }
-          />
-        </Box>
-        {signType === FORMTYPE.SIGNIN && (
+          isDisabled={signType.includes(FORMTYPE.OTP)}
+        />
+        <PermissionForm signType={signType} />
+        {signType.includes(FORMTYPE.SIGNIN) && (
           <Box display={'flex'} justifyContent={'end'} gap={1} marginTop={1}>
             <Button
               variant='contained'
@@ -89,6 +52,8 @@ const SignInForm = ({ signType }: Props) => {
                 maxWidth: 'max-content',
                 minWidth: 'max-content',
               }}
+              type='submit'
+              disabled={signType.includes(FORMTYPE.OTP)}
             >
               Sign in -get OTP
             </Button>

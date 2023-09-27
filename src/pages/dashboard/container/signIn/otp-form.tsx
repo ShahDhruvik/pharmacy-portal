@@ -1,16 +1,10 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 import OtpInput from '../../../../components/OtpInput'
 import { Box, Button } from '@mui/material'
+import { OtpFormFields } from '../../../../types/authTypes'
 
 type Props = {}
-type OtpFormFields = {
-  otp0: string
-  otp1: string
-  otp2: string
-  otp3: string
-  otp4: string
-  otp5: string
-}
+
 const OTPForm = ({}: Props) => {
   const { control, handleSubmit } = useForm({
     defaultValues: {

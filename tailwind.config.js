@@ -15,7 +15,60 @@ export default {
       // banner: "url('../../public/images/bannerImage.png')",
       // bannerLaserSkin: "url('../../public/images/laser-skin.png')",
     },
-
+    colors: {
+      'violet-warn': '#3441A3',
+      pink: {
+        main: '#e20074',
+        light: '#e20074',
+        dark: '#e20074',
+      },
+      darkBlue: {
+        main: '#0a3876',
+        light: '#0a3876',
+        dark: '#0a3876',
+      },
+      blue: {
+        main: '#00a1f1',
+        light: '#00a1f1',
+        dark: '#00a1f1',
+      },
+      lightBlue: {
+        main: '#d9e3f8',
+        light: '#d9e3f8',
+        dark: '#d9e3f8',
+      },
+      lightGray: {
+        main: '#f4f4f4',
+        light: '#f4f4f4',
+        dark: '#f4f4f4',
+      },
+      gray: {
+        main: '#d4d4d4',
+        light: '#d4d4d4',
+        dark: '#d4d4d4',
+      },
+      darkGray: {
+        main: '#787d78',
+        light: '#787d78',
+        dark: '#787d78',
+      },
+      orange: {
+        main: '#db4437',
+        light: '#db4437',
+        dark: '#db4437',
+      },
+      green: {
+        main: '#0f9d58',
+        light: '#0f9d58',
+        dark: '#0f9d58',
+      },
+      yellow: {
+        main: '#ffbb00',
+        light: '#ffbb00',
+        dark: '#ffbb00',
+      },
+      white: '#ffffff',
+    },
     extend: {
       spacing: {
         container: `max(
@@ -54,13 +107,6 @@ export default {
       },
       fontFamily: {
         sans: ['Poppins', 'sans'],
-      },
-      colors: {
-        'blue-main': '#0a3876 ',
-        'grey-light': '#f4f4f4',
-        'green-success': '#0f9d58',
-        'yellow-error': '#ffbb00',
-        'violet-warn': '#3441A3',
       },
     },
   },

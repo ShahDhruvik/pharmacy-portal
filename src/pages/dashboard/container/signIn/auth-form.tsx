@@ -1,6 +1,6 @@
 import { Box, Button, Checkbox, DialogTitle, FormControlLabel } from '@mui/material'
 import CustomDialog from '../../../../components/Dialog-custom'
-import { ALIGN_DIALOG } from '../../../../utils/constants'
+import { ALIGN_DIALOG, FORMTYPE } from '../../../../utils/constants'
 import SvgIcon from '../../../../components/SvgIcon'
 import { theme } from '../../../../context/ThemeProvider'
 import { useState } from 'react'
@@ -9,18 +9,13 @@ import OTPForm from './otp-form'
 import MobileInput from '../../../../components/MobileInput'
 import { Link } from 'react-router-dom'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { SignInFormFields } from './sign-in-form'
+import { SignInFormFields } from '../../../../types/authTypes'
+import { FormTypeArray } from '../../../../types/common'
 
 type Props = {
   open: boolean
   handleClose: () => void
 }
-export const enum FORMTYPE {
-  SIGNUP = 'SIGNUP',
-  SIGNIN = 'SIGNIN',
-  OTP = 'OTP',
-}
-export type FormType = FORMTYPE.SIGNIN | FORMTYPE.SIGNUP | FORMTYPE.OTP | undefined
 
 const AuthForm = ({ open, handleClose }: Props) => {
   const { control, watch, setValue, handleSubmit } = useForm({
@@ -29,17 +24,17 @@ const AuthForm = ({ open, handleClose }: Props) => {
       contryCode: '+1',
     },
   })
-  const [signType, setSignType] = useState<FormType>(undefined)
+  const [signType, setSignType] = useState<FormTypeArray>([])
   const onSubmitHandle: SubmitHandler<SignInFormFields> = (data) => {
     console.log(data)
-    setSignType(FORMTYPE.OTP)
+    setSignType([FORMTYPE.OTP])
   }
   return (
     <CustomDialog
       open={open}
       handleClose={() => {
         handleClose()
-        setSignType(undefined)
+        setSignType([])
       }}
       align={ALIGN_DIALOG.TOP_RIGHT}
       action={{
@@ -58,7 +53,7 @@ const AuthForm = ({ open, handleClose }: Props) => {
               <button
                 onClick={() => {
                   handleClose()
-                  setSignType(undefined)
+                  setSignType([])
                 }}
               >
                 <SvgIcon iconName='cancel' svgProp={{ fill: theme.palette.mGrey?.main }} />
@@ -67,13 +62,13 @@ const AuthForm = ({ open, handleClose }: Props) => {
           </DialogTitle>
         ),
       }}
-      maxWidth={'sm'}
+      maxWidth={'md'}
       disableClickAway={true}
       paddingOfContent='20px'
     >
       <div>
         <form onSubmit={handleSubmit(onSubmitHandle)}>
-          {signType !== FORMTYPE.SIGNUP && (
+          {!signType.includes(FORMTYPE.SIGNUP) && (
             <div className='flex flex-col justify-center gap-3'>
               <MobileInput
                 control={control}
@@ -82,8 +77,10 @@ const AuthForm = ({ open, handleClose }: Props) => {
                 setValue={setValue}
                 watch={watch}
                 handleChange={() => {}}
-                minWidth={350}
-                isDisabled={signType === FORMTYPE.OTP}
+                isDisabled={signType.includes(FORMTYPE.OTP)}
+                sx={{
+                  minWidth: 350,
+                }}
               />
               <Box
                 display={'flex'}
@@ -102,7 +99,7 @@ const AuthForm = ({ open, handleClose }: Props) => {
                       px: '2px',
                     },
                   }}
-                  disabled={signType === FORMTYPE.OTP}
+                  disabled={signType.includes(FORMTYPE.OTP)}
                   control={<Checkbox />}
                   label={<p className='text-sm'>I am not a robot</p>}
                 />
@@ -113,7 +110,7 @@ const AuthForm = ({ open, handleClose }: Props) => {
                       px: '2px',
                     },
                   }}
-                  disabled={signType === FORMTYPE.OTP}
+                  disabled={signType.includes(FORMTYPE.OTP)}
                   control={<Checkbox />}
                   label={
                     <p className='text-sm'>
@@ -125,7 +122,7 @@ const AuthForm = ({ open, handleClose }: Props) => {
                   }
                 />
               </Box>
-              {signType === FORMTYPE.SIGNIN && (
+              {signType.includes(FORMTYPE.SIGNIN) && (
                 <Box display={'flex'} justifyContent={'end'} gap={1} marginTop={1}>
                   <Button
                     variant='contained'
@@ -142,7 +139,7 @@ const AuthForm = ({ open, handleClose }: Props) => {
               )}
             </div>
           )}
-          {signType === undefined && (
+          {signType.length === 0 && (
             <Box display={'flex'} justifyContent={'center'} gap={1} marginTop={1}>
               <Button
                 variant='contained'
@@ -160,7 +157,7 @@ const AuthForm = ({ open, handleClose }: Props) => {
                 <Button
                   variant='contained'
                   color='mPink'
-                  onClick={() => setSignType(FORMTYPE.SIGNUP)}
+                  onClick={() => setSignType([FORMTYPE.SIGNUP])}
                   sx={{
                     maxHeight: 27,
                     maxWidth: 150,
@@ -174,8 +171,10 @@ const AuthForm = ({ open, handleClose }: Props) => {
             </Box>
           )}
         </form>
-        {signType === FORMTYPE.SIGNUP && <SignUpForm />}
-        {signType === FORMTYPE.OTP && <OTPForm />}
+        {signType.includes(FORMTYPE.SIGNUP) && (
+          <SignUpForm signType={signType} handleClose={handleClose} setSignType={setSignType} />
+        )}
+        {signType.includes(FORMTYPE.OTP) && <OTPForm />}
       </div>
     </CustomDialog>
   )

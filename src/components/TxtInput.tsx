@@ -1,4 +1,4 @@
-import { TextField } from '@mui/material'
+import { SxProps, TextField, Theme } from '@mui/material'
 import { Controller, Control } from 'react-hook-form'
 type Props = {
   placeholder: string
@@ -6,9 +6,19 @@ type Props = {
   control: Control<any> | undefined
   handleChange: () => void
   validation: any
+  isDisabled?: boolean
+  sx?: SxProps<Theme>
 }
 
-const TxtInput = ({ placeholder, name, control, handleChange, validation }: Props) => {
+const TxtInput = ({
+  placeholder,
+  name,
+  control,
+  handleChange,
+  validation,
+  isDisabled,
+  sx,
+}: Props) => {
   return (
     <Controller
       name={name}
@@ -25,6 +35,8 @@ const TxtInput = ({ placeholder, name, control, handleChange, validation }: Prop
             placeholder={placeholder}
             error={fieldState.invalid}
             helperText={fieldState.error?.message || ''}
+            disabled={isDisabled ?? false}
+            sx={sx ?? {}}
           />
         )
       }}

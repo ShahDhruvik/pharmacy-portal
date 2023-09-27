@@ -14,6 +14,7 @@ interface Props {
   header: { isHeader: boolean; component: ReactNode }
   action: { isAction: boolean; component: ReactNode }
   paddingOfContent?: string
+  minWidth?: number
 }
 
 const CustomDialog = ({
@@ -28,6 +29,7 @@ const CustomDialog = ({
   header,
   action,
   paddingOfContent,
+  minWidth,
 }: Props) => {
   //Dialog Allignment
   const otherProps = { m: '1rem 0.5rem ' }
@@ -82,6 +84,7 @@ const CustomDialog = ({
       sx={{
         '.MuiPaper-root ': {
           borderRadius: '7px',
+          minWidth: minWidth ?? 0,
         },
       }}
       aria-labelledby='scroll-dialog-title'

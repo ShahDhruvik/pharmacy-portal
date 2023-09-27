@@ -25,9 +25,9 @@ const Navbar = ({}: Props) => {
         <div className='flex flex-row gap-3 min-[350px]:items-center md:gap-0 '>
           <div className='flex items-center gap-2 flex-1'>
             <img src={Logo} alt='Logo' width={50} height={50} />
-            <h1 className='text-3xl text-blue-main font-semibold'>Oopchar</h1>
+            <h1 className='text-3xl text-darkBlue-main font-semibold'>Oopchar</h1>
           </div>
-          <ul className='hidden md:flex  flex-row flex-wrap  gap-5 text-blue-main font-extralight'>
+          <ul className='hidden md:flex  flex-row flex-wrap  gap-5 text-darkBlue-main font-extralight'>
             {headerLinks.map((x) => {
               return (
                 <Link to={x.path} key={x.id}>
@@ -65,7 +65,7 @@ const Navbar = ({}: Props) => {
                 }}
               >
                 <div className='bg-white drop-shadow-xl p-5 rounded-lg border-black border-[1px] border-opacity-20 mt-2'>
-                  <ul className='flex flex-col  gap-5 text-blue-main font-extralight'>
+                  <ul className='flex flex-col  gap-5 text-darkBlue-main font-extralight'>
                     {headerLinks.map((x) => {
                       return (
                         <Link to={x.path} key={x.id} onClick={handleClick}>

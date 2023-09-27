@@ -1,17 +1,22 @@
-/* eslint-disable no-empty-pattern */
 import SvgIcon from '../../../components/SvgIcon'
 import CustomDialog from '../../../components/Dialog-custom'
 import { Button, DialogContentText, DialogTitle } from '@mui/material'
 import { frequentlyAskedQuestions } from '../../../utils/data'
 import { Link } from 'react-router-dom'
 import AssessmentWhiteBox from '../../../components/AssessmentWhiteBox'
-
+import { useState } from 'react'
+import { FormTypeArray } from '../../../types/common'
+import { FORMTYPE } from '../../../utils/constants'
+import SignInForm from './signIn/sign-in-form'
+import OTPForm from './signIn/otp-form'
+import SignUpForm from './signIn/sign-up-form'
 type Props = {
   handleClose: () => void
   open: boolean
 }
 
 const Assessment = ({ handleClose, open }: Props) => {
+  const [signType, setsignType] = useState<FormTypeArray>([])
   return (
     <>
       <CustomDialog
@@ -29,7 +34,12 @@ const Assessment = ({ handleClose, open }: Props) => {
                   <span className='text-sm text-blue-950'>Daisy: Your virtual health agent</span>
                 </div>
                 <div>
-                  <button onClick={() => handleClose()}>
+                  <button
+                    onClick={() => {
+                      handleClose()
+                      setsignType([])
+                    }}
+                  >
                     <SvgIcon iconName='ser' />
                   </button>
                 </div>
@@ -57,41 +67,64 @@ const Assessment = ({ handleClose, open }: Props) => {
                   </div>
                 </AssessmentWhiteBox>
                 <AssessmentWhiteBox iconName='ser'>
-                  <div>
-                    <div>Please sign in or sign up using your mobile number</div>
-                    <div className='pb-2 flex gap-3'>
-                      <Button
-                        variant='contained'
-                        color='mPink'
-                        sx={{
-                          maxWidth: 100,
-                          minWidth: 100,
-                        }}
-                      >
-                        Sign In
-                      </Button>
-                      <Button
-                        variant='contained'
-                        color='mPink'
-                        sx={{
-                          maxWidth: 100,
-                          minWidth: 100,
-                        }}
-                      >
-                        Sign Up
-                      </Button>
+                  {signType.length === 0 && (
+                    <div>
+                      <div>Please sign in or sign up using your mobile number</div>
+                      <div className='pb-2 flex gap-3'>
+                        <Button
+                          variant='contained'
+                          color='mPink'
+                          sx={{
+                            maxWidth: 100,
+                            minWidth: 100,
+                          }}
+                          onClick={() => setsignType([FORMTYPE.SIGNIN])}
+                        >
+                          Sign In
+                        </Button>
+                        <Button
+                          variant='contained'
+                          color='mPink'
+                          sx={{
+                            maxWidth: 100,
+                            minWidth: 100,
+                          }}
+                          onClick={() => setsignType([FORMTYPE.SIGNUP])}
+                        >
+                          Sign Up
+                        </Button>
+                      </div>
+                      <div>Need time to sign in or sign up, proceed as Guest</div>
+                      <div className='pb-2'>
+                        <Button variant='contained' color='mPink'>
+                          Process As Guest
+                        </Button>
+                      </div>
                     </div>
-                    <div>Need time to sign in or sign up, proceed as Guest</div>
-                    <div className='pb-2'>
-                      <Button variant='contained' color='mPink'>
-                        Process As Guest
-                      </Button>
-                    </div>
-                  </div>
+                  )}
+                  {signType.includes(FORMTYPE.SIGNIN) && (
+                    <SignInForm
+                      handleClose={handleClose}
+                      setSignType={setsignType}
+                      signType={signType}
+                    />
+                  )}
+                  {signType.includes(FORMTYPE.SIGNUP) && (
+                    <SignUpForm
+                      setSignType={setsignType}
+                      handleClose={handleClose}
+                      signType={signType}
+                    />
+                  )}
                 </AssessmentWhiteBox>
+                {signType.includes(FORMTYPE.OTP) && (
+                  <AssessmentWhiteBox iconName='ser' left={true}>
+                    <OTPForm />
+                  </AssessmentWhiteBox>
+                )}
               </div>
             </div>
-            <div className='border-x-2 border-gray-300 mx-5'></div>
+            <div className='border-x-2 border-gray-300 mx-5 '></div>
             <div className='w-2/5'>
               <h2>Frequently Asked Questions</h2>
               {frequentlyAskedQuestions.map((x) => (

@@ -1,4 +1,4 @@
-import { Autocomplete, TextField, MenuItem, Tooltip } from '@mui/material'
+import { Autocomplete, TextField, MenuItem, Tooltip, SxProps, Theme } from '@mui/material'
 import { acDefaultValue } from '../utils/form.validation'
 import {
   Control,
@@ -9,8 +9,10 @@ import {
 } from 'react-hook-form'
 import SvgIcon from './SvgIcon'
 import { splitDescription } from '../utils/constants'
+import { SelectDDL } from '../types/common'
 
 type Props = {
+  options: SelectDDL[]
   name: string
   control: Control<any> | undefined
   label: string
@@ -20,18 +22,10 @@ type Props = {
   validation: any
   notRequired?: boolean
   tooltip?: { isTooltip: boolean; length: number }
+  sx?: SxProps<Theme>
+  handleChange?: () => void
 }
-const drps = [
-  acDefaultValue,
-  {
-    _id: '0',
-    label: 'hello',
-  },
-  {
-    _id: '1',
-    label: 'hey',
-  },
-]
+
 const listBoxPropsDropdown = () => {
   return {
     sx: {
@@ -96,6 +90,9 @@ const SelectInput = ({
   clearErrors,
   label,
   tooltip,
+  options,
+  handleChange,
+  sx,
 }: Props) => {
   return (
     <Controller
@@ -105,18 +102,24 @@ const SelectInput = ({
       render={({ fieldState, field }) => (
         <Autocomplete
           isOptionEqualToValue={(option, value) => option._id === value._id}
-          options={drps}
+          options={options}
           disableClearable
           onChange={(e, val) => {
             if (val !== null) {
               if (!notRequired) {
                 setValue(name, val)
+                if (handleChange) {
+                  handleChange()
+                }
                 if (val._id === acDefaultValue._id) {
                   setError(name, { type: 'validate', message: `Select ${label}` })
                 } else {
                   clearErrors(name)
                 }
               } else {
+                if (handleChange) {
+                  handleChange()
+                }
                 setValue(name, val)
               }
             }
@@ -129,6 +132,7 @@ const SelectInput = ({
                 error={fieldState.invalid}
                 placeholder={`Select ${label}`}
                 helperText={fieldState.error ? fieldState.error.message : ''}
+                sx={sx ?? {}}
               />
             )
           }}

@@ -1,4 +1,4 @@
-import { InputAdornment, MenuItem, TextField } from '@mui/material'
+import { InputAdornment, MenuItem, SxProps, TextField, Theme } from '@mui/material'
 import { MobileSelect } from './MuiStyledComponents'
 import { countryCodes } from '../utils/data'
 import { Controller, Control, UseFormSetValue, UseFormWatch } from 'react-hook-form'
@@ -10,8 +10,8 @@ type Props = {
   setValue: UseFormSetValue<any>
   watch: UseFormWatch<any>
   handleChange: () => void
-  minWidth: number
   isDisabled?: boolean
+  sx?: SxProps<Theme>
 }
 
 const MobileInput = ({
@@ -21,8 +21,8 @@ const MobileInput = ({
   watch,
   setValue,
   handleChange,
-  minWidth,
   isDisabled,
+  sx,
 }: Props) => {
   const contryCode = watch('contryCode')
   return (
@@ -38,9 +38,7 @@ const MobileInput = ({
               onChange(e)
               handleChange()
             }}
-            sx={{
-              minWidth: minWidth,
-            }}
+            sx={sx ?? {}}
             disabled={isDisabled ?? false}
             placeholder={placeholder}
             InputProps={{

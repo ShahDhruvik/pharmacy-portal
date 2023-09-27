@@ -6,6 +6,7 @@ import { Controller } from 'react-hook-form'
 import { enGB } from 'date-fns/locale'
 import { useState } from 'react'
 import { theme } from '../context/ThemeProvider'
+import { SxProps, Theme } from '@mui/material'
 // import SvgIcon from './SvgIcon'
 
 type Props = {
@@ -17,6 +18,8 @@ type Props = {
   validation: any
   minDate?: Date | null
   handleChange: () => void
+  isDisabled?: boolean
+  sx?: SxProps<Theme>
 }
 
 export const DateInput = ({
@@ -28,6 +31,8 @@ export const DateInput = ({
   validation,
   minDate,
   handleChange,
+  isDisabled,
+  sx,
 }: Props) => {
   const [OpenClender, setOpenClender] = useState(false)
   const pickerProps = {
@@ -75,6 +80,8 @@ export const DateInput = ({
                 onKeyDown: onKeyDown,
                 onClick: () => setOpenClender(!OpenClender),
                 placeholder: `Select ${label}`,
+                disabled: isDisabled ?? false,
+                sx: sx ?? {},
               },
               actionBar: {
                 actions: ['clear'],
@@ -91,7 +98,6 @@ export const DateInput = ({
                   },
                 },
               },
-
               popper: {
                 sx: {
                   '& .MuiButtonBase-root.Mui-selected': {

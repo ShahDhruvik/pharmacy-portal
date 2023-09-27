@@ -4,14 +4,15 @@
 }
 
 .Toastify__toast-theme--colored.Toastify__toast--info {
+  @apply bg-blue-main text-darkBlue-main font-sans font-light text-lg;
 }
 
 .Toastify__toast-theme--colored.Toastify__toast--success {
-  @apply bg-green-success text-white font-sans font-light text-lg;
+  @apply bg-green-main text-white font-sans font-light text-lg;
 }
 
 .Toastify__toast-theme--colored.Toastify__toast--error {
-  @apply bg-yellow-error text-blue-main font-sans font-light text-lg;
+  @apply bg-yellow-main text-darkBlue-main font-sans font-light text-lg;
 }
 
 .Toastify__toast-theme--colored.Toastify__toast--warning {
