@@ -48,6 +48,11 @@ export const headerLinks: HeaderLinkType[] = [
   },
   {
     id: 4,
+    name: 'Contact us',
+    path: MAIN_PATH.CONTACT_US.split('/*')[0],
+  },
+  {
+    id: 5,
     name: 'Sign in',
     path: `${MAIN_PATH.AUTH.split('/*')[0]}${AUTH_PATH.LOGIN}`,
   },
