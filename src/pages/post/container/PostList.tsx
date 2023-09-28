@@ -3,7 +3,7 @@ import { BlogPosts } from '../../../utils/constants'
 import { InputAdornment, TextField, Button } from '@mui/material'
 import SvgIcon from '../../../components/SvgIcon'
 import { useForm } from 'react-hook-form'
-// import MobileInput from '../../../components/MobileInput'
+import MobileInput from '../../../components/MobileInput'
 import TxtInput from '../../../components/TxtInput'
 import {
   acDefaultValue,

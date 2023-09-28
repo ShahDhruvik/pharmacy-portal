@@ -2,7 +2,7 @@ import { Route } from 'react-router-dom'
 import About from './container/page'
 import Contact from './container/contact'
 import RouteWrapper from '../../middleware/routeWrapper'
-import { ABOUT_PATH } from '../../Paths'
+import { ABOUT_PATH } from '../../paths'
 import withAuth from '../../middleware/auth.middleware'
 import { ROLES } from '../../utils/constants'
 

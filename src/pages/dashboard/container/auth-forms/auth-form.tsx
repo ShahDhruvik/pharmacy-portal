@@ -11,7 +11,6 @@ import { Link } from 'react-router-dom'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { SignInFormFields } from '../../../../types/authTypes'
 import { FormTypeArray } from '../../../../types/common'
-
 type Props = {
   open: boolean
   handleClose: () => void
@@ -56,7 +55,7 @@ const AuthForm = ({ open, handleClose }: Props) => {
                   setSignType([])
                 }}
               >
-                <SvgIcon iconName='cancel' svgProp={{ fill: theme.palette.mGrey?.main }} />
+                <SvgIcon iconName='cancel' svgProp={{ fill: theme.palette.mGray?.main }} />
               </button>
             </div>
           </DialogTitle>

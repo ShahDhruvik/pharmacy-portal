@@ -3,7 +3,7 @@ import img1 from '../../../assets/images/Aspect_Ratio.jpg'
 import TxtInput from '../../../components/TxtInput'
 import { Button } from '@mui/material'
 import SelectInput from '../../../components/SelectInput'
-import PermissionForm from '../../dashboard/container/signIn/permission-form'
+import PermissionForm from '../../dashboard/container/auth-forms/permission-form'
 import { DateInput } from '../../../components/DateInput'
 
 interface Props {}

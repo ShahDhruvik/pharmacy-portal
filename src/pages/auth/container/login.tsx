@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { users } from '../../user/container/data'
 import { useNavigate } from 'react-router-dom'
-import { COMMON_PATH } from '../../../Paths'
+import { COMMON_PATH } from '../../../paths'
 import { useAuth } from '../../../context/AuthContext'
 interface Props {}
 

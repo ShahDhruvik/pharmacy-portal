@@ -3,7 +3,7 @@ import RouteWrapper from '../../middleware/routeWrapper'
 import PostList from './container/PostList'
 import Post from './container/Post'
 import Posts from './container/page'
-import { COMMON_PATH, POST_PATH } from '../../Paths'
+import { COMMON_PATH, POST_PATH } from '../../paths'
 
 interface Props {}
 

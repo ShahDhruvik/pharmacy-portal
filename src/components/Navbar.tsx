@@ -4,7 +4,7 @@ import Logo from '../assets/images/logo.webp'
 import SvgIcon from './SvgIcon'
 import { headerLinks } from '../utils/data'
 import { IconButton, Popper } from '@mui/material'
-import AuthForm from '../pages/dashboard/container/signIn/auth-form'
+import AuthForm from '../pages/dashboard/container/auth-forms/auth-form'
 interface Props {}
 
 const Navbar = ({}: Props) => {

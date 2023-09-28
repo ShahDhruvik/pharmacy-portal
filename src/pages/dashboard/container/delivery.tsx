@@ -8,7 +8,7 @@ import SliderPhotoCard from '../../../components/SliderPhotoCard'
 import { Button } from '@mui/material'
 // import { frequentlyAskedQuestions } from '../../../utils/data'
 import { useNavigate } from 'react-router-dom'
-import { DASHBOARD_PATH } from '../../../Paths'
+import { DASHBOARD_PATH } from '../../../paths'
 import Assessment from './assessmentModal'
 
 interface Props {}
