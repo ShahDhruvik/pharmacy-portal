@@ -1,13 +1,16 @@
 /* eslint-disable no-empty-pattern */
-import HeadContent from '../../../components/HeadContent'
-import SliderPhotoCard from '../../../components/SliderPhotoCard'
-import SvgIcon from '../../../components/SvgIcon'
-import img1 from '../../../../src/assets/images/Aspect_Ratio.jpg'
-import SelectInput from '../../../components/SelectInput'
-import { DateInput } from '../../../components/DateInput'
+import HeadContent from '@/components/HeadContent'
+import SliderPhotoCard from '@/components/SliderPhotoCard'
+import SvgIcon from '@/components/SvgIcon'
+import img1 from '@/assets/images/Aspect_Ratio.jpg'
+import SelectInput from '@/components/SelectInput'
+import { DateInput } from '@/components/DateInput'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { txtFieldValidation, dateSelectValidation } from '../../../utils/form.validation'
+import { txtFieldValidation, dateSelectValidation } from '@/utils/form.validation'
 import { Button } from '@mui/material'
+import { useState } from 'react'
+import Appointment from './AppointmentModal'
+import { OnlineSchedulingFormField } from '@/types/onlineSchedulingTypes'
 
 interface Props {}
 
@@ -61,16 +64,22 @@ const arr = [
 const OnlineScheduling = ({}: Props) => {
   const { control, setValue, clearErrors, setError, handleSubmit } = useForm({
     defaultValues: {
-      phone: '',
-      contryCode: '+1',
-      name: '',
-      dob: null as Date | null,
-      email: '',
-    } as any,
+      speciality: '',
+      problem: '',
+      date: null as Date | null,
+    } as OnlineSchedulingFormField,
   })
   //form submission
-  const onSubmitHandle: SubmitHandler<any> = (data) => {
+  const onSubmitHandle: SubmitHandler<OnlineSchedulingFormField> = (data) => {
     console.log(data)
+  }
+
+  const [open, setOpen] = useState(false)
+  const handleClickOpen = () => () => {
+    setOpen(true)
+  }
+  const handleClose = () => {
+    setOpen(false)
   }
   return (
     <>
@@ -93,7 +102,13 @@ const OnlineScheduling = ({}: Props) => {
               clearErrors={() => {}}
               validation={{ ...txtFieldValidation(true) }}
               sx={{
-                minWidth: '33%',
+                '.MuiOutlinedInput-notchedOutline': {
+                  borderTopRightRadius: 0,
+                  borderBottomRightRadius: 0,
+                },
+                '.MuiOutlinedInput-input': {
+                  textAlign: 'center',
+                },
               }}
             />
             <SelectInput
@@ -106,7 +121,15 @@ const OnlineScheduling = ({}: Props) => {
               clearErrors={() => {}}
               validation={{ ...txtFieldValidation(true) }}
               sx={{
-                minWidth: '33%',
+                '.MuiOutlinedInput-notchedOutline': {
+                  borderTopRightRadius: 0,
+                  borderBottomRightRadius: 0,
+                  borderTopLeftRadius: 0,
+                  borderBottomLeftRadius: 0,
+                },
+                '.MuiOutlinedInput-input': {
+                  textAlign: 'center',
+                },
               }}
             />
             <DateInput
@@ -118,17 +141,29 @@ const OnlineScheduling = ({}: Props) => {
               setError={setError}
               validation={{ ...dateSelectValidation('Select Date') }}
               sx={{
-                minWidth: '33%',
+                maxWidth: '250px',
+                '.MuiOutlinedInput-notchedOutline': {
+                  borderTopLeftRadius: 0,
+                  borderBottomLeftRadius: 0,
+                  borderTopRightRadius: 0,
+                  borderBottomRightRadius: 0,
+                },
+                '.MuiOutlinedInput-input': {
+                  textAlign: 'center',
+                },
               }}
             />
             <Button
               variant='contained'
               color='mPink'
               sx={{
-                maxWidth: 100,
-                minWidth: 100,
+                maxWidth: 130,
+                minWidth: 130,
+                gap: '3px',
               }}
+              onClick={handleClickOpen()}
             >
+              <SvgIcon iconName='ser' svgProp={{ fill: 'white' }} />
               Find Now
             </Button>
           </form>
@@ -143,6 +178,7 @@ const OnlineScheduling = ({}: Props) => {
           <SvgIcon iconName='ser' />
         </div>
       </section>
+      <Appointment handleClose={handleClose} open={open} />
     </>
   )
 }

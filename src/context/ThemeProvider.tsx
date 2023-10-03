@@ -40,6 +40,9 @@ declare module '@mui/material/styles' {
   interface Palette {
     mWhite?: PaletteColor
   }
+  interface Palette {
+    mDarkGreen?: PaletteColor
+  }
   interface PaletteOptions {
     mPink?: PaletteColor
   }
@@ -72,6 +75,9 @@ declare module '@mui/material/styles' {
   }
   interface PaletteOptions {
     mWhite?: PaletteColor
+  }
+  interface PaletteOptions {
+    mDarkGreen?: PaletteColor
   }
   interface TypographyVariants {
     btnTxt: React.CSSProperties
@@ -152,6 +158,11 @@ export const theme: Theme = createTheme({
       main: '#ffffff',
       light: '#ffffff',
       dark: '#ffffff',
+    },
+    mDarkGreen: {
+      main: '#1A2428',
+      light: '#1A2428',
+      dark: '#1A2428',
     },
   },
   typography: {},

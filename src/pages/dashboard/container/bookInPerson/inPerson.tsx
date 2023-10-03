@@ -1,14 +1,17 @@
 /* eslint-disable no-empty-pattern */
-import HeadContent from '../../../components/HeadContent'
-import SliderPhotoCard from '../../../components/SliderPhotoCard'
-import SvgIcon from '../../../components/SvgIcon'
-import img1 from '../../../../src/assets/images/Aspect_Ratio.jpg'
+import HeadContent from '@/components/HeadContent'
+import SliderPhotoCard from '@/components/SliderPhotoCard'
+import SvgIcon from '@/components/SvgIcon'
+import img1 from '@/assets/images/Aspect_Ratio.jpg'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import SelectInput from '../../../components/SelectInput'
-import { txtFieldValidation, dateSelectValidation } from '../../../utils/form.validation'
-import { DateInput } from '../../../components/DateInput'
+import SelectInput from '@/components/SelectInput'
+import { txtFieldValidation, dateSelectValidation } from '@/utils/form.validation'
+import { DateInput } from '@/components/DateInput'
 import { Button } from '@mui/material'
-import TxtInput from '../../../components/TxtInput'
+import TxtInput from '@/components/TxtInput'
+import { BookInPersonFormField } from '@/types/bookInPersonTypes'
+import { useNavigate } from 'react-router-dom'
+import { DASHBOARD_PATH } from '@/paths/index'
 
 interface Props {}
 
@@ -60,17 +63,18 @@ const arr = [
 ]
 
 const InPerson = ({}: Props) => {
+  const nav = useNavigate()
+
   const { control, setValue, clearErrors, setError, handleSubmit } = useForm({
     defaultValues: {
-      phone: '',
-      contryCode: '+1',
-      name: '',
-      dob: null as Date | null,
-      email: '',
-    } as any,
+      speciality: '',
+      problem: '',
+      postalCode: '',
+      date: null as Date | null,
+    } as BookInPersonFormField,
   })
   //form submission
-  const onSubmitHandle: SubmitHandler<any> = (data) => {
+  const onSubmitHandle: SubmitHandler<BookInPersonFormField> = (data) => {
     console.log(data)
   }
   return (
@@ -80,29 +84,6 @@ const InPerson = ({}: Props) => {
       <section>
         <div>
           <div className='text-center mb-3'>Book in-person consultation now</div>
-          {/* <div className='flex items-center justify-center mb-5'>
-            <input
-              type='text'
-              className='bg-[#f6f9f7] border-2 border-r-0 border-gray-500 w-80'
-              placeholder='Select health speciality'
-            />
-            <input
-              type='text'
-              className='bg-[#f6f9f7] border-2 border-r-0 border-gray-500 w-80'
-              placeholder='Select your problem'
-            />
-            <input
-              type='text'
-              className='bg-[#f6f9f7] border-2 border-r-0 border-gray-500 w-80'
-              placeholder='Enter your postal code'
-            />
-            <input
-              type='text'
-              className='bg-[#f6f9f7] border-2 border-r-0 border-gray-500 w-40'
-              placeholder='Select Date'
-            />
-            <button className='bg-pink-500 border-2 border-gray-500'>Find Now</button>
-          </div> */}
           <form
             onSubmit={handleSubmit(onSubmitHandle)}
             className='flex items-center justify-center mb-5'
@@ -117,7 +98,13 @@ const InPerson = ({}: Props) => {
               clearErrors={() => {}}
               validation={{ ...txtFieldValidation(true) }}
               sx={{
-                minWidth: '22%',
+                '.MuiOutlinedInput-notchedOutline': {
+                  borderTopRightRadius: 0,
+                  borderBottomRightRadius: 0,
+                },
+                '.MuiOutlinedInput-input': {
+                  textAlign: 'center',
+                },
               }}
             />
             <SelectInput
@@ -130,7 +117,15 @@ const InPerson = ({}: Props) => {
               clearErrors={() => {}}
               validation={{ ...txtFieldValidation(true) }}
               sx={{
-                minWidth: '22%',
+                '.MuiOutlinedInput-notchedOutline': {
+                  borderTopRightRadius: 0,
+                  borderBottomRightRadius: 0,
+                  borderTopLeftRadius: 0,
+                  borderBottomLeftRadius: 0,
+                },
+                '.MuiOutlinedInput-input': {
+                  textAlign: 'center',
+                },
               }}
             />
             <TxtInput
@@ -140,7 +135,15 @@ const InPerson = ({}: Props) => {
               handleChange={() => {}}
               validation={'Required'}
               sx={{
-                minWidth: '22%',
+                '.MuiOutlinedInput-notchedOutline': {
+                  borderTopRightRadius: 0,
+                  borderBottomRightRadius: 0,
+                  borderTopLeftRadius: 0,
+                  borderBottomLeftRadius: 0,
+                },
+                '.MuiOutlinedInput-input': {
+                  textAlign: 'center',
+                },
               }}
             />
             <DateInput
@@ -152,17 +155,31 @@ const InPerson = ({}: Props) => {
               setError={setError}
               validation={{ ...dateSelectValidation('Select Date') }}
               sx={{
-                minWidth: '22%',
+                maxWidth: '250px',
+                '.MuiOutlinedInput-notchedOutline': {
+                  borderTopLeftRadius: 0,
+                  borderBottomLeftRadius: 0,
+                  borderTopRightRadius: 0,
+                  borderBottomRightRadius: 0,
+                },
+                '.MuiOutlinedInput-input': {
+                  textAlign: 'center',
+                },
               }}
             />
             <Button
               variant='contained'
               color='mPink'
               sx={{
-                maxWidth: 100,
-                minWidth: 100,
+                maxWidth: 130,
+                minWidth: 130,
+                gap: '3px',
+              }}
+              onClick={() => {
+                nav(DASHBOARD_PATH.LIST_OF_BOOK_IN_PERSON)
               }}
             >
+              <SvgIcon iconName='ser' svgProp={{ fill: 'white' }} />
               Find Now
             </Button>
           </form>
