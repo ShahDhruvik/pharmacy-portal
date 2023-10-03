@@ -24,12 +24,18 @@ const SignUpForm = ({ setSignType, signType }: Props) => {
       name: '',
       dob: null as Date | null,
       email: '',
+      robo: false,
+      tNc: false,
     } as SignUpFormFields,
   })
   //form submission
   const onSubmitHandle: SubmitHandler<SignUpFormFields> = (data) => {
-    console.log(data)
-    setSignType([FORMTYPE.OTP, FORMTYPE.SIGNUP])
+    if (!data.robo || !data.tNc) {
+      return
+    } else {
+      console.log(data)
+      setSignType([FORMTYPE.OTP, FORMTYPE.SIGNUP])
+    }
   }
   return (
     <form onSubmit={handleSubmit(onSubmitHandle)}>
@@ -72,7 +78,7 @@ const SignUpForm = ({ setSignType, signType }: Props) => {
           validation={{ ...txtFieldValidation(false, 'Email') }}
           isDisabled={signType.includes(FORMTYPE.OTP)}
         />
-        <PermissionForm signType={signType} />
+        <PermissionForm signType={signType} roboName={'robo'} tncName={'tNc'} control={control} />
         <Box display={'flex'} justifyContent={'end'} gap={1} marginTop={1}>
           <Button
             variant='contained'

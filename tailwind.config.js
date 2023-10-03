@@ -46,6 +46,11 @@ export default {
         light: '#d4d4d4',
         dark: '#d4d4d4',
       },
+      midGray: {
+        main: '#c1c1c4',
+        light: '#c1c1c4',
+        dark: '#c1c1c4',
+      },
       darkGray: {
         main: '#787d78',
         light: '#787d78',
@@ -55,6 +60,11 @@ export default {
         main: '#db4437',
         light: '#db4437',
         dark: '#db4437',
+      },
+      lightOrange: {
+        main: '#de605d',
+        light: '#de605d',
+        dark: '#de605d',
       },
       green: {
         main: '#0f9d58',
@@ -116,7 +126,7 @@ export default {
       //   cxl: '1440px',
       // },
       aspectRatio: {
-        sliderDragableImage: '3/1',
+        planCardRatio: '2/3',
       },
       fontFamily: {
         sans: ['Poppins', 'sans'],

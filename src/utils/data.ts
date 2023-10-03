@@ -154,3 +154,4 @@ export const communityArr: Community[] = [
     color: '#00a1f1',
   },
 ]
+

@@ -1,4 +1,3 @@
-'use client'
 import { LoadingState } from '../../src/types/common'
 import { ReactNode, createContext, useContext, useState } from 'react'
 

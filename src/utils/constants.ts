@@ -30,6 +30,13 @@ export const enum TOAST_TYPES {
   INFO = 'Info',
 }
 
+export const enum ASSESST_AREA {
+  AUTH = 'AUTH',
+  FAQ = 'FAQ',
+  QNA = 'QNA',
+  SLIDER = 'SLIDER',
+}
+
 export const enum FORMTYPE {
   SIGNUP = 'SIGNUP',
   SIGNIN = 'SIGNIN',

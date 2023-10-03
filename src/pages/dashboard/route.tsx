@@ -8,6 +8,9 @@ import PlantTrees from './container/plantTrees'
 import FAQTabs from './container/tabs'
 import OnlineScheduling from './container/onlineScheduling'
 import InPerson from './container/inPerson'
+import Plans from './container/plans/page'
+import Packages from './container/packages/page'
+import Pay from './container/pay/page'
 
 interface Props {}
 
@@ -16,6 +19,9 @@ const DashboardRoute = ({}: Props) => {
     <RouteWrapper>
       <Route index element={<Dashboard />} />
       <Route path={DASHBOARD_PATH.TREE} element={<PlantTrees />} />
+      <Route path={DASHBOARD_PATH.PLANS} element={<Plans />} />
+      <Route path={DASHBOARD_PATH.PACKAGES} element={<Packages />} />
+      <Route path={DASHBOARD_PATH.PAY} element={<Pay />} />
       <Route path={DASHBOARD_PATH.FAQTABS} element={<FAQTabs />} />
       <Route path={DASHBOARD_PATH.BOOK_CONSULTATION} element={<OnlineScheduling />} />
       <Route path={DASHBOARD_PATH.BOOK_IN_PERSON} element={<InPerson />} />

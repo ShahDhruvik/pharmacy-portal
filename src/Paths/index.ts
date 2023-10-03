@@ -27,6 +27,9 @@ export const enum DASHBOARD_PATH {
   FAQTABS = '/faq',
   BOOK_CONSULTATION = 'book-consultation',
   BOOK_IN_PERSON = 'book-in-person',
+  PLANS = 'plans',
+  PAY = 'pay',
+  PACKAGES = 'packages',
   DISHANK = '/dishank',
   DISHANK1 = '/dishank/1',
 }

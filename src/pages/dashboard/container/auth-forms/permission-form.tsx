@@ -1,13 +1,18 @@
-import { Box, Checkbox, FormControlLabel } from '@mui/material'
+import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { FormTypeArray } from '../../../../types/common'
 import { FORMTYPE } from '../../../../utils/constants'
+import CheckBoxInput from '@/components/CheckBoxInput'
+import { Control } from 'react-hook-form'
 
 type Props = {
   signType: FormTypeArray
+  roboName: string
+  tncName: string
+  control: Control<any> | undefined
 }
 
-const PermissionForm = ({ signType }: Props) => {
+const PermissionForm = ({ signType, roboName, tncName, control }: Props) => {
   return (
     <Box
       display={'flex'}
@@ -27,8 +32,8 @@ const PermissionForm = ({ signType }: Props) => {
           },
         }}
         disabled={signType.includes(FORMTYPE.OTP)}
-        control={<Checkbox />}
-        label={<p className='text-sm'>I am not a robot</p>}
+        control={<CheckBoxInput control={control} name={roboName} />}
+        label={<Typography sx={{ fontSize: '14px' }}>I am not a robot</Typography>}
       />
       <FormControlLabel
         sx={{
@@ -38,14 +43,14 @@ const PermissionForm = ({ signType }: Props) => {
           },
         }}
         disabled={signType.includes(FORMTYPE.OTP)}
-        control={<Checkbox />}
+        control={<CheckBoxInput control={control} name={tncName} />}
         label={
-          <p className='text-sm'>
-            Agree to{' '}
-            <Link to={'/'}>
-              <span className='text-blue-700'>terms and conditions</span>
+          <Typography sx={{ fontSize: '14px' }}>
+            {`Agree to `}
+            <Link to={'/'} className='text-blue-main'>
+              terms and conditions
             </Link>
-          </p>
+          </Typography>
         }
       />
     </Box>

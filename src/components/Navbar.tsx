@@ -88,7 +88,7 @@ const Navbar = ({}: Props) => {
           </div>
         </div>
       </nav>
-      <AuthForm open={openSign} handleClose={handleCloseForm} />
+      <AuthForm open={openSign} handleClose={handleCloseForm} isAssesstment={false} />
     </>
   )
 }

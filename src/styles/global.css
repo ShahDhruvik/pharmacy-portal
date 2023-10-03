@@ -6,7 +6,7 @@
 @layer base {
   section {
     & > div {
-      @apply p-container py-0 font-sans font-medium;
+      @apply p-container py-0 font-sans font-medium text-black-main;
     }
   }
   nav {
@@ -16,12 +16,12 @@
   }
 }
 
-.example::-webkit-scrollbar {
+.hideScroll::-webkit-scrollbar {
   display: none;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
-.example {
+.hideScroll {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
@@ -129,4 +129,8 @@ input::-webkit-inner-spin-button {
 
 input[type='number'] {
   -moz-appearance: textfield;
+}
+
+.labelBox {
+  @apply absolute text-black-main font-thin -top-3 left-3;
 }

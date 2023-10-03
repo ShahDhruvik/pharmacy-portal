@@ -11,7 +11,7 @@ type Props = {
 
 const SliderPhotoCard = ({ arr }: Props) => {
   return (
-    <div className='flex overflow-x-scroll gap-8 py-10 px-2 example::-webkit-scrollbar example'>
+    <div className='flex overflow-x-scroll gap-8 py-10 px-2  hideScroll'>
       {arr.map((x) => (
         <div className='flex '>
           <PhotoCard img={x.imgName} name={x.name} />

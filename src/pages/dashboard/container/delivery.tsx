@@ -1,15 +1,12 @@
-/* eslint-disable no-empty-pattern */
 import { useState } from 'react'
 import SvgIcon from '../../../components/SvgIcon'
 import img1 from '../../../assets/images/Aspect_Ratio.jpg'
 import HeadContent from '../../../components/HeadContent'
 import SliderPhotoCard from '../../../components/SliderPhotoCard'
-// import CustomDialog from '../../../components/Dialog-custom'
 import { Button } from '@mui/material'
-// import { frequentlyAskedQuestions } from '../../../utils/data'
 import { useNavigate } from 'react-router-dom'
 import { DASHBOARD_PATH } from '../../../paths'
-import Assessment from './assessmentModal'
+import Assessment from './free-assessment/assistModal'
 
 interface Props {}
 

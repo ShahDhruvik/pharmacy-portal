@@ -10,6 +10,8 @@ export type OtpFormFields = {
 export type SignInFormFields = {
     phone: number | string
     contryCode: string
+    robo: boolean,
+    tNc: boolean
 }
 
 export type SignUpFormFields = {
@@ -18,6 +20,8 @@ export type SignUpFormFields = {
     name: string
     dob: Date | null
     email: string
+    robo: boolean,
+    tNc: boolean
 }
 export type GuestFormFields = {
     phone: number | string
@@ -25,5 +29,7 @@ export type GuestFormFields = {
     name: string
     dob: Date | null
     email: string
+    robo: boolean,
+    tNc: boolean
 }
 

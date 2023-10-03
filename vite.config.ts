@@ -16,7 +16,6 @@ export default defineConfig({
     strictPort: true,
   },
   resolve: {
-
     alias: {
       "@/components": `${path.resolve(__dirname, "./src/components/")}`,
       "@/assets": `${path.resolve(__dirname, "./src/assets/")}`,
@@ -29,6 +28,7 @@ export default defineConfig({
       "@/store": `${path.resolve(__dirname, "./src/store/")}`,
       "@/types": `${path.resolve(__dirname, "./src/types/")}`,
       "@/utils": `${path.resolve(__dirname, "./src/utils/")}`,
+      "@/styles": `${path.resolve(__dirname, "./src/styles/")}`,
     }
   }
 })

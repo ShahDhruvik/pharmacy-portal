@@ -21,12 +21,18 @@ const GuestForm = ({ setSignType, signType }: Props) => {
       phone: '',
       contryCode: '+1',
       name: '',
+      tNc: false,
+      robo: false,
     } as GuestFormFields,
   })
   //form submission
   const onSubmitHandle: SubmitHandler<GuestFormFields> = (data) => {
-    console.log(data)
-    setSignType([FORMTYPE.OTP, FORMTYPE.GUEST])
+    if (!data.robo || !data.tNc) {
+      return
+    } else {
+      console.log(data)
+      setSignType([FORMTYPE.OTP, FORMTYPE.GUEST])
+    }
   }
   return (
     <form onSubmit={handleSubmit(onSubmitHandle)}>
@@ -51,7 +57,7 @@ const GuestForm = ({ setSignType, signType }: Props) => {
           validation={{ ...txtFieldValidation(true) }}
           isDisabled={signType.includes(FORMTYPE.OTP)}
         />
-        <PermissionForm signType={signType} />
+        <PermissionForm signType={signType} roboName={'robo'} tncName={'tNc'} control={control} />
         <Box display={'flex'} justifyContent={'end'} gap={1} marginTop={1}>
           <Button
             variant='contained'

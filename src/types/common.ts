@@ -41,3 +41,4 @@ export type FormType = FORMTYPE.SIGNIN | FORMTYPE.SIGNUP | FORMTYPE.OTP | FORMTY
 
 export type FormTypeArray = Array<FormType>
 export type SelectDDL = { label: string, _id: string }
+

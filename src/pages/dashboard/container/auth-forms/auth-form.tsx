@@ -11,22 +11,34 @@ import { Link } from 'react-router-dom'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { SignInFormFields } from '../../../../types/authTypes'
 import { FormTypeArray } from '../../../../types/common'
+import CheckBoxInput from '@/components/CheckBoxInput'
+import PermissionForm from './permission-form'
 type Props = {
   open: boolean
   handleClose: () => void
+  isAssesstment: boolean
 }
 
-const AuthForm = ({ open, handleClose }: Props) => {
+const AuthForm = ({ open, handleClose, isAssesstment }: Props) => {
+  const [errorMessage, setErrorMessage] = useState('')
   const { control, watch, setValue, handleSubmit } = useForm({
     defaultValues: {
       phone: '',
       contryCode: '+1',
+      tNc: false,
+      robo: false,
     },
   })
   const [signType, setSignType] = useState<FormTypeArray>([])
   const onSubmitHandle: SubmitHandler<SignInFormFields> = (data) => {
-    console.log(data)
-    setSignType([FORMTYPE.OTP])
+    if (!data.robo || !data.tNc) {
+      setErrorMessage('check the conditions')
+      return
+    } else {
+      setErrorMessage('')
+      console.log(data)
+      setSignType([FORMTYPE.OTP])
+    }
   }
   return (
     <CustomDialog
@@ -55,7 +67,7 @@ const AuthForm = ({ open, handleClose }: Props) => {
                   setSignType([])
                 }}
               >
-                <SvgIcon iconName='cancel' svgProp={{ fill: theme.palette.mGray?.main }} />
+                <SvgIcon iconName='cancel' svgProp={{ fill: theme.palette.mDarkGray?.main }} />
               </button>
             </div>
           </DialogTitle>
@@ -91,34 +103,11 @@ const AuthForm = ({ open, handleClose }: Props) => {
                 }}
                 gap={1}
               >
-                <FormControlLabel
-                  sx={{
-                    '.MuiButtonBase-root': {
-                      py: 0,
-                      px: '2px',
-                    },
-                  }}
-                  disabled={signType.includes(FORMTYPE.OTP)}
-                  control={<Checkbox />}
-                  label={<p className='text-sm'>I am not a robot</p>}
-                />
-                <FormControlLabel
-                  sx={{
-                    '.MuiButtonBase-root': {
-                      py: 0,
-                      px: '2px',
-                    },
-                  }}
-                  disabled={signType.includes(FORMTYPE.OTP)}
-                  control={<Checkbox />}
-                  label={
-                    <p className='text-sm'>
-                      Agree to{' '}
-                      <Link to={'/'}>
-                        <span className='text-blue-700'>terms and conditions</span>
-                      </Link>
-                    </p>
-                  }
+                <PermissionForm
+                  signType={signType}
+                  roboName={'robo'}
+                  tncName={'tNc'}
+                  control={control}
                 />
               </Box>
               {signType.includes(FORMTYPE.SIGNIN) && (
@@ -169,11 +158,14 @@ const AuthForm = ({ open, handleClose }: Props) => {
               </div>
             </Box>
           )}
+          {errorMessage !== '' && <p className='text-lightOrange-main text-sm'>{errorMessage}</p>}
         </form>
         {signType.includes(FORMTYPE.SIGNUP) && (
           <SignUpForm signType={signType} handleClose={handleClose} setSignType={setSignType} />
         )}
-        {signType.includes(FORMTYPE.OTP) && <OTPForm />}
+        {signType.includes(FORMTYPE.OTP) && (
+          <OTPForm handleClose={handleClose} isAssesstMent={isAssesstment} />
+        )}
       </div>
     </CustomDialog>
   )

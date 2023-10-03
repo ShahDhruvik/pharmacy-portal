@@ -18,12 +18,18 @@ const SignInForm = ({ signType, setSignType }: Props) => {
     defaultValues: {
       phone: '',
       contryCode: '+1',
+      robo: false,
+      tNc: false,
     },
   })
   //form submission
   const onSubmitHandle: SubmitHandler<SignInFormFields> = (data) => {
-    console.log(data)
-    setSignType([FORMTYPE.OTP, FORMTYPE.SIGNIN])
+    if (!data.robo || !data.tNc) {
+      return
+    } else {
+      console.log(data)
+      setSignType([FORMTYPE.OTP, FORMTYPE.SIGNIN])
+    }
   }
 
   return (
@@ -41,7 +47,7 @@ const SignInForm = ({ signType, setSignType }: Props) => {
           }}
           isDisabled={signType.includes(FORMTYPE.OTP)}
         />
-        <PermissionForm signType={signType} />
+        <PermissionForm signType={signType} roboName={'robo'} tncName={'tNc'} control={control} />
         {signType.includes(FORMTYPE.SIGNIN) && (
           <Box display={'flex'} justifyContent={'end'} gap={1} marginTop={1}>
             <Button

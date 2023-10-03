@@ -2,10 +2,16 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import OtpInput from '../../../../components/OtpInput'
 import { Box, Button } from '@mui/material'
 import { OtpFormFields } from '../../../../types/authTypes'
+import { useAssessment } from '@/context/AssessmentContext'
+import { ASSESST_AREA } from '@/utils/constants'
 
-type Props = {}
+type Props = {
+  handleClose: () => void
+  isAssesstMent: boolean
+}
 
-const OTPForm = ({}: Props) => {
+const OTPForm = ({ handleClose, isAssesstMent }: Props) => {
+  const { setArea } = useAssessment()
   const { control, handleSubmit } = useForm({
     defaultValues: {
       otp0: '',
@@ -17,7 +23,11 @@ const OTPForm = ({}: Props) => {
     },
   })
   const onSubmitHandle: SubmitHandler<OtpFormFields> = (data) => {
-    console.log(data)
+    if (isAssesstMent) {
+      setArea([ASSESST_AREA.QNA, ASSESST_AREA.SLIDER])
+    } else {
+      handleClose()
+    }
   }
   return (
     <form onSubmit={handleSubmit(onSubmitHandle)}>
