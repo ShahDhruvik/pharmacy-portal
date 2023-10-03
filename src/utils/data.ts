@@ -155,3 +155,29 @@ export const communityArr: Community[] = [
   },
 ]
 
+export const family = [
+  {
+    name: 'Yogi',
+    age: '50',
+    dob: '25/10/1980',
+    relation: 'Self',
+  },
+  {
+    name: 'Yogi',
+    age: '50',
+    dob: '25/10/1980',
+    relation: 'Self',
+  },
+  {
+    name: 'Yogi',
+    age: '50',
+    dob: '25/10/1980',
+    relation: 'Self',
+  },
+  {
+    name: 'Yogi',
+    age: '50',
+    dob: '25/10/1980',
+    relation: 'Self',
+  },
+]

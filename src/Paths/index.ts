@@ -30,6 +30,7 @@ export const enum DASHBOARD_PATH {
   PLANS = 'plans',
   PAY = 'pay',
   PACKAGES = 'packages',
+  LIST_OF_BOOK_IN_PERSON = '/list-book-in-person',
   DISHANK = '/dishank',
   DISHANK1 = '/dishank/1',
 }
