@@ -127,6 +127,7 @@ declare module '@mui/material/Button' {
     mPink: true
     mLightBlack: true
     mOrange: true
+    mWhite: true
   }
 }
 

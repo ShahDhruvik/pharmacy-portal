@@ -1,11 +1,13 @@
-import Delivery from './delivery'
-// import { useToast } from '../../../hooks/useToast'
+import Banner from './banner'
+import Welcome from './welcome'
+
 type Props = {}
 
 const Dashboard = ({}: Props) => {
   return (
     <>
-      <Delivery />
+      <Welcome />
+      <Banner />
     </>
   )
 }

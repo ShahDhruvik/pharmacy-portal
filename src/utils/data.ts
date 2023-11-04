@@ -33,23 +33,18 @@ export const headerLinks: HeaderLinkType[] = [
   },
   {
     id: 1,
-    name: 'For Practice',
+    name: 'Privacy',
     path: MAIN_PATH.POST.split('/*')[0],
   },
   {
     id: 2,
-    name: 'For Provider',
+    name: 'Treatment Plan',
     path: MAIN_PATH.ABOUT.split('/*')[0],
   },
   {
     id: 3,
-    name: 'Franchise',
+    name: 'Help',
     path: MAIN_PATH.USER.split('/*')[0],
-  },
-  {
-    id: 4,
-    name: 'Contact us',
-    path: MAIN_PATH.CONTACT_US.split('/*')[0],
   },
 ]
 
@@ -179,5 +174,28 @@ export const family = [
     age: '50',
     dob: '25/10/1980',
     relation: 'Self',
+  },
+]
+
+export const headerData: HeaderLinkType[] = [
+  {
+    id: 0,
+    name: 'Book Appointment',
+    path: COMMON_PATH.DEFAULT,
+  },
+  {
+    id: 1,
+    name: 'Plans and Subscription',
+    path: MAIN_PATH.POST.split('/*')[0],
+  },
+  {
+    id: 2,
+    name: 'Track Medicine',
+    path: MAIN_PATH.ABOUT.split('/*')[0],
+  },
+  {
+    id: 3,
+    name: 'Emergency/Triage',
+    path: MAIN_PATH.USER.split('/*')[0],
   },
 ]

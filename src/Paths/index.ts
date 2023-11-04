@@ -24,15 +24,6 @@ export const enum AUTH_PATH {
 
 export const enum DASHBOARD_PATH {
   TREE = '/tree',
-  FAQTABS = '/faq',
-  BOOK_CONSULTATION = 'book-consultation',
-  BOOK_IN_PERSON = 'book-in-person',
-  PLANS = 'plans',
-  PAY = 'pay',
-  PACKAGES = 'packages',
-  LIST_OF_BOOK_IN_PERSON = '/list-book-in-person',
-  DISHANK = '/dishank',
-  DISHANK1 = '/dishank/1',
 }
 
 export const enum POST_PATH {

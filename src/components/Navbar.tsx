@@ -26,6 +26,9 @@ const Navbar = ({}: Props) => {
           <div className='flex items-center gap-2 flex-1'>
             <img src={Logo} alt='Logo' width={50} height={50} />
             <h1 className='text-3xl text-darkBlue-main font-semibold'>Oopchar</h1>
+            <span className='text-lg text-darkBlue-main font-normal'>
+              EasyWeb: Patient Self-care
+            </span>
           </div>
           <ul className='hidden md:flex  flex-row flex-wrap  gap-5 text-darkBlue-main font-extralight'>
             {headerLinks.map((x) => {
@@ -36,8 +39,7 @@ const Navbar = ({}: Props) => {
               )
             })}
             <button className='hover:underline' onClick={handleOpenForm}>
-              {' '}
-              Sign In
+              <SvgIcon iconName='home' />
             </button>
             {/* <Link to={`${MAIN_PATH.AUTH.split('/*')[0]}${AUTH_PATH.LOGOUT}`}>Logout</Link> */}
           </ul>

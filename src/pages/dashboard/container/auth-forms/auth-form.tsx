@@ -1,4 +1,4 @@
-import { Box, Button, Checkbox, DialogTitle, FormControlLabel } from '@mui/material'
+import { Box, Button, DialogTitle } from '@mui/material'
 import CustomDialog from '../../../../components/Dialog-custom'
 import { ALIGN_DIALOG, FORMTYPE } from '../../../../utils/constants'
 import SvgIcon from '../../../../components/SvgIcon'
@@ -7,12 +7,11 @@ import { useState } from 'react'
 import SignUpForm from './sign-up-form'
 import OTPForm from './otp-form'
 import MobileInput from '../../../../components/MobileInput'
-import { Link } from 'react-router-dom'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { SignInFormFields } from '../../../../types/authTypes'
 import { FormTypeArray } from '../../../../types/common'
-import CheckBoxInput from '@/components/CheckBoxInput'
 import PermissionForm from './permission-form'
+
 type Props = {
   open: boolean
   handleClose: () => void
@@ -142,7 +141,7 @@ const AuthForm = ({ open, handleClose, isAssesstment }: Props) => {
                 Sign in -get OTP
               </Button>
               <div>
-                <Button
+                {/* <Button
                   variant='contained'
                   color='mPink'
                   onClick={() => setSignType([FORMTYPE.SIGNUP])}
@@ -154,7 +153,7 @@ const AuthForm = ({ open, handleClose, isAssesstment }: Props) => {
                 >
                   Sign up
                 </Button>
-                <p className='ml-3 text-sm'>Do not have account</p>
+                <p className='ml-3 text-sm'>Do not have account</p> */}
               </div>
             </Box>
           )}
