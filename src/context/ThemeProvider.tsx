@@ -55,6 +55,9 @@ declare module '@mui/material/styles' {
   interface Palette {
     mDarkGreen?: PaletteColor
   }
+  interface Palette {
+    mMidBlue?: PaletteColor
+  }
   interface PaletteOptions {
     mPink?: PaletteColor
   }
@@ -103,6 +106,9 @@ declare module '@mui/material/styles' {
   interface PaletteOptions {
     mDarkGreen?: PaletteColor
   }
+  interface PaletteOptions {
+    mMidBlue?: PaletteColor
+  }
   interface TypographyVariants {
     btnTxt: React.CSSProperties
   }
@@ -125,6 +131,7 @@ declare module '@mui/material/Button' {
   }
   interface ButtonPropsColorOverrides {
     mPink: true
+    mMidBlue: true
     mLightBlack: true
     mOrange: true
     mWhite: true
@@ -160,6 +167,11 @@ export const theme: Theme = createTheme({
       main: '#d9e3f8',
       light: '#d9e3f8',
       dark: '#d9e3f8',
+    },
+    mMidBlue: {
+      main: '#2466b5',
+      light: '#2466b5',
+      dark: '#2466b5',
     },
     mLightGray: {
       main: '#f4f4f4',

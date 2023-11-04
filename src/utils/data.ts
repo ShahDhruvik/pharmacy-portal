@@ -1,4 +1,4 @@
-import { COMMON_PATH, MAIN_PATH } from '../paths'
+import { COMMON_PATH, MAIN_PATH } from '../Paths'
 import { HeaderLinkType } from '../types/common'
 type PlantTree = {
   icon?: string

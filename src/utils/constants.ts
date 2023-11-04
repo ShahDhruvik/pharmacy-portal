@@ -59,3 +59,8 @@ export const splitDescription = (description: string, length?: number) => {
     return description
   }
 }
+
+export const enum DRAWERSTATE {
+  NORMAL = 'NORMAL',
+  EDIT = 'EDIT',
+}

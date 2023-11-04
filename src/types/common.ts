@@ -1,6 +1,6 @@
 // All the common types are defined here
 import { SetStateAction, Dispatch, } from "react";
-import { ALIGN_DIALOG, FORMTYPE } from "../utils/constants";
+import { ALIGN_DIALOG, DRAWERSTATE, FORMTYPE } from "../utils/constants";
 // Other types regarding the individual entity will have separate file (ex: user.types.ts)
 export type PaletteColor = {
     light?: string;
@@ -42,3 +42,4 @@ export type FormType = FORMTYPE.SIGNIN | FORMTYPE.SIGNUP | FORMTYPE.OTP | FORMTY
 export type FormTypeArray = Array<FormType>
 export type SelectDDL = { label: string, _id: string }
 
+export type DrawerState = DRAWERSTATE.EDIT | DRAWERSTATE.NORMAL
