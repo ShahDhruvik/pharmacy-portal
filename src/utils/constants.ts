@@ -64,3 +64,20 @@ export const enum DRAWERSTATE {
   NORMAL = 'NORMAL',
   EDIT = 'EDIT',
 }
+
+export const enum PROF_HEADER {
+  PROFILE = 'Profile',
+  COMMUNICATION = 'Communication',
+  INSURANCE = 'Insurance info',
+  COUNTRY = 'Country',
+}
+
+export const enum PROF_FIELDS {
+  PROFILE_MOBILE = 'Mobile Number',
+  PROFILE_EMAIL = 'Email Address',
+  COMMUNICATION_MOBILE = 'Mobile Number',
+  COMMUNICATION_EMAIL = 'Email Address',
+  COMMUNICATION_PREFERENCE = 'Preference',
+  INSURANCE_FIELD = 'Whats App Message',
+  COUNTRY_FIELD = 'Country',
+}

@@ -1,32 +1,44 @@
 import { InputAdornment, MenuItem, SxProps, TextField, Theme } from '@mui/material'
 import { MobileSelect } from './MuiStyledComponents'
 import { countryCodes } from '../utils/data'
-import { Controller, Control, UseFormSetValue, UseFormWatch } from 'react-hook-form'
+import {
+  Controller,
+  Control,
+  UseFormSetValue,
+  UseFormWatch,
+  UseFormGetValues,
+} from 'react-hook-form'
 import { numberFieldValidation } from '../utils/form.validation'
 type Props = {
   placeholder: string
   name: string
+  codeName: string
   control: Control<any> | undefined
   setValue: UseFormSetValue<any>
   watch: UseFormWatch<any>
   handleChange: () => void
   isDisabled?: boolean
   sx?: SxProps<Theme>
+  getValues?: UseFormGetValues<any>
+  confirm?: { isConfirm: boolean; confirmField?: string; message?: string; codeMatchName?: string }
 }
 
 const MobileInput = ({
   placeholder,
   name,
+  codeName,
   control,
   watch,
   setValue,
   handleChange,
   isDisabled,
   sx,
+  getValues,
+  confirm,
 }: Props) => {
   const inputStyleProps: SxProps<Theme> = { ...sx, width: '100%' }
 
-  const contryCode = watch('contryCode')
+  const contryCode = watch(codeName)
   return (
     <Controller
       name={name}
@@ -49,7 +61,7 @@ const MobileInput = ({
                   <MobileSelect
                     value={contryCode}
                     onChange={(e) => {
-                      setValue('contryCode', e.target.value)
+                      setValue(codeName, e.target.value)
                     }}
                   >
                     {countryCodes.map((x) => {
@@ -72,9 +84,32 @@ const MobileInput = ({
           />
         )
       }}
-      rules={{ ...numberFieldValidation(true, 'Phone') }}
+      rules={{
+        ...numberFieldValidation(true, 'Phone'),
+        ...(confirm &&
+          confirm.isConfirm && {
+            validate: (value) => {
+              console.log(value)
+              if (getValues) {
+                const val = getValues(confirm.confirmField as string)
+                console.log(val, 'sdsd')
+              }
+              return (
+                (value === (getValues && getValues(confirm.confirmField as string)) &&
+                  getValues &&
+                  getValues(codeName) === getValues(confirm.codeMatchName as string)) ||
+                `${confirm.message ?? ''}`
+              )
+            },
+          }),
+      }}
     />
   )
 }
 
 export default MobileInput
+
+// rules={{
+//   required: 'required.',
+//   validate: (value) => value === getValues('password') || 'Passwords do not match',
+// }}

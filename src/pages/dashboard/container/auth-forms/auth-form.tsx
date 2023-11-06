@@ -87,6 +87,7 @@ const AuthForm = ({ open, handleClose, isAssesstment }: Props) => {
                 setValue={setValue}
                 watch={watch}
                 handleChange={() => {}}
+                codeName='contryCode'
                 isDisabled={signType.includes(FORMTYPE.OTP)}
                 sx={{
                   minWidth: 350,

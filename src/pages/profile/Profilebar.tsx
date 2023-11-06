@@ -2,7 +2,7 @@ import { theme } from '@/context/ThemeProvider'
 import { Drawer, Button } from '@mui/material'
 import Profile from './Profile'
 import { useState } from 'react'
-import { DrawerState } from '@/types/common'
+import { DrawerState, FieldProfState, HeadProfState } from '@/types/common'
 import { DRAWERSTATE } from '@/utils/constants'
 import ProfileEdit from './ProfileEdit'
 type Props = {
@@ -11,9 +11,23 @@ type Props = {
 }
 
 const Profilebar = ({ open, handleClose }: Props) => {
+  //Drawer
   const [drawerState, setDrawerState] = useState<DrawerState>(DRAWERSTATE.NORMAL)
   const handleDrawerState = (state: DrawerState) => {
     setDrawerState(state)
+  }
+  // Fields
+  const [fieldName, setFieldName] = useState<{
+    fieldName: FieldProfState | undefined
+    data: string | undefined
+    headName: HeadProfState | undefined
+  }>({ fieldName: undefined, data: undefined, headName: undefined })
+  const handleField = (
+    fieldName: FieldProfState | undefined,
+    data: string | undefined,
+    headName: HeadProfState | undefined,
+  ) => {
+    setFieldName({ fieldName, data, headName })
   }
   return (
     <Drawer
@@ -24,14 +38,21 @@ const Profilebar = ({ open, handleClose }: Props) => {
         width: '25%',
         '& .MuiDrawer-paper': {
           width: '25%',
-          padding: '20px',
+          px: '20px',
+          backgroundColor: theme.palette.mLightGray?.main,
         },
       }}
     >
       {drawerState === DRAWERSTATE.NORMAL && (
-        <Profile handleClose={handleClose} handleDrawerState={handleDrawerState} />
+        <Profile
+          handleClose={handleClose}
+          handleDrawerState={handleDrawerState}
+          handleField={handleField}
+        />
       )}
-      {drawerState === DRAWERSTATE.EDIT && <ProfileEdit handleDrawerState={handleDrawerState} />}
+      {drawerState === DRAWERSTATE.EDIT && (
+        <ProfileEdit handleDrawerState={handleDrawerState} fieldName={fieldName} />
+      )}
     </Drawer>
   )
 }

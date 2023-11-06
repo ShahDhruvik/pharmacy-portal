@@ -36,6 +36,11 @@ export default {
         light: '#d9e3f8',
         dark: '#d9e3f8',
       },
+      mediumBlue: {
+        main: '#2466b5',
+        light: '#2466b5',
+        dark: '#2466b5',
+      },
       lightGray: {
         main: '#f4f4f4',
         light: '#f4f4f4',

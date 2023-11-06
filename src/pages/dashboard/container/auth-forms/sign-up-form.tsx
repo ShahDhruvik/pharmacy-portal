@@ -47,6 +47,7 @@ const SignUpForm = ({ setSignType, signType }: Props) => {
           setValue={setValue}
           watch={watch}
           handleChange={() => {}}
+          codeName='countryCode'
           sx={{
             minWidth: 350,
           }}

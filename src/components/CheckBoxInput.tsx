@@ -6,10 +6,10 @@ import { useToast } from '@/hooks/useToast'
 type Props = {
   name: string
   control: Control<any> | undefined
+  notValidate?: boolean
 }
 
-const CheckBoxInput = ({ control, name }: Props) => {
-  const shoeToast = useToast()
+const CheckBoxInput = ({ control, name, notValidate }: Props) => {
   return (
     <Controller
       name={name}
@@ -30,7 +30,9 @@ const CheckBoxInput = ({ control, name }: Props) => {
         )
       }}
       rules={{
-        validate: (val) => val || 'Check the conditions',
+        ...(!notValidate && {
+          validate: (val) => val || 'Check the conditions',
+        }),
       }}
     />
   )

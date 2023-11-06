@@ -16,7 +16,7 @@ type Props = {
 
 const GuestForm = ({ setSignType, signType }: Props) => {
   //form
-  const { control, watch, setValue, handleSubmit } = useForm({
+  const { control, watch, setValue, handleSubmit, getValues } = useForm({
     defaultValues: {
       phone: '',
       contryCode: '+1',
@@ -43,11 +43,13 @@ const GuestForm = ({ setSignType, signType }: Props) => {
           placeholder='Enter whatsapp number here ...'
           setValue={setValue}
           watch={watch}
+          codeName='contryCode'
           handleChange={() => {}}
           sx={{
             minWidth: 350,
           }}
           isDisabled={signType.includes(FORMTYPE.OTP)}
+          getValues={getValues}
         />
         <TxtInput
           control={control}
