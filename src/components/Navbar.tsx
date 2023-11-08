@@ -26,7 +26,7 @@ const Navbar = ({}: Props) => {
     <>
       <nav>
         <div className='flex flex-row gap-3 min-[350px]:items-center md:gap-0 '>
-          <div className='flex items-center gap-2 flex-1'>
+          <div className='flex items-center gap-2 flex-1 flex-wrap'>
             <img src={Logo} alt='Logo' width={50} height={50} />
             <h1 className='text-3xl text-black-main font-semibold'>Oopchar</h1>
             <span className='text-lg text-black-main font-semibold'>

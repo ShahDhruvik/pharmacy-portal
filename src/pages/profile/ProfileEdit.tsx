@@ -127,7 +127,7 @@ const ProfileEdit = ({ handleDrawerState, fieldName, setFieldName }: Props) => {
             type='submit'
             onClick={handleSubmit(onSubmitHandle)}
             disableRipple
-            disabled={isOtp || fieldName.isConfirm}
+            disabled={fieldName.isConfirm}
           >
             Submit
           </Button>
@@ -147,7 +147,7 @@ const ProfileEdit = ({ handleDrawerState, fieldName, setFieldName }: Props) => {
             }}
             disableRipple
             onClick={() => handleDrawerState(DRAWERSTATE.NORMAL)}
-            disabled={isOtp || fieldName.isConfirm}
+            disabled={fieldName.isConfirm}
           >
             Cancel
           </Button>
