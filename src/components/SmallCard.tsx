@@ -1,8 +1,12 @@
-import SvgIcon from './SvgIcon'
+import React, { useState } from 'react'
 import AvatarGroup from '@mui/material/AvatarGroup'
 import Avatar from '@mui/material/Avatar'
 import img from '@/assets/images/Aspect_Ratio.jpg'
 import { Divider } from '@mui/material'
+import PermMediaIcon from '@mui/icons-material/PermMedia'
+import { theme } from '@/context/ThemeProvider'
+import img1 from '@/assets/images/Aspect_Ratio.jpg'
+import InsuranceBar from '@/pages/insuranceCalculator/insuranceBar'
 
 interface Props {
   family?: boolean
@@ -14,15 +18,37 @@ interface Props {
 }
 
 const SmallCard = ({ family, medicalForm, healthCard, insurance, heading, para }: Props) => {
+  // Drawer
+  const [openDrawer, setOpenDrawer] = useState(false)
+  const handleCloseDrawer = () => {
+    setOpenDrawer(false)
+  }
+  const handleOpenDrawer = () => {
+    setOpenDrawer(true)
+  }
   return (
     <>
-      <div className='mb-10 rounded-md border-[1px] border-black-main bg-lightGray-main w-64'>
+      <div className='mb-10 rounded-md border-[1px] border-black-main bg-lightGray-main min-w-64 w-80 h-40 md:shadow-xl shadow-lg'>
         <div className={insurance ? ' px-3 pt-1' : 'flex flex-wrap justify-between px-3 pt-1'}>
           <h1>{heading}</h1>
-          <p className='text-darkBlue-main font-light text-[12px]'>{para}</p>
+          <button
+            className='text-darkBlue-main font-light text-[12px]'
+            onClick={() => {
+              if (insurance) {
+                handleOpenDrawer()
+              }
+            }}
+          >
+            {para}
+          </button>
         </div>
+        {insurance && (
+          <div className='px-3'>
+            <Divider sx={{ paddingTop: '10px' }} />
+          </div>
+        )}
         {family && (
-          <div className='flex items-center justify-between px-3 pt-5 pb-2'>
+          <div className='flex items-center justify-center px-3 h-28'>
             <AvatarGroup max={4}>
               <Avatar alt='Remy Sharp' src={img} sx={{ height: '60px', width: '60px' }} />
               <Avatar alt='Travis Howard' src={img} sx={{ height: '60px', width: '60px' }} />
@@ -32,28 +58,35 @@ const SmallCard = ({ family, medicalForm, healthCard, insurance, heading, para }
           </div>
         )}
         {medicalForm && (
-          <div className='flex items-center justify-between px-3 pt-5 pb-2'>
-            <div>
-              <SvgIcon iconName='home' svgProp={{ width: '50px', height: '50px' }} />
+          <>
+            <div className='flex items-center justify-evenly px-3 h-[105px]'>
+              <div>
+                <PermMediaIcon
+                  sx={{ width: '80px', height: '80px', color: theme.palette.mDarkGray?.main }}
+                />
+              </div>
+              <div className='flex flex-col text-darkBlue-main font-light text-[13px] items-start'>
+                <button>Medical History Form</button>
+                <button>Patient Info Form</button>
+                <button>Insurance Form</button>
+              </div>
             </div>
-            <div className='flex flex-col text-darkBlue-main font-light text-[13px]'>
-              <span>Medical History Form</span>
-              <span>Patient Info Form</span>
-              <span>Insurance Form</span>
-            </div>
-          </div>
+            <span className='flex justify-end text-darkBlue-main font-light pr-3 h-[7px]'>
+              <button>more...</button>
+            </span>
+          </>
         )}
         {healthCard && (
-          <div className='flex items-center justify-start px-3 pt-5 pb-2'>
+          <div className='flex items-center justify-start px-3 h-28'>
             <div>
-              <SvgIcon iconName='home' svgProp={{ width: '80px', height: '80px' }} />
+              {/* <SvgIcon iconName='home' svgProp={{ width: '80px', height: '80px' }} /> */}
+              <img src={img1} alt='' className='relative full aspect-video h-24' />
             </div>
           </div>
         )}
         {insurance && (
-          <div className='px-3'>
-            <Divider sx={{ paddingTop: '10px' }} />
-            <div className='flex items-start justify-between pt-3'>
+          <div className='px-3 h-24'>
+            <div className='flex items-center justify-between pt-3 h-20'>
               <div>
                 <h2 className='text-base'>My Rewards</h2>
                 <p className='flex text-darkBlue-main font-normal items-center gap-1 text-lg'>
@@ -61,16 +94,17 @@ const SmallCard = ({ family, medicalForm, healthCard, insurance, heading, para }
                 </p>
               </div>
               <div className='flex flex-col text-darkBlue-main font-light text-[13px] text-right'>
-                <span>Refer a Friend</span>
-                <span>Redeem Reward</span>
+                <div>
+                  <button onClick={handleOpenDrawer}>Refer a Friend</button>
+                </div>
+                <button onClick={handleOpenDrawer}>Redeem Reward</button>
+                <div></div>
               </div>
             </div>
           </div>
         )}
-        {medicalForm && (
-          <div className='flex justify-end text-darkBlue-main font-light pr-3'>more...</div>
-        )}
       </div>
+      <InsuranceBar handleClose={handleCloseDrawer} open={openDrawer} />
     </>
   )
 }

@@ -1,6 +1,7 @@
 import AppointmentCard from '@/components/AppointmentCard'
 import Header from '@/components/Header'
 import SmallCard from '@/components/SmallCard'
+import { theme } from '@/context/ThemeProvider'
 import { Divider } from '@mui/material'
 
 interface Props {}
@@ -49,7 +50,7 @@ const Banner = ({}: Props) => {
       </section>
       <section>
         <div>
-          <div className='flex justify-between'>
+          <div className='flex justify-between gap-3 flex-wrap'>
             <SmallCard family={true} heading='My Family' para='Manage' />
             <SmallCard medicalForm={true} heading='Medical Forms' para='Manage' />
             <SmallCard healthCard={true} heading='Health Card' para='Update ' />
@@ -59,11 +60,11 @@ const Banner = ({}: Props) => {
               para='Manage coverage and expenses'
             />
           </div>
-          <Divider />
-          <div className='flex justify-between'>
-            <AppointmentCard heading='Upcoming Appointments' />
-            <AppointmentCard heading='Completed Appointments' />
-            <AppointmentCard heading='Cancelled Appointments' />
+          <Divider sx={{ borderBottom: '3px solid', borderColor: theme.palette.mDarkGray?.main }} />
+          <div className='flex justify-between flex-wrap'>
+            <AppointmentCard heading='Upcoming Appointments' upcoming={true} />
+            <AppointmentCard heading='Completed Appointments' complete={true} />
+            <AppointmentCard heading='Cancelled Appointments' cancel={true} />
           </div>
           <span className='flex justify-end font-extralight text-sm pt-4'>
             Copyright © 2023 Triaina Health. All rights reserved.

@@ -5,6 +5,9 @@ import SvgIcon from './SvgIcon'
 import { headerLinks } from '../utils/data'
 import { IconButton, Popper } from '@mui/material'
 import AuthForm from '../pages/dashboard/container/auth-forms/auth-form'
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
+import { theme } from '@/context/ThemeProvider'
+
 interface Props {}
 
 const Navbar = ({}: Props) => {
@@ -23,7 +26,7 @@ const Navbar = ({}: Props) => {
     <>
       <nav>
         <div className='flex flex-row gap-3 min-[350px]:items-center md:gap-0 '>
-          <div className='flex items-center gap-2 flex-1'>
+          <div className='flex items-center gap-2 flex-1 flex-wrap'>
             <img src={Logo} alt='Logo' width={50} height={50} />
             <h1 className='text-3xl text-darkBlue-main font-semibold'>Oopchar</h1>
             <span className='text-lg text-darkBlue-main font-normal'>
@@ -39,7 +42,14 @@ const Navbar = ({}: Props) => {
               )
             })}
             <button className='hover:underline' onClick={handleOpenForm}>
-              <SvgIcon iconName='home' />
+              <HomeOutlinedIcon
+                sx={{
+                  color: theme.palette.mWhite?.main,
+                  backgroundColor: theme.palette.mDarkGray?.main,
+                  padding: '2px',
+                  borderRadius: '9999px',
+                }}
+              />
             </button>
             {/* <Link to={`${MAIN_PATH.AUTH.split('/*')[0]}${AUTH_PATH.LOGOUT}`}>Logout</Link> */}
           </ul>
@@ -85,7 +95,14 @@ const Navbar = ({}: Props) => {
                 padding: 0,
               }}
             >
-              <SvgIcon iconName='home' />
+              <HomeOutlinedIcon
+                sx={{
+                  color: theme.palette.mWhite?.main,
+                  backgroundColor: theme.palette.mDarkGray?.main,
+                  padding: '2px',
+                  borderRadius: '9999px',
+                }}
+              />
             </IconButton>
           </div>
         </div>
