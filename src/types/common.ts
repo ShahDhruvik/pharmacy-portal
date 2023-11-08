@@ -30,7 +30,7 @@ export type HeaderLinkType = {
     path: string
 }
 
-export type AlignDialogProp = ALIGN_DIALOG.BOTTOM_LEFT | ALIGN_DIALOG.BOTTOM_RIGHT | ALIGN_DIALOG.TOP_LEFT | ALIGN_DIALOG.TOP_RIGHT
+export type AlignDialogProp = ALIGN_DIALOG.BOTTOM_LEFT | ALIGN_DIALOG.BOTTOM_RIGHT | ALIGN_DIALOG.TOP_LEFT | ALIGN_DIALOG.TOP_RIGHT | ALIGN_DIALOG.MID_RIGHT
 
 export type LoadingState = {
     loading: { isLoading: boolean, isPage: boolean, pageProps?: { image: any, pageTxt: string } };

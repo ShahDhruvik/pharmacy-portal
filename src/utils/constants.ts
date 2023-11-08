@@ -49,6 +49,7 @@ export const enum ALIGN_DIALOG {
   TOP_RIGHT = 'top-right',
   BOTTOM_LEFT = 'bottom-left',
   BOTTOM_RIGHT = 'bottom-right',
+  MID_RIGHT = 'mid-right',
 }
 
 export const splitDescription = (description: string, length?: number) => {

@@ -279,7 +279,7 @@ export const theme: Theme = createTheme({
           },
           '&.Mui-error': {
             '& .MuiOutlinedInput-notchedOutline': {
-              border: `2px solid #e20074`,
+              border: `2px solid #de605d`,
             },
           },
           '&.Mui-hover': {
@@ -317,7 +317,15 @@ export const theme: Theme = createTheme({
         root: {},
       },
     },
-    MuiTab: {},
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          '&.Mui-selected': {
+            color: '#e20074',
+          },
+        },
+      },
+    },
   },
 })
 

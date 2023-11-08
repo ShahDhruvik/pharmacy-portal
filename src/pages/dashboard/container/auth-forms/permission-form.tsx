@@ -10,50 +10,56 @@ type Props = {
   roboName: string
   tncName: string
   control: Control<any> | undefined
+  errors: boolean
 }
 
-const PermissionForm = ({ signType, roboName, tncName, control }: Props) => {
+const PermissionForm = ({ signType, roboName, tncName, control, errors }: Props) => {
   return (
-    <Box
-      display={'flex'}
-      justifyContent={'center'}
-      sx={{
-        '& .MuiFormControlLabel-root': {
-          mx: 0,
-        },
-      }}
-      gap={1}
-    >
-      <FormControlLabel
+    <div>
+      <Box
+        display={'flex'}
+        justifyContent={'center'}
         sx={{
-          '.MuiButtonBase-root': {
-            py: 0,
-            px: '2px',
+          '& .MuiFormControlLabel-root': {
+            mx: 0,
           },
         }}
-        disabled={signType.includes(FORMTYPE.OTP)}
-        control={<CheckBoxInput control={control} name={roboName} />}
-        label={<Typography sx={{ fontSize: '14px' }}>I am not a robot</Typography>}
-      />
-      <FormControlLabel
-        sx={{
-          '.MuiButtonBase-root': {
-            py: 0,
-            px: '2px',
-          },
-        }}
-        disabled={signType.includes(FORMTYPE.OTP)}
-        control={<CheckBoxInput control={control} name={tncName} />}
-        label={
-          <Typography sx={{ fontSize: '14px' }}>
-            {`Agree to `}
-            <Link to={'/'} className='text-blue-main'>
-              terms and conditions
-            </Link>
-          </Typography>
-        }
-      />
-    </Box>
+        gap={3}
+      >
+        <FormControlLabel
+          sx={{
+            '.MuiButtonBase-root': {
+              py: 0,
+              px: '2px',
+            },
+          }}
+          disabled={signType.includes(FORMTYPE.OTP)}
+          control={<CheckBoxInput control={control} name={roboName} />}
+          label={<Typography sx={{ fontSize: '14px' }}>I am not a robot</Typography>}
+        />
+        <FormControlLabel
+          sx={{
+            '.MuiButtonBase-root': {
+              py: 0,
+              px: '2px',
+            },
+          }}
+          disabled={signType.includes(FORMTYPE.OTP)}
+          control={<CheckBoxInput control={control} name={tncName} />}
+          label={
+            <Typography sx={{ fontSize: '14px' }}>
+              {`Agree to `}
+              <Link to={'/'} className='text-blue-main'>
+                terms and conditions
+              </Link>
+            </Typography>
+          }
+        />
+      </Box>
+      {errors && (
+        <p className='text-center text-sm mt-2 text-lightOrange-main'>Check the conditions*</p>
+      )}
+    </div>
   )
 }
 

@@ -60,6 +60,11 @@ const CustomDialog = ({
         case ALIGN_DIALOG.BOTTOM_RIGHT:
           return { PaperProps: { sx: { position: 'fixed', bottom: 10, right: 10, ...otherProps } } }
           break
+        case ALIGN_DIALOG.MID_RIGHT:
+          return {
+            PaperProps: { sx: { position: 'fixed', bottom: '50%', right: 10, ...otherProps } },
+          }
+          break
         default:
           return { PaperProps: { sx: {} } }
           break

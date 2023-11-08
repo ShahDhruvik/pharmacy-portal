@@ -7,7 +7,7 @@ import { Avatar, Box, Divider, Drawer, IconButton, Popper } from '@mui/material'
 import img from '@/assets/images/Aspect_Ratio.jpg'
 import { theme } from '@/context/ThemeProvider'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
-import Sidebar from '../pages/profile/Profilebar'
+import ProfileBar from '../pages/profile/Profilebar'
 interface Props {}
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right'
@@ -101,7 +101,7 @@ const Header = ({}: Props) => {
           </div>
         </div>
       </nav>
-      <Sidebar handleClose={handleCloseDrawer} open={openDrawer} />
+      <ProfileBar handleClose={handleCloseDrawer} open={openDrawer} />
     </>
   )
 }

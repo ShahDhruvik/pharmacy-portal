@@ -3,7 +3,7 @@ import CustomDialog from '../../../../components/Dialog-custom'
 import { ALIGN_DIALOG, FORMTYPE } from '../../../../utils/constants'
 import SvgIcon from '../../../../components/SvgIcon'
 import { theme } from '../../../../context/ThemeProvider'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import SignUpForm from './sign-up-form'
 import OTPForm from './otp-form'
 import MobileInput from '../../../../components/MobileInput'
@@ -20,7 +20,7 @@ type Props = {
 
 const AuthForm = ({ open, handleClose, isAssesstment }: Props) => {
   const [errorMessage, setErrorMessage] = useState('')
-  const { control, watch, setValue, handleSubmit } = useForm({
+  const { control, watch, setValue, handleSubmit, formState, reset } = useForm({
     defaultValues: {
       phone: '',
       contryCode: '+1',
@@ -28,6 +28,10 @@ const AuthForm = ({ open, handleClose, isAssesstment }: Props) => {
       robo: false,
     },
   })
+  useEffect(() => {
+    reset()
+  }, [open])
+  const { errors } = formState
   const [signType, setSignType] = useState<FormTypeArray>([])
   const onSubmitHandle: SubmitHandler<SignInFormFields> = (data) => {
     if (!data.robo || !data.tNc) {
@@ -59,7 +63,7 @@ const AuthForm = ({ open, handleClose, isAssesstment }: Props) => {
               padding: '16px 24px 14px 24px',
             }}
           >
-            <div className='flex justify-end'>
+            <div className='flex justify-end items-baseline -mt-2 -mr-4'>
               <button
                 onClick={() => {
                   handleClose()
@@ -79,7 +83,7 @@ const AuthForm = ({ open, handleClose, isAssesstment }: Props) => {
       <div>
         <form onSubmit={handleSubmit(onSubmitHandle)}>
           {!signType.includes(FORMTYPE.SIGNUP) && (
-            <div className='flex flex-col justify-center gap-5'>
+            <div className='flex flex-col justify-center gap-6 py-1 my-1'>
               <MobileInput
                 control={control}
                 name={'phone'}
@@ -90,26 +94,16 @@ const AuthForm = ({ open, handleClose, isAssesstment }: Props) => {
                 codeName='contryCode'
                 isDisabled={signType.includes(FORMTYPE.OTP)}
                 sx={{
-                  minWidth: 350,
+                  minWidth: 400,
                 }}
               />
-              <Box
-                display={'flex'}
-                justifyContent={'center'}
-                sx={{
-                  '& .MuiFormControlLabel-root': {
-                    mx: 0,
-                  },
-                }}
-                gap={1}
-              >
-                <PermissionForm
-                  signType={signType}
-                  roboName={'robo'}
-                  tncName={'tNc'}
-                  control={control}
-                />
-              </Box>
+              <PermissionForm
+                signType={signType}
+                roboName={'robo'}
+                tncName={'tNc'}
+                control={control}
+                errors={errors.tNc || errors.robo ? true : false}
+              />
               {signType.includes(FORMTYPE.SIGNIN) && (
                 <Box display={'flex'} justifyContent={'end'} gap={1} marginTop={1}>
                   <Button
@@ -128,7 +122,7 @@ const AuthForm = ({ open, handleClose, isAssesstment }: Props) => {
             </div>
           )}
           {signType.length === 0 && (
-            <Box display={'flex'} justifyContent={'center'} gap={1} marginTop={1}>
+            <Box display={'flex'} justifyContent={'center'} gap={1} marginTop={'24px'}>
               <Button
                 variant='contained'
                 color='mPink'
@@ -164,7 +158,9 @@ const AuthForm = ({ open, handleClose, isAssesstment }: Props) => {
           <SignUpForm signType={signType} handleClose={handleClose} setSignType={setSignType} />
         )}
         {signType.includes(FORMTYPE.OTP) && (
-          <OTPForm handleClose={handleClose} isAssesstMent={isAssesstment} />
+          <div className='mt-3'>
+            <OTPForm handleClose={handleClose} isAssesstMent={isAssesstment} />
+          </div>
         )}
       </div>
     </CustomDialog>

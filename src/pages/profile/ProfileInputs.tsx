@@ -1,6 +1,6 @@
 import MobileInput from '@/components/MobileInput'
 import { FieldProfState, HeadProfState } from '@/types/common'
-import { PROF_FIELDS } from '@/utils/constants'
+import { ALIGN_DIALOG, PROF_FIELDS } from '@/utils/constants'
 import { Dispatch, SetStateAction } from 'react'
 import {
   Control,
@@ -12,7 +12,7 @@ import {
   UseFormTrigger,
   UseFormWatch,
 } from 'react-hook-form'
-import { Button, FormControlLabel, Typography, Divider } from '@mui/material'
+import { Button, FormControlLabel, Typography, Divider, DialogTitle } from '@mui/material'
 import TxtInput from '@/components/TxtInput'
 import { acDefaultValue, searchSelectValidation, txtFieldValidation } from '@/utils/form.validation'
 import CheckBoxInput from '@/components/CheckBoxInput'
@@ -20,6 +20,8 @@ import { ProFileFormFields } from './ProfileEdit'
 import { FieldStateProps } from './Profilebar'
 import { theme } from '@/context/ThemeProvider'
 import SelectInput from '@/components/SelectInput'
+import CustomDialog from '@/components/Dialog-custom'
+import SvgIcon from '@/components/SvgIcon'
 type Props = {
   fieldName: FieldStateProps
   setFieldName: Dispatch<SetStateAction<FieldStateProps>>
@@ -45,6 +47,85 @@ const country = [
   { _id: 'USA', label: 'USA' },
 ]
 
+const ConfirmPopUp = ({
+  setFieldName,
+  fieldName,
+  reset,
+  formData,
+}: {
+  setFieldName: Dispatch<SetStateAction<FieldStateProps>>
+  fieldName: FieldStateProps
+  reset: UseFormReset<ProFileFormFields>
+  formData: ProFileFormFields | undefined
+}) => {
+  const handleYes = () => {
+    switch (fieldName.fieldName) {
+      case PROF_FIELDS.COMMUNICATION_PREFERENCE:
+        // API For Update
+        break
+
+      default:
+        break
+    }
+    console.log(formData)
+  }
+  return (
+    <CustomDialog
+      action={{ component: null, isAction: false }}
+      handleClose={() => {
+        setFieldName({ ...fieldName, isConfirm: false })
+      }}
+      open={fieldName.isConfirm as boolean}
+      header={{
+        component: (
+          <DialogTitle
+            sx={{
+              padding: '16px 24px 14px 24px',
+            }}
+          >
+            <div className='flex justify-end items-baseline -mt-2 -mr-4'>
+              <button
+                onClick={() => {
+                  reset((formValues) => {
+                    return formValues
+                  })
+                  setFieldName({ ...fieldName, isConfirm: false })
+                }}
+              >
+                <SvgIcon iconName='cancel' svgProp={{ fill: theme.palette.mDarkGray?.main }} />
+              </button>
+            </div>
+          </DialogTitle>
+        ),
+        isHeader: true,
+      }}
+      align={ALIGN_DIALOG.MID_RIGHT}
+      maxWidth='sm'
+    >
+      <div className=' flex flex-col gap-4 items-center'>
+        <p className='p-2 rounded-md  '>Are you sure you want to change ?</p>
+        <div className='flex justify-between gap-3 px-5'>
+          <Button
+            color='mPink'
+            sx={{ minWidth: '150px' }}
+            onClick={() => {
+              reset((formValues) => {
+                return formValues
+              })
+              setFieldName({ ...fieldName, isConfirm: false })
+            }}
+          >
+            No
+          </Button>
+          <Button color='mPink' sx={{ minWidth: '150px' }} onClick={handleYes}>
+            Yes
+          </Button>
+        </div>
+      </div>
+    </CustomDialog>
+  )
+}
+
 const ProfileInputs = ({
   fieldName,
   control,
@@ -60,17 +141,6 @@ const ProfileInputs = ({
   clearErrors,
   setError,
 }: Props) => {
-  const handleYes = () => {
-    switch (fieldName.fieldName) {
-      case PROF_FIELDS.COMMUNICATION_PREFERENCE:
-        // API For Update
-        break
-
-      default:
-        break
-    }
-    console.log(formData)
-  }
   switch (fieldName.fieldName) {
     case PROF_FIELDS.PROFILE_MOBILE || PROF_FIELDS.COMMUNICATION_MOBILE:
       return (
@@ -304,35 +374,12 @@ const ProfileInputs = ({
             </div>
           </div>
           {fieldName.isConfirm && (
-            <div>
-              <Divider
-                sx={{
-                  borderColor: theme.palette.mDarkGray?.main,
-                  borderWidth: '1.5px',
-                  my: '20px',
-                }}
-              />
-              <div className=' flex flex-col gap-4 items-center'>
-                <p className='p-2 rounded-md bg-white-main '>Are you sure you want to change ?</p>
-                <div className='flex justify-between gap-3 px-5'>
-                  <Button
-                    color='mPink'
-                    sx={{ minWidth: '150px' }}
-                    onClick={() => {
-                      reset((formValues) => {
-                        return formValues
-                      })
-                      setFieldName({ ...fieldName, isConfirm: false })
-                    }}
-                  >
-                    No
-                  </Button>
-                  <Button color='mPink' sx={{ minWidth: '150px' }} onClick={handleYes}>
-                    Yes
-                  </Button>
-                </div>
-              </div>
-            </div>
+            <ConfirmPopUp
+              fieldName={fieldName}
+              formData={formData}
+              reset={reset}
+              setFieldName={setFieldName}
+            />
           )}
         </div>
       )
@@ -352,35 +399,12 @@ const ProfileInputs = ({
             isDisabled={fieldName.isConfirm}
           />
           {fieldName.isConfirm && (
-            <div>
-              <Divider
-                sx={{
-                  borderColor: theme.palette.mDarkGray?.main,
-                  borderWidth: '1.5px',
-                  my: '20px',
-                }}
-              />
-              <div className=' flex flex-col gap-4 items-center'>
-                <p className='p-2 rounded-md bg-white-main '>Are you sure you want to change ?</p>
-                <div className='flex justify-between gap-3 px-5'>
-                  <Button
-                    color='mPink'
-                    sx={{ minWidth: '150px' }}
-                    onClick={() => {
-                      reset((formValues) => {
-                        return formValues
-                      })
-                      setFieldName({ ...fieldName, isConfirm: false })
-                    }}
-                  >
-                    No
-                  </Button>
-                  <Button color='mPink' sx={{ minWidth: '150px' }} onClick={handleYes}>
-                    Yes
-                  </Button>
-                </div>
-              </div>
-            </div>
+            <ConfirmPopUp
+              fieldName={fieldName}
+              formData={formData}
+              reset={reset}
+              setFieldName={setFieldName}
+            />
           )}
         </div>
       )

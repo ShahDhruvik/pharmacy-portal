@@ -4,6 +4,7 @@ import { Box, Button } from '@mui/material'
 import { OtpFormFields } from '../../../../types/authTypes'
 import { useAssessment } from '@/context/AssessmentContext'
 import { ASSESST_AREA } from '@/utils/constants'
+import LoopIcon from '@mui/icons-material/Loop'
 
 type Props = {
   handleClose: () => void
@@ -33,9 +34,14 @@ const OTPForm = ({ handleClose, isAssesstMent }: Props) => {
     <form onSubmit={handleSubmit(onSubmitHandle)}>
       <div className='flex flex-col justify-center '>
         <OtpInput name={['otp0', 'otp1', 'otp2', 'otp3', 'otp4', 'otp5']} control={control} />
-        <div className='flex justify-between'>
+        <div className='flex justify-between mb-4'>
           <p className='ml-2'>You have 30 second left</p>
-          <p className='mr-2'>Resend otp</p>
+          <button className='mr-2 text-mediumBlue-main'>
+            <span>
+              <LoopIcon />
+            </span>
+            Resend otp
+          </button>
         </div>
         <Box display={'flex'} justifyContent={'end'} gap={1} marginTop={1}>
           <Button

@@ -2,7 +2,9 @@ import AppointmentCard from '@/components/AppointmentCard'
 import Header from '@/components/Header'
 import SmallCard from '@/components/SmallCard'
 import { theme } from '@/context/ThemeProvider'
+import ManageBar from '@/pages/medical-form/medical-form-bar'
 import { Divider } from '@mui/material'
+import { useState } from 'react'
 
 interface Props {}
 
