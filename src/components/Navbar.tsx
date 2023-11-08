@@ -5,6 +5,9 @@ import SvgIcon from './SvgIcon'
 import { headerLinks } from '../utils/data'
 import { IconButton, Popper } from '@mui/material'
 import AuthForm from '../pages/dashboard/container/auth-forms/auth-form'
+import HomeIcon from '@mui/icons-material/Home'
+import { theme } from '@/context/ThemeProvider'
+
 interface Props {}
 
 const Navbar = ({}: Props) => {
@@ -25,8 +28,8 @@ const Navbar = ({}: Props) => {
         <div className='flex flex-row gap-3 min-[350px]:items-center md:gap-0 '>
           <div className='flex items-center gap-2 flex-1'>
             <img src={Logo} alt='Logo' width={50} height={50} />
-            <h1 className='text-3xl text-darkBlue-main font-semibold'>Oopchar</h1>
-            <span className='text-lg text-darkBlue-main font-normal'>
+            <h1 className='text-3xl text-black-main font-semibold'>Oopchar</h1>
+            <span className='text-lg text-black-main font-semibold'>
               EasyWeb: Patient Self-care
             </span>
           </div>
@@ -34,12 +37,15 @@ const Navbar = ({}: Props) => {
             {headerLinks.map((x) => {
               return (
                 <Link to={x.path} key={x.id}>
-                  <li className='hover:underline'> {x.name}</li>
+                  <li className='hover:underline text-darkGray-main font-medium'> {x.name}</li>
                 </Link>
               )
             })}
-            <button className='hover:underline' onClick={handleOpenForm}>
-              <SvgIcon iconName='home' />
+            <button
+              className='hover:underline p-1 bg-darkGray-main rounded-full h-6 aspect-square flex items-center justify-center'
+              onClick={handleOpenForm}
+            >
+              <HomeIcon sx={{ color: theme.palette.mWhite?.main, fontSize: '15px', p: 0 }} />
             </button>
             {/* <Link to={`${MAIN_PATH.AUTH.split('/*')[0]}${AUTH_PATH.LOGOUT}`}>Logout</Link> */}
           </ul>
@@ -82,10 +88,14 @@ const Navbar = ({}: Props) => {
             <IconButton
               sx={{
                 minWidth: 'max-content',
-                padding: 0,
+                padding: 1,
+                border: 1,
+                borderRadius: '100%',
+                bgcolor: theme.palette.mDarkGray?.main,
+                borderColor: theme.palette.mDarkGray?.main,
               }}
             >
-              <SvgIcon iconName='home' />
+              <HomeIcon />
             </IconButton>
           </div>
         </div>

@@ -10,6 +10,13 @@ type Props = {
   open: boolean
 }
 
+export type FieldStateProps = {
+  fieldName: FieldProfState | undefined
+  data: string | undefined
+  headName: HeadProfState | undefined
+  isConfirm?: boolean
+}
+
 const Profilebar = ({ open, handleClose }: Props) => {
   //Drawer
   const [drawerState, setDrawerState] = useState<DrawerState>(DRAWERSTATE.NORMAL)
@@ -17,11 +24,11 @@ const Profilebar = ({ open, handleClose }: Props) => {
     setDrawerState(state)
   }
   // Fields
-  const [fieldName, setFieldName] = useState<{
-    fieldName: FieldProfState | undefined
-    data: string | undefined
-    headName: HeadProfState | undefined
-  }>({ fieldName: undefined, data: undefined, headName: undefined })
+  const [fieldName, setFieldName] = useState<FieldStateProps>({
+    fieldName: undefined,
+    data: undefined,
+    headName: undefined,
+  })
   const handleField = (
     fieldName: FieldProfState | undefined,
     data: string | undefined,
@@ -51,7 +58,11 @@ const Profilebar = ({ open, handleClose }: Props) => {
         />
       )}
       {drawerState === DRAWERSTATE.EDIT && (
-        <ProfileEdit handleDrawerState={handleDrawerState} fieldName={fieldName} />
+        <ProfileEdit
+          handleDrawerState={handleDrawerState}
+          fieldName={fieldName}
+          setFieldName={setFieldName}
+        />
       )}
     </Drawer>
   )

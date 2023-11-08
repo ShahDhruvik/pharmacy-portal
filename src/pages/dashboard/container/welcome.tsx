@@ -3,43 +3,50 @@ import { theme } from '@/context/ThemeProvider'
 import { Button, Divider } from '@mui/material'
 import img1 from '@/assets/images/Aspect_Ratio.jpg'
 import Header from '@/components/Header'
-
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import FamilyRestroomOutlinedIcon from '@mui/icons-material/FamilyRestroomOutlined'
+import AppRegistrationOutlinedIcon from '@mui/icons-material/AppRegistrationOutlined'
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
+import FormatAlignJustifyOutlinedIcon from '@mui/icons-material/FormatAlignJustifyOutlined'
+import EmojiEventsOutlinedIcon from '@mui/icons-material/EmojiEventsOutlined'
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer'
+import ModeCommentIcon from '@mui/icons-material/ModeComment'
 interface Props {}
 
 const arr = [
   {
     id: 1,
-    icon: 'home',
+    icon: <FamilyRestroomOutlinedIcon />,
     heading: 'Manage Family',
     para: 'Explore health care and related products and services',
   },
   {
     id: 2,
-    icon: 'home',
+    icon: <AppRegistrationOutlinedIcon />,
     heading: 'Manage Appointments',
     para: 'Explore health care and related products and services',
   },
   {
     id: 3,
-    icon: 'home',
+    icon: <AccountCircleOutlinedIcon />,
     heading: 'Update Profile',
     para: 'Explore health care and related products and services',
   },
   {
     id: 4,
-    icon: 'home',
+    icon: <FormatAlignJustifyOutlinedIcon />,
     heading: 'Manage Medical Forms',
     para: 'Explore health care and related products and services',
   },
   {
     id: 5,
-    icon: 'home',
+    icon: <EmojiEventsOutlinedIcon />,
     heading: 'Earn Rewards',
     para: 'Explore health care and related products and services',
   },
   {
     id: 6,
-    icon: 'home',
+    icon: <QuestionAnswerIcon />,
     heading: 'Chat with Clinics',
     para: 'Explore health care and related products and services',
   },
@@ -62,8 +69,8 @@ const Welcome = ({}: Props) => {
             </div>
             <div>
               <Button
-                variant='contained'
-                color='mWhite'
+                variant='outlined'
+                color='mBlack'
                 sx={{
                   maxWidth: 250,
                   minWidth: 250,
@@ -71,19 +78,24 @@ const Welcome = ({}: Props) => {
                   marginBottom: '4px',
                   color: theme.palette.mBlack?.main,
                   borderColor: theme.palette.mBlack?.main,
+                  borderWidth: '3px',
+                  fontWeight: 'bold',
                 }}
               >
                 Book Online Consultation
               </Button>
               <Button
-                variant='contained'
-                color='mWhite'
+                variant='outlined'
+                color='mBlack'
                 sx={{
                   maxWidth: 250,
                   minWidth: 250,
                   marginTop: '12px',
                   marginBottom: '4px',
                   color: theme.palette.mBlack?.main,
+                  borderColor: theme.palette.mBlack?.main,
+                  borderWidth: '3px',
+                  fontWeight: 'bold',
                 }}
               >
                 Take Free Assessment
@@ -92,29 +104,33 @@ const Welcome = ({}: Props) => {
           </div>
           <Divider orientation='vertical' />
           <div className='flex-1'>
-            <h2 className='text-xl'>EasyWeb: Patient Self-care</h2>
+            <h2 className='text-xl text-black-main font-semibold'>EasyWeb: Patient Self-care</h2>
             <Button
               variant='contained'
               color='mPink'
               sx={{
                 maxWidth: 250,
                 minWidth: 250,
+                maxHeight: 'max-content',
                 marginTop: '12px',
                 marginBottom: '4px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
               }}
             >
-              <SvgIcon iconName='ser' />
-              Sign in
+              <LockOutlinedIcon height={10} width={10} />
+              <p>Sign in</p>
             </Button>
-            <div className='text-darkBlue-main font-light flex py-2 gap-3 mb-3'>
-              <span className='flex '>
-                Register
-                <SvgIcon iconName={'arrow_forward'} />
-              </span>
-              <span className='flex '>
-                Security Guarantee
-                <SvgIcon iconName={'arrow_forward'} />
-              </span>
+            <div className='text-darkBlue-main font-light flex items-center py-2 gap-3 mb-3'>
+              <div className='flex items-center gap-1'>
+                <p className='text-blue-main'>Register</p>
+                <SvgIcon iconName={'arrow_forward'} svgProp={{ width: 18, height: 18 }} />
+              </div>
+              <div className='flex items-center gap-1'>
+                <p className='text-blue-main '>Security Guarantee</p>
+                <SvgIcon iconName={'arrow_forward'} svgProp={{ width: 18, height: 18 }} />
+              </div>
             </div>
             <Divider sx={{ marginRight: '40px' }} />
             <h3 className='text-xl my-2'>Download Mobile App</h3>
@@ -132,9 +148,7 @@ const Welcome = ({}: Props) => {
             <div className='flex items-center gap-8 flex-wrap px-12 justify-between py-5'>
               {arr.map((x) => (
                 <div className='flex items-center gap-5 max-w-96 w-80' key={x.id}>
-                  <div className='border-2 rounded-full border-gray-main p-3'>
-                    <SvgIcon iconName={x.icon} />
-                  </div>
+                  <div className='border-2 rounded-full border-gray-main p-3'>{x.icon}</div>
                   <div>
                     <h2>{x.heading}</h2>
                     <p className='text-sm font-light'>{x.para}</p>
@@ -146,8 +160,8 @@ const Welcome = ({}: Props) => {
         </div>
       </section>
       <section className='flex justify-end pr-10 pb-2'>
-        <div>
-          <SvgIcon iconName='ser' />
+        <div className='rounded-full py-2 px-2 bg-darkBlue-main'>
+          <ModeCommentIcon sx={{ color: theme.palette.mWhite?.main, fontSize: '24px' }} />
         </div>
       </section>
     </>

@@ -24,6 +24,7 @@ type Props = {
   tooltip?: { isTooltip: boolean; length: number }
   sx?: SxProps<Theme>
   handleChange?: () => void
+  isDisabled?: boolean
 }
 
 const listBoxPropsDropdown = () => {
@@ -93,6 +94,7 @@ const SelectInput = ({
   options,
   handleChange,
   sx,
+  isDisabled,
 }: Props) => {
   const inputStyleProps: SxProps<Theme> = { ...sx, width: '100%' }
 
@@ -103,6 +105,7 @@ const SelectInput = ({
       rules={validation}
       render={({ fieldState, field }) => (
         <Autocomplete
+          disabled={isDisabled}
           sx={inputStyleProps}
           isOptionEqualToValue={(option, value) => option._id === value._id}
           options={options}

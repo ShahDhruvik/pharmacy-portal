@@ -68,7 +68,7 @@ const OtpInput = ({ name, control }: Props) => {
   return (
     <div className='mt-3'>
       <p className='ml-2 mb-1'>Enter the OTP here</p>
-      <div className='flex  '>
+      <div className='flex max-w-xs  '>
         <Controller
           name={name[0]}
           control={control}

@@ -4,70 +4,46 @@ import { PROF_FIELDS } from '@/utils/constants'
 import { Dispatch, SetStateAction } from 'react'
 import {
   Control,
+  UseFormClearErrors,
   UseFormGetValues,
+  UseFormReset,
+  UseFormSetError,
   UseFormSetValue,
   UseFormTrigger,
   UseFormWatch,
 } from 'react-hook-form'
-import { Button, FormControlLabel, Typography } from '@mui/material'
+import { Button, FormControlLabel, Typography, Divider } from '@mui/material'
 import TxtInput from '@/components/TxtInput'
-import { txtFieldValidation } from '@/utils/form.validation'
+import { acDefaultValue, searchSelectValidation, txtFieldValidation } from '@/utils/form.validation'
 import CheckBoxInput from '@/components/CheckBoxInput'
+import { ProFileFormFields } from './ProfileEdit'
+import { FieldStateProps } from './Profilebar'
+import { theme } from '@/context/ThemeProvider'
+import SelectInput from '@/components/SelectInput'
 type Props = {
-  fieldName: {
-    fieldName: FieldProfState | undefined
-    data: string | undefined
-    headName: HeadProfState | undefined
-  }
-  control: Control<
-    {
-      profMobile: string
-      profMobileConfirm: string
-      profCountryCode: string
-      profCountryCodeConfirm: string
-      profEmail: string
-      profEmailConfirm: string
-      comMobile: string
-      comMobileConfirm: string
-      comCountryCode: string
-      comCountryCodeConfirm: string
-      comEmail: string
-      comEmailConfirm: string
-      comPref: string
-      insField: string
-      country: string
-      whatsapp: boolean
-      sms: boolean
-      email: boolean
-    },
-    any
-  >
+  fieldName: FieldStateProps
+  setFieldName: Dispatch<SetStateAction<FieldStateProps>>
+  control: Control<ProFileFormFields, any>
+  reset: UseFormReset<ProFileFormFields>
   setValue: UseFormSetValue<any>
   watch: UseFormWatch<any>
   getValues: UseFormGetValues<any>
-  trigger: UseFormTrigger<{
-    profMobile: string
-    profMobileConfirm: string
-    profCountryCode: string
-    profCountryCodeConfirm: string
-    profEmail: string
-    profEmailConfirm: string
-    comMobile: string
-    comMobileConfirm: string
-    comCountryCode: string
-    comCountryCodeConfirm: string
-    comEmail: string
-    comEmailConfirm: string
-    comPref: string
-    insField: string
-    country: string
-    whatsapp: boolean
-    sms: boolean
-    email: boolean
-  }>
+  trigger: UseFormTrigger<ProFileFormFields>
   setIsOtp: Dispatch<SetStateAction<boolean>>
   isOtp: boolean
+  formData: ProFileFormFields | undefined
+  clearErrors: UseFormClearErrors<ProFileFormFields>
+  setError: UseFormSetError<ProFileFormFields>
 }
+
+const country = [
+  acDefaultValue,
+  {
+    _id: 'India',
+    label: 'India',
+  },
+  { _id: 'USA', label: 'USA' },
+]
 
 const ProfileInputs = ({
   fieldName,
@@ -78,7 +54,23 @@ const ProfileInputs = ({
   trigger,
   setIsOtp,
   isOtp,
+  reset,
+  formData,
+  setFieldName,
+  clearErrors,
+  setError,
 }: Props) => {
+  const handleYes = () => {
+    switch (fieldName.fieldName) {
+      case PROF_FIELDS.COMMUNICATION_PREFERENCE:
+        // API For Update
+        break
+
+      default:
+        break
+    }
+    console.log(formData)
+  }
   switch (fieldName.fieldName) {
     case PROF_FIELDS.PROFILE_MOBILE || PROF_FIELDS.COMMUNICATION_MOBILE:
       return (
@@ -90,11 +82,14 @@ const ProfileInputs = ({
             placeholder={`Enter new ${fieldName.fieldName?.toLowerCase()}`}
             setValue={setValue}
             watch={watch}
-            handleChange={() => {}}
+            handleChange={() => {
+              trigger(PROF_FIELDS.COMMUNICATION_MOBILE ? 'comMobile' : 'profMobile')
+            }}
             codeName={PROF_FIELDS.COMMUNICATION_MOBILE ? 'comCountryCode' : 'profCountryCode'}
             sx={{
               minWidth: 350,
             }}
+            isDisabled={isOtp}
           />
           <p className='text-lg ml-[6px] mb-1'>{`Confirm new ${fieldName.headName} ${fieldName.fieldName}`}</p>
           <MobileInput
@@ -103,13 +98,16 @@ const ProfileInputs = ({
             placeholder={`Enter new ${fieldName.fieldName?.toLowerCase()}`}
             setValue={setValue}
             watch={watch}
-            handleChange={() => {}}
+            handleChange={() => {
+              trigger(PROF_FIELDS.COMMUNICATION_MOBILE ? 'comMobileConfirm' : 'profMobileConfirm')
+            }}
             codeName={
               PROF_FIELDS.COMMUNICATION_MOBILE ? 'comCountryCodeConfirm' : 'profCountryCodeConfirm'
             }
             sx={{
               minWidth: 350,
             }}
+            isDisabled={isOtp}
             confirm={{
               isConfirm: true,
               confirmField: PROF_FIELDS.COMMUNICATION_MOBILE ? 'comMobile' : 'profMobile',
@@ -125,6 +123,7 @@ const ProfileInputs = ({
               color='mPink'
               sx={{
                 minWidth: '100%',
+                marginTop: '5px',
               }}
               onClick={async () => {
                 if (PROF_FIELDS.COMMUNICATION_MOBILE) {
@@ -150,18 +149,23 @@ const ProfileInputs = ({
             control={control}
             name={PROF_FIELDS.COMMUNICATION_MOBILE ? 'comEmail' : 'profEmail'}
             placeholder={`Enter new ${fieldName.fieldName?.toLowerCase()}`}
-            handleChange={() => {}}
+            handleChange={() => {
+              trigger(PROF_FIELDS.COMMUNICATION_MOBILE ? 'comEmail' : 'profEmail')
+            }}
             sx={{
               minWidth: 350,
             }}
             validation={{ ...txtFieldValidation(true, 'Email') }}
+            isDisabled={isOtp}
           />
           <p className='text-lg ml-[6px] mb-1'>{`Confirm new ${fieldName.headName} ${fieldName.fieldName}`}</p>
           <TxtInput
             control={control}
             name={PROF_FIELDS.COMMUNICATION_MOBILE ? 'comEmailConfirm' : 'profEmailConfirm'}
             placeholder={`Enter new ${fieldName.fieldName?.toLowerCase()}`}
-            handleChange={() => {}}
+            handleChange={() => {
+              trigger(PROF_FIELDS.COMMUNICATION_MOBILE ? 'comEmailConfirm' : 'profEmailConfirm')
+            }}
             sx={{
               minWidth: 350,
             }}
@@ -174,6 +178,7 @@ const ProfileInputs = ({
                   'Email does not match',
               },
             }}
+            isDisabled={isOtp}
           />
           {!isOtp && (
             <Button
@@ -199,59 +204,187 @@ const ProfileInputs = ({
       break
     case PROF_FIELDS.COMMUNICATION_PREFERENCE:
       return (
-        <div className='flex flex-col gap-2'>
-          <p className='text-lg ml-[6px] mb-1'>{`Update ${fieldName.headName} ${fieldName.fieldName}`}</p>
-          <div className='flex flex-col gap-3'>
-            <FormControlLabel
-              sx={{
-                '.MuiButtonBase-root': {
-                  py: 0,
-                  px: '2px',
-                  ml: '14px',
-                },
-              }}
-              control={<CheckBoxInput control={control} name={'whatsapp'} notValidate={true} />}
-              label={
-                <Typography sx={{ fontSize: '14px', ml: '8px', fontWeight: 700 }}>
-                  WhatsApp Messages
-                </Typography>
-              }
-            />
-            <FormControlLabel
-              sx={{
-                '.MuiButtonBase-root': {
-                  py: 0,
-                  px: '2px',
-                  ml: '14px',
-                },
-              }}
-              control={<CheckBoxInput control={control} name={'sms'} notValidate={true} />}
-              label={
-                <Typography sx={{ fontSize: '14px', ml: '8px', fontWeight: 700 }}>
-                  SMS Text Messages
-                </Typography>
-              }
-            />{' '}
-            <FormControlLabel
-              sx={{
-                '.MuiButtonBase-root': {
-                  py: 0,
-                  px: '2px',
-                  ml: '14px',
-                },
-              }}
-              control={<CheckBoxInput control={control} name={'email'} notValidate={true} />}
-              label={
-                <Typography sx={{ fontSize: '14px', ml: '8px', fontWeight: 700 }}>
-                  Email Messages
-                </Typography>
-              }
-            />
+        <div>
+          <div className='flex flex-col gap-2'>
+            <p className='text-lg ml-[6px] mb-1'>{`Update ${fieldName.headName} ${fieldName.fieldName}`}</p>
+            <div className='flex flex-col gap-3'>
+              <FormControlLabel
+                sx={{
+                  '.MuiButtonBase-root': {
+                    py: 0,
+                    px: '2px',
+                    ml: '14px',
+                  },
+                }}
+                control={
+                  <CheckBoxInput
+                    control={control}
+                    name={'whatsapp'}
+                    notValidate={true}
+                    isDisabled={fieldName.isConfirm}
+                  />
+                }
+                label={
+                  <Typography
+                    sx={{
+                      fontSize: '14px',
+                      ml: '8px',
+                      fontWeight: 700,
+                      color: fieldName.isConfirm
+                        ? theme.palette.mMediumGray?.main
+                        : theme.palette.mBlack?.main,
+                    }}
+                  >
+                    WhatsApp Messages
+                  </Typography>
+                }
+              />
+              <FormControlLabel
+                sx={{
+                  '.MuiButtonBase-root': {
+                    py: 0,
+                    px: '2px',
+                    ml: '14px',
+                  },
+                }}
+                control={
+                  <CheckBoxInput
+                    control={control}
+                    name={'sms'}
+                    notValidate={true}
+                    isDisabled={fieldName.isConfirm}
+                  />
+                }
+                label={
+                  <Typography
+                    sx={{
+                      fontSize: '14px',
+                      ml: '8px',
+                      fontWeight: 700,
+                      color: fieldName.isConfirm
+                        ? theme.palette.mMediumGray?.main
+                        : theme.palette.mBlack?.main,
+                    }}
+                  >
+                    SMS Text Messages
+                  </Typography>
+                }
+              />
+              <FormControlLabel
+                sx={{
+                  '.MuiButtonBase-root': {
+                    py: 0,
+                    px: '2px',
+                    ml: '14px',
+                  },
+                }}
+                control={
+                  <CheckBoxInput
+                    control={control}
+                    name={'email'}
+                    notValidate={true}
+                    isDisabled={fieldName.isConfirm}
+                  />
+                }
+                label={
+                  <Typography
+                    sx={{
+                      fontSize: '14px',
+                      ml: '8px',
+                      fontWeight: 700,
+                      color: fieldName.isConfirm
+                        ? theme.palette.mMediumGray?.main
+                        : theme.palette.mBlack?.main,
+                    }}
+                  >
+                    Email Messages
+                  </Typography>
+                }
+              />
+            </div>
           </div>
+          {fieldName.isConfirm && (
+            <div>
+              <Divider
+                sx={{
+                  borderColor: theme.palette.mDarkGray?.main,
+                  borderWidth: '1.5px',
+                  my: '20px',
+                }}
+              />
+              <div className=' flex flex-col gap-4 items-center'>
+                <p className='p-2 rounded-md bg-white-main '>Are you sure you want to change ?</p>
+                <div className='flex justify-between gap-3 px-5'>
+                  <Button
+                    color='mPink'
+                    sx={{ minWidth: '150px' }}
+                    onClick={() => {
+                      reset((formValues) => {
+                        return formValues
+                      })
+                      setFieldName({ ...fieldName, isConfirm: false })
+                    }}
+                  >
+                    No
+                  </Button>
+                  <Button color='mPink' sx={{ minWidth: '150px' }} onClick={handleYes}>
+                    Yes
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )
       break
-
+    case PROF_FIELDS.COUNTRY_FIELD:
+      return (
+        <div>
+          <SelectInput
+            control={control}
+            name='country'
+            label='Country'
+            options={country}
+            clearErrors={clearErrors}
+            setError={setError}
+            setValue={setValue}
+            validation={searchSelectValidation('country')}
+            isDisabled={fieldName.isConfirm}
+          />
+          {fieldName.isConfirm && (
+            <div>
+              <Divider
+                sx={{
+                  borderColor: theme.palette.mDarkGray?.main,
+                  borderWidth: '1.5px',
+                  my: '20px',
+                }}
+              />
+              <div className=' flex flex-col gap-4 items-center'>
+                <p className='p-2 rounded-md bg-white-main '>Are you sure you want to change ?</p>
+                <div className='flex justify-between gap-3 px-5'>
+                  <Button
+                    color='mPink'
+                    sx={{ minWidth: '150px' }}
+                    onClick={() => {
+                      reset((formValues) => {
+                        return formValues
+                      })
+                      setFieldName({ ...fieldName, isConfirm: false })
+                    }}
+                  >
+                    No
+                  </Button>
+                  <Button color='mPink' sx={{ minWidth: '150px' }} onClick={handleYes}>
+                    Yes
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      )
+      break
     default:
       break
   }

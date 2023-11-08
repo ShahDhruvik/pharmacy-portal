@@ -4,6 +4,7 @@ import { DrawerState, FieldProfState, HeadProfState } from '@/types/common'
 import { DRAWERSTATE, PROF_FIELDS, PROF_HEADER } from '@/utils/constants'
 import ProfileImg from '@/assets/images/profile.avif'
 import { useEffect, useState } from 'react'
+import Spinner from '@/components/spinner'
 type Props = {
   handleDrawerState: (state: DrawerState) => void
   handleClose: () => void
@@ -11,6 +12,7 @@ type Props = {
     fieldName: FieldProfState | undefined,
     data: string | undefined,
     headName: HeadProfState | undefined,
+    isConfirm?: boolean,
   ) => void
 }
 
@@ -66,137 +68,150 @@ export const FieldEdit = ({
 }
 
 const Profile = ({ handleDrawerState, handleClose, handleField }: Props) => {
-  return (
-    <div>
-      <div
-        className={`flex justify-between items-center mb-3 sticky top-0 z-10  py-[10px] `}
-        id='header'
-      >
-        <Button
-          variant='text'
-          color='mMidBlue'
-          sx={{
-            color: theme.palette.mMidBlue?.main,
-            minWidth: 'max-content',
-            fontSize: '1rem',
-
-            height: 20,
-          }}
-          onClick={handleClose}
-          disableRipple
+  const [isLoading, setIsLoading] = useState(true)
+  if (isLoading) {
+    return (
+      <div>
+        <div
+          className={`flex justify-between items-center mb-3 sticky top-0 z-10 bg-lightGray-main  py-[10px] `}
+          id='header'
         >
-          Done
-        </Button>
-        <Button
-          variant='text'
-          color='mMidBlue'
-          sx={{
-            color: theme.palette.mMidBlue?.main,
-            minWidth: 'max-content',
-            fontSize: '1rem',
-
-            height: 20,
-          }}
-          disableRipple
-        >
-          Sign out
-        </Button>
-      </div>
-      <div className='flex flex-col gap-5 mb-3'>
-        <div className='flex justify-center items-center'>
-          <Avatar
+          <Button
+            variant='text'
+            color='mMidBlue'
             sx={{
-              height: '70px',
-              width: '70px',
+              color: theme.palette.mMidBlue?.main,
+              minWidth: 'max-content',
+              fontSize: '1rem',
+
+              height: 20,
             }}
-            src={ProfileImg}
-          />
+            onClick={handleClose}
+            disableRipple
+          >
+            Done
+          </Button>
+          <Button
+            variant='text'
+            color='mMidBlue'
+            sx={{
+              color: theme.palette.mMidBlue?.main,
+              minWidth: 'max-content',
+              fontSize: '1rem',
+
+              height: 20,
+            }}
+            disableRipple
+          >
+            Sign out
+          </Button>
         </div>
-        <div>
-          <Headers name={PROF_HEADER.PROFILE} />
-          <FieldEdit
-            name={PROF_FIELDS.PROFILE_MOBILE}
-            editFunction={() => {
-              handleField(PROF_FIELDS.PROFILE_MOBILE, '+9123089023', PROF_HEADER.PROFILE)
-              handleDrawerState(DRAWERSTATE.EDIT)
-            }}
-            data={'+9123089023'}
-          />
-          <FieldEdit
-            name={PROF_FIELDS.PROFILE_EMAIL}
-            editFunction={() => {
-              handleField(PROF_FIELDS.PROFILE_EMAIL, 'dhruvik9a03@gmail.com', PROF_HEADER.PROFILE)
-              handleDrawerState(DRAWERSTATE.EDIT)
-            }}
-            data={'dhruvik9a03@gmail.com'}
-          />
-        </div>
-        <div>
-          <Headers name={PROF_HEADER.COMMUNICATION} />
-          <FieldEdit
-            name={PROF_FIELDS.COMMUNICATION_MOBILE}
-            editFunction={() => {
-              handleField(
-                PROF_FIELDS.COMMUNICATION_MOBILE,
-                '+9123089023',
-                PROF_HEADER.COMMUNICATION,
-              )
-              handleDrawerState(DRAWERSTATE.EDIT)
-            }}
-            data={'+9123089023'}
-          />
-          <FieldEdit
-            name={PROF_FIELDS.COMMUNICATION_EMAIL}
-            editFunction={() => {
-              handleField(PROF_FIELDS.COMMUNICATION_EMAIL, '+9123089023', PROF_HEADER.COMMUNICATION)
-              handleDrawerState(DRAWERSTATE.EDIT)
-            }}
-            data={'dhruvik9a03@gmail.com'}
-          />
-          <FieldEdit
-            name={PROF_FIELDS.COMMUNICATION_PREFERENCE}
-            editFunction={() => {
-              handleField(
-                PROF_FIELDS.COMMUNICATION_PREFERENCE,
-                '+9123089023',
-                PROF_HEADER.COMMUNICATION,
-              )
-              handleDrawerState(DRAWERSTATE.EDIT)
-            }}
-            data={'Dr Shah'}
-          />
-        </div>
-        <div>
-          <Headers name={PROF_HEADER.INSURANCE} />
-          <FieldEdit
-            name={undefined}
-            editFunction={() => {
-              handleField(
-                PROF_FIELDS.INSURANCE_FIELD,
-                `Canada life insurance 
+        <div className='flex flex-col gap-5 mb-3'>
+          <div className='flex justify-center items-center'>
+            <Avatar
+              sx={{
+                height: '70px',
+                width: '70px',
+              }}
+              src={ProfileImg}
+            />
+          </div>
+          <div>
+            <Headers name={PROF_HEADER.PROFILE} />
+            <FieldEdit
+              name={PROF_FIELDS.PROFILE_MOBILE}
+              editFunction={() => {
+                handleField(PROF_FIELDS.PROFILE_MOBILE, '+9123089023', PROF_HEADER.PROFILE)
+                handleDrawerState(DRAWERSTATE.EDIT)
+              }}
+              data={'+9123089023'}
+            />
+            <FieldEdit
+              name={PROF_FIELDS.PROFILE_EMAIL}
+              editFunction={() => {
+                handleField(PROF_FIELDS.PROFILE_EMAIL, 'dhruvik9a03@gmail.com', PROF_HEADER.PROFILE)
+                handleDrawerState(DRAWERSTATE.EDIT)
+              }}
+              data={'dhruvik9a03@gmail.com'}
+            />
+          </div>
+          <div>
+            <Headers name={PROF_HEADER.COMMUNICATION} />
+            <FieldEdit
+              name={PROF_FIELDS.COMMUNICATION_MOBILE}
+              editFunction={() => {
+                handleField(
+                  PROF_FIELDS.COMMUNICATION_MOBILE,
+                  '+9123089023',
+                  PROF_HEADER.COMMUNICATION,
+                )
+                handleDrawerState(DRAWERSTATE.EDIT)
+              }}
+              data={'+9123089023'}
+            />
+            <FieldEdit
+              name={PROF_FIELDS.COMMUNICATION_EMAIL}
+              editFunction={() => {
+                handleField(
+                  PROF_FIELDS.COMMUNICATION_EMAIL,
+                  '+9123089023',
+                  PROF_HEADER.COMMUNICATION,
+                )
+                handleDrawerState(DRAWERSTATE.EDIT)
+              }}
+              data={'dhruvik9a03@gmail.com'}
+            />
+            <FieldEdit
+              name={PROF_FIELDS.COMMUNICATION_PREFERENCE}
+              editFunction={() => {
+                handleField(
+                  PROF_FIELDS.COMMUNICATION_PREFERENCE,
+                  '+9123089023',
+                  PROF_HEADER.COMMUNICATION,
+                )
+                handleDrawerState(DRAWERSTATE.EDIT)
+              }}
+              data={'Dr Shah'}
+            />
+          </div>
+          <div>
+            <Headers name={PROF_HEADER.INSURANCE} />
+            <FieldEdit
+              name={undefined}
+              editFunction={() => {
+                handleField(
+                  PROF_FIELDS.INSURANCE_FIELD,
+                  `Canada life insurance 
               Plan no : 123456789`,
-                PROF_HEADER.INSURANCE,
-              )
-              handleDrawerState(DRAWERSTATE.EDIT)
-            }}
-            data={`Canada life insurance 
+                  PROF_HEADER.INSURANCE,
+                )
+                handleDrawerState(DRAWERSTATE.EDIT)
+              }}
+              data={`Canada life insurance 
             Plan no : 123456789`}
-          />
-        </div>
-        <div>
-          <Headers name={PROF_HEADER.COUNTRY} />
-          <FieldEdit
-            name={undefined}
-            editFunction={() => {
-              handleField(PROF_FIELDS.COUNTRY_FIELD, 'India', PROF_HEADER.COUNTRY)
-              handleDrawerState(DRAWERSTATE.EDIT)
-            }}
-            data={'India'}
-          />
+            />
+          </div>
+          <div>
+            <Headers name={PROF_HEADER.COUNTRY} />
+            <FieldEdit
+              name={undefined}
+              editFunction={() => {
+                handleField(PROF_FIELDS.COUNTRY_FIELD, 'India', PROF_HEADER.COUNTRY)
+                handleDrawerState(DRAWERSTATE.EDIT)
+              }}
+              data={'India'}
+            />
+          </div>
         </div>
       </div>
-    </div>
-  )
+    )
+  } else {
+    return (
+      <div className='min-h-screen flex items-center justify-center'>
+        <Spinner />
+      </div>
+    )
+  }
 }
 
 export default Profile

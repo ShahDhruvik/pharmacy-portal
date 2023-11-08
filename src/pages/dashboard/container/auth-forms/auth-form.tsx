@@ -79,7 +79,7 @@ const AuthForm = ({ open, handleClose, isAssesstment }: Props) => {
       <div>
         <form onSubmit={handleSubmit(onSubmitHandle)}>
           {!signType.includes(FORMTYPE.SIGNUP) && (
-            <div className='flex flex-col justify-center gap-3'>
+            <div className='flex flex-col justify-center gap-5'>
               <MobileInput
                 control={control}
                 name={'phone'}

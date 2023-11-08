@@ -2,14 +2,16 @@ import { Checkbox } from '@mui/material'
 import { Control, Controller } from 'react-hook-form'
 import SvgIcon from './SvgIcon'
 import { useToast } from '@/hooks/useToast'
+import { theme } from '@/context/ThemeProvider'
 
 type Props = {
   name: string
   control: Control<any> | undefined
   notValidate?: boolean
+  isDisabled?: boolean
 }
 
-const CheckBoxInput = ({ control, name, notValidate }: Props) => {
+const CheckBoxInput = ({ control, name, notValidate, isDisabled }: Props) => {
   return (
     <Controller
       name={name}
@@ -18,14 +20,15 @@ const CheckBoxInput = ({ control, name, notValidate }: Props) => {
         return (
           <Checkbox
             {...field}
-            checkedIcon={
-              <SvgIcon iconName='check-box' svgProp={{ width: '1rem', height: '1rem' }} />
-            }
             checked={field.value ?? false}
-            indeterminateIcon={
-              <SvgIcon iconName='check-box' svgProp={{ width: '1rem', height: '1rem' }} />
-            }
-            icon={<div className='h-4 aspect-square  border-[2px] border-black-main'></div>}
+            // icon={
+            //   <div
+            //     className={`h-4 aspect-square  border-[2px] ${
+            //       isDisabled ? 'border-midGray-main' : 'border-black-main'
+            //     }`}
+            //   ></div>
+            // }
+            disabled={isDisabled}
           />
         )
       }}
