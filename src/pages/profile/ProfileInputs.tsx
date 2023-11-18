@@ -104,10 +104,10 @@ const ConfirmPopUp = ({
     >
       <div className=' flex flex-col gap-4 items-center'>
         <p className='p-2 rounded-md  '>Are you sure you want to change ?</p>
-        <div className='flex justify-between gap-3 px-5'>
+        <div className='flex justify-between gap-3 '>
           <Button
             color='mPink'
-            sx={{ minWidth: '150px' }}
+            sx={{ minWidth: '140px' }}
             onClick={() => {
               reset((formValues) => {
                 return formValues
@@ -117,7 +117,7 @@ const ConfirmPopUp = ({
           >
             No
           </Button>
-          <Button color='mPink' sx={{ minWidth: '150px' }} onClick={handleYes}>
+          <Button color='mPink' sx={{ minWidth: '140px' }} onClick={handleYes}>
             Yes
           </Button>
         </div>

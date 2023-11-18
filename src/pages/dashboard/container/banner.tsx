@@ -35,7 +35,11 @@ const arr = [
     time: '10:15 AM to 11:00 AM',
   },
 ]
-
+const enum SliderString {
+  UP = 'up',
+  COM = 'com',
+  CAN = 'can',
+}
 const Banner = ({}: Props) => {
   return (
     <div className='min-h-screen'>
@@ -64,9 +68,24 @@ const Banner = ({}: Props) => {
           </div>
           <Divider sx={{ borderBottom: '3px solid', borderColor: theme.palette.mDarkGray?.main }} />
           <div className='flex justify-between flex-wrap'>
-            <AppointmentCard heading='Upcoming Appointments' upcoming={true} />
-            <AppointmentCard heading='Completed Appointments' complete={true} />
-            <AppointmentCard heading='Cancelled Appointments' cancel={true} />
+            <AppointmentCard
+              heading='Upcoming Appointments'
+              upcoming={true}
+              nextClassName={`${SliderString.UP}Next`}
+              prevClassName={`${SliderString.UP}Prev`}
+            />
+            <AppointmentCard
+              heading='Completed Appointments'
+              complete={true}
+              nextClassName={`${SliderString.COM}Next`}
+              prevClassName={`${SliderString.COM}Prev`}
+            />
+            <AppointmentCard
+              heading='Cancelled Appointments'
+              cancel={true}
+              nextClassName={`${SliderString.CAN}Next`}
+              prevClassName={`${SliderString.CAN}Prev`}
+            />
           </div>
           <span className='flex justify-end font-extralight text-sm pt-4'>
             Copyright © 2023 Triaina Health. All rights reserved.
