@@ -305,7 +305,7 @@ const ProfileInputs = ({
                         : theme.palette.mBlack?.main,
                     }}
                   >
-                    WhatsApp Messages
+                    Sms
                   </Typography>
                 }
               />
@@ -336,11 +336,11 @@ const ProfileInputs = ({
                         : theme.palette.mBlack?.main,
                     }}
                   >
-                    SMS Text Messages
+                    Email
                   </Typography>
                 }
               />
-              <FormControlLabel
+              {/* <FormControlLabel
                 sx={{
                   '.MuiButtonBase-root': {
                     py: 0,
@@ -370,7 +370,7 @@ const ProfileInputs = ({
                     Email Messages
                   </Typography>
                 }
-              />
+              /> */}
             </div>
           </div>
           {fieldName.isConfirm && (

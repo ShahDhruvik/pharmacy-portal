@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import React, { useState } from 'react'
 import { Avatar, IconButton } from '@mui/material'
 import img from '@/assets/images/Aspect_Ratio.jpg'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
@@ -11,18 +11,23 @@ import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined'
 import MovieOutlinedIcon from '@mui/icons-material/MovieOutlined'
 import { theme } from '@/context/ThemeProvider'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, Pagination, Autoplay } from 'swiper/modules'
+import { Navigation } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/autoplay'
 import '@/styles/Manage-card-Slider.css'
+import ViewBar from '@/pages/appointmentViewPage/viewBar'
 
 interface Props {
   heading: string
   upcoming?: boolean
   complete?: boolean
   cancel?: boolean
-  prevClassName: string
-  nextClassName: string
+  prevClassName?: string
+  nextClassName?: string
+  state?: string
+  full?: boolean
+  setManageState?: any
+  manageState?: string
 }
 
 const AppointmentCard = ({
@@ -32,41 +37,74 @@ const AppointmentCard = ({
   cancel,
   nextClassName,
   prevClassName,
+  state,
+  setManageState,
+  manageState,
+  full,
 }: Props) => {
+  const [openDrawer, setOpenDrawer] = useState(false)
+
+  const handleCloseDrawer = () => {
+    setOpenDrawer(false)
+  }
+
+  const handleOpenDrawer = () => {
+    setOpenDrawer(true)
+  }
+
+  //Manage states
+  const enum MANAGE_STATE {
+    UPCOMING = 'upcoming',
+    COMPLETE = 'complete',
+    CANCEL = 'cancel',
+  }
+
+  // type ManageState = MANAGE_STATE.UPCOMING | MANAGE_STATE.COMPLETE | MANAGE_STATE.CANCEL | undefined
+
+  // const [manageState, setManageState] = useState<ManageState>(undefined)
+
+  console.log(state, 'state')
+  // console.log(manageState, 'manageState')
+
   return (
     <>
       <div>
-        <div className='flex justify-between px-1 items-center py-2 '>
-          <span className='text-darkBlue-main font-semibold'>{heading}</span>
-          <span className='flex '>
-            <IconButton className={prevClassName}>
-              <ChevronLeftIcon
-                sx={{
-                  height: '20px',
-                  width: '20px',
-                  color: theme.palette.mBlack?.main,
-                  border: '1px solid',
-                  borderColor: theme.palette.mDarkGray?.main,
-                  padding: '1px',
-                  borderRadius: '9999px',
-                }}
-              />
-            </IconButton>
-            <IconButton className={nextClassName}>
-              <ChevronRightIcon
-                sx={{
-                  height: '20px',
-                  width: '20px',
-                  color: theme.palette.mBlack?.main,
-                  border: '1px solid',
-                  borderColor: theme.palette.mDarkGray?.main,
-                  padding: '1px',
-                  borderRadius: '9999px',
-                }}
-              />
-            </IconButton>
-          </span>
-        </div>
+        {full && (
+          <>
+            {' '}
+            <div className='flex justify-between px-1 items-center py-2 '>
+              <span className='text-darkBlue-main font-semibold'>{heading}</span>
+              <span className='flex '>
+                <IconButton className={prevClassName}>
+                  <ChevronLeftIcon
+                    sx={{
+                      height: '20px',
+                      width: '20px',
+                      color: theme.palette.mBlack?.main,
+                      border: '1px solid',
+                      borderColor: theme.palette.mDarkGray?.main,
+                      padding: '1px',
+                      borderRadius: '9999px',
+                    }}
+                  />
+                </IconButton>
+                <IconButton className={nextClassName}>
+                  <ChevronRightIcon
+                    sx={{
+                      height: '20px',
+                      width: '20px',
+                      color: theme.palette.mBlack?.main,
+                      border: '1px solid',
+                      borderColor: theme.palette.mDarkGray?.main,
+                      padding: '1px',
+                      borderRadius: '9999px',
+                    }}
+                  />
+                </IconButton>
+              </span>
+            </div>
+          </>
+        )}
         <Swiper
           navigation={{
             prevEl: `.${prevClassName}`,
@@ -78,11 +116,44 @@ const AppointmentCard = ({
           autoplay={{ delay: 2000 }}
           className=' max-w-xs lg:max-w-sm xl:max-w-md  '
         >
-          <span className='flex justify-end text-darkBlue-main font-light'>
-            <button>view all</button>
-          </span>
+          {upcoming && full && (
+            <span className='flex justify-end text-darkBlue-main font-light'>
+              <button
+                onClick={() => {
+                  handleOpenDrawer()
+                  setManageState(MANAGE_STATE.UPCOMING)
+                }}
+              >
+                view all
+              </button>
+            </span>
+          )}
+          {complete && full && (
+            <span className='flex justify-end text-darkBlue-main font-light'>
+              <button
+                onClick={() => {
+                  handleOpenDrawer()
+                  setManageState(MANAGE_STATE.COMPLETE)
+                }}
+              >
+                view all
+              </button>
+            </span>
+          )}
+          {cancel && full && (
+            <span className='flex justify-end text-darkBlue-main font-light'>
+              <button
+                onClick={() => {
+                  handleOpenDrawer()
+                  setManageState(MANAGE_STATE.CANCEL)
+                }}
+              >
+                view all
+              </button>
+            </span>
+          )}
           <SwiperSlide className='pb-2'>
-            <div className='mt-3 rounded-md border-[1px] border-black-main bg-lightGray-main md:shadow-xl shadow-lg'>
+            <div className='mt-3 rounded-md border-[1px] border-black-main bg-lightGray-main'>
               <div className='relative border-black'>
                 <div className='absolute inset-0 flex items-center justify-end md:gap-3 gap-1 leading-5 text-white-main text-[12px]'>
                   {upcoming && (
@@ -210,7 +281,7 @@ const AppointmentCard = ({
             </div>
           </SwiperSlide>
           <SwiperSlide>
-            <div className='mt-3 rounded-md border-[1px] border-black-main bg-lightGray-main md:shadow-xl shadow-lg'>
+            <div className='mt-3 rounded-md border-[1px] border-black-main bg-lightGray-main'>
               <div className='relative border-black'>
                 <div className='absolute inset-0 flex items-center justify-end md:gap-3 gap-1 leading-5 text-white-main text-[12px]'>
                   {upcoming && (
@@ -339,6 +410,24 @@ const AppointmentCard = ({
           </SwiperSlide>
         </Swiper>
       </div>
+      <ViewBar
+        handleClose={handleCloseDrawer}
+        open={openDrawer && manageState === MANAGE_STATE.UPCOMING}
+        heading='Upcoming Appointments'
+        upcoming={true}
+      />
+      <ViewBar
+        handleClose={handleCloseDrawer}
+        open={openDrawer && manageState === MANAGE_STATE.COMPLETE}
+        heading='Complete Appointments'
+        complete={true}
+      />
+      <ViewBar
+        handleClose={handleCloseDrawer}
+        open={openDrawer && manageState === MANAGE_STATE.CANCEL}
+        heading='Cancel Appointments'
+        cancel={true}
+      />
     </>
   )
 }

@@ -2,7 +2,6 @@ import AppointmentCard from '@/components/AppointmentCard'
 import Header from '@/components/Header'
 import SmallCard from '@/components/SmallCard'
 import { theme } from '@/context/ThemeProvider'
-import ManageBar from '@/pages/medical-form/medical-form-bar'
 import { Divider } from '@mui/material'
 import { useState } from 'react'
 
@@ -35,12 +34,25 @@ const arr = [
     time: '10:15 AM to 11:00 AM',
   },
 ]
+
 const enum SliderString {
   UP = 'up',
   COM = 'com',
   CAN = 'can',
 }
+
 const Banner = ({}: Props) => {
+  //Manage states
+  const enum MANAGE_STATE {
+    UPCOMING = 'upcoming',
+    COMPLETE = 'complete',
+    CANCEL = 'cancel',
+  }
+
+  type ManageState = MANAGE_STATE.UPCOMING | MANAGE_STATE.COMPLETE | MANAGE_STATE.CANCEL | undefined
+
+  const [manageState, setManageState] = useState<ManageState>(undefined)
+
   return (
     <div className='min-h-screen'>
       <Header />
@@ -73,18 +85,27 @@ const Banner = ({}: Props) => {
               upcoming={true}
               nextClassName={`${SliderString.UP}Next`}
               prevClassName={`${SliderString.UP}Prev`}
+              setManageState={setManageState}
+              manageState={manageState}
+              full={true}
             />
             <AppointmentCard
               heading='Completed Appointments'
               complete={true}
               nextClassName={`${SliderString.COM}Next`}
               prevClassName={`${SliderString.COM}Prev`}
+              setManageState={setManageState}
+              manageState={manageState}
+              full={true}
             />
             <AppointmentCard
               heading='Cancelled Appointments'
               cancel={true}
               nextClassName={`${SliderString.CAN}Next`}
               prevClassName={`${SliderString.CAN}Prev`}
+              setManageState={setManageState}
+              manageState={manageState}
+              full={true}
             />
           </div>
           <span className='flex justify-end font-extralight text-sm pt-4'>

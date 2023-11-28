@@ -7,7 +7,6 @@ import PermMediaIcon from '@mui/icons-material/PermMedia'
 import { theme } from '@/context/ThemeProvider'
 import img1 from '@/assets/images/Aspect_Ratio.jpg'
 import InsuranceBar from '@/pages/insuranceCalculator/insuranceBar'
-import ManageBar from '@/pages/medical-form/medical-form-bar'
 import MedicalFormBar from '@/pages/medical-form/medical-form-bar'
 
 interface Props {
