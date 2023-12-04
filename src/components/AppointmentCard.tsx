@@ -63,7 +63,6 @@ const AppointmentCard = ({
 
   // const [manageState, setManageState] = useState<ManageState>(undefined)
 
-  console.log(state, 'state')
   // console.log(manageState, 'manageState')
 
   return (

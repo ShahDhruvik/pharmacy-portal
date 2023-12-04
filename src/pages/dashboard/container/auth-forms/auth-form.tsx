@@ -11,6 +11,9 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { SignInFormFields } from '../../../../types/authTypes'
 import { FormTypeArray } from '../../../../types/common'
 import PermissionForm from './permission-form'
+import { loginUser } from '@/lib/Auth'
+import { useLoading } from '@/context/LoadingContext'
+import { useToast } from '@/hooks/useToast'
 
 type Props = {
   open: boolean
@@ -19,28 +22,38 @@ type Props = {
 }
 
 const AuthForm = ({ open, handleClose, isAssesstment }: Props) => {
+  const { setLoading } = useLoading()
+  const showToast = useToast()
+
   const [errorMessage, setErrorMessage] = useState('')
+  const [phone, setPhone] = useState('')
+
   const { control, watch, setValue, handleSubmit, formState, reset } = useForm({
     defaultValues: {
-      phone: '',
+      contactNo: '',
       contryCode: '+1',
       tNc: false,
       robo: false,
     },
   })
+
   useEffect(() => {
     reset()
   }, [open])
+
   const { errors } = formState
   const [signType, setSignType] = useState<FormTypeArray>([])
-  const onSubmitHandle: SubmitHandler<SignInFormFields> = (data) => {
+  const onSubmitHandle: SubmitHandler<SignInFormFields> = async (data) => {
     if (!data.robo || !data.tNc) {
       setErrorMessage('check the conditions')
       return
     } else {
       setErrorMessage('')
-      console.log(data)
-      setSignType([FORMTYPE.OTP])
+      const res = await loginUser(setLoading, showToast, data?.contactNo as string)
+      if (res?.status === 200) {
+        setPhone(data.contactNo as string)
+        setSignType([FORMTYPE.OTP])
+      }
     }
   }
   return (
@@ -86,7 +99,7 @@ const AuthForm = ({ open, handleClose, isAssesstment }: Props) => {
             <div className='flex flex-col justify-center gap-6 py-1 my-1'>
               <MobileInput
                 control={control}
-                name={'phone'}
+                name={'contactNo'}
                 placeholder='Enter whatsapp number here ...'
                 setValue={setValue}
                 watch={watch}
@@ -159,7 +172,7 @@ const AuthForm = ({ open, handleClose, isAssesstment }: Props) => {
         )}
         {signType.includes(FORMTYPE.OTP) && (
           <div className='mt-3'>
-            <OTPForm handleClose={handleClose} isAssesstMent={isAssesstment} />
+            <OTPForm handleClose={handleClose} isAssesstMent={isAssesstment} phone={phone} />
           </div>
         )}
       </div>

@@ -95,6 +95,7 @@ const MedicalFormBar = ({ open, handleClose }: Props) => {
               handleChange={() => {}}
               placeholder='Enter email'
               validation={txtFieldValidation(true, 'Email')}
+              label='Email'
             />
             <SelectInput
               control={control}

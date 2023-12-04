@@ -5,6 +5,9 @@ import { DRAWERSTATE, PROF_FIELDS, PROF_HEADER } from '@/utils/constants'
 import ProfileImg from '@/assets/images/profile.avif'
 import { useEffect, useState } from 'react'
 import Spinner from '@/components/spinner'
+import { getAllProfile } from '@/lib/Profile'
+import { useLoading } from '@/context/LoadingContext'
+import { useToast } from '@/hooks/useToast'
 type Props = {
   handleDrawerState: (state: DrawerState) => void
   handleClose: () => void
@@ -68,8 +71,21 @@ export const FieldEdit = ({
 }
 
 const Profile = ({ handleDrawerState, handleClose, handleField }: Props) => {
-  const [isLoading, setIsLoading] = useState(true)
-  if (isLoading) {
+  const [data, setData] = useState<any>(null)
+  const { setLoading, loading } = useLoading()
+  const showToast = useToast()
+
+  const getData = async () => {
+    const response = await getAllProfile(setLoading, showToast)
+    setData(response)
+    console.log(response, 'res')
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
+
+  if (!loading.isLoading && !loading.isIndependentLoader) {
     return (
       <div>
         <div
@@ -107,7 +123,7 @@ const Profile = ({ handleDrawerState, handleClose, handleField }: Props) => {
           </Button>
         </div>
         <div className='flex flex-col gap-5 mb-3'>
-          <div className='flex justify-center items-center'>
+          <div className='flex flex-col justify-center items-center'>
             <Avatar
               sx={{
                 height: '70px',
@@ -115,24 +131,31 @@ const Profile = ({ handleDrawerState, handleClose, handleField }: Props) => {
               }}
               src={ProfileImg}
             />
+            <p className='font-bold'>
+              {data && `${data?.firstName} ${data?.middleName} ${data?.lastName}`}
+            </p>
           </div>
           <div>
             <Headers name={PROF_HEADER.PROFILE} />
             <FieldEdit
               name={PROF_FIELDS.PROFILE_MOBILE}
               editFunction={() => {
-                handleField(PROF_FIELDS.PROFILE_MOBILE, '+9123089023', PROF_HEADER.PROFILE)
+                handleField(PROF_FIELDS.PROFILE_MOBILE, data && data.contactNo, PROF_HEADER.PROFILE)
                 handleDrawerState(DRAWERSTATE.EDIT)
               }}
-              data={'+9123089023'}
+              data={data && data.contactNo}
             />
             <FieldEdit
               name={PROF_FIELDS.PROFILE_EMAIL}
               editFunction={() => {
-                handleField(PROF_FIELDS.PROFILE_EMAIL, 'dhruvik9a03@gmail.com', PROF_HEADER.PROFILE)
+                handleField(
+                  PROF_FIELDS.PROFILE_EMAIL,
+                  data && data.profileEmail,
+                  PROF_HEADER.PROFILE,
+                )
                 handleDrawerState(DRAWERSTATE.EDIT)
               }}
-              data={'dhruvik9a03@gmail.com'}
+              data={data && data.profileEmail}
             />
           </div>
           <div>
@@ -142,36 +165,36 @@ const Profile = ({ handleDrawerState, handleClose, handleField }: Props) => {
               editFunction={() => {
                 handleField(
                   PROF_FIELDS.COMMUNICATION_MOBILE,
-                  '+9123089023',
+                  data && data.communicationMobile,
                   PROF_HEADER.COMMUNICATION,
                 )
                 handleDrawerState(DRAWERSTATE.EDIT)
               }}
-              data={'+9123089023'}
+              data={data && data.communicationMobile}
             />
             <FieldEdit
               name={PROF_FIELDS.COMMUNICATION_EMAIL}
               editFunction={() => {
                 handleField(
                   PROF_FIELDS.COMMUNICATION_EMAIL,
-                  '+9123089023',
+                  data && data.communicationEmail,
                   PROF_HEADER.COMMUNICATION,
                 )
                 handleDrawerState(DRAWERSTATE.EDIT)
               }}
-              data={'dhruvik9a03@gmail.com'}
+              data={data && data.communicationEmail}
             />
             <FieldEdit
               name={PROF_FIELDS.COMMUNICATION_PREFERENCE}
               editFunction={() => {
                 handleField(
                   PROF_FIELDS.COMMUNICATION_PREFERENCE,
-                  '+9123089023',
+                  data && data.communicationPreference,
                   PROF_HEADER.COMMUNICATION,
                 )
                 handleDrawerState(DRAWERSTATE.EDIT)
               }}
-              data={'Dr Shah'}
+              data={data && data.communicationPreference}
             />
           </div>
           <div>
@@ -196,10 +219,14 @@ const Profile = ({ handleDrawerState, handleClose, handleField }: Props) => {
             <FieldEdit
               name={undefined}
               editFunction={() => {
-                handleField(PROF_FIELDS.COUNTRY_FIELD, 'India', PROF_HEADER.COUNTRY)
+                handleField(
+                  PROF_FIELDS.COUNTRY_FIELD,
+                  data && data?.country?.name,
+                  PROF_HEADER.COUNTRY,
+                )
                 handleDrawerState(DRAWERSTATE.EDIT)
               }}
-              data={'India'}
+              data={data && data?.country?.name}
             />
           </div>
         </div>

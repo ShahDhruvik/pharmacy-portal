@@ -96,6 +96,7 @@ const PostList = ({}: Props) => {
             handleChange={() => {}}
             placeholder='Enter name'
             validation={{ ...txtFieldValidation(true) }}
+            label='Name'
           />
           <DateInput
             name='dateVal'

@@ -11,7 +11,7 @@ type Props = {
 const Loader = ({ loading }: Props) => {
   const location = useLocation()
   console.log(location.pathname)
-  if (loading.isLoading) {
+  if (loading.isLoading && !loading.isIndependentLoader) {
     if (!loading.isPage) {
       return (
         <Backdrop

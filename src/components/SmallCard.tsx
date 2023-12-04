@@ -8,6 +8,7 @@ import { theme } from '@/context/ThemeProvider'
 import img1 from '@/assets/images/Aspect_Ratio.jpg'
 import InsuranceBar from '@/pages/insuranceCalculator/insuranceBar'
 import MedicalFormBar from '@/pages/medical-form/medical-form-bar'
+import FamilyManageBar from '@/pages/familyManage/familyManageBar'
 
 interface Props {
   family?: boolean
@@ -159,13 +160,17 @@ const SmallCard = ({ family, medicalForm, healthCard, insurance, heading, para }
           </>
         )}
       </div>
-      <InsuranceBar
+      <FamilyManageBar
         handleClose={handleCloseDrawer}
-        open={openDrawer && manageState === MANAGE_STATE.INSURANCE}
+        open={openDrawer && manageState === MANAGE_STATE.FAMILY}
       />
       <MedicalFormBar
         handleClose={handleCloseDrawer}
         open={openDrawer && manageState === MANAGE_STATE.MEDICAL_FORM}
+      />
+      <InsuranceBar
+        handleClose={handleCloseDrawer}
+        open={openDrawer && manageState === MANAGE_STATE.INSURANCE}
       />
     </>
   )

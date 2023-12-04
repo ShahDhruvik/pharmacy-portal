@@ -1,3 +1,6 @@
+import { format, parseISO } from 'date-fns'
+import { enUS } from 'date-fns/locale'
+
 // ALl your constants and enums. This includes pre-defined functions and other commonly used variables. ex: date-format functions, other standarad maintaining function
 export const x = 10
 
@@ -11,6 +14,8 @@ export const BlogPosts: Record<string, { title: string; description: string }> =
     description: 'Hello React Router v6',
   },
 }
+
+export const VITE_APP_API_URL = 'http://localhost:8000/api'
 
 export const enum ROLES {
   ADMIN = 'ADMIN',
@@ -74,8 +79,8 @@ export const enum PROF_HEADER {
 }
 
 export const enum PROF_FIELDS {
-  PROFILE_MOBILE = 'Mobile Number',
-  PROFILE_EMAIL = 'Email Address',
+  PROFILE_MOBILE = 'Profile Mobile Number',
+  PROFILE_EMAIL = 'Profile Email Address',
   COMMUNICATION_MOBILE = 'Mobile Number',
   COMMUNICATION_EMAIL = 'Email Address',
   COMMUNICATION_PREFERENCE = 'Preference',
@@ -83,3 +88,12 @@ export const enum PROF_FIELDS {
   COUNTRY_FIELD = 'Country',
 }
 
+export const formatDate = (dateString: string) => {
+  if (typeof dateString === 'string') {
+    const parsedDate = parseISO(dateString)
+    const formattedDate = format(parsedDate, "dd MMMM',' yyyy", { locale: enUS })
+    return formattedDate
+  } else {
+    return ''
+  }
+}

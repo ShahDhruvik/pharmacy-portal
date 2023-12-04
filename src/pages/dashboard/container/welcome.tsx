@@ -11,6 +11,10 @@ import ListAltIcon from '@mui/icons-material/ListAlt'
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
 import ChatIcon from '@mui/icons-material/Chat'
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined'
+import { getAllFeature, getAllImage } from '@/lib/DashboardContent'
+import { useLoading } from '@/context/LoadingContext'
+import { useToast } from '@/hooks/useToast'
+import { useEffect, useState } from 'react'
 
 interface Props {}
 
@@ -54,14 +58,49 @@ const arr = [
 ]
 
 const Welcome = ({}: Props) => {
+  const { setLoading } = useLoading()
+  const showToast = useToast()
+
+  const [data, setData] = useState<any>(null)
+  const [data1, setData1] = useState<any>(null)
+  const [feature, setFeature] = useState<any>([])
+
+  const getData = async () => {
+    const response = await getAllImage(setLoading, showToast, {
+      type: undefined,
+    })
+    if (response) {
+      const small = response.find((x: any) => x.type === 'SMALL')
+      const large = response.find((x: any) => x.type === 'LARGE')
+      setData(small)
+      setData1(large)
+    }
+  }
+
+  const getFeature = async () => {
+    const response = await getAllFeature(setLoading, showToast)
+    if (response) {
+      setFeature(response)
+    }
+  }
+
+  useEffect(() => {
+    getData()
+    getFeature()
+  }, [])
+
   return (
     <>
       <div className='flex w-full gap-5 flex-wrap min-h-fit'>
         <div className='flex-1 items-center justify-center flex flex-wrap'>
           <div className='top-0 left-0 relative'>
-            <img src={img1} alt='' className='relative full aspect-video' />
             <img
-              src={img1}
+              src={`http://localhost:8000/api/common/${data1?.image}`}
+              alt=''
+              className='relative full aspect-video'
+            />
+            <img
+              src={`http://localhost:8000/api/common/${data?.image}`}
               alt=''
               className='w-60 aspect-square absolute top-20 -right-16 md:block hidden'
             />
@@ -161,15 +200,18 @@ const Welcome = ({}: Props) => {
               Explore health care and related products and services
             </p>
             <div className='flex items-center gap-8 flex-wrap px-12 justify-between py-5'>
-              {arr.map((x) => (
-                <div className='flex items-center gap-5 max-w-96 w-80' key={x.id}>
+              {feature?.map((x: any) => (
+                <div className='flex items-center gap-5 max-w-96 w-80' key={x._id}>
                   <div className='border-2 rounded-full border-gray-main p-3'>
-                    {/* <SvgIcon iconName={x.icon} /> */}
-                    {x.icon}
+                    <img
+                      src={`http://localhost:8000/api/common/${x?.icon}`}
+                      alt='Img'
+                      width={'40px'}
+                    />
                   </div>
                   <div>
-                    <h2>{x.heading}</h2>
-                    <p className='text-sm font-light'>{x.para}</p>
+                    <h2>{x.name}</h2>
+                    <p className='text-sm font-light'>{x.description}</p>
                   </div>
                 </div>
               ))}

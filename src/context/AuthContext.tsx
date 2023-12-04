@@ -3,7 +3,7 @@ import { AuthParams } from '../types/common'
 
 interface AuthContextType {
   authParams: AuthParams | undefined
-  addStorage: (token: string, role: string) => void | undefined
+  addStorage: (accessToken: string, refreshToken: string, role?: string) => void | undefined
   clearStorage: () => void | undefined
   setAuthParams: Dispatch<SetStateAction<AuthParams | undefined>>
 }
@@ -12,19 +12,20 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [authParams, setAuthParams] = useState<AuthParams | undefined>({
-    isAuth: localStorage.getItem('token') !== null,
+    isAuth:
+      localStorage.getItem('accessToken') !== null && localStorage.getItem('refreshToken') !== null,
     role: localStorage.getItem('role') as string,
   })
 
-  const addStorage = (token: string, role: string) => {
-    localStorage.setItem('token', token)
-    localStorage.setItem('role', role)
-    setAuthParams({ isAuth: true, role: role })
+  const addStorage = (accessToken: string, refreshToken: string, role?: string) => {
+    localStorage.setItem('accessToken', accessToken)
+    localStorage.setItem('refreshToken', refreshToken)
+    setAuthParams({ isAuth: true, role: role ? role : 'Admin' })
   }
 
   const clearStorage = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('role')
+    localStorage.removeItem('accessToken')
+    localStorage.removeItem('refreshToken')
     setAuthParams(undefined)
   }
   return (

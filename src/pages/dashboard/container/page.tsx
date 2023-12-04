@@ -6,12 +6,7 @@ type Props = {}
 
 const Dashboard = ({}: Props) => {
   const { authParams } = useAuth()
-  return (
-    <>
-      <Welcome />
-      <Banner />
-    </>
-  )
+  return <>{authParams?.isAuth ? <Banner /> : <Welcome />}</>
 }
 
 export default Dashboard

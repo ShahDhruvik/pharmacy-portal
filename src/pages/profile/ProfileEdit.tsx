@@ -4,13 +4,16 @@ import { Divider, Button } from '@mui/material'
 import { DrawerState, FieldProfState, HeadProfState, SelectDDL } from '@/types/common'
 import { DRAWERSTATE, PROF_FIELDS } from '@/utils/constants'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import ProfileInputs from './ProfileInputs'
+import ProfileInputs, { CommunicationPreferenceOpts } from './ProfileInputs'
 import OtpInput from '@/components/OtpInput'
 import { useState } from 'react'
 import LoopIcon from '@mui/icons-material/Loop'
 import Spinner from '@/components/spinner'
 import { FieldStateProps } from './Profilebar'
 import { acDefaultValue } from '@/utils/form.validation'
+import { useToast } from '@/hooks/useToast'
+import { profileCommunicationEdit, profileEmailEdit, profileMobileNumberEdit } from '@/lib/Profile'
+import { useLoading } from '@/context/LoadingContext'
 
 type Props = {
   handleDrawerState: (state: DrawerState) => void
@@ -37,11 +40,14 @@ export type ProFileFormFields = {
   whatsapp: boolean
   sms: boolean
   email: boolean
+  Email?: boolean
+  SMS?: boolean
 }
 
 const ProfileEdit = ({ handleDrawerState, fieldName, setFieldName }: Props) => {
+  const { setLoading, loading } = useLoading()
+  const showToast = useToast()
   const [isOtp, setIsOtp] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
   const [formData, setFormData] = useState<ProFileFormFields>()
 
   const {
@@ -74,21 +80,52 @@ const ProfileEdit = ({ handleDrawerState, fieldName, setFieldName }: Props) => {
       whatsapp: false,
       sms: false,
       email: false,
+      otp0: '',
+      otp1: '',
+      otp2: '',
+      otp3: '',
+      otp4: '',
+      otp5: '',
     },
   })
-  const onSubmitHandle: SubmitHandler<any> = (data) => {
+  const onSubmitHandle: SubmitHandler<any> = async (data) => {
+    const o = {
+      otp0: data.otp0,
+      otp1: data.otp1,
+      otp2: data.otp2,
+      otp3: data.otp3,
+      otp4: data.otp4,
+      otp5: data.otp5,
+    }
     switch (fieldName.fieldName) {
       case PROF_FIELDS.PROFILE_MOBILE || PROF_FIELDS.COMMUNICATION_MOBILE:
         //API edit
-        console.log(data)
+        console.log(data, 'mob')
+
+        const a = {
+          otp: Object.values(o).join(''),
+          contactNo: data.profMobileConfirm,
+        }
+        const res = await profileMobileNumberEdit(setLoading, showToast, a)
+        if (res?.status === 200) {
+          handleDrawerState(DRAWERSTATE.NORMAL)
+        }
         break
       case PROF_FIELDS.PROFILE_EMAIL || PROF_FIELDS.COMMUNICATION_EMAIL:
         //API edit
-        console.log(data)
+        console.log(data, 'email')
+        const b = {
+          otp: Object.values(o).join(''),
+          profileEmail: data.profEmailConfirm,
+        }
+        const resp = await profileEmailEdit(setLoading, showToast, b)
+        if (resp?.status === 200) {
+          handleDrawerState(DRAWERSTATE.NORMAL)
+        }
         break
       case PROF_FIELDS.COMMUNICATION_PREFERENCE:
         //confirmation popUp
-        console.log(data)
+        console.log(data, 'pref')
         console.log('pref')
         setFormData(data)
         setFieldName({ ...fieldName, isConfirm: true })
@@ -96,7 +133,7 @@ const ProfileEdit = ({ handleDrawerState, fieldName, setFieldName }: Props) => {
       case PROF_FIELDS.COUNTRY_FIELD:
         //confirmation popUp
         console.log(data)
-        console.log('pref')
+        console.log('country')
         setFormData(data)
         setFieldName({ ...fieldName, isConfirm: true })
         break
@@ -106,7 +143,7 @@ const ProfileEdit = ({ handleDrawerState, fieldName, setFieldName }: Props) => {
     }
   }
 
-  if (isLoading) {
+  if (!loading.isLoading && !loading.isIndependentLoader) {
     return (
       <div className='flex flex-col gap-2'>
         <div className='flex justify-between items-center mb-3 sticky top-0  py-[10px] bg-lightGray-main'>
@@ -164,19 +201,20 @@ const ProfileEdit = ({ handleDrawerState, fieldName, setFieldName }: Props) => {
           </div>
         </div>
         <ProfileInputs
-          control={control}
+          control={control as any}
           fieldName={fieldName}
           setValue={setValue}
           watch={watch}
           getValues={getValues}
-          trigger={trigger}
+          trigger={trigger as any}
           setIsOtp={setIsOtp}
           isOtp={isOtp}
           formData={formData}
-          reset={reset}
+          reset={reset as any}
           setFieldName={setFieldName}
-          clearErrors={clearErrors}
-          setError={setError}
+          clearErrors={clearErrors as any}
+          setError={setError as any}
+          handleDrawerState={handleDrawerState}
         />
         {isOtp && (
           <div className='mt-2'>

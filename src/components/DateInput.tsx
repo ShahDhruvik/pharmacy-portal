@@ -2,12 +2,10 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { Controller } from 'react-hook-form'
-// import { DateInputStyles } from './customComponents'
 import { enGB } from 'date-fns/locale'
 import { useState } from 'react'
 import { theme } from '../context/ThemeProvider'
 import { SxProps, Theme } from '@mui/material'
-// import SvgIcon from './SvgIcon'
 
 type Props = {
   name: string
@@ -83,6 +81,7 @@ export const DateInput = ({
                 placeholder: `Select ${label}`,
                 disabled: isDisabled ?? false,
                 sx: inputStyleProps,
+                label: label,
               },
               actionBar: {
                 actions: ['clear'],

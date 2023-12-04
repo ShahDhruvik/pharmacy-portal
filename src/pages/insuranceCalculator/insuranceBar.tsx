@@ -148,6 +148,7 @@ const InsuranceBar = ({ open, handleClose }: Props) => {
                   }
                 }
                 sx={{ marginY: '10px' }}
+                label='Mobile No Or Email'
               />
               <IconButton onClick={handlePlus}>
                 <AddCircleIcon

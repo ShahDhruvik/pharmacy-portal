@@ -58,8 +58,15 @@ const GuestForm = ({ setSignType, signType }: Props) => {
           placeholder='Enter firstname and lastname'
           validation={{ ...txtFieldValidation(true) }}
           isDisabled={signType.includes(FORMTYPE.OTP)}
+          label='First Name And Last Name'
         />
-        <PermissionForm signType={signType} roboName={'robo'} tncName={'tNc'} control={control} />
+        <PermissionForm
+          signType={signType}
+          roboName={'robo'}
+          tncName={'tNc'}
+          control={control}
+          errors={false}
+        />
         <Box display={'flex'} justifyContent={'end'} gap={1} marginTop={1}>
           <Button
             variant='contained'

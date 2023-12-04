@@ -1,7 +1,7 @@
 import MobileInput from '@/components/MobileInput'
-import { FieldProfState, HeadProfState } from '@/types/common'
-import { ALIGN_DIALOG, PROF_FIELDS } from '@/utils/constants'
-import { Dispatch, SetStateAction } from 'react'
+import { DrawerState, FieldProfState, HeadProfState, SelectDDL } from '@/types/common'
+import { ALIGN_DIALOG, DRAWERSTATE, PROF_FIELDS } from '@/utils/constants'
+import { Dispatch, SetStateAction, useState, useEffect } from 'react'
 import {
   Control,
   UseFormClearErrors,
@@ -22,6 +22,16 @@ import { theme } from '@/context/ThemeProvider'
 import SelectInput from '@/components/SelectInput'
 import CustomDialog from '@/components/Dialog-custom'
 import SvgIcon from '@/components/SvgIcon'
+import { useLoading } from '@/context/LoadingContext'
+import { useToast } from '@/hooks/useToast'
+import {
+  getAllCountry,
+  profileCommunicationEdit,
+  profileCountryEdit,
+  profileEmailEditOtp,
+  profileMobileNumberEditOtp,
+} from '@/lib/Profile'
+
 type Props = {
   fieldName: FieldStateProps
   setFieldName: Dispatch<SetStateAction<FieldStateProps>>
@@ -36,34 +46,77 @@ type Props = {
   formData: ProFileFormFields | undefined
   clearErrors: UseFormClearErrors<ProFileFormFields>
   setError: UseFormSetError<ProFileFormFields>
+  handleDrawerState: (state: DrawerState) => void
 }
 
-const country = [
-  acDefaultValue,
-  {
-    _id: 'India',
-    label: 'India',
-  },
-  { _id: 'USA', label: 'USA' },
-]
+// const country = [
+//   acDefaultValue,
+//   {
+//     _id: 'India',
+//     label: 'India',
+//   },
+//   { _id: 'USA', label: 'USA' },
+// ]
+
+export enum CommunicationPreferenceOpts {
+  sms = 'SMS',
+  email = 'Email',
+}
 
 const ConfirmPopUp = ({
   setFieldName,
   fieldName,
   reset,
-  formData,
+  formData, // handleDrawerState,
 }: {
   setFieldName: Dispatch<SetStateAction<FieldStateProps>>
   fieldName: FieldStateProps
   reset: UseFormReset<ProFileFormFields>
   formData: ProFileFormFields | undefined
+  // handleDrawerState: (state: DrawerState) => void
 }) => {
-  const handleYes = () => {
+  const { setLoading } = useLoading()
+  const showToast = useToast()
+  const handleYes = async () => {
     switch (fieldName.fieldName) {
       case PROF_FIELDS.COMMUNICATION_PREFERENCE:
         // API For Update
-        break
+        console.log(formData, 'ffff')
 
+        let c
+        if (formData?.SMS === true && formData?.Email === undefined) {
+          c = `${CommunicationPreferenceOpts.sms}`
+        }
+        if (formData?.SMS === undefined && formData?.Email === true) {
+          c = `${CommunicationPreferenceOpts.email}`
+        }
+        if (formData?.SMS === true && formData?.Email === true) {
+          c = `${CommunicationPreferenceOpts.sms}, ${CommunicationPreferenceOpts.email}`
+        }
+        const data = {
+          communicationPreference: c,
+        }
+
+        const respo = await profileCommunicationEdit(setLoading, showToast, data)
+        if (respo?.status === 200) {
+          reset((formValues) => {
+            return formValues
+          })
+          setFieldName({ ...fieldName, isConfirm: false })
+        }
+        break
+      case PROF_FIELDS.COUNTRY_FIELD:
+        // API For Update
+        console.log(formData, 'ffffddd')
+
+        const response = await profileCountryEdit(setLoading, showToast, formData?.country)
+        if (response?.status === 200) {
+          reset((formValues) => {
+            return formValues
+          })
+          setFieldName({ ...fieldName, isConfirm: false })
+        }
+        break
       default:
         break
     }
@@ -140,22 +193,60 @@ const ProfileInputs = ({
   setFieldName,
   clearErrors,
   setError,
+  handleDrawerState,
 }: Props) => {
+  const { setLoading } = useLoading()
+  const showToast = useToast()
+  const [country, setCountry] = useState<SelectDDL[]>([])
+
+  const getCountry = async () => {
+    const data = await getAllCountry(setLoading, showToast)
+    if (data) {
+      const con: SelectDDL[] = []
+      data?.records?.map((x: any) => {
+        const conItem: SelectDDL = { label: `${x.name}`, _id: x._id }
+        con.push(conItem)
+      })
+      setCountry(con)
+    }
+  }
+  console.log(fieldName, 'hh')
+
+  useEffect(() => {
+    if (String(fieldName.fieldName) === PROF_FIELDS.COUNTRY_FIELD) {
+      getCountry()
+    }
+  }, [])
+
   switch (fieldName.fieldName) {
-    case PROF_FIELDS.PROFILE_MOBILE || PROF_FIELDS.COMMUNICATION_MOBILE:
+    case fieldName.fieldName === PROF_FIELDS.COMMUNICATION_MOBILE
+      ? PROF_FIELDS.COMMUNICATION_MOBILE
+      : PROF_FIELDS.PROFILE_MOBILE:
       return (
         <div className='flex flex-col gap-2'>
           <p className='text-lg ml-[6px] mb-1'>{`New ${fieldName.headName} ${fieldName.fieldName}`}</p>
           <MobileInput
             control={control}
-            name={PROF_FIELDS.COMMUNICATION_MOBILE ? 'comMobile' : 'profMobile'}
+            name={
+              String(PROF_FIELDS.COMMUNICATION_MOBILE) === fieldName?.fieldName
+                ? 'comMobile'
+                : 'profMobile'
+            }
             placeholder={`Enter new ${fieldName.fieldName?.toLowerCase()}`}
             setValue={setValue}
             watch={watch}
             handleChange={() => {
-              trigger(PROF_FIELDS.COMMUNICATION_MOBILE ? 'comMobile' : 'profMobile')
+              trigger(
+                String(PROF_FIELDS.COMMUNICATION_MOBILE) === fieldName.fieldName
+                  ? 'comMobile'
+                  : 'profMobile',
+              )
             }}
-            codeName={PROF_FIELDS.COMMUNICATION_MOBILE ? 'comCountryCode' : 'profCountryCode'}
+            codeName={
+              String(PROF_FIELDS.COMMUNICATION_MOBILE) === fieldName.fieldName
+                ? 'comCountryCode'
+                : 'profCountryCode'
+            }
             sx={{
               minWidth: 350,
             }}
@@ -164,15 +255,25 @@ const ProfileInputs = ({
           <p className='text-lg ml-[6px] mb-1'>{`Confirm new ${fieldName.headName} ${fieldName.fieldName}`}</p>
           <MobileInput
             control={control}
-            name={PROF_FIELDS.COMMUNICATION_MOBILE ? 'comMobileConfirm' : 'profMobileConfirm'}
+            name={
+              String(PROF_FIELDS.COMMUNICATION_MOBILE) === fieldName.fieldName
+                ? 'comMobileConfirm'
+                : 'profMobileConfirm'
+            }
             placeholder={`Enter new ${fieldName.fieldName?.toLowerCase()}`}
             setValue={setValue}
             watch={watch}
             handleChange={() => {
-              trigger(PROF_FIELDS.COMMUNICATION_MOBILE ? 'comMobileConfirm' : 'profMobileConfirm')
+              trigger(
+                String(PROF_FIELDS.COMMUNICATION_MOBILE) === fieldName.fieldName
+                  ? 'comMobileConfirm'
+                  : 'profMobileConfirm',
+              )
             }}
             codeName={
-              PROF_FIELDS.COMMUNICATION_MOBILE ? 'comCountryCodeConfirm' : 'profCountryCodeConfirm'
+              String(PROF_FIELDS.COMMUNICATION_MOBILE) === fieldName.fieldName
+                ? 'comCountryCodeConfirm'
+                : 'profCountryCodeConfirm'
             }
             sx={{
               minWidth: 350,
@@ -180,11 +281,15 @@ const ProfileInputs = ({
             isDisabled={isOtp}
             confirm={{
               isConfirm: true,
-              confirmField: PROF_FIELDS.COMMUNICATION_MOBILE ? 'comMobile' : 'profMobile',
+              confirmField:
+                String(PROF_FIELDS.COMMUNICATION_MOBILE) === fieldName.fieldName
+                  ? 'comMobile'
+                  : 'profMobile',
               message: 'Mobile Number does not match',
-              codeMatchName: PROF_FIELDS.COMMUNICATION_MOBILE
-                ? 'comCountryCode'
-                : 'profCountryCode',
+              codeMatchName:
+                String(PROF_FIELDS.COMMUNICATION_MOBILE) === fieldName.fieldName
+                  ? 'comCountryCode'
+                  : 'profCountryCode',
             }}
             getValues={getValues}
           />
@@ -196,12 +301,26 @@ const ProfileInputs = ({
                 marginTop: '5px',
               }}
               onClick={async () => {
-                if (PROF_FIELDS.COMMUNICATION_MOBILE) {
+                if (String(PROF_FIELDS.COMMUNICATION_MOBILE) === fieldName.fieldName) {
                   const triggeredValue = await trigger(['comMobile', 'comMobileConfirm'])
-                  setIsOtp(triggeredValue)
+                  console.log(triggeredValue, 'com')
+                  const data = { communicationMobile: getValues('comMobileConfirm') }
+                  const res = await profileCommunicationEdit(setLoading, showToast, data)
+                  if (res?.status === 200) {
+                    handleDrawerState(DRAWERSTATE.NORMAL)
+                  }
+                  setIsOtp(false)
                 } else {
                   const triggeredValue = await trigger(['profMobile', 'profMobileConfirm'])
-                  setIsOtp(triggeredValue)
+                  const data = getValues('profMobileConfirm')
+                  const res = await profileMobileNumberEditOtp(
+                    setLoading,
+                    showToast,
+                    data as string,
+                  )
+                  if (res?.status === 200) {
+                    setIsOtp(triggeredValue)
+                  }
                 }
               }}
             >
@@ -211,30 +330,50 @@ const ProfileInputs = ({
         </div>
       )
       break
-    case PROF_FIELDS.PROFILE_EMAIL || PROF_FIELDS.COMMUNICATION_EMAIL:
+    case fieldName.fieldName === PROF_FIELDS.COMMUNICATION_EMAIL
+      ? PROF_FIELDS.COMMUNICATION_EMAIL
+      : PROF_FIELDS.PROFILE_EMAIL:
       return (
         <div className='flex flex-col gap-2'>
           <p className='text-lg ml-[6px] mb-1'>{`New ${fieldName.headName} ${fieldName.fieldName}`}</p>
           <TxtInput
             control={control}
-            name={PROF_FIELDS.COMMUNICATION_MOBILE ? 'comEmail' : 'profEmail'}
+            name={
+              String(PROF_FIELDS.COMMUNICATION_EMAIL) === fieldName.fieldName
+                ? 'comEmail'
+                : 'profEmail'
+            }
             placeholder={`Enter new ${fieldName.fieldName?.toLowerCase()}`}
             handleChange={() => {
-              trigger(PROF_FIELDS.COMMUNICATION_MOBILE ? 'comEmail' : 'profEmail')
+              trigger(
+                String(PROF_FIELDS.COMMUNICATION_EMAIL) === fieldName.fieldName
+                  ? 'comEmail'
+                  : 'profEmail',
+              )
             }}
             sx={{
               minWidth: 350,
             }}
             validation={{ ...txtFieldValidation(true, 'Email') }}
             isDisabled={isOtp}
+            label='Email'
           />
           <p className='text-lg ml-[6px] mb-1'>{`Confirm new ${fieldName.headName} ${fieldName.fieldName}`}</p>
           <TxtInput
+            label='Email'
             control={control}
-            name={PROF_FIELDS.COMMUNICATION_MOBILE ? 'comEmailConfirm' : 'profEmailConfirm'}
+            name={
+              String(PROF_FIELDS.COMMUNICATION_EMAIL) === fieldName.fieldName
+                ? 'comEmailConfirm'
+                : 'profEmailConfirm'
+            }
             placeholder={`Enter new ${fieldName.fieldName?.toLowerCase()}`}
             handleChange={() => {
-              trigger(PROF_FIELDS.COMMUNICATION_MOBILE ? 'comEmailConfirm' : 'profEmailConfirm')
+              trigger(
+                String(PROF_FIELDS.COMMUNICATION_EMAIL) === fieldName.fieldName
+                  ? 'comEmailConfirm'
+                  : 'profEmailConfirm',
+              )
             }}
             sx={{
               minWidth: 350,
@@ -244,8 +383,11 @@ const ProfileInputs = ({
               ...{
                 validate: (value: string) =>
                   value ===
-                    getValues(PROF_FIELDS.COMMUNICATION_MOBILE ? 'comEmail' : 'profEmail') ||
-                  'Email does not match',
+                    getValues(
+                      String(PROF_FIELDS.COMMUNICATION_EMAIL) === fieldName.fieldName
+                        ? 'comEmail'
+                        : 'profEmail',
+                    ) || 'Email does not match',
               },
             }}
             isDisabled={isOtp}
@@ -257,11 +399,21 @@ const ProfileInputs = ({
                 minWidth: '100%',
               }}
               onClick={async () => {
-                if (PROF_FIELDS.COMMUNICATION_MOBILE) {
+                if (String(PROF_FIELDS.COMMUNICATION_EMAIL) === fieldName.fieldName) {
                   const triggeredValue = await trigger(['comEmail', 'comEmailConfirm'])
+                  const data = { communicationEmail: getValues('comEmailConfirm') }
+                  const res = await profileCommunicationEdit(setLoading, showToast, data)
+                  if (res?.status === 200) {
+                    handleDrawerState(DRAWERSTATE.NORMAL)
+                  }
                   setIsOtp(triggeredValue)
                 } else {
                   const triggeredValue = await trigger(['profEmail', 'profEmailConfirm'])
+                  const data = getValues('profEmailConfirm')
+                  const res = await profileEmailEditOtp(setLoading, showToast, data as string)
+                  if (res?.status === 200) {
+                    setIsOtp(triggeredValue)
+                  }
                   setIsOtp(triggeredValue)
                 }
               }}
@@ -289,7 +441,7 @@ const ProfileInputs = ({
                 control={
                   <CheckBoxInput
                     control={control}
-                    name={'whatsapp'}
+                    name={CommunicationPreferenceOpts.sms}
                     notValidate={true}
                     isDisabled={fieldName.isConfirm}
                   />
@@ -320,7 +472,7 @@ const ProfileInputs = ({
                 control={
                   <CheckBoxInput
                     control={control}
-                    name={'sms'}
+                    name={CommunicationPreferenceOpts.email}
                     notValidate={true}
                     isDisabled={fieldName.isConfirm}
                   />
