@@ -16,7 +16,7 @@ export const BlogPosts: Record<string, { title: string; description: string }> =
 }
 
 //SERVER
-export const CONST_API_URL = 'https://admin-dev.oopchar.com/api'
+export const CONST_API_URL = 'https://api-dev.oopchar.com/api'
 
 //LOCAL
 // export const CONST_API_URL = 'http://localhost:8000/api'
