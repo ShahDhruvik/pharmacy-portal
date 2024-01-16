@@ -15,7 +15,7 @@ import { getAllFeature, getAllImage } from '@/lib/DashboardContent'
 import { useLoading } from '@/context/LoadingContext'
 import { useToast } from '@/hooks/useToast'
 import { useEffect, useState } from 'react'
-import { VITE_APP_API_URL } from '@/utils/constants'
+import { CONST_API_URL } from '@/utils/constants'
 
 interface Props {}
 
@@ -96,12 +96,12 @@ const Welcome = ({}: Props) => {
         <div className='flex-1 items-center justify-center flex flex-wrap'>
           <div className='top-0 left-0 relative'>
             <img
-              src={`${VITE_APP_API_URL}/common/${data1?.image}`}
+              src={`${CONST_API_URL}/common/${data1?.image}`}
               alt=''
               className='relative full aspect-video'
             />
             <img
-              src={`${VITE_APP_API_URL}/common/${data?.image}`}
+              src={`${CONST_API_URL}/common/${data?.image}`}
               alt=''
               className='w-60 aspect-square absolute top-20 -right-16 md:block hidden'
             />
