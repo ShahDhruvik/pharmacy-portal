@@ -29,7 +29,7 @@ const createFamily = async (
     }
   } catch (error: any) {
     console.log(error)
-    toast('error', error.message)
+    toast('error', error?.response?.data?.message)
   } finally {
     loading({ isLoading: false, isIndependentLoader: false, isPage: false })
   }
@@ -45,7 +45,7 @@ const getAllFamily = async (loading: LoadingState['setLoading'], toast: ShowToas
   } catch (error: any) {
     console.log(error)
     if (error.response.status === 404) {
-      toast('error', error.response.data.message)
+      // toast('error', error.response.data.message)
     } else {
       toast('error', error.response.statusText)
     }
@@ -81,7 +81,7 @@ const editFamily = async (
     }
   } catch (error: any) {
     console.log(error)
-    toast('error', error.message)
+    toast('error', error?.response?.data?.message)
   } finally {
     loading({ isLoading: false, isIndependentLoader: false, isPage: false })
   }

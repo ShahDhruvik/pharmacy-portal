@@ -82,7 +82,6 @@ const ConfirmPopUp = ({
       case PROF_FIELDS.COMMUNICATION_PREFERENCE:
         // API For Update
         console.log(formData, 'ffff')
-
         let c
         if (formData?.SMS === true && formData?.Email === undefined) {
           c = `${CommunicationPreferenceOpts.sms}`
@@ -442,8 +441,10 @@ const ProfileInputs = ({
                   <CheckBoxInput
                     control={control}
                     name={CommunicationPreferenceOpts.sms}
-                    notValidate={true}
+                    // notValidate={true}
                     isDisabled={fieldName.isConfirm}
+                    setValue={setValue}
+                    trigger={trigger}
                   />
                 }
                 label={
@@ -473,8 +474,10 @@ const ProfileInputs = ({
                   <CheckBoxInput
                     control={control}
                     name={CommunicationPreferenceOpts.email}
-                    notValidate={true}
+                    // notValidate={true}
                     isDisabled={fieldName.isConfirm}
+                    setValue={setValue}
+                    trigger={trigger}
                   />
                 }
                 label={

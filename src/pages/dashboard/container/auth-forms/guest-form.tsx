@@ -16,7 +16,7 @@ type Props = {
 
 const GuestForm = ({ setSignType, signType }: Props) => {
   //form
-  const { control, watch, setValue, handleSubmit, getValues } = useForm({
+  const { control, watch, setValue, handleSubmit, getValues, trigger, formState } = useForm({
     defaultValues: {
       phone: '',
       contryCode: '+1',
@@ -25,6 +25,8 @@ const GuestForm = ({ setSignType, signType }: Props) => {
       robo: false,
     } as GuestFormFields,
   })
+  const { errors } = formState
+
   //form submission
   const onSubmitHandle: SubmitHandler<GuestFormFields> = (data) => {
     if (!data.robo || !data.tNc) {
@@ -65,7 +67,11 @@ const GuestForm = ({ setSignType, signType }: Props) => {
           roboName={'robo'}
           tncName={'tNc'}
           control={control}
-          errors={false}
+          errors={errors.tNc || errors.robo ? true : false}
+          handleClose={() => {}}
+          setValue={setValue}
+          trigger={trigger}
+          isDisabled={signType.includes(FORMTYPE.OTP)}
         />
         <Box display={'flex'} justifyContent={'end'} gap={1} marginTop={1}>
           <Button

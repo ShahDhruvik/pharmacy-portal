@@ -28,7 +28,7 @@ const AuthForm = ({ open, handleClose, isAssesstment }: Props) => {
   const [errorMessage, setErrorMessage] = useState('')
   const [phone, setPhone] = useState('')
 
-  const { control, watch, setValue, handleSubmit, formState, reset } = useForm({
+  const { control, watch, setValue, handleSubmit, formState, reset, trigger } = useForm({
     defaultValues: {
       contactNo: '',
       contryCode: '+1',
@@ -94,7 +94,7 @@ const AuthForm = ({ open, handleClose, isAssesstment }: Props) => {
       paddingOfContent='20px'
     >
       <div>
-        <form onSubmit={handleSubmit(onSubmitHandle)}>
+        <form onSubmit={handleSubmit(onSubmitHandle as any)}>
           {!signType.includes(FORMTYPE.SIGNUP) && (
             <div className='flex flex-col justify-center gap-6 py-1 my-1'>
               <MobileInput
@@ -116,6 +116,10 @@ const AuthForm = ({ open, handleClose, isAssesstment }: Props) => {
                 tncName={'tNc'}
                 control={control}
                 errors={errors.tNc || errors.robo ? true : false}
+                handleClose={() => {}}
+                setValue={setValue}
+                trigger={trigger}
+                isDisabled={signType.includes(FORMTYPE.OTP)}
               />
               {signType.includes(FORMTYPE.SIGNIN) && (
                 <Box display={'flex'} justifyContent={'end'} gap={1} marginTop={1}>

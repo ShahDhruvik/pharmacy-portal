@@ -1,17 +1,19 @@
 import { Checkbox } from '@mui/material'
-import { Control, Controller } from 'react-hook-form'
+import { Control, Controller, UseFormSetValue, UseFormTrigger } from 'react-hook-form'
 import SvgIcon from './SvgIcon'
 import { useToast } from '@/hooks/useToast'
-import { theme } from '@/context/ThemeProvider'
 
 type Props = {
   name: string
   control: Control<any> | undefined
-  notValidate?: boolean
+  setValue: UseFormSetValue<any>
+  trigger: UseFormTrigger<any>
+  handleToggle?: (checked: boolean) => void
   isDisabled?: boolean
 }
 
-const CheckBoxInput = ({ control, name, notValidate, isDisabled }: Props) => {
+const CheckBoxInput = ({ control, name, handleToggle, setValue, trigger, isDisabled }: Props) => {
+  const shoeToast = useToast()
   return (
     <Controller
       name={name}
@@ -21,21 +23,19 @@ const CheckBoxInput = ({ control, name, notValidate, isDisabled }: Props) => {
           <Checkbox
             {...field}
             checked={field.value ?? false}
-            // icon={
-            //   <div
-            //     className={`h-4 aspect-square  border-[2px] ${
-            //       isDisabled ? 'border-midGray-main' : 'border-black-main'
-            //     }`}
-            //   ></div>
-            // }
+            onChange={(e, checked) => {
+              setValue(name, checked)
+              trigger(name)
+              if (handleToggle) {
+                handleToggle(checked)
+              }
+            }}
             disabled={isDisabled}
           />
         )
       }}
       rules={{
-        ...(!notValidate && {
-          validate: (val) => val || 'Check the conditions',
-        }),
+        validate: (val) => val || 'Check the conditions',
       }}
     />
   )

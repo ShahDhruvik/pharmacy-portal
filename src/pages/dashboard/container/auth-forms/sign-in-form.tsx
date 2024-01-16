@@ -14,7 +14,7 @@ type Props = {
 
 const SignInForm = ({ signType, setSignType }: Props) => {
   //form
-  const { control, watch, setValue, handleSubmit } = useForm({
+  const { control, watch, setValue, handleSubmit, formState, trigger } = useForm({
     defaultValues: {
       phone: '',
       contryCode: '+1',
@@ -22,6 +22,8 @@ const SignInForm = ({ signType, setSignType }: Props) => {
       tNc: false,
     },
   })
+  const { errors } = formState
+
   //form submission
   const onSubmitHandle: SubmitHandler<SignInFormFields> = (data) => {
     if (!data.robo || !data.tNc) {
@@ -33,7 +35,7 @@ const SignInForm = ({ signType, setSignType }: Props) => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmitHandle)}>
+    <form onSubmit={handleSubmit(onSubmitHandle as any)}>
       <div className='flex flex-col justify-center gap-3'>
         <MobileInput
           control={control}
@@ -48,7 +50,17 @@ const SignInForm = ({ signType, setSignType }: Props) => {
           }}
           isDisabled={signType.includes(FORMTYPE.OTP)}
         />
-        <PermissionForm signType={signType} roboName={'robo'} tncName={'tNc'} control={control} />
+        <PermissionForm
+          signType={signType}
+          roboName={'robo'}
+          tncName={'tNc'}
+          control={control}
+          errors={errors.tNc || errors.robo ? true : false}
+          handleClose={() => {}}
+          setValue={setValue}
+          trigger={trigger}
+          isDisabled={signType.includes(FORMTYPE.OTP)}
+        />
         {signType.includes(FORMTYPE.SIGNIN) && (
           <Box display={'flex'} justifyContent={'end'} gap={1} marginTop={1}>
             <Button

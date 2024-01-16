@@ -36,7 +36,7 @@ const profileMobileNumberEditOtp = async (
     const res = await axiosInstance.put(`${PROFILE.PATIENT_PROFILE_PHONE_EDIT_OTP}`, data)
 
     if (res.data.success) {
-      toast('success', COMMON_MESSAGE.Login)
+      // toast('success', `Profile Mobile Number ${COMMON_MESSAGE.Success}`)
       return res
     } else {
       toast('error', res.data.message)
@@ -67,6 +67,7 @@ const profileMobileNumberEdit = async (
     }
     const res = await axiosInstance.put(`${PROFILE.PATIENT_PROFILE_PHONE_EDIT}`, data)
     if (res.data.success) {
+      toast('success', `Profile Mobile Number ${COMMON_MESSAGE.Updated}`)
       return res
     }
   } catch (error: any) {
@@ -95,7 +96,7 @@ const profileEmailEditOtp = async (
     const res = await axiosInstance.put(`${PROFILE.PATIENT_PROFILE_EMAIL_EDIT_OTP}`, data)
 
     if (res.data.success) {
-      toast('success', COMMON_MESSAGE.Login)
+      // toast('success', COMMON_MESSAGE.Login)
       return res
     } else {
       toast('error', res.data.message)
@@ -126,6 +127,7 @@ const profileEmailEdit = async (
     }
     const res = await axiosInstance.put(`${PROFILE.PATIENT_PROFILE_EMAIl_EDIT}`, data)
     if (res.data.success) {
+      toast('success', `Profile Email ${COMMON_MESSAGE.Updated}`)
       return res
     }
   } catch (error: any) {
@@ -153,6 +155,7 @@ const profileCountryEdit = async (
     }
     const res = await axiosInstance.put(`${PROFILE.PATIENT_PROFILE_COUNTRY_EDIT}`, data)
     if (res.data.success) {
+      toast('success', `Profile Country ${COMMON_MESSAGE.Updated}`)
       return res
     }
   } catch (error: any) {

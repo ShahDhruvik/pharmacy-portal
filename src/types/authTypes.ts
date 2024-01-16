@@ -12,6 +12,10 @@ export type SignInFormFields = {
   contryCode: string
   robo: boolean
   tNc: boolean
+  phone: number | string
+  name: string
+  dob: Date | null
+  email: string
 }
 
 export type SignUpFormFields = {
@@ -23,6 +27,7 @@ export type SignUpFormFields = {
   robo: boolean
   tNc: boolean
 }
+
 export type GuestFormFields = {
   phone: number | string
   contryCode: string

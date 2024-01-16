@@ -17,17 +17,20 @@ type Props = {
 
 const SignUpForm = ({ setSignType, signType }: Props) => {
   //form
-  const { control, watch, setValue, clearErrors, setError, handleSubmit } = useForm({
-    defaultValues: {
-      phone: '',
-      contryCode: '+1',
-      name: '',
-      dob: null as Date | null,
-      email: '',
-      robo: false,
-      tNc: false,
-    } as SignUpFormFields,
-  })
+  const { control, watch, setValue, clearErrors, setError, handleSubmit, formState, trigger } =
+    useForm({
+      defaultValues: {
+        phone: '',
+        contryCode: '+1',
+        name: '',
+        dob: null as Date | null,
+        email: '',
+        robo: false,
+        tNc: false,
+      } as SignUpFormFields,
+    })
+  const { errors } = formState
+
   //form submission
   const onSubmitHandle: SubmitHandler<SignUpFormFields> = (data) => {
     if (!data.robo || !data.tNc) {
@@ -86,7 +89,11 @@ const SignUpForm = ({ setSignType, signType }: Props) => {
           roboName={'robo'}
           tncName={'tNc'}
           control={control}
-          errors={false}
+          errors={errors.tNc || errors.robo ? true : false}
+          handleClose={() => {}}
+          setValue={setValue}
+          trigger={trigger}
+          isDisabled={signType.includes(FORMTYPE.OTP)}
         />
         <Box display={'flex'} justifyContent={'end'} gap={1} marginTop={1}>
           <Button

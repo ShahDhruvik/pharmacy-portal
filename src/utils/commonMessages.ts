@@ -7,3 +7,7 @@ export const enum COMMON_MESSAGE {
   Updated = 'Updated',
   Deleted = 'Deleted',
 }
+
+export const enum VALIDATION_MESSAGE {
+  checkBoxValidation = 'Check Box Select',
+}

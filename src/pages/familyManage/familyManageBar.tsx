@@ -97,7 +97,7 @@ const relation = [
 ]
 
 const FamilyManageBar = ({ open, handleClose }: Props) => {
-  const [entity, setEntity] = useState<FamilyField | undefined>()
+  const [entity, setEntity] = useState<any | undefined>()
   const [item, setItems] = useState(false)
   const [type, setType] = useState('')
 
@@ -151,7 +151,7 @@ const FamilyManageBar = ({ open, handleClose }: Props) => {
   const getData = async () => {
     const response = await getAllFamily(setLoading, showToast)
     if (response) {
-      setData(response.Accounts)
+      setData(response)
     }
   }
 
@@ -180,16 +180,16 @@ const FamilyManageBar = ({ open, handleClose }: Props) => {
 
   useEffect(() => {
     if (entity) {
-      setValue('firstName', entity?.firstName)
-      setValue('lastName', entity?.lastName)
-      setValue('contactNo', entity?.contactNo)
+      setValue('firstName', entity?.account?.firstName)
+      setValue('lastName', entity?.account?.lastName)
+      setValue('contactNo', entity?.account?.contactNo)
       setValue('accRelation', {
-        label: entity.accRelation,
-        _id: entity.accRelation,
+        label: entity?.account.accRelation,
+        _id: entity?.account.accRelation,
       })
-      setValue('profileEmail', entity?.profileEmail)
-      setValue('dob', entity?.dob ? new Date(entity?.dob) : null)
-      setValue('gender', entity.gender)
+      setValue('profileEmail', entity?.account?.profileEmail)
+      setValue('dob', entity?.account?.dob ? new Date(entity?.account?.dob) : null)
+      setValue('gender', entity?.account?.gender)
     } else {
       reset()
     }
@@ -260,15 +260,15 @@ const FamilyManageBar = ({ open, handleClose }: Props) => {
                     <td className='w-1/4 text-center'>Action</td>
                   </th>
 
-                  {data?.map((x: FamilyField) => (
+                  {data?.map((x: any) => (
                     <tr
                       className='flex px-2 text-start w-full items-center hover:bg-blue-main hover:border-none rounded-md hover:text-white-main text-black-main border-[1px] border-black-main my-1'
                       key={Math.random()}
                     >
                       <td className='w-1/2'>
-                        {splitDescription(x.firstName, 10)} ({x?.age})
+                        {splitDescription(x.account.firstName, 10)} ({x?.account.age})
                       </td>
-                      <td className='w-1/4'>{x.accRelation}</td>
+                      <td className='w-1/4'>{x.account.accRelation}</td>
                       <td className='w-1/4 flex'>
                         <Tooltip title='Edit' arrow placement='left'>
                           <IconButton
@@ -317,16 +317,6 @@ const FamilyManageBar = ({ open, handleClose }: Props) => {
                       />
                     </div>
                     <div className='flex gap-4 mb-3'>
-                      <TxtInput
-                        placeholder={'Enter ContactNo'}
-                        name={'contactNo'}
-                        control={control}
-                        handleChange={() => {}}
-                        validation={{ ...numberFieldValidation(false, 'Phone') }}
-                        label='Contact No'
-                      />
-                    </div>
-                    <div className='flex gap-4 mb-3'>
                       <SelectInput
                         options={relation as any}
                         name={'accRelation'}
@@ -339,16 +329,6 @@ const FamilyManageBar = ({ open, handleClose }: Props) => {
                       />
                     </div>
                     <div className='flex gap-4 mb-3'>
-                      <TxtInput
-                        placeholder={'Enter Email'}
-                        name={'profileEmail'}
-                        control={control}
-                        handleChange={() => {}}
-                        validation={{ ...txtFieldValidation(false, 'Email') }}
-                        label='Email'
-                      />
-                    </div>
-                    <div className='flex gap-5 mb-3'>
                       <DateInput
                         name='dob'
                         control={control}
@@ -357,6 +337,26 @@ const FamilyManageBar = ({ open, handleClose }: Props) => {
                         validation={{ ...dateSelectValidation('date of birth') }}
                         label={'Date of Birth*'}
                         setError={setError}
+                      />
+                    </div>
+                    <div className='flex gap-4 mb-3'>
+                      <TxtInput
+                        placeholder={'Enter ContactNo (optional)'}
+                        name={'contactNo'}
+                        control={control}
+                        handleChange={() => {}}
+                        validation={{ ...numberFieldValidation(false, 'Phone') }}
+                        label='Contact No'
+                      />
+                    </div>
+                    <div className='flex gap-4 mb-3'>
+                      <TxtInput
+                        placeholder={'Enter Email (optional)'}
+                        name={'profileEmail'}
+                        control={control}
+                        handleChange={() => {}}
+                        validation={{ ...txtFieldValidation(false, 'Email') }}
+                        label='Email'
                       />
                     </div>
                     <div className='flex gap-4 mb-3'>
