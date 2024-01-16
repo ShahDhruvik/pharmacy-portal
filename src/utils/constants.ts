@@ -15,8 +15,11 @@ export const BlogPosts: Record<string, { title: string; description: string }> =
   },
 }
 
-export const VITE_APP_API_URL = 'http://localhost:8000/api'
-// export const VITE_APP_API_URL = 'https://admin-dev.oopchar.com/api'
+//SERVER
+export const CONST_API_URL = 'https://admin-dev.oopchar.com/api'
+
+//LOCAL
+// export const CONST_API_URL = 'http://localhost:8000/api'
 
 export const enum ROLES {
   ADMIN = 'ADMIN',

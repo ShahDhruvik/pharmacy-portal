@@ -1,12 +1,14 @@
 import axios, { AxiosInstance, AxiosResponse, CancelTokenSource } from 'axios'
-import { VITE_APP_API_URL } from '@/utils/constants'
+import { VITE_APP_API_URL } from '@/utils/envVariables'
+import { CONST_API_URL } from '@/utils/constants'
 
 //Cancel Token
 const _cancelTokenQueue = new Map<string, CancelTokenSource>()
 
 //Instance
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: VITE_APP_API_URL as string,
+  // baseURL: VITE_APP_API_URL as string,
+  baseURL: VITE_APP_API_URL || (CONST_API_URL as string),
   // timeout: 20000,
   timeoutErrorMessage: 'Timeout! something went wrong',
 })
