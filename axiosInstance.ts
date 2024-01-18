@@ -8,7 +8,7 @@ const _cancelTokenQueue = new Map<string, CancelTokenSource>()
 //Instance
 const axiosInstance: AxiosInstance = axios.create({
   // baseURL: VITE_APP_API_URL as string,
-  baseURL: CONST_API_URL as string,
+  baseURL: VITE_APP_API_URL || (CONST_API_URL as string),
   // timeout: 20000,
   timeoutErrorMessage: 'Timeout! something went wrong',
 })
