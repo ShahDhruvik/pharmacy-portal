@@ -98,7 +98,7 @@ const Welcome = ({}: Props) => {
             <img
               src={`${CONST_API_URL}/common/${data1?.image}`}
               alt=''
-              className='relative full aspect-video'
+              className='relative full aspect-video h-96'
             />
             <img
               src={`${CONST_API_URL}/common/${data?.image}`}
@@ -204,11 +204,7 @@ const Welcome = ({}: Props) => {
               {feature?.map((x: any) => (
                 <div className='flex items-center gap-5 max-w-96 w-80' key={x._id}>
                   <div className='border-2 rounded-full border-gray-main p-3'>
-                    <img
-                      src={`http://localhost:8000/api/common/${x?.icon}`}
-                      alt='Img'
-                      width={'40px'}
-                    />
+                    <img src={`${CONST_API_URL}/common/${x?.icon}`} alt='Img' width={'40px'} />
                   </div>
                   <div>
                     <h2>{x.name}</h2>
