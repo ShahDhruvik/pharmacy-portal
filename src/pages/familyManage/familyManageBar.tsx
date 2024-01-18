@@ -170,7 +170,12 @@ const FamilyManageBar = ({ open, handleClose }: Props) => {
       reset()
     }
     if (type === 'edit') {
-      const res = await editFamily(setLoading, showToast, data, entity?.internalId as string)
+      const res = await editFamily(
+        setLoading,
+        showToast,
+        data,
+        entity?.account?.internalId as string,
+      )
       if (res?.status === 200) {
         setItems(false)
         getData()
@@ -282,7 +287,7 @@ const FamilyManageBar = ({ open, handleClose }: Props) => {
                         <Tooltip title='Delete' arrow placement='left'>
                           <IconButton
                             onClick={() => {
-                              handleOpen(x?.internalId)
+                              handleOpen(x?.account?.internalId)
                             }}
                           >
                             <DeleteIcon />

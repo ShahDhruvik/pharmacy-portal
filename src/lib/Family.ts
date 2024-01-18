@@ -18,6 +18,14 @@ const createFamily = async (
       profileEmail: formData.profileEmail,
       dob: formData.dob,
       gender: formData.gender,
+      address: {
+        addressLineOne: '',
+        addressLineTwo: '',
+        countryId: '',
+        stateId: '',
+        cityId: '',
+        pinCode: '',
+      },
     }
     const res = await axiosInstance.post(FAMILY.CREATE, data)
 
