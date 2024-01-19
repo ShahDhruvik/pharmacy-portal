@@ -31,6 +31,7 @@ import {
   profileEmailEditOtp,
   profileMobileNumberEditOtp,
 } from '@/lib/Profile'
+import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 
 type Props = {
   fieldName: FieldStateProps
@@ -144,7 +145,7 @@ const ConfirmPopUp = ({
                   setFieldName({ ...fieldName, isConfirm: false })
                 }}
               >
-                <SvgIcon iconName='cancel' svgProp={{ fill: theme.palette.mDarkGray?.main }} />
+                <HighlightOffIcon sx={{ fill: theme.palette.mDarkGray?.main }} />
               </button>
             </div>
           </DialogTitle>

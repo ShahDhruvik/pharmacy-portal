@@ -1,8 +1,8 @@
 import { theme } from '@/context/ThemeProvider'
 import { Button, Divider } from '@mui/material'
-import SvgIcon from './SvgIcon'
 import img1 from '@/assets/images/Aspect_Ratio.jpg'
 import TotalAvatars from './Avatar'
+import GoogleIcon from '@mui/icons-material/Google'
 
 type Props = {
   img: string
@@ -91,7 +91,12 @@ const BookAppointmentCard = ({
               <div>
                 <div className='flex items-center gap-2'>
                   <div>
-                    <SvgIcon iconName='ser' />
+                    <GoogleIcon
+                      sx={{
+                        color: theme.palette.mBlack?.main,
+                        fontSize: 30,
+                      }}
+                    />
                   </div>
                   <div>
                     <h6 className='text-black-main text-xs font-light'>Google Reviews</h6>

@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { FAQData } from '../utils/data'
-import SvgIcon from './SvgIcon'
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
+import { theme } from '@/context/ThemeProvider'
 
 type Props = {
   handleToggle: (index: number) => void
@@ -23,7 +24,7 @@ const AccordianItem = ({ handleToggle, active, faq }: Props) => {
           <h5 className='relative text-sm text-black-main font-semibold mb-0 transition-all duration-700 basis-3/4 '>
             {header}
           </h5>
-          <SvgIcon iconName='ser' wrapperStyle=' transform rotate-180' />
+          <KeyboardArrowUpIcon sx={{ color: theme.palette.mDarkBlue?.main }} />
         </div>
       </div>
       <div className='flex items-center justify-center'>

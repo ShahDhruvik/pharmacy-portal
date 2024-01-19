@@ -1,4 +1,4 @@
-import SvgIcon from './SvgIcon'
+import Star from '@/assets/icons/star.svg?react'
 
 type Props = {
   heading: string
@@ -18,11 +18,11 @@ const HeadContent = ({ heading, wrapperClass }: Props) => {
           </ul>
           <h1 className='text-5xl leading-snug'>{heading}</h1>
           <span className='flex gap-5'>
-            <SvgIcon iconName={'ser'} />
-            <SvgIcon iconName={'ser'} />
-            <SvgIcon iconName={'ser'} />
-            <SvgIcon iconName={'ser'} />
-            <SvgIcon iconName={'ser'} />
+            <Star width={30} height={30} />
+            <Star width={30} height={30} />
+            <Star width={30} height={30} />
+            <Star width={30} height={30} />
+            <Star width={30} height={30} />
           </span>
         </div>
       </div>

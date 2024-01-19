@@ -1,7 +1,6 @@
 import { Box, Button, DialogTitle } from '@mui/material'
 import CustomDialog from '../../../../components/Dialog-custom'
 import { ALIGN_DIALOG, FORMTYPE } from '../../../../utils/constants'
-import SvgIcon from '../../../../components/SvgIcon'
 import { theme } from '../../../../context/ThemeProvider'
 import { useEffect, useState } from 'react'
 import SignUpForm from './sign-up-form'
@@ -14,6 +13,7 @@ import PermissionForm from './permission-form'
 import { loginUser } from '@/lib/Auth'
 import { useLoading } from '@/context/LoadingContext'
 import { useToast } from '@/hooks/useToast'
+import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 
 type Props = {
   open: boolean
@@ -83,7 +83,7 @@ const AuthForm = ({ open, handleClose, isAssesstment }: Props) => {
                   setSignType([])
                 }}
               >
-                <SvgIcon iconName='cancel' svgProp={{ fill: theme.palette.mDarkGray?.main }} />
+                <HighlightOffIcon sx={{ fill: theme.palette.mDarkGray?.main }} />
               </button>
             </div>
           </DialogTitle>
