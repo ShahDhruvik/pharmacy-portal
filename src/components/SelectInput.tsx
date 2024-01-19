@@ -7,9 +7,10 @@ import {
   UseFormSetError,
   UseFormSetValue,
 } from 'react-hook-form'
-import SvgIcon from './SvgIcon'
 import { splitDescription } from '../utils/constants'
 import { SelectDDL } from '../types/common'
+import ArrowCircleDownOutlinedIcon from '@mui/icons-material/ArrowCircleDownOutlined'
+import { theme } from '@/context/ThemeProvider'
 
 type Props = {
   options: SelectDDL[]
@@ -152,7 +153,11 @@ const SelectInput = ({
               tooltip ? tooltip.length : 13,
             )
           }
-          popupIcon={<SvgIcon iconName='select-arrow' svgProp={{ width: 24, height: 24 }} />}
+          popupIcon={
+            <ArrowCircleDownOutlinedIcon
+              sx={{ width: 24, height: 24, fill: theme.palette.mDarkGray?.main }}
+            />
+          }
         />
       )}
     />

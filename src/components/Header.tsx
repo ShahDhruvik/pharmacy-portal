@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Logo from '../assets/images/logo.webp'
-import SvgIcon from './SvgIcon'
 import { headerData } from '../utils/data'
 import { Avatar, Box, Divider, Drawer, IconButton, Popper } from '@mui/material'
 import img from '@/assets/images/Aspect_Ratio.jpg'
 import { theme } from '@/context/ThemeProvider'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import ProfileBar from '../pages/profile/Profilebar'
+import HomeIcon from '@mui/icons-material/Home'
+
 interface Props {}
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right'
@@ -65,7 +66,7 @@ const Header = ({}: Props) => {
                   padding: 0,
                 }}
               >
-                <SvgIcon iconName='tool-box' />
+                <HomeIcon />
               </IconButton>
               <Popper
                 id={id}
@@ -96,7 +97,7 @@ const Header = ({}: Props) => {
                 padding: 0,
               }}
             >
-              <SvgIcon iconName='home' />
+              <HomeIcon />
             </IconButton>
           </div>
         </div>
