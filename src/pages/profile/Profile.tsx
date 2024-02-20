@@ -8,6 +8,7 @@ import Spinner from '@/components/spinner'
 import { getAllProfile } from '@/lib/Profile'
 import { useLoading } from '@/context/LoadingContext'
 import { useToast } from '@/hooks/useToast'
+import { useAuth } from '@/context/AuthContext'
 type Props = {
   handleDrawerState: (state: DrawerState) => void
   handleClose: () => void
@@ -74,6 +75,7 @@ const Profile = ({ handleDrawerState, handleClose, handleField }: Props) => {
   const [data, setData] = useState<any>(null)
   const { setLoading, loading } = useLoading()
   const showToast = useToast()
+  const { clearStorage } = useAuth()
 
   const getData = async () => {
     const response = await getAllProfile(setLoading, showToast)
@@ -118,6 +120,7 @@ const Profile = ({ handleDrawerState, handleClose, handleField }: Props) => {
               height: 20,
             }}
             disableRipple
+            onClick={clearStorage}
           >
             Sign out
           </Button>

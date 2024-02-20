@@ -34,10 +34,14 @@ import Spinner from '@/components/spinner'
 import CustomDialog from '@/components/Dialog-custom'
 import CloseIcon from '@mui/icons-material/Close'
 import { FamilyField } from '@/types/FamilyTypes'
+import { dropdownRelation } from '@/lib/DropDownApis'
+import { SelectDDL } from '@/types/common'
+import { MANAGE_STATE } from '@/components/SmallCard'
 
 type Props = {
   handleClose: () => void
   open: boolean
+  manageState: any
 }
 
 export const enum FAMILY_RELATION {
@@ -96,7 +100,7 @@ const relation = [
   },
 ]
 
-const FamilyManageBar = ({ open, handleClose }: Props) => {
+const FamilyManageBar = ({ open, handleClose, manageState }: Props) => {
   const [entity, setEntity] = useState<any | undefined>()
   const [item, setItems] = useState(false)
   const [type, setType] = useState('')
@@ -106,6 +110,7 @@ const FamilyManageBar = ({ open, handleClose }: Props) => {
   const [data, setData] = useState<FamilyField[]>([])
   const [openPopup, setOpenPopup] = useState(false)
   const [id, setId] = useState('')
+  const [relationData, setRelationData] = useState<SelectDDL[]>([])
 
   const { control, setValue, setError, clearErrors, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -118,6 +123,18 @@ const FamilyManageBar = ({ open, handleClose }: Props) => {
       gender: 'male',
     },
   })
+
+  const drpRelation = async () => {
+    const res = await dropdownRelation(setLoading, showToast)
+    if (res) {
+      setRelationData(res)
+    }
+  }
+  useEffect(() => {
+    if (type === 'add' || type === 'edit') {
+      drpRelation()
+    }
+  }, [type])
 
   const handleItemClick = () => {
     setType('add')
@@ -156,8 +173,10 @@ const FamilyManageBar = ({ open, handleClose }: Props) => {
   }
 
   useEffect(() => {
-    getData()
-  }, [])
+    if (manageState === MANAGE_STATE.FAMILY) {
+      getData()
+    }
+  }, [manageState])
 
   const onSubmitHandle: SubmitHandler<any> = async (data: FamilyField) => {
     if (type === 'add') {
@@ -189,8 +208,8 @@ const FamilyManageBar = ({ open, handleClose }: Props) => {
       setValue('lastName', entity?.account?.lastName)
       setValue('contactNo', entity?.account?.contactNo)
       setValue('accRelation', {
-        label: entity?.account.accRelation,
-        _id: entity?.account.accRelation,
+        label: entity?.account?.accRelation?.displayName,
+        _id: entity?.account?.accRelation?.id,
       })
       setValue('profileEmail', entity?.account?.profileEmail)
       setValue('dob', entity?.account?.dob ? new Date(entity?.account?.dob) : null)
@@ -271,9 +290,9 @@ const FamilyManageBar = ({ open, handleClose }: Props) => {
                       key={Math.random()}
                     >
                       <td className='w-1/2'>
-                        {splitDescription(x.account.firstName, 10)} ({x?.account.age})
+                        {splitDescription(x?.account?.firstName, 10)} ({x?.account?.age})
                       </td>
-                      <td className='w-1/4'>{x.account.accRelation}</td>
+                      <td className='w-1/4'>{x?.account?.accRelation?.displayName}</td>
                       <td className='w-1/4 flex'>
                         <Tooltip title='Edit' arrow placement='left'>
                           <IconButton
@@ -323,7 +342,7 @@ const FamilyManageBar = ({ open, handleClose }: Props) => {
                     </div>
                     <div className='flex gap-4 mb-3'>
                       <SelectInput
-                        options={relation as any}
+                        options={relationData as any}
                         name={'accRelation'}
                         control={control}
                         label={'Relation*'}

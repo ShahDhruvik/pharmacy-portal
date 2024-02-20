@@ -20,6 +20,13 @@ interface Props {
   para: string
 }
 
+export const enum MANAGE_STATE {
+  MEDICAL_FORM = 'medicalForm',
+  HEALTH_CARD = 'healthCard',
+  INSURANCE = 'insurance',
+  FAMILY = 'family',
+}
+
 const SmallCard = ({ family, medicalForm, healthCard, insurance, heading, para }: Props) => {
   // Drawer
   const [openDrawer, setOpenDrawer] = useState(false)
@@ -30,12 +37,7 @@ const SmallCard = ({ family, medicalForm, healthCard, insurance, heading, para }
     setOpenDrawer(true)
   }
   //Manage states
-  const enum MANAGE_STATE {
-    MEDICAL_FORM = 'medicalForm',
-    HEALTH_CARD = 'healthCard',
-    INSURANCE = 'insurance',
-    FAMILY = 'family',
-  }
+
   type ManageState =
     | MANAGE_STATE.FAMILY
     | MANAGE_STATE.HEALTH_CARD
@@ -164,6 +166,7 @@ const SmallCard = ({ family, medicalForm, healthCard, insurance, heading, para }
       <FamilyManageBar
         handleClose={handleCloseDrawer}
         open={openDrawer && manageState === MANAGE_STATE.FAMILY}
+        manageState={manageState as any}
       />
       <MedicalFormBar
         handleClose={handleCloseDrawer}

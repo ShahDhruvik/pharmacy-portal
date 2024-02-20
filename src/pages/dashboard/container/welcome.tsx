@@ -15,7 +15,7 @@ import { getAllFeature, getAllImage } from '@/lib/DashboardContent'
 import { useLoading } from '@/context/LoadingContext'
 import { useToast } from '@/hooks/useToast'
 import { useEffect, useState } from 'react'
-import { CONST_API_URL } from '@/utils/constants'
+import { CONST_APP_IMAGE_URL, CONST_OOPCHAR_URL } from '@/utils/constants'
 
 interface Props {}
 
@@ -96,12 +96,12 @@ const Welcome = ({}: Props) => {
         <div className='flex-1 items-center justify-center flex flex-wrap'>
           <div className='top-0 left-0 relative'>
             <img
-              src={`${CONST_API_URL}/common/${data1?.image}`}
+              src={`${CONST_APP_IMAGE_URL}${data1?.image}`}
               alt=''
               className='relative full aspect-video h-96'
             />
             <img
-              src={`${CONST_API_URL}/common/${data?.image}`}
+              src={`${CONST_APP_IMAGE_URL}${data?.image}`}
               alt=''
               className='w-60 aspect-square absolute top-20 -right-16 md:block hidden'
             />
@@ -113,38 +113,42 @@ const Welcome = ({}: Props) => {
               Get top notch support from direct healthcare professionals.
             </div>
             <div>
-              <Button
-                variant='outlined'
-                color='mBlack'
-                sx={{
-                  maxWidth: 250,
-                  minWidth: 250,
-                  marginTop: '12px',
-                  marginBottom: '4px',
-                  color: theme.palette.mBlack?.main,
-                  borderColor: theme.palette.mBlack?.main,
-                  borderWidth: '3px',
-                  fontWeight: 'bold',
-                }}
-              >
-                Book Online Consultation
-              </Button>
-              <Button
-                variant='outlined'
-                color='mBlack'
-                sx={{
-                  maxWidth: 250,
-                  minWidth: 250,
-                  marginTop: '12px',
-                  marginBottom: '4px',
-                  color: theme.palette.mBlack?.main,
-                  borderColor: theme.palette.mBlack?.main,
-                  borderWidth: '3px',
-                  fontWeight: 'bold',
-                }}
-              >
-                Take Free Assessment
-              </Button>
+              <a href={CONST_OOPCHAR_URL} target='_blank' rel='noopener noreferrer'>
+                <Button
+                  variant='outlined'
+                  color='mBlack'
+                  sx={{
+                    maxWidth: 250,
+                    minWidth: 250,
+                    marginTop: '12px',
+                    marginBottom: '4px',
+                    color: theme.palette.mBlack?.main,
+                    borderColor: theme.palette.mBlack?.main,
+                    borderWidth: '3px',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  Book Online Consultation
+                </Button>
+              </a>
+              <a href={CONST_OOPCHAR_URL} target='_blank' rel='noopener noreferrer'>
+                <Button
+                  variant='outlined'
+                  color='mBlack'
+                  sx={{
+                    maxWidth: 250,
+                    minWidth: 250,
+                    marginTop: '12px',
+                    marginBottom: '4px',
+                    color: theme.palette.mBlack?.main,
+                    borderColor: theme.palette.mBlack?.main,
+                    borderWidth: '3px',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  Take Free Assessment
+                </Button>
+              </a>
             </div>
           </div>
           <Divider orientation='vertical' />
@@ -203,12 +207,12 @@ const Welcome = ({}: Props) => {
             <div className='flex items-center gap-8 flex-wrap px-12 justify-between py-5'>
               {feature?.map((x: any) => (
                 <div className='flex items-center gap-5 max-w-96 w-80' key={x._id}>
-                  <div className='border-2 rounded-full border-gray-main p-3'>
-                    <img src={`${CONST_API_URL}/common/${x?.icon}`} alt='Img' width={'40px'} />
+                  <div className='border-2 rounded-full border-gray-main p-3 aspect-square'>
+                    <img src={`${CONST_APP_IMAGE_URL}${x?.icon}`} alt='Img' width={'40px'} />
                   </div>
                   <div>
-                    <h2>{x.name}</h2>
-                    <p className='text-sm font-light'>{x.description}</p>
+                    <h2>{x?.name}</h2>
+                    <p className='text-sm font-light'>{x?.description}</p>
                   </div>
                 </div>
               ))}

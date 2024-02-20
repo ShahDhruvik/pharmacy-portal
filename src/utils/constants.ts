@@ -17,9 +17,13 @@ export const BlogPosts: Record<string, { title: string; description: string }> =
 
 //SERVER
 export const CONST_API_URL = 'https://api-dev.oopchar.com/api'
+export const CONST_APP_IMAGE_URL = 'https://oopchar-editor-dev-1.s3.ap-south-1.amazonaws.com/'
+export const CONST_OOPCHAR_URL = 'https://dev.oopchar.com/'
 
 //LOCAL
 // export const CONST_API_URL = 'http://localhost:8000/api'
+// export const CONST_APP_IMAGE_URL = 'https://oopchar-editor-dev-1.s3.ap-south-1.amazonaws.com/'
+// export const CONST_OOPCHAR_URL = 'https://dev.oopchar.com/'
 
 export const enum ROLES {
   ADMIN = 'ADMIN',

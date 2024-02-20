@@ -2,8 +2,12 @@ import AppointmentCard from '@/components/AppointmentCard'
 import Header from '@/components/Header'
 import SmallCard from '@/components/SmallCard'
 import { theme } from '@/context/ThemeProvider'
+import { getAllAppointments } from '@/lib/Appointment'
 import { Divider } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useToast } from '@/hooks/useToast'
+import { useLoading } from '@/context/LoadingContext'
+import { useAuth } from '@/context/AuthContext'
 
 interface Props {}
 
@@ -42,6 +46,8 @@ const enum SliderString {
 }
 
 const Banner = ({}: Props) => {
+  const { setLoading } = useLoading()
+  const showToast = useToast()
   //Manage states
   const enum MANAGE_STATE {
     UPCOMING = 'upcoming',
@@ -50,8 +56,22 @@ const Banner = ({}: Props) => {
   }
 
   type ManageState = MANAGE_STATE.UPCOMING | MANAGE_STATE.COMPLETE | MANAGE_STATE.CANCEL | undefined
-
+  const [appointmentDetails, setAppointmentDetails] = useState<any>(null)
+  const { authParams } = useAuth()
   const [manageState, setManageState] = useState<ManageState>(undefined)
+
+  const getData = async () => {
+    const response = await getAllAppointments(setLoading, showToast)
+    if (response) {
+      setAppointmentDetails(response)
+    }
+  }
+
+  useEffect(() => {
+    if (authParams?.isAuth) {
+      getData()
+    }
+  }, [authParams?.isAuth])
 
   return (
     <div className='min-h-screen'>
@@ -88,6 +108,7 @@ const Banner = ({}: Props) => {
               setManageState={setManageState}
               manageState={manageState}
               full={true}
+              data={appointmentDetails?.upcomingAppointments}
             />
             <AppointmentCard
               heading='Completed Appointments'
@@ -97,6 +118,7 @@ const Banner = ({}: Props) => {
               setManageState={setManageState}
               manageState={manageState}
               full={true}
+              data={appointmentDetails?.completedAppointments}
             />
             <AppointmentCard
               heading='Cancelled Appointments'
@@ -106,6 +128,7 @@ const Banner = ({}: Props) => {
               setManageState={setManageState}
               manageState={manageState}
               full={true}
+              data={appointmentDetails?.cancelledAppointments}
             />
           </div>
           <span className='flex justify-end font-extralight text-sm pt-4'>
