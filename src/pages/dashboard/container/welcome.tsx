@@ -16,6 +16,7 @@ import { useLoading } from '@/context/LoadingContext'
 import { useToast } from '@/hooks/useToast'
 import { useEffect, useState } from 'react'
 import { CONST_APP_IMAGE_URL, CONST_OOPCHAR_URL } from '@/utils/constants'
+import AuthForm from './auth-forms/auth-form'
 
 interface Props {}
 
@@ -89,6 +90,18 @@ const Welcome = ({}: Props) => {
     getData()
     getFeature()
   }, [])
+
+  const [openSign, setOpenSign] = useState(false)
+  const handleOpenForm = () => setOpenSign(true)
+  const handleCloseForm = () => setOpenSign(false)
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget)
+  }
+
+  const open = Boolean(anchorEl)
+  const id = open ? 'simple-popper' : undefined
 
   return (
     <>
@@ -167,6 +180,7 @@ const Welcome = ({}: Props) => {
                 alignItems: 'center',
                 gap: '10px',
               }}
+              onClick={handleOpenForm}
             >
               <LockOutlinedIcon />
               Sign in
@@ -234,6 +248,7 @@ const Welcome = ({}: Props) => {
         />
         {/* </div> */}
       </section>
+      <AuthForm open={openSign} handleClose={handleCloseForm} isAssesstment={false} />
     </>
   )
 }

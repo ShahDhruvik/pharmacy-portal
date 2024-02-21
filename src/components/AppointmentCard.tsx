@@ -122,44 +122,7 @@ const AppointmentCard = ({
             autoplay={{ delay: 2000 }}
             className=' max-w-xs lg:max-w-sm xl:max-w-md  '
           >
-            {upcoming && full && (
-              <span className='flex justify-end text-darkBlue-main font-light'>
-                <button
-                  onClick={() => {
-                    handleOpenDrawer()
-                    setManageState(MANAGE_STATE.UPCOMING)
-                  }}
-                >
-                  view all
-                </button>
-              </span>
-            )}
-            {complete && full && (
-              <span className='flex justify-end text-darkBlue-main font-light'>
-                <button
-                  onClick={() => {
-                    handleOpenDrawer()
-                    setManageState(MANAGE_STATE.COMPLETE)
-                  }}
-                >
-                  view all
-                </button>
-              </span>
-            )}
-            {cancel && full && (
-              <span className='flex justify-end text-darkBlue-main font-light'>
-                <button
-                  onClick={() => {
-                    handleOpenDrawer()
-                    setManageState(MANAGE_STATE.CANCEL)
-                  }}
-                >
-                  view all
-                </button>
-              </span>
-            )}
-            {data &&
-              data?.length > 0 &&
+            {data && data?.length > 0 ? (
               data?.map((x) => (
                 <SwiperSlide className='pb-2'>
                   <div className='mt-3 rounded-md border-[1px] border-black-main bg-lightGray-main'>
@@ -316,7 +279,46 @@ const AppointmentCard = ({
                     </div>
                   </div>
                 </SwiperSlide>
-              ))}
+              ))
+            ) : (
+              <div className='flex items-center justify-center h-60'>Appointment Not Found!!</div>
+            )}
+            {upcoming && full && (
+              <span className='flex justify-end text-darkBlue-main font-light'>
+                <button
+                  onClick={() => {
+                    handleOpenDrawer()
+                    setManageState(MANAGE_STATE.UPCOMING)
+                  }}
+                >
+                  view all
+                </button>
+              </span>
+            )}
+            {complete && full && (
+              <span className='flex justify-end text-darkBlue-main font-light'>
+                <button
+                  onClick={() => {
+                    handleOpenDrawer()
+                    setManageState(MANAGE_STATE.COMPLETE)
+                  }}
+                >
+                  view all
+                </button>
+              </span>
+            )}
+            {cancel && full && (
+              <span className='flex justify-end text-darkBlue-main font-light'>
+                <button
+                  onClick={() => {
+                    handleOpenDrawer()
+                    setManageState(MANAGE_STATE.CANCEL)
+                  }}
+                >
+                  view all
+                </button>
+              </span>
+            )}
             {/* <SwiperSlide>
             <div className='mt-3 rounded-md border-[1px] border-black-main bg-lightGray-main'>
               <div className='relative border-black'>
