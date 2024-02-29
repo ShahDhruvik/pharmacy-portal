@@ -4,6 +4,8 @@ import { enUS } from 'date-fns/locale'
 // ALl your constants and enums. This includes pre-defined functions and other commonly used variables. ex: date-format functions, other standarad maintaining function
 export const x = 10
 
+export const currencySymbol = '₹'
+
 export const BlogPosts: Record<string, { title: string; description: string }> = {
   'first-blog-post': {
     title: 'First Blog Post',

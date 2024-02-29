@@ -33,6 +33,7 @@ import {
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import Spinner from '@/components/spinner'
 import { MANAGE_STATE } from '@/components/SmallCard'
+import { currencySymbol } from '@/utils/constants'
 
 type Props = {
   handleClose: () => void
@@ -440,13 +441,13 @@ const CoverageAndExpenseBar = ({ open, handleClose, manageState }: Props) => {
                             <div className='flex flex-col gap-2'>
                               <span className='text-xl font-medium text-end'>
                                 {y?.AccountExpenses?.length > 0
-                                  ? y?.AccountExpenses?.reduce(
+                                  ? `${currencySymbol} ${y?.AccountExpenses?.reduce(
                                       (accumulator: any, currentValue: any) => {
                                         return accumulator + Number(currentValue.amount)
                                       },
                                       0,
-                                    )
-                                  : 0}
+                                    )}`
+                                  : `${currencySymbol} ${0}`}
                               </span>
                               {y?.AccountExpenses?.length > 0 && y?.amount ? (
                                 <div className='w-full rounded-full h-1.5 dark:bg-lightBlue-main'>
@@ -487,7 +488,7 @@ const CoverageAndExpenseBar = ({ open, handleClose, manageState }: Props) => {
 
                               <div className='flex justify-between text-darkGray-main text-sm'>
                                 <span>{y?.name}</span>
-                                <span>{y?.amount}</span>
+                                <span>{`${currencySymbol} ${y?.amount}`}</span>
                               </div>
                             </div>
                           </div>
@@ -703,13 +704,13 @@ const CoverageAndExpenseBar = ({ open, handleClose, manageState }: Props) => {
                             <div className='flex flex-col gap-2'>
                               <span className='text-xl font-medium text-end'>
                                 {y?.AccountExpenses?.length > 0
-                                  ? y?.AccountExpenses?.reduce(
+                                  ? `${currencySymbol} ${y?.AccountExpenses?.reduce(
                                       (accumulator: any, currentValue: any) => {
                                         return accumulator + Number(currentValue.amount)
                                       },
                                       0,
-                                    )
-                                  : 0}
+                                    )}`
+                                  : `${currencySymbol} ${0}`}
                               </span>
                               {y?.AccountExpenses?.length > 0 && y?.amount ? (
                                 <div className='w-full rounded-full h-1.5 dark:bg-lightBlue-main'>
@@ -750,7 +751,7 @@ const CoverageAndExpenseBar = ({ open, handleClose, manageState }: Props) => {
 
                               <div className='flex justify-between text-darkGray-main text-sm'>
                                 <span>{y?.name}</span>
-                                <span>{y?.amount}</span>
+                                <span>{`${currencySymbol} ${y?.amount}`}</span>
                               </div>
                             </div>
                           </div>
@@ -774,8 +775,8 @@ const CoverageAndExpenseBar = ({ open, handleClose, manageState }: Props) => {
                                       className='flex text-start w-full items-center text-black-main border-b-[1px] border-black-main h-10'
                                       key={Math.random()}
                                     >
-                                      <td className='w-3/5'>{z?.practiceId}</td>
-                                      <td className='w-1/4'>{z?.amount}</td>
+                                      <td className='w-3/5'>{z?.PracticeInfo?.name}</td>
+                                      <td className='w-1/4'>{`${currencySymbol} ${z?.amount}`}</td>
                                       <td className='w-[15%]'>
                                         {!show && (
                                           <Button
