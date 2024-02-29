@@ -160,15 +160,16 @@ const CoverageAndExpenseBar = ({ open, handleClose, manageState }: Props) => {
     if (type === TYPE_ENUM.ADD_EXPENSE) {
       if (coverageWatch?._id !== '00') {
         setAddedCoverageId(coverageWatch?.internalId)
+        drpSpentOn(coverageWatch?.internalId)
       }
     }
   }, [coverageWatch, type])
 
-  useEffect(() => {
-    if (addedCoverageId !== '' && type === TYPE_ENUM.ADD_EXPENSE) {
-      drpSpentOn(addedCoverageId)
-    }
-  }, [coverageWatch, type])
+  // useEffect(() => {
+  //   if (addedCoverageId !== '' && type === TYPE_ENUM.ADD_EXPENSE) {
+  //     drpSpentOn(addedCoverageId)
+  //   }
+  // }, [coverageWatch, type])
 
   // useEffect(() => {
   //   if (familyData?.length > 0) {
@@ -290,11 +291,12 @@ const CoverageAndExpenseBar = ({ open, handleClose, manageState }: Props) => {
         // getData()
       }
       setType('')
+      setShow(false)
       reset()
     }
   }
 
-  if (!loading.isLoading && !loading.isIndependentLoader) {
+  if (!loading.isLoading && !loading.isCoverageLoader) {
     return (
       <Drawer
         anchor='right'

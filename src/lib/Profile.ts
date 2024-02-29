@@ -5,7 +5,7 @@ import axiosInstance from '../../axiosInstance'
 
 const getAllProfile = async (loading: LoadingState['setLoading'], toast: ShowToastFunction) => {
   try {
-    loading({ isLoading: true, isPage: false, isIndependentLoader: true })
+    loading({ isLoading: true, isIndependentLoader: true, isPage: false })
     const res = await axiosInstance.post(PROFILE.GET)
     if (res.data.success) {
       return res.data.data
@@ -18,7 +18,7 @@ const getAllProfile = async (loading: LoadingState['setLoading'], toast: ShowToa
       toast('error', error.response.statusText)
     }
   } finally {
-    loading({ isLoading: false, isPage: false, isIndependentLoader: false })
+    loading({ isLoading: false, isIndependentLoader: false, isPage: false })
   }
 }
 

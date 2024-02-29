@@ -71,7 +71,7 @@ const AppointmentCard = ({
   // const [manageState, setManageState] = useState<ManageState>(undefined)
 
   // console.log(manageState, 'manageState')
-  if (!loading.isLoading && !loading.isIndependentLoader) {
+  if (!loading.isLoading && !loading.isAppointmentLoader) {
     return (
       <>
         <div className='w-[425px]'>
@@ -473,11 +473,13 @@ const AppointmentCard = ({
       </>
     )
   } else {
-    return (
-      <div className='h-80 flex items-center justify-center px-10'>
-        <Spinner />
-      </div>
-    )
+    if (loading.isAppointmentLoader) {
+      return (
+        <div className='h-80 flex items-center justify-center px-10'>
+          <Spinner />
+        </div>
+      )
+    }
   }
 }
 

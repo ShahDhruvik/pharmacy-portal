@@ -9,7 +9,7 @@ export const createCoverage = async (
   formData: any,
 ) => {
   try {
-    loading({ isLoading: true, isIndependentLoader: true, isPage: false })
+    loading({ isLoading: true, isCoverageLoader: true, isPage: false })
     console.log(formData, 'form')
     const data = {
       accountId: Number(formData?.accountId),
@@ -35,7 +35,7 @@ export const createCoverage = async (
     console.log(error)
     toast('error', error?.response?.data?.message)
   } finally {
-    loading({ isLoading: false, isIndependentLoader: false, isPage: false })
+    loading({ isLoading: false, isCoverageLoader: false, isPage: false })
   }
 }
 
@@ -45,7 +45,7 @@ export const getAllDetails = async (
   accountId: string,
 ) => {
   try {
-    loading({ isLoading: true, isIndependentLoader: true, isPage: false })
+    loading({ isLoading: true, isCoverageLoader: true, isPage: false })
     const res = await axiosInstance.post(INSURANCE_CALCULATOR.GET, { accountInternalId: accountId })
     if (res.data.success) {
       return res.data.data
@@ -58,7 +58,7 @@ export const getAllDetails = async (
       toast('error', error.response.statusText)
     }
   } finally {
-    loading({ isLoading: false, isIndependentLoader: false, isPage: false })
+    loading({ isLoading: false, isCoverageLoader: false, isPage: false })
   }
 }
 
@@ -68,7 +68,7 @@ export const createExpense = async (
   formData: any,
 ) => {
   try {
-    loading({ isLoading: true, isIndependentLoader: true, isPage: false })
+    loading({ isLoading: true, isCoverageLoader: true, isPage: false })
     console.log(formData, 'form')
     const data = {
       accountId: Number(formData?.accountId),
@@ -90,7 +90,7 @@ export const createExpense = async (
     console.log(error)
     toast('error', error?.response?.data?.message)
   } finally {
-    loading({ isLoading: false, isIndependentLoader: false, isPage: false })
+    loading({ isLoading: false, isCoverageLoader: false, isPage: false })
   }
 }
 
@@ -100,7 +100,7 @@ export const editCoverage = async (
   formData: any,
 ) => {
   try {
-    loading({ isLoading: true, isIndependentLoader: true, isPage: false })
+    loading({ isLoading: true, isCoverageLoader: true, isPage: false })
     const a = formData.deleted
     const b = formData?.coverageDetails
     const notInB = a.filter((itemA: any) => !b.some((itemB: any) => itemA.id === itemB.id))
@@ -130,7 +130,7 @@ export const editCoverage = async (
     console.log(error)
     toast('error', error?.response?.data?.message)
   } finally {
-    loading({ isLoading: false, isIndependentLoader: false, isPage: false })
+    loading({ isLoading: false, isCoverageLoader: false, isPage: false })
   }
 }
 
@@ -141,7 +141,7 @@ export const editExpense = async (
   id: any,
 ) => {
   try {
-    loading({ isLoading: true, isIndependentLoader: true, isPage: false })
+    loading({ isLoading: true, isCoverageLoader: true, isPage: false })
     console.log(formData, 'ff')
 
     const data = {
@@ -166,6 +166,6 @@ export const editExpense = async (
     console.log(error)
     toast('error', error?.response?.data?.message)
   } finally {
-    loading({ isLoading: false, isIndependentLoader: false, isPage: false })
+    loading({ isLoading: false, isCoverageLoader: false, isPage: false })
   }
 }

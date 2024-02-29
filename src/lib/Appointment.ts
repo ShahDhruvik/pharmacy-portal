@@ -7,7 +7,7 @@ export const getAllAppointments = async (
   toast: ShowToastFunction,
 ) => {
   try {
-    loading({ isLoading: true, isIndependentLoader: true, isPage: false })
+    loading({ isLoading: true, isAppointmentLoader: true, isPage: false })
     const res = await axiosInstance.post(APPOINTMENT.GET)
     if (res.data.success) {
       return res.data.data
@@ -20,6 +20,6 @@ export const getAllAppointments = async (
       toast('error', error.response.statusText)
     }
   } finally {
-    loading({ isLoading: false, isIndependentLoader: false, isPage: false })
+    loading({ isLoading: false, isAppointmentLoader: false, isPage: false })
   }
 }

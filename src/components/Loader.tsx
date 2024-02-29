@@ -11,28 +11,8 @@ type Props = {
 const Loader = ({ loading }: Props) => {
   const location = useLocation()
   console.log(location.pathname)
-  if (loading.isLoading && !loading.isIndependentLoader) {
-    if (!loading.isPage) {
-      return (
-        <Backdrop
-          sx={{
-            color: '#000000',
-            zIndex: (theme) => theme.zIndex.drawer + 1999999999999,
-          }}
-          open={loading.isLoading}
-        >
-          <CustomDialog
-            open={true}
-            handleClose={() => {}}
-            action={{ isAction: false, component: null }}
-            maxWidth={'xs'}
-            header={{ isHeader: false, component: null }}
-          >
-            <Spinner />
-          </CustomDialog>
-        </Backdrop>
-      )
-    } else {
+  if (loading.isLoading) {
+    if (loading.isPage) {
       return (
         <Dialog
           open={loading.isLoading}
@@ -59,6 +39,32 @@ const Loader = ({ loading }: Props) => {
             </div>
           </section>
         </Dialog>
+      )
+    } else if (
+      loading.isIndependentLoader ||
+      loading.isAppointmentLoader ||
+      loading.isCoverageLoader
+    ) {
+      return null
+    } else {
+      return (
+        <Backdrop
+          sx={{
+            color: '#000000',
+            zIndex: (theme) => theme.zIndex.drawer + 1999999999999,
+          }}
+          open={loading.isLoading}
+        >
+          <CustomDialog
+            open={true}
+            handleClose={() => {}}
+            action={{ isAction: false, component: null }}
+            maxWidth={'xs'}
+            header={{ isHeader: false, component: null }}
+          >
+            <Spinner />
+          </CustomDialog>
+        </Backdrop>
       )
     }
   } else {

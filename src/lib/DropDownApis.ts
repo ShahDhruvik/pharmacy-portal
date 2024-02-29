@@ -17,7 +17,7 @@ export const dropdownRelation = async (
   isMulti?: SelectDDL,
 ) => {
   try {
-    loading({ isLoading: true, isPage: true })
+    loading({ isLoading: true, isIndependentLoader: true, isPage: false })
     const res = await axiosInstance.post(DROPDOWN.drpRelation, {})
     if (res && res.data.success && res.data) {
       const { data } = res
@@ -47,7 +47,7 @@ export const dropdownFamily = async (
   isMulti?: SelectDDL,
 ) => {
   try {
-    loading({ isLoading: true, isPage: true })
+    loading({ isLoading: true, isIndependentLoader: true, isPage: false })
     const res = await axiosInstance.post(DROPDOWN.drpFamily, {})
     if (res && res.data.success && res.data) {
       const { data } = res
@@ -81,7 +81,7 @@ export const dropdownClinic = async (
   isMulti?: SelectDDL,
 ) => {
   try {
-    loading({ isLoading: true, isPage: true })
+    loading({ isLoading: true, isIndependentLoader: true, isPage: false })
     const res = await axiosInstance.post(DROPDOWN.drpClinic, {})
     if (res && res.data.success && res.data) {
       const { data } = res
@@ -112,7 +112,7 @@ export const dropdownAddedCoverage = async (
   isMulti?: SelectDDL,
 ) => {
   try {
-    loading({ isLoading: true, isPage: true })
+    loading({ isLoading: true, isIndependentLoader: true, isPage: false })
     const res = await axiosInstance.post(DROPDOWN.drpCoverage, { accountInternalId: accountId })
     if (res && res.data.success && res.data) {
       console.log(res, 'res')
@@ -145,7 +145,7 @@ export const dropdownSpentOn = async (
   isMulti?: SelectDDL,
 ) => {
   try {
-    loading({ isLoading: true, isPage: true })
+    loading({ isLoading: true, isIndependentLoader: true, isPage: false })
     const res = await axiosInstance.post(DROPDOWN.drpCoverageDetails, {
       coverageInternalId: coverageId,
     })

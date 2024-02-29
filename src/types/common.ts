@@ -42,6 +42,8 @@ export type LoadingState = {
   loading: {
     isLoading: boolean
     isIndependentLoader?: boolean
+    isAppointmentLoader?: boolean
+    isCoverageLoader?: boolean
     isPage: boolean
     pageProps?: { image: any; pageTxt: string }
   }
@@ -49,6 +51,8 @@ export type LoadingState = {
     SetStateAction<{
       isLoading: boolean
       isIndependentLoader?: boolean
+      isAppointmentLoader?: boolean
+      isCoverageLoader?: boolean
       isPage: boolean
       pageProps?: { image: any; pageTxt: string }
     }>
