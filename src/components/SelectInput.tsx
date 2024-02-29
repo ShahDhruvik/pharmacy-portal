@@ -6,11 +6,13 @@ import {
   UseFormClearErrors,
   UseFormSetError,
   UseFormSetValue,
+  useController,
 } from 'react-hook-form'
 import { splitDescription } from '../utils/constants'
 import { SelectDDL } from '../types/common'
 import ArrowCircleDownOutlinedIcon from '@mui/icons-material/ArrowCircleDownOutlined'
 import { theme } from '@/context/ThemeProvider'
+import { useEffect } from 'react'
 
 type Props = {
   options: SelectDDL[]
@@ -26,6 +28,7 @@ type Props = {
   sx?: SxProps<Theme>
   handleChange?: () => void
   isDisabled?: boolean
+  selectDefault?: boolean
 }
 
 const listBoxPropsDropdown = () => {
@@ -96,8 +99,26 @@ const SelectInput = ({
   handleChange,
   sx,
   isDisabled,
+  selectDefault,
 }: Props) => {
   const inputStyleProps: SxProps<Theme> = { ...sx, width: '100%' }
+
+  const { field, fieldState } = useController({
+    name,
+    control,
+    rules: validation,
+    defaultValue: selectDefault ? options[0] : undefined,
+  })
+
+  useEffect(() => {
+    if (selectDefault && options && options.length > 0) {
+      const isCurrentValueDefault = field?.value && field?.value?._id === acDefaultValue?._id
+
+      if (isCurrentValueDefault) {
+        setValue(name, options[0])
+      }
+    }
+  }, [selectDefault, options, field.value])
 
   return (
     <Controller
@@ -131,7 +152,7 @@ const SelectInput = ({
               }
             }
           }}
-          value={field.value}
+          value={field.value || null}
           renderInput={(params) => {
             return (
               <TextField

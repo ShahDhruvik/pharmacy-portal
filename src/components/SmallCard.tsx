@@ -10,6 +10,8 @@ import InsuranceBar from '@/pages/insuranceCalculator/insuranceBar'
 import MedicalFormBar from '@/pages/medical-form/medical-form-bar'
 import FamilyManageBar from '@/pages/familyManage/familyManageBar'
 import HealthManageBar from '@/pages/healthManage/healthBar'
+import CoverageAndExpense from '@/pages/insuranceCalculator/coverageAndExpense'
+import CoverageAndExpenseBar from '@/pages/insuranceCalculator/coverageAndExpense'
 
 interface Props {
   family?: boolean
@@ -25,6 +27,7 @@ export const enum MANAGE_STATE {
   HEALTH_CARD = 'healthCard',
   INSURANCE = 'insurance',
   FAMILY = 'family',
+  COVERAGE_AND_EXPENSE = 'CoverageAndExpense',
 }
 
 const SmallCard = ({ family, medicalForm, healthCard, insurance, heading, para }: Props) => {
@@ -43,6 +46,7 @@ const SmallCard = ({ family, medicalForm, healthCard, insurance, heading, para }
     | MANAGE_STATE.HEALTH_CARD
     | MANAGE_STATE.INSURANCE
     | MANAGE_STATE.MEDICAL_FORM
+    | MANAGE_STATE.COVERAGE_AND_EXPENSE
     | undefined
   const [manageState, setManageState] = useState<ManageState>(undefined)
 
@@ -134,7 +138,7 @@ const SmallCard = ({ family, medicalForm, healthCard, insurance, heading, para }
                 className='text-darkBlue-main font-light text-[12px]'
                 onClick={() => {
                   handleOpenDrawer()
-                  setManageState(MANAGE_STATE.INSURANCE)
+                  setManageState(MANAGE_STATE.COVERAGE_AND_EXPENSE)
                 }}
               >
                 {para}
@@ -153,9 +157,23 @@ const SmallCard = ({ family, medicalForm, healthCard, insurance, heading, para }
                 </div>
                 <div className='flex flex-col text-darkBlue-main font-light text-[13px] text-right'>
                   <div>
-                    <button onClick={handleOpenDrawer}>Refer a Friend</button>
+                    <button
+                      onClick={() => {
+                        handleOpenDrawer()
+                        setManageState(MANAGE_STATE.INSURANCE)
+                      }}
+                    >
+                      Refer a Friend
+                    </button>
                   </div>
-                  <button onClick={handleOpenDrawer}>Redeem Reward</button>
+                  <button
+                    onClick={() => {
+                      handleOpenDrawer()
+                      setManageState(MANAGE_STATE.INSURANCE)
+                    }}
+                  >
+                    Redeem Reward
+                  </button>
                   <div></div>
                 </div>
               </div>
@@ -179,6 +197,11 @@ const SmallCard = ({ family, medicalForm, healthCard, insurance, heading, para }
       <InsuranceBar
         handleClose={handleCloseDrawer}
         open={openDrawer && manageState === MANAGE_STATE.INSURANCE}
+      />
+      <CoverageAndExpenseBar
+        handleClose={handleCloseDrawer}
+        open={openDrawer && manageState === MANAGE_STATE.COVERAGE_AND_EXPENSE}
+        manageState={manageState as any}
       />
     </>
   )

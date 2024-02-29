@@ -8,6 +8,7 @@ export const enum DEF_PATHS {
   main = '/main',
   common = '/common',
   patient = '/patient',
+  practice = '/practice',
 }
 
 export const enum AUTH_ENDPOINT {
@@ -41,8 +42,20 @@ export const enum DASHBOARD_CONTENT {
 
 export const enum DROPDOWN {
   drpRelation = DEF_PATHS.common + '/practice/relation-ddl',
+  drpFamily = DEF_PATHS.main + DEF_PATHS.patient + '/family-account/dropdown',
+  drpClinic = DEF_PATHS.main + DEF_PATHS.practice + '/patient/dropdown',
+  drpCoverage = DEF_PATHS.main + DEF_PATHS.patient + '/coverage/dropdown',
+  drpCoverageDetails = DEF_PATHS.main + DEF_PATHS.patient + '/coverage-details/dropdown',
 }
 
 export const enum APPOINTMENT {
   GET = DEF_PATHS.main + DEF_PATHS.patient + '/appointment',
+}
+
+export const enum INSURANCE_CALCULATOR {
+  GET = DEF_PATHS.main + DEF_PATHS.patient + '/coverage/all-details',
+  CREATE_COVERAGE = DEF_PATHS.main + DEF_PATHS.patient + '/coverage/create',
+  EDIT_COVERAGE = DEF_PATHS.main + DEF_PATHS.patient + '/coverage/edit',
+  CREATE_EXPENSE = DEF_PATHS.main + DEF_PATHS.patient + '/expense/create',
+  EDIT_EXPENSE = DEF_PATHS.main + DEF_PATHS.patient + '/expense/edit/',
 }
