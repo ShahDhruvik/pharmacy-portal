@@ -1,14 +1,12 @@
-import { Outlet } from 'react-router-dom'
-
 type Props = {}
 
 const Posts = ({}: Props) => {
   return (
-    <div>
-      <h2 className='bg-green-400  text-3xl p-5 font-bold'>BLOG : -</h2>
-
-      <Outlet />
-    </div>
+    <section className='min-h-screen'>
+      <div className='flex items-center justify-center h-40 bg-blue-light'>
+        <h1 className='text-5xl text-white-main'>Privacy Policy</h1>
+      </div>
+    </section>
   )
 }
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import AvatarGroup from '@mui/material/AvatarGroup'
 import Avatar from '@mui/material/Avatar'
 import img from '@/assets/images/Aspect_Ratio.jpg'
+import Abha from '@/assets/images/abha.png'
 import { Divider } from '@mui/material'
 import PermMediaIcon from '@mui/icons-material/PermMedia'
 import { theme } from '@/context/ThemeProvider'
@@ -91,21 +92,19 @@ const SmallCard = ({ family, medicalForm, healthCard, insurance, heading, para }
                 {para}
               </button>
             </div>
-            <div className='flex items-center justify-evenly px-3 h-[105px]'>
+            <div className='flex items-center justify-between gap-3 px-3 h-[105px]'>
               <div>
                 <PermMediaIcon
                   sx={{ width: '80px', height: '80px', color: theme.palette.mDarkGray?.main }}
                 />
               </div>
               <div className='flex flex-col text-darkBlue-main font-light text-[13px] items-start'>
-                <button>Medical History Form</button>
-                <button>Patient Info Form</button>
-                <button>Insurance Form</button>
+                <span>Manage and share your health information digitally.</span>
               </div>
             </div>
-            <span className='flex justify-end text-darkBlue-main font-light pr-3 h-[7px]'>
+            {/* <span className='flex justify-end text-darkBlue-main font-light pr-3 h-[7px]'>
               <button>more...</button>
-            </span>
+            </span> */}
           </>
         )}
         {healthCard && (
@@ -125,7 +124,7 @@ const SmallCard = ({ family, medicalForm, healthCard, insurance, heading, para }
             <div className='flex items-center justify-start px-3 h-28'>
               <div>
                 {/* <SvgIcon iconName='home' svgProp={{ width: '80px', height: '80px' }} /> */}
-                <img src={img1} alt='' className='relative full aspect-video h-24' />
+                <img src={Abha} alt='' className='relative full aspect-video h-24' />
               </div>
             </div>
           </>

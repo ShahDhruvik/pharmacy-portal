@@ -100,7 +100,7 @@ const AuthForm = ({ open, handleClose, isAssesstment }: Props) => {
               <MobileInput
                 control={control}
                 name={'contactNo'}
-                placeholder='Enter whatsapp number here ...'
+                placeholder='Enter Number'
                 setValue={setValue}
                 watch={watch}
                 handleChange={() => {}}

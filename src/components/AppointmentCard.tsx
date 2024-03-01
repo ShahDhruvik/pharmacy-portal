@@ -281,7 +281,9 @@ const AppointmentCard = ({
                 </SwiperSlide>
               ))
             ) : (
-              <div className='flex items-center justify-center h-60'>Appointment Not Found!!</div>
+              <div className='flex items-center justify-center border-black-main rounded-md border-[1px] bg-yellowLight-main h-56'>
+                There is Nothing to Show!
+              </div>
             )}
             {upcoming && full && (
               <span className='flex justify-end text-darkBlue-main font-light'>

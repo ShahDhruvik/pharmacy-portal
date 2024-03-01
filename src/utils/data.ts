@@ -36,11 +36,11 @@ export const headerLinks: HeaderLinkType[] = [
     name: 'Privacy',
     path: MAIN_PATH.POST.split('/*')[0],
   },
-  {
-    id: 2,
-    name: 'Treatment Plan',
-    path: MAIN_PATH.ABOUT.split('/*')[0],
-  },
+  // {
+  //   id: 2,
+  //   name: 'Treatment Plan',
+  //   path: MAIN_PATH.ABOUT.split('/*')[0],
+  // },
   {
     id: 3,
     name: 'Help',
@@ -94,6 +94,9 @@ export type FAQData = {
   id: number
   header: string
   text: string
+  question?: any
+  _id?: any
+  answer?: any
 }
 
 export const faqs: FAQData[] = [
@@ -185,17 +188,22 @@ export const headerData: HeaderLinkType[] = [
   },
   {
     id: 1,
-    name: 'Plans and Subscription',
+    name: 'My Packages',
     path: MAIN_PATH.POST.split('/*')[0],
   },
+  // {
+  //   id: 2,
+  //   name: 'Track Medicine',
+  //   path: MAIN_PATH.ABOUT.split('/*')[0],
+  // },
+  // {
+  //   id: 3,
+  //   name: 'Emergency/Triage',
+  //   path: MAIN_PATH.USER.split('/*')[0],
+  // },
   {
-    id: 2,
-    name: 'Track Medicine',
-    path: MAIN_PATH.ABOUT.split('/*')[0],
-  },
-  {
-    id: 3,
-    name: 'Emergency/Triage',
+    id: 4,
+    name: 'Help',
     path: MAIN_PATH.USER.split('/*')[0],
   },
 ]

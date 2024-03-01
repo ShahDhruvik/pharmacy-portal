@@ -252,7 +252,7 @@ const FamilyManageBar = ({ open, handleClose, manageState }: Props) => {
               onClick={handleClose}
               disableRipple
             >
-              Cancel
+              Done
             </Button>
           </div>
           <div className='flex flex-col gap-5 mb-3'>
@@ -365,22 +365,22 @@ const FamilyManageBar = ({ open, handleClose, manageState }: Props) => {
                     </div>
                     <div className='flex gap-4 mb-3'>
                       <TxtInput
-                        placeholder={'Enter ContactNo (optional)'}
+                        placeholder={'Enter Communication Number'}
                         name={'contactNo'}
                         control={control}
                         handleChange={() => {}}
                         validation={{ ...numberFieldValidation(false, 'Phone') }}
-                        label='Contact No'
+                        label='Communication Number'
                       />
                     </div>
                     <div className='flex gap-4 mb-3'>
                       <TxtInput
-                        placeholder={'Enter Email (optional)'}
+                        placeholder={'Enter Communication Email'}
                         name={'profileEmail'}
                         control={control}
                         handleChange={() => {}}
                         validation={{ ...txtFieldValidation(false, 'Email') }}
-                        label='Email'
+                        label='Communication Email'
                       />
                     </div>
                     <div className='flex gap-4 mb-3'>

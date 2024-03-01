@@ -59,3 +59,7 @@ export const enum INSURANCE_CALCULATOR {
   CREATE_EXPENSE = DEF_PATHS.main + DEF_PATHS.patient + '/expense/create',
   EDIT_EXPENSE = DEF_PATHS.main + DEF_PATHS.patient + '/expense/edit/',
 }
+
+export const enum FAQ {
+  GET = DEF_PATHS.common + '/patient/faq/list',
+}

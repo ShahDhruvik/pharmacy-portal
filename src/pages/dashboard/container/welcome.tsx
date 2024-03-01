@@ -1,5 +1,5 @@
 import { theme } from '@/context/ThemeProvider'
-import { Button, Divider } from '@mui/material'
+import { Avatar, Box, Button, Divider } from '@mui/material'
 import img1 from '@/assets/images/Aspect_Ratio.jpg'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import QrCode2Icon from '@mui/icons-material/QrCode2'
@@ -185,7 +185,7 @@ const Welcome = ({}: Props) => {
               <LockOutlinedIcon />
               Sign in
             </Button>
-            <div className='text-darkBlue-main font-light flex py-2 gap-3 mb-3'>
+            {/* <div className='text-darkBlue-main font-light flex py-2 gap-3 mb-3'>
               <span className='flex '>
                 Register
                 <ChevronRightIcon sx={{ color: theme.palette.mBlack?.main }} />
@@ -194,18 +194,26 @@ const Welcome = ({}: Props) => {
                 Security Guarantee
                 <ChevronRightIcon sx={{ color: theme.palette.mBlack?.main }} />
               </span>
-            </div>
-            <Divider sx={{ marginRight: '40px' }} />
+            </div> */}
+            {/* <Divider sx={{ marginRight: '40px' }} /> */}
             <h3 className='text-xl my-2'>Download Mobile App</h3>
             <div className='flex'>
-              <div className='flex flex-col items-center leading-[1px]'>
-                <QrCode2Icon sx={{ height: '140px', width: '140px' }} />
-                <span className='text-[12px]'>APPLE STORE</span>
-              </div>
-              <div className='flex flex-col items-center leading-[1px]'>
-                <QrCode2Icon sx={{ height: '140px', width: '140px' }} />
-                <span className='text-[12px]'>PLAY STORE</span>
-              </div>
+              <a
+                href={`https://www.apple.com/in/app-store/`}
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                <div className='flex flex-col items-center leading-[1px]'>
+                  <QrCode2Icon sx={{ height: '140px', width: '140px' }} />
+                  <span className='text-[12px]'>APPLE STORE</span>
+                </div>
+              </a>
+              <a href={`https://play.google.com/store/`} target='_blank' rel='noopener noreferrer'>
+                <div className='flex flex-col items-center leading-[1px]'>
+                  <QrCode2Icon sx={{ height: '140px', width: '140px' }} />
+                  <span className='text-[12px]'>PLAY STORE</span>
+                </div>
+              </a>
             </div>
           </div>
         </div>
@@ -221,8 +229,14 @@ const Welcome = ({}: Props) => {
             <div className='flex items-center gap-8 flex-wrap px-12 justify-between py-5'>
               {feature?.map((x: any) => (
                 <div className='flex items-center gap-5 max-w-96 w-80' key={x._id}>
-                  <div className='border-2 rounded-full border-gray-main p-3 aspect-square'>
-                    <img src={`${CONST_APP_IMAGE_URL}${x?.icon}`} alt='Img' width={'40px'} />
+                  <div className='border-2 rounded-full border-gray-main p-1 aspect-square'>
+                    {/* <img src={`${CONST_APP_IMAGE_URL}${x?.icon}`} alt='Img' width={'100px'} /> */}
+                    <Box padding={1}>
+                      <Avatar
+                        src={x?.icon ? `${CONST_APP_IMAGE_URL}${x?.icon}` : ''}
+                        sx={{ width: 70, height: 70 }}
+                      />
+                    </Box>
                   </div>
                   <div>
                     <h2>{x?.name}</h2>

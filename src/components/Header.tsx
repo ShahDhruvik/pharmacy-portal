@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import Logo from '../assets/images/logo.webp'
+import { Link, useNavigate } from 'react-router-dom'
+import Logo from '../assets/images/new-logo.png'
 import { headerData } from '../utils/data'
 import { Avatar, Box, Divider, Drawer, IconButton, Popper } from '@mui/material'
-import img from '@/assets/images/Aspect_Ratio.jpg'
 import { theme } from '@/context/ThemeProvider'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import ProfileBar from '../pages/profile/Profilebar'
@@ -14,6 +13,8 @@ interface Props {}
 type Anchor = 'top' | 'left' | 'bottom' | 'right'
 
 const Header = ({}: Props) => {
+  const nav = useNavigate()
+
   //Mobile  pop-up
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -34,7 +35,16 @@ const Header = ({}: Props) => {
       <nav>
         <div className='flex flex-row gap-3 min-[350px]:items-center md:gap-0 '>
           <div className='flex items-center gap-2 flex-1'>
-            <img src={Logo} alt='Logo' width={50} height={50} />
+            <img
+              src={Logo}
+              alt='Logo'
+              width={50}
+              height={50}
+              onClick={() => {
+                nav('/')
+              }}
+              className='cursor-pointer'
+            />
             <h1 className='text-3xl text-darkBlue-main font-semibold'>Oopchar</h1>
           </div>
           <ul className='hidden md:flex flex-row flex-wrap gap-5 text-darkBlue-main font-light items-center'>
@@ -45,7 +55,9 @@ const Header = ({}: Props) => {
                 </Link>
               )
             })}
-            <span className='underline'>Help</span>
+            {/* <span className='underline' onClick={() => nav('/help')}>
+              Help
+            </span> */}
             <button className='hover:underline' onClick={handleopenDrawer}>
               <AccountCircleIcon
                 sx={{

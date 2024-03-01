@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import Logo from '../assets/images/logo.webp'
+import { Link, useNavigate } from 'react-router-dom'
+import Logo from '../assets/images/new-logo.png'
 import { headerLinks } from '../utils/data'
 import { IconButton, Popper } from '@mui/material'
 import AuthForm from '../pages/dashboard/container/auth-forms/auth-form'
@@ -10,6 +10,8 @@ import { theme } from '@/context/ThemeProvider'
 interface Props {}
 
 const Navbar = ({}: Props) => {
+  const nav = useNavigate()
+
   const [openSign, setOpenSign] = useState(false)
   const handleOpenForm = () => setOpenSign(true)
   const handleCloseForm = () => setOpenSign(false)
@@ -26,7 +28,16 @@ const Navbar = ({}: Props) => {
       <nav>
         <div className='flex flex-row gap-3 min-[350px]:items-center md:gap-0 '>
           <div className='flex items-center gap-2 flex-1 flex-wrap'>
-            <img src={Logo} alt='Logo' width={50} height={50} />
+            <img
+              src={Logo}
+              alt='Logo'
+              width={50}
+              height={50}
+              onClick={() => {
+                nav('/')
+              }}
+              className='cursor-pointer'
+            />
             <h1 className='text-3xl text-black-main font-semibold'>Oopchar</h1>
             <span className='text-lg text-black-main font-semibold'>
               EasyWeb: Patient Self-care

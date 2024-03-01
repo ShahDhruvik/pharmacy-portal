@@ -91,7 +91,7 @@ const Banner = ({}: Props) => {
           <div className='flex justify-between gap-3 flex-wrap'>
             <SmallCard family={true} heading='My Family' para='Manage' />
             <SmallCard medicalForm={true} heading='Medical Forms' para='Manage' />
-            <SmallCard healthCard={true} heading='Health Card' para='Update ' />
+            <SmallCard healthCard={true} heading='Health Card' para='Create' />
             <SmallCard
               insurance={true}
               heading='Insurance Calculator'

@@ -3,7 +3,7 @@ export const enum MAIN_PATH {
   DASHBOARD = '/*',
   ABOUT = '/about/*',
   POST = '/posts/*',
-  USER = '/user/*',
+  USER = '/help/*',
   UNAUTHORIZED = '/unauthorized',
   CONTACT_US = '/contactUs/*',
 }

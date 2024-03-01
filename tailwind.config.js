@@ -96,6 +96,11 @@ export default {
         light: '#000000',
         dark: '#000000',
       },
+      yellowLight: {
+        main: '#FFFDD0',
+        light: '#FFFDD0',
+        dark: '#FFFDD0',
+      },
     },
     extend: {
       spacing: {

@@ -55,7 +55,7 @@ const ViewBar = ({ open, handleClose, heading, upcoming, complete, cancel, data 
             onClick={handleClose}
             disableRipple
           >
-            Cancel
+            Done
           </Button>
         </div>
         <div className='flex flex-col gap-5 mb-3'>

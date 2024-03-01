@@ -89,24 +89,6 @@ const MedicalFormBar = ({ open, handleClose }: Props) => {
       {tabIndex == 0 && (
         <form onSubmit={handleSubmit(onSubmitHandle)}>
           <div className='pt-5 flex flex-col gap-5 min-h-screen'>
-            <TxtInput
-              control={control}
-              name='email'
-              handleChange={() => {}}
-              placeholder='Enter email'
-              validation={txtFieldValidation(true, 'Email')}
-              label='Email'
-            />
-            <SelectInput
-              control={control}
-              clearErrors={clearErrors}
-              label='Family Member'
-              name='family'
-              options={familyOptions}
-              setError={setError}
-              setValue={setValue}
-              validation={searchSelectValidation('Family Member')}
-            />
             <div>
               <p className='font-semibold text-xl ml-[6px] '>Select Forms</p>
               <Divider sx={{ borderColor: theme.palette.mDarkGray?.main, borderWidth: '1.5px' }} />
@@ -155,6 +137,24 @@ const MedicalFormBar = ({ open, handleClose }: Props) => {
                 )
               })}
             </div>
+            <TxtInput
+              control={control}
+              name='email'
+              handleChange={() => {}}
+              placeholder='Enter Clinic Email'
+              validation={txtFieldValidation(true, 'Email')}
+              label='Clinic Email'
+            />
+            <SelectInput
+              control={control}
+              clearErrors={clearErrors}
+              label='Family Member'
+              name='family'
+              options={familyOptions}
+              setError={setError}
+              setValue={setValue}
+              validation={searchSelectValidation('Family Member')}
+            />
             <div className='sticky bottom-0 flex items-end justify-end bg-lightGray-main py-5 w-full'>
               <Button color='mPink' type='submit'>
                 Submit Selected Forms

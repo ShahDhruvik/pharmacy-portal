@@ -40,7 +40,7 @@ const SignInForm = ({ signType, setSignType }: Props) => {
         <MobileInput
           control={control}
           name={'phone'}
-          placeholder='Enter whatsapp number here ...'
+          placeholder='Enter Number'
           setValue={setValue}
           watch={watch}
           handleChange={() => {}}

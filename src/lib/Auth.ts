@@ -17,7 +17,7 @@ const loginUser = async (
     const res = await axiosInstance.post(`${AUTH_ENDPOINT.PATIENT_LOGIN}`, data)
 
     if (res.data.success) {
-      toast('success', COMMON_MESSAGE.Login)
+      // toast('success', COMMON_MESSAGE.Login)
       return res
     } else {
       toast('error', res.data.message)
@@ -56,6 +56,7 @@ const verifyOtp = async (
       //   } else {
       //     setUuid(undefined)
       //   }
+      toast('success', COMMON_MESSAGE.Login)
       return res
     } else {
       // toast('error', res.data.message);

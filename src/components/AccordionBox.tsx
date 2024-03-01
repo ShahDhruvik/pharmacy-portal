@@ -1,22 +1,43 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import AccordianItem from './AccordionItem'
 import { FAQData } from '../utils/data'
+import CustomBackDrop from './CustomBackdrop'
 
-type Props = { faqs: FAQData[] }
+type Props = { faqs: FAQData[]; index: string }
 
-const AccordionBox = ({ faqs }: Props) => {
-  const [active, setActive] = useState<number | null>(null)
-  const handleToggle = (index: number) => {
+const AccordionBox = ({ faqs, index }: Props) => {
+  const [active, setActive] = useState<string>(index)
+
+  const handleToggle = (index: string) => {
     if (active === index) {
-      setActive(null)
+      setActive('')
     } else {
       setActive(index)
     }
   }
+
   return (
-    <div className='flex flex-col items-center justify-center '>
-      {faqs.map((faq, index) => {
-        return <AccordianItem key={index} active={active} handleToggle={handleToggle} faq={faq} />
+    <div
+      className={`relative rounded-lg  border-2 border-gray-main ${
+        faqs.length === 0 && 'aspect-video mxs:aspect-[5/2] msm:aspect-[5/1]'
+      }`}
+    >
+      {faqs.length === 0 && (
+        <CustomBackDrop>
+          <p className='text-orange-main text-center '> No record Found</p>
+        </CustomBackDrop>
+      )}
+      {faqs?.map((faq, i) => {
+        const isLastItem = i === faqs.length - 1
+        return (
+          <AccordianItem
+            key={i}
+            active={active}
+            handleToggle={handleToggle}
+            faq={faq}
+            isLastItem={isLastItem}
+          />
+        )
       })}
     </div>
   )
