@@ -417,7 +417,7 @@ const CoverageAndExpenseBar = ({ open, handleClose, manageState }: Props) => {
                   </Button>
                 </div>
                 <div>
-                  {data.length > 0 ? (
+                  {data?.length > 0 ? (
                     data?.map((x) => (
                       <div className='mb-3'>
                         <div className='flex items-center justify-between'>
@@ -438,7 +438,7 @@ const CoverageAndExpenseBar = ({ open, handleClose, manageState }: Props) => {
                             Edit
                           </Button>
                         </div>
-                        {x?.AccountCoverageDetails.map((y: any) => (
+                        {x?.AccountCoverageDetails?.map((y: any) => (
                           <div className='mb-4'>
                             <div className='flex flex-col gap-2'>
                               <span className='text-xl font-medium text-end'>
@@ -679,7 +679,7 @@ const CoverageAndExpenseBar = ({ open, handleClose, manageState }: Props) => {
                 <Divider
                   sx={{ borderColor: theme.palette.mDarkGray?.main, borderWidth: '1.5px' }}
                 />
-                {data.length > 0 &&
+                {data?.length > 0 ? (
                   data.map((x) => (
                     <div className='my-3'>
                       <div className='flex items-center justify-between'>
@@ -855,7 +855,14 @@ const CoverageAndExpenseBar = ({ open, handleClose, manageState }: Props) => {
                         </>
                       ))}
                     </div>
-                  ))}
+                  ))
+                ) : (
+                  <div className='flex flex-col items-center justify-center h-40'>
+                    <div className='bg-lightBlue-light border-2 border-black-light rounded-md text-center py-7 px-3'>
+                      You do not have any expenses, please add your first expense
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           )}
