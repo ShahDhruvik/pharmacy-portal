@@ -31,7 +31,7 @@ const AuthForm = ({ open, handleClose, isAssesstment }: Props) => {
   const { control, watch, setValue, handleSubmit, formState, reset, trigger } = useForm({
     defaultValues: {
       contactNo: '',
-      contryCode: '+1',
+      contryCode: '+91',
       tNc: false,
       robo: false,
     },

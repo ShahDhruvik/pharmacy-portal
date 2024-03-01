@@ -17,7 +17,7 @@ const SignInForm = ({ signType, setSignType }: Props) => {
   const { control, watch, setValue, handleSubmit, formState, trigger } = useForm({
     defaultValues: {
       phone: '',
-      contryCode: '+1',
+      contryCode: '+91',
       robo: false,
       tNc: false,
     },

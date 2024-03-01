@@ -63,6 +63,7 @@ const MobileInput = ({
                     onChange={(e) => {
                       setValue(codeName, e.target.value)
                     }}
+                    disabled={true}
                   >
                     {countryCodes.map((x) => {
                       return (

@@ -122,17 +122,19 @@ const CoverageAndExpenseBar = ({ open, handleClose, manageState }: Props) => {
     }
   }, [manageState])
 
-  const drpClinic = async () => {
-    const res = await dropdownClinic(setLoading, showToast)
-    if (res) {
-      setClinicData(res)
+  const drpClinic = async (id: string) => {
+    if (memberInternalId !== '') {
+      const res = await dropdownClinic(setLoading, showToast, id)
+      if (res) {
+        setClinicData(res)
+      }
     }
   }
-  useEffect(() => {
-    if (type === TYPE_ENUM.ADD_EXPENSE) {
-      drpClinic()
-    }
-  }, [type])
+  // useEffect(() => {
+  //   if (type === TYPE_ENUM.ADD_EXPENSE) {
+  //     drpClinic()
+  //   }
+  // }, [type])
 
   const drpCoverage = async (id: string) => {
     if (memberInternalId !== '') {
@@ -198,6 +200,7 @@ const CoverageAndExpenseBar = ({ open, handleClose, manageState }: Props) => {
       getData(memberInternalId)
     }
     if (type === TYPE_ENUM.ADD_EXPENSE) {
+      drpClinic(memberInternalId)
       drpCoverage(memberInternalId)
     }
   }, [type, memberInternalId])
@@ -777,7 +780,11 @@ const CoverageAndExpenseBar = ({ open, handleClose, manageState }: Props) => {
                                       className='flex text-start w-full items-center text-black-main border-b-[1px] border-black-main h-10'
                                       key={Math.random()}
                                     >
-                                      <td className='w-3/5'>{z?.PracticeInfo?.name}</td>
+                                      <td className='w-3/5'>
+                                        {z?.PracticeInfo === null
+                                          ? z?.otherPracticeName
+                                          : z?.PracticeInfo?.name}
+                                      </td>
                                       <td className='w-1/4'>{`${currencySymbol} ${z?.amount}`}</td>
                                       <td className='w-[15%]'>
                                         {!show && (
