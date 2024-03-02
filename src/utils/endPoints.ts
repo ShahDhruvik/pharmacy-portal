@@ -50,6 +50,7 @@ export const enum DROPDOWN {
 
 export const enum APPOINTMENT {
   GET = DEF_PATHS.main + DEF_PATHS.patient + '/appointment',
+  CANCEL = DEF_PATHS.main + DEF_PATHS.patient + '/appointment/cancel/',
 }
 
 export const enum INSURANCE_CALCULATOR {
@@ -58,8 +59,13 @@ export const enum INSURANCE_CALCULATOR {
   EDIT_COVERAGE = DEF_PATHS.main + DEF_PATHS.patient + '/coverage/edit',
   CREATE_EXPENSE = DEF_PATHS.main + DEF_PATHS.patient + '/expense/create',
   EDIT_EXPENSE = DEF_PATHS.main + DEF_PATHS.patient + '/expense/edit/',
+  DELETE_EXPENSE = DEF_PATHS.main + DEF_PATHS.patient + '/expense/delete/',
 }
 
 export const enum FAQ {
   GET = DEF_PATHS.common + '/patient/faq/list',
+}
+
+export const enum SOURCE_UUID {
+  GET = DEF_PATHS.common + '/marketing-reference/get-all',
 }

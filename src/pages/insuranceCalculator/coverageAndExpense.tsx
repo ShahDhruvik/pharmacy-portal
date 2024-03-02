@@ -26,6 +26,7 @@ import CancelIcon from '@mui/icons-material/Cancel'
 import {
   createCoverage,
   createExpense,
+  deleteExpense,
   editCoverage,
   editExpense,
   getAllDetails,
@@ -34,6 +35,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import Spinner from '@/components/spinner'
 import { MANAGE_STATE } from '@/components/SmallCard'
 import { currencySymbol } from '@/utils/constants'
+import DeleteIcon from '@mui/icons-material/Delete'
 
 type Props = {
   handleClose: () => void
@@ -246,6 +248,16 @@ const CoverageAndExpenseBar = ({ open, handleClose, manageState }: Props) => {
     }
   }, [entity])
 
+  const deleteExpenseDetails = async (id: string) => {
+    const res = await deleteExpense(setLoading, showToast, id)
+    if (res?.status === 201) {
+      setItems(false)
+      // getData()
+    }
+    setType('')
+    setShow(false)
+  }
+
   const onSubmitHandle: SubmitHandler<any> = async (data: any) => {
     console.log(data, 'data')
 
@@ -329,7 +341,6 @@ const CoverageAndExpenseBar = ({ open, handleClose, manageState }: Props) => {
                   color: theme.palette.mMidBlue?.main,
                   minWidth: 'max-content',
                   fontSize: '1rem',
-
                   height: 20,
                 }}
                 onClick={() => {
@@ -392,29 +403,37 @@ const CoverageAndExpenseBar = ({ open, handleClose, manageState }: Props) => {
                 <div className='flex justify-between mt-2 mb-3'>
                   <Button
                     variant='contained'
-                    color='mPink'
+                    color={data?.length > 0 ? 'mPink' : 'mDarkGray'}
                     sx={{
                       minWidth: 160,
                     }}
                     onClick={() => {
-                      setType(TYPE_ENUM.VIEW_EXPENSE)
-                      setItems((prevItems) => !prevItems)
+                      if (data?.length > 0) {
+                        setType(TYPE_ENUM.VIEW_EXPENSE)
+                        setItems((prevItems) => !prevItems)
+                      } else {
+                        showToast('info', `Please add coverage details first`)
+                      }
                     }}
-                    disableRipple
+                    // disableRipple
                   >
                     View Expense
                   </Button>
                   <Button
                     variant='contained'
-                    color='mPink'
+                    color={data?.length > 0 ? 'mPink' : 'mDarkGray'}
                     sx={{
                       minWidth: 160,
                     }}
                     onClick={() => {
-                      setType(TYPE_ENUM.ADD_EXPENSE)
-                      setItems((prevItems) => !prevItems)
+                      if (data?.length > 0) {
+                        setType(TYPE_ENUM.ADD_EXPENSE)
+                        setItems((prevItems) => !prevItems)
+                      } else {
+                        showToast('info', `Please add coverage details first`)
+                      }
                     }}
-                    disableRipple
+                    // disableRipple
                   >
                     Add Expense
                   </Button>
@@ -553,17 +572,17 @@ const CoverageAndExpenseBar = ({ open, handleClose, manageState }: Props) => {
                             validation={txtFieldValidation(true, 'PositiveNumbers')}
                             label='Amount*'
                           />
-                          {i === 0 ? (
+                          {/* {i === 0 ? (
                             <div>
                               <CancelIcon
                                 sx={{ width: 20, height: 20, pointerEvents: 'none', opacity: 0.5 }}
                               />
                             </div>
-                          ) : (
-                            <div role='button' onClick={() => remove(i)}>
-                              <CancelIcon sx={{ width: 20, height: 20 }} />
-                            </div>
-                          )}
+                          ) : ( */}
+                          <div role='button' onClick={() => remove(i)}>
+                            <CancelIcon sx={{ width: 20, height: 20 }} />
+                          </div>
+                          {/* )} */}
                         </div>
                       </div>
                     )
@@ -763,9 +782,9 @@ const CoverageAndExpenseBar = ({ open, handleClose, manageState }: Props) => {
                           {y?.AccountExpenses?.length > 0 && (
                             <table className='flex flex-col mb-8'>
                               <th className='flex justify-between w-full text-start font-light'>
-                                <td className='w-3/5'>Clinic</td>
+                                <td className='w-1/2'>Clinic</td>
                                 <td className='w-1/4'>Spent</td>
-                                <td className='w-[15%]'>Action</td>
+                                <td className='w-1/4'>Action</td>
                               </th>
                               <Divider
                                 sx={{
@@ -780,13 +799,13 @@ const CoverageAndExpenseBar = ({ open, handleClose, manageState }: Props) => {
                                       className='flex text-start w-full items-center text-black-main border-b-[1px] border-black-main h-10'
                                       key={Math.random()}
                                     >
-                                      <td className='w-3/5'>
+                                      <td className='w-1/2'>
                                         {z?.PracticeInfo === null
                                           ? z?.otherPracticeName
                                           : z?.PracticeInfo?.name}
                                       </td>
                                       <td className='w-1/4'>{`${currencySymbol} ${z?.amount}`}</td>
-                                      <td className='w-[15%]'>
+                                      <td className='w-1/4'>
                                         {!show && (
                                           <Button
                                             variant='text'
@@ -813,6 +832,21 @@ const CoverageAndExpenseBar = ({ open, handleClose, manageState }: Props) => {
                                               }}
                                             >
                                               <CancelIcon
+                                                sx={{
+                                                  width: 20,
+                                                  height: 20,
+                                                  pointerEvents: 'none',
+                                                  color: theme.palette.mOrange?.main,
+                                                }}
+                                              />
+                                            </div>
+                                            <div
+                                              role='button'
+                                              onClick={() => {
+                                                deleteExpenseDetails(z?.internalId)
+                                              }}
+                                            >
+                                              <DeleteIcon
                                                 sx={{
                                                   width: 20,
                                                   height: 20,

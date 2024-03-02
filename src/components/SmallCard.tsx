@@ -1,18 +1,21 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AvatarGroup from '@mui/material/AvatarGroup'
 import Avatar from '@mui/material/Avatar'
-import img from '@/assets/images/Aspect_Ratio.jpg'
 import Abha from '@/assets/images/abha.png'
 import { Divider } from '@mui/material'
 import PermMediaIcon from '@mui/icons-material/PermMedia'
 import { theme } from '@/context/ThemeProvider'
-import img1 from '@/assets/images/Aspect_Ratio.jpg'
 import InsuranceBar from '@/pages/insuranceCalculator/insuranceBar'
 import MedicalFormBar from '@/pages/medical-form/medical-form-bar'
 import FamilyManageBar from '@/pages/familyManage/familyManageBar'
 import HealthManageBar from '@/pages/healthManage/healthBar'
-import CoverageAndExpense from '@/pages/insuranceCalculator/coverageAndExpense'
 import CoverageAndExpenseBar from '@/pages/insuranceCalculator/coverageAndExpense'
+import { getAllFamily } from '@/lib/Family'
+import { useLoading } from '@/context/LoadingContext'
+import { useToast } from '@/hooks/useToast'
+import { FamilyField } from '@/types/FamilyTypes'
+import { CONST_APP_IMAGE_URL } from '@/utils/constants'
+import { useAuth } from '@/context/AuthContext'
 
 interface Props {
   family?: boolean
@@ -21,6 +24,7 @@ interface Props {
   insurance?: boolean
   heading: string
   para: string
+  familyData?: any
 }
 
 export const enum MANAGE_STATE {
@@ -31,7 +35,15 @@ export const enum MANAGE_STATE {
   COVERAGE_AND_EXPENSE = 'CoverageAndExpense',
 }
 
-const SmallCard = ({ family, medicalForm, healthCard, insurance, heading, para }: Props) => {
+const SmallCard = ({
+  family,
+  medicalForm,
+  healthCard,
+  insurance,
+  heading,
+  para,
+  familyData,
+}: Props) => {
   // Drawer
   const [openDrawer, setOpenDrawer] = useState(false)
   const handleCloseDrawer = () => {
@@ -50,6 +62,11 @@ const SmallCard = ({ family, medicalForm, healthCard, insurance, heading, para }
     | MANAGE_STATE.COVERAGE_AND_EXPENSE
     | undefined
   const [manageState, setManageState] = useState<ManageState>(undefined)
+  // const [data, setData] = useState<FamilyField[]>([])
+
+  const { setLoading, loading } = useLoading()
+  const { authParams } = useAuth()
+  const showToast = useToast()
 
   return (
     <>
@@ -70,10 +87,19 @@ const SmallCard = ({ family, medicalForm, healthCard, insurance, heading, para }
             </div>
             <div className='flex items-center justify-center px-3 h-28'>
               <AvatarGroup max={4}>
-                <Avatar alt='Remy Sharp' src={img} sx={{ height: '60px', width: '60px' }} />
-                <Avatar alt='Travis Howard' src={img} sx={{ height: '60px', width: '60px' }} />
-                <Avatar alt='Cindy Baker' src={img} sx={{ height: '60px', width: '60px' }} />
-                <Avatar alt='Agnes Walker' src={img} sx={{ height: '60px', width: '60px' }} />
+                {familyData?.map((x: any) => (
+                  <Avatar
+                    src={
+                      x?.account?.profilePicture !== ''
+                        ? `${CONST_APP_IMAGE_URL}${x?.account?.profilePicture}`
+                        : 'a'
+                    }
+                    alt={String(x?.account?.firstName)
+                      .charAt(0)
+                      .toUpperCase()}
+                    sx={{ height: '60px', width: '60px' }}
+                  />
+                ))}
               </AvatarGroup>
             </div>
           </>
@@ -192,6 +218,7 @@ const SmallCard = ({ family, medicalForm, healthCard, insurance, heading, para }
       <HealthManageBar
         handleClose={handleCloseDrawer}
         open={openDrawer && manageState === MANAGE_STATE.HEALTH_CARD}
+        manageState={manageState as any}
       />
       <InsuranceBar
         handleClose={handleCloseDrawer}

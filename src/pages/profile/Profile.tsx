@@ -134,9 +134,7 @@ const Profile = ({ handleDrawerState, handleClose, handleField }: Props) => {
               }}
               src={ProfileImg}
             />
-            <p className='font-bold'>
-              {data && `${data?.firstName} ${data?.middleName} ${data?.lastName}`}
-            </p>
+            <p className='font-bold'>{data && `${data?.firstName} ${data?.lastName}`}</p>
           </div>
           <div>
             <Headers name={PROF_HEADER.PROFILE} />

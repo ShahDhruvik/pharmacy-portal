@@ -48,7 +48,7 @@ const Header = ({}: Props) => {
             <h1 className='text-3xl text-darkBlue-main font-semibold'>Oopchar</h1>
           </div>
           <ul className='hidden md:flex flex-row flex-wrap gap-5 text-darkBlue-main font-light items-center'>
-            {headerData.map((x) => {
+            {headerData?.map((x) => {
               return (
                 <Link to={x.path} key={x.id}>
                   <li className='hover:underline bg-white-main px-3 py-1 rounded-sm'>{x.name}</li>
@@ -92,7 +92,7 @@ const Header = ({}: Props) => {
               >
                 <div className='bg-white drop-shadow-xl p-5 rounded-lg border-black border-[1px] border-opacity-20 mt-2'>
                   <ul className='flex flex-col  gap-5 text-darkBlue-main font-extralight'>
-                    {headerData.map((x) => {
+                    {headerData?.map((x) => {
                       return (
                         <Link to={x.path} key={x.id} onClick={handleClick}>
                           <li> {x.name}</li>

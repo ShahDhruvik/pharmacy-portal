@@ -292,12 +292,20 @@ const FamilyManageBar = ({ open, handleClose, manageState }: Props) => {
                       <td className='w-1/2'>
                         {splitDescription(x?.account?.firstName, 10)} ({x?.account?.age})
                       </td>
-                      <td className='w-1/4'>{x?.account?.accRelation?.displayName}</td>
+                      <td className='w-1/4'>
+                        {x?.parentAccountId !== x?.accountId
+                          ? x?.account?.accRelation?.displayName
+                          : 'Self'}
+                      </td>
                       <td className='w-1/4 flex'>
                         <Tooltip title='Edit' arrow placement='left'>
                           <IconButton
                             onClick={() => {
-                              handleEdit(x)
+                              if (x?.parentAccountId === x?.accountId) {
+                                showToast('info', `Can not edit self account`)
+                              } else {
+                                handleEdit(x)
+                              }
                             }}
                           >
                             <EditIcon />
@@ -306,7 +314,11 @@ const FamilyManageBar = ({ open, handleClose, manageState }: Props) => {
                         <Tooltip title='Delete' arrow placement='left'>
                           <IconButton
                             onClick={() => {
-                              handleOpen(x?.account?.internalId)
+                              if (x?.parentAccountId === x?.accountId) {
+                                showToast('info', `Can not delete self account`)
+                              } else {
+                                handleOpen(x?.account?.internalId)
+                              }
                             }}
                           >
                             <DeleteIcon />

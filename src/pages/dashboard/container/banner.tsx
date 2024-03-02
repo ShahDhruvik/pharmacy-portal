@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react'
 import { useToast } from '@/hooks/useToast'
 import { useLoading } from '@/context/LoadingContext'
 import { useAuth } from '@/context/AuthContext'
+import { getAllFamily } from '@/lib/Family'
+import { FamilyField } from '@/types/FamilyTypes'
 
 interface Props {}
 
@@ -59,17 +61,31 @@ const Banner = ({}: Props) => {
   const [appointmentDetails, setAppointmentDetails] = useState<any>(null)
   const { authParams } = useAuth()
   const [manageState, setManageState] = useState<ManageState>(undefined)
+  const [data, setData] = useState<FamilyField[]>([])
 
-  const getData = async () => {
+  const getAppData = async () => {
     const response = await getAllAppointments(setLoading, showToast)
     if (response) {
       setAppointmentDetails(response)
     }
   }
 
+  const getFamilyData = async () => {
+    const response = await getAllFamily(setLoading, showToast)
+    if (response) {
+      setData(response)
+    }
+  }
+
+  // useEffect(() => {
+  //   if (manageState === undefined) {
+  //   }
+  // }, [manageState])
+
   useEffect(() => {
     if (authParams?.isAuth) {
-      getData()
+      getFamilyData()
+      getAppData()
     }
   }, [authParams?.isAuth])
 
@@ -89,7 +105,7 @@ const Banner = ({}: Props) => {
       <section>
         <div>
           <div className='flex justify-between gap-3 flex-wrap'>
-            <SmallCard family={true} heading='My Family' para='Manage' />
+            <SmallCard family={true} heading='My Family' para='Manage' familyData={data} />
             <SmallCard medicalForm={true} heading='Medical Forms' para='Manage' />
             <SmallCard healthCard={true} heading='Health Card' para='Create' />
             <SmallCard

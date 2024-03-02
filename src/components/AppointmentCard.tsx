@@ -16,10 +16,12 @@ import 'swiper/css'
 import 'swiper/css/autoplay'
 import '@/styles/Manage-card-Slider.css'
 import ViewBar from '@/pages/appointmentViewPage/viewBar'
-import { CONST_APP_IMAGE_URL } from '@/utils/constants'
+import { CONST_APP_IMAGE_URL, uuid } from '@/utils/constants'
 import { format, parse } from 'date-fns'
 import Spinner from './spinner'
 import { useLoading } from '@/context/LoadingContext'
+import { useToast } from '@/hooks/useToast'
+import { cancelAppointment, getAllAppointments } from '@/lib/Appointment'
 
 interface Props {
   heading: string
@@ -50,6 +52,7 @@ const AppointmentCard = ({
 }: Props) => {
   const [openDrawer, setOpenDrawer] = useState(false)
   const { setLoading, loading } = useLoading()
+  const showToast = useToast()
 
   const handleCloseDrawer = () => {
     setOpenDrawer(false)
@@ -64,6 +67,13 @@ const AppointmentCard = ({
     UPCOMING = 'upcoming',
     COMPLETE = 'complete',
     CANCEL = 'cancel',
+  }
+
+  const cancelAppoint = async (id: string) => {
+    const res = await cancelAppointment(setLoading, showToast, id)
+    if (res?.status === 200) {
+      await getAllAppointments(setLoading, showToast)
+    }
   }
 
   // type ManageState = MANAGE_STATE.UPCOMING | MANAGE_STATE.COMPLETE | MANAGE_STATE.CANCEL | undefined
@@ -131,9 +141,11 @@ const AppointmentCard = ({
                         {upcoming && (
                           <>
                             <span className='rounded-md bg-darkBlue-main px-3'>
-                              {x?.appointmentModeName}
+                              {x?.appointmentMode}
                             </span>
-                            <span className='rounded-md bg-green-main px-3'>Confirmed</span>
+                            <span className='rounded-md bg-green-main px-3'>
+                              {x?.appointmentStatus?.enumType}
+                            </span>
                             <span className='mr-3 rounded-md bg-darkGray-main px-3'>
                               Sexual Health
                             </span>
@@ -142,10 +154,10 @@ const AppointmentCard = ({
                         {complete && (
                           <>
                             <span className='rounded-md bg-blue-main px-3'>
-                              {x?.appointmentModeName}
+                              {x?.appointmentMode}
                             </span>
                             <span className='rounded-md bg-yellow-main px-3 text-black-main'>
-                              Review
+                              {x?.appointmentStatus?.enumType}
                             </span>
                             <span className='mr-3 rounded-md bg-darkGray-main px-3'>
                               Sexual Health
@@ -155,7 +167,7 @@ const AppointmentCard = ({
                         {cancel && (
                           <>
                             <span className='rounded-md bg-orange-main px-3'>
-                              {x?.appointmentModeName}
+                              {x?.appointmentMode}
                             </span>
                             <span className='mr-3 rounded-md bg-darkGray-main px-3'>
                               Sexual Health
@@ -180,7 +192,7 @@ const AppointmentCard = ({
                             </p>
                             <p className='text-darkGray-main font-light text-[13px] line-clamp-1'>
                               {/* 3403 Fieldgate Drive, Mississauga, ON, L4X 2J4 */}
-                              {`${x?.practiceAddressLineOne}, ${x?.practiceAddressLineTwo}`}
+                              {`${x?.practiceCityName}, ${x?.practiceStateName}`}
                             </p>
                           </div>
                         </div>
@@ -192,7 +204,7 @@ const AppointmentCard = ({
                             />
                           </div>
                           <div className='leading-5'>
-                            <h1>{`${x.patientFirstName} ${x.patientLastName}`}</h1>
+                            <h1>{`${x?.patientFirstName} ${x?.patientLastName}`}</h1>
                             <p className='text-darkBlue-main font-light text-[13px]'>
                               {format(new Date(x?.appointmentDate), 'dd MMM yyyy')}
                             </p>
@@ -219,28 +231,53 @@ const AppointmentCard = ({
                             }}
                           />
                         </IconButton>
-                        <IconButton>
-                          <LocationOnOutlinedIcon
-                            sx={{
-                              color: theme.palette.mWhite?.main,
-                              backgroundColor: theme.palette.mDarkGray?.main,
-                              padding: '4px',
-                              borderRadius: '9999px',
-                            }}
-                          />
-                        </IconButton>
-                        <IconButton>
-                          <EmailOutlinedIcon
-                            sx={{
-                              color: theme.palette.mWhite?.main,
-                              backgroundColor: theme.palette.mDarkGray?.main,
-                              padding: '4px',
-                              borderRadius: '9999px',
-                            }}
-                          />
-                        </IconButton>
-                        {upcoming && (
+                        {x?.practiceLat === null ? (
+                          <IconButton sx={{ cursor: 'not-allowed' }}>
+                            <LocationOnOutlinedIcon
+                              sx={{
+                                color: theme.palette.mWhite?.main,
+                                backgroundColor: theme.palette.mDarkGray?.main,
+                                padding: '4px',
+                                borderRadius: '9999px',
+                              }}
+                            />
+                          </IconButton>
+                        ) : (
+                          <a
+                            aria-label='location'
+                            href={`https://maps.google.com/?q=${x?.practiceLat},${x?.practiceLong}`}
+                            target='_blank'
+                          >
+                            <IconButton>
+                              <LocationOnOutlinedIcon
+                                sx={{
+                                  color: theme.palette.mWhite?.main,
+                                  backgroundColor: theme.palette.mDarkGray?.main,
+                                  padding: '4px',
+                                  borderRadius: '9999px',
+                                }}
+                              />
+                            </IconButton>
+                          </a>
+                        )}
+                        <a aria-label='gmail' href={`mailto:${x?.practiceEmail}`} target='_blank'>
                           <IconButton>
+                            <EmailOutlinedIcon
+                              sx={{
+                                color: theme.palette.mWhite?.main,
+                                backgroundColor: theme.palette.mDarkGray?.main,
+                                padding: '4px',
+                                borderRadius: '9999px',
+                              }}
+                            />
+                          </IconButton>
+                        </a>
+                        {upcoming && (
+                          <IconButton
+                            onClick={() => {
+                              cancelAppoint(x?.appointmentInternalId)
+                            }}
+                          >
                             <HighlightOffOutlinedIcon
                               sx={{
                                 color: theme.palette.mWhite?.main,
@@ -264,16 +301,24 @@ const AppointmentCard = ({
                           </IconButton>
                         )}
                         {cancel && (
-                          <IconButton>
-                            <MovieOutlinedIcon
-                              sx={{
-                                color: theme.palette.mWhite?.main,
-                                backgroundColor: theme.palette.mPink?.main,
-                                padding: '4px',
-                                borderRadius: '9999px',
-                              }}
-                            />
-                          </IconButton>
+                          <a
+                            aria-label='reschedule'
+                            href={encodeURI(
+                              `http://localhost:4001/book-in-person?sourceUuid=${uuid}&specialtyId=${x?.specialtyId}&cityId=${x?.practiceCityId}&consultationTypeId=${x?.consultationTypeInternalId}&findDate=${x?.appointmentDate}&practiceInternalId=${x?.practiceInternalId}`,
+                            )}
+                            target='_blank'
+                          >
+                            <IconButton>
+                              <MovieOutlinedIcon
+                                sx={{
+                                  color: theme.palette.mWhite?.main,
+                                  backgroundColor: theme.palette.mPink?.main,
+                                  padding: '4px',
+                                  borderRadius: '9999px',
+                                }}
+                              />
+                            </IconButton>
+                          </a>
                         )}
                       </div>
                     </div>
@@ -281,11 +326,11 @@ const AppointmentCard = ({
                 </SwiperSlide>
               ))
             ) : (
-              <div className='flex items-center justify-center border-black-main rounded-md border-[1px] bg-yellowLight-main h-56'>
-                There is Nothing to Show!
+              <div className='flex items-center justify-center border-black-main rounded-md border-[1px] bg-yellowLight-main h-[215px] mt-3'>
+                There is nothing to show here!
               </div>
             )}
-            {upcoming && full && (
+            {upcoming && full && data && data?.length > 1 && (
               <span className='flex justify-end text-darkBlue-main font-light'>
                 <button
                   onClick={() => {
@@ -297,7 +342,7 @@ const AppointmentCard = ({
                 </button>
               </span>
             )}
-            {complete && full && (
+            {complete && full && data && data?.length > 1 && (
               <span className='flex justify-end text-darkBlue-main font-light'>
                 <button
                   onClick={() => {
@@ -309,7 +354,7 @@ const AppointmentCard = ({
                 </button>
               </span>
             )}
-            {cancel && full && (
+            {cancel && full && data && data?.length > 1 && (
               <span className='flex justify-end text-darkBlue-main font-light'>
                 <button
                   onClick={() => {

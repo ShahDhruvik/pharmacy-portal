@@ -18,9 +18,10 @@ export const BlogPosts: Record<string, { title: string; description: string }> =
 }
 
 //SERVER
+export const uuid = localStorage.getItem('uuid')
 export const CONST_API_URL = 'https://api-dev.oopchar.com/api'
 export const CONST_APP_IMAGE_URL = 'https://oopchar-editor-dev-1.s3.ap-south-1.amazonaws.com/'
-export const CONST_OOPCHAR_URL = 'https://dev.oopchar.com/'
+export const CONST_OOPCHAR_URL = `https://dev.oopchar.com?sourceUuid=${uuid}`
 
 //LOCAL
 // export const CONST_API_URL = 'http://localhost:8000/api'
@@ -106,4 +107,24 @@ export const formatDate = (dateString: string) => {
   } else {
     return ''
   }
+}
+
+export enum AppointmentStatusEnum {
+  Upcoming = 'Upcoming',
+  Completed = 'Completed',
+  Cancelled = 'Cancelled',
+}
+
+export enum MarketingReferenceEnum {
+  Facebook = 'Facebook',
+  Instagram = 'Instagram',
+  GoogleSearch = 'GoogleSearch',
+  GoogleAdds = 'GoogleAdds',
+  Oopchar = 'Oopchar',
+  ClientWebsite = 'ClientWebsite',
+  MobileAppAndroid = 'MobileAppAndroid',
+  MobileAppIOS = 'MobileAppIOS',
+  PatientPortal = 'PatientPortal',
+  PracticePortal = 'PracticePortal',
+  Default = 'Default',
 }

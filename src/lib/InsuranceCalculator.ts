@@ -169,3 +169,27 @@ export const editExpense = async (
     loading({ isLoading: false, isCoverageLoader: false, isPage: false })
   }
 }
+
+export const deleteExpense = async (
+  loading: LoadingState['setLoading'],
+  toast: ShowToastFunction,
+  id: string,
+) => {
+  try {
+    loading({ isLoading: true, isCoverageLoader: true, isPage: false })
+
+    const res = await axiosInstance.put(`${INSURANCE_CALCULATOR.DELETE_EXPENSE}${id}`)
+
+    if (res.data.success) {
+      toast('success', COMMON_MESSAGE.Deleted)
+      return res
+    } else {
+      toast('error', res.data.message)
+    }
+  } catch (error: any) {
+    console.log(error)
+    toast('error', error?.response?.data?.message)
+  } finally {
+    loading({ isLoading: false, isCoverageLoader: false, isPage: false })
+  }
+}

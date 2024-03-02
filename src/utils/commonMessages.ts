@@ -6,6 +6,7 @@ export const enum COMMON_MESSAGE {
   LogOut = 'loggedOut Succesfully',
   Updated = 'Updated',
   Deleted = 'Deleted',
+  Cancel = 'Cancel',
 }
 
 export const enum VALIDATION_MESSAGE {

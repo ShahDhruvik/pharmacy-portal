@@ -26,6 +26,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const clearStorage = () => {
     localStorage.removeItem('accessToken')
     localStorage.removeItem('refreshToken')
+    localStorage.removeItem('uuid')
     setAuthParams(undefined)
   }
   return (

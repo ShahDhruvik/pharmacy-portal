@@ -44,7 +44,7 @@ const Navbar = ({}: Props) => {
             </span>
           </div>
           <ul className='hidden md:flex  flex-row flex-wrap  gap-5 text-darkBlue-main font-extralight'>
-            {headerLinks.map((x) => {
+            {headerLinks?.map((x) => {
               return (
                 <Link to={x.path} key={x.id}>
                   <li className='hover:underline text-darkGray-main font-medium'> {x.name}</li>

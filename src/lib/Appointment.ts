@@ -1,6 +1,7 @@
 import { LoadingState, ShowToastFunction } from '@/types/common'
 import { APPOINTMENT } from '@/utils/endPoints'
 import axiosInstance from '../../axiosInstance'
+import { COMMON_MESSAGE } from '@/utils/commonMessages'
 
 export const getAllAppointments = async (
   loading: LoadingState['setLoading'],
@@ -21,5 +22,29 @@ export const getAllAppointments = async (
     }
   } finally {
     loading({ isLoading: false, isAppointmentLoader: false, isPage: false })
+  }
+}
+
+export const cancelAppointment = async (
+  loading: LoadingState['setLoading'],
+  toast: ShowToastFunction,
+  id: string,
+) => {
+  try {
+    loading({ isLoading: true, isCoverageLoader: true, isPage: false })
+
+    const res = await axiosInstance.put(`${APPOINTMENT.CANCEL}${id}`)
+
+    if (res.data.success) {
+      toast('success', COMMON_MESSAGE.Cancel)
+      return res
+    } else {
+      toast('error', res.data.message)
+    }
+  } catch (error: any) {
+    console.log(error)
+    toast('error', error?.response?.data?.message)
+  } finally {
+    loading({ isLoading: false, isCoverageLoader: false, isPage: false })
   }
 }

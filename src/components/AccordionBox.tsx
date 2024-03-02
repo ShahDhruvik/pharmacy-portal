@@ -27,7 +27,7 @@ const AccordionBox = ({ faqs, index }: Props) => {
           <p className='text-orange-main text-center '> No record Found</p>
         </CustomBackDrop>
       )}
-      {faqs?.map((faq, i) => {
+      {faqs?.slice(0, 5)?.map((faq, i) => {
         const isLastItem = i === faqs.length - 1
         return (
           <AccordianItem

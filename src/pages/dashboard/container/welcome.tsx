@@ -15,8 +15,9 @@ import { getAllFeature, getAllImage } from '@/lib/DashboardContent'
 import { useLoading } from '@/context/LoadingContext'
 import { useToast } from '@/hooks/useToast'
 import { useEffect, useState } from 'react'
-import { CONST_APP_IMAGE_URL, CONST_OOPCHAR_URL } from '@/utils/constants'
+import { CONST_APP_IMAGE_URL, CONST_OOPCHAR_URL, MarketingReferenceEnum } from '@/utils/constants'
 import AuthForm from './auth-forms/auth-form'
+import { getAllSourceUuid } from '@/lib/SourceUuid'
 
 interface Props {}
 
@@ -86,9 +87,18 @@ const Welcome = ({}: Props) => {
     }
   }
 
+  const getSourceUuid = async () => {
+    const response = await getAllSourceUuid(setLoading, showToast)
+    if (response) {
+      const sourceUuid = response?.find((x: any) => x.name === MarketingReferenceEnum.PatientPortal)
+      localStorage.setItem('uuid', sourceUuid?.uuid)
+    }
+  }
+
   useEffect(() => {
     getData()
     getFeature()
+    getSourceUuid()
   }, [])
 
   const [openSign, setOpenSign] = useState(false)
