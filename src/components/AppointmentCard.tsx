@@ -16,7 +16,7 @@ import 'swiper/css'
 import 'swiper/css/autoplay'
 import '@/styles/Manage-card-Slider.css'
 import ViewBar from '@/pages/appointmentViewPage/viewBar'
-import { CONST_APP_IMAGE_URL, uuid } from '@/utils/constants'
+import { CONST_APP_IMAGE_URL, CONST_OOPCHAR_URL, uuid } from '@/utils/constants'
 import { format, parse } from 'date-fns'
 import Spinner from './spinner'
 import { useLoading } from '@/context/LoadingContext'
@@ -304,7 +304,7 @@ const AppointmentCard = ({
                           <a
                             aria-label='reschedule'
                             href={encodeURI(
-                              `http://localhost:4001/book-in-person?sourceUuid=${uuid}&specialtyId=${x?.specialtyId}&cityId=${x?.practiceCityId}&consultationTypeId=${x?.consultationTypeInternalId}&findDate=${x?.appointmentDate}&practiceInternalId=${x?.practiceInternalId}`,
+                              `${CONST_OOPCHAR_URL}book-in-person?sourceUuid=${uuid}&specialtyId=${x?.specialtyId}&cityId=${x?.practiceCityId}&consultationTypeId=${x?.consultationTypeInternalId}&findDate=${x?.appointmentDate}&practiceInternalId=${x?.practiceInternalId}`,
                             )}
                             target='_blank'
                           >
