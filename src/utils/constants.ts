@@ -21,7 +21,9 @@ export const BlogPosts: Record<string, { title: string; description: string }> =
 export const uuid = localStorage.getItem('uuid')
 export const CONST_API_URL = 'https://api-dev.oopchar.com/api'
 export const CONST_APP_IMAGE_URL = 'https://oopchar-editor-dev-1.s3.ap-south-1.amazonaws.com/'
-export const CONST_OOPCHAR_URL = `https://dev.oopchar.com?sourceUuid=${uuid}`
+export const CONST_OOPCHAR_ONLINE_CONSULTATION_URL = `https://dev.oopchar.com/book-consultation?sourceUuid=${uuid}`
+export const CONST_OOPCHAR_IN_PERSON_CONSULTATION_URL = `https://dev.oopchar.com/book-in-person?sourceUuid=${uuid}`
+export const CONST_OOPCHAR_URL = `https://dev.oopchar.com/book-consultation?sourceUuid=${uuid}`
 
 //LOCAL
 // export const CONST_API_URL = 'http://localhost:8000/api'

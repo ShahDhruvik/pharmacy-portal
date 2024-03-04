@@ -15,7 +15,12 @@ import { getAllFeature, getAllImage } from '@/lib/DashboardContent'
 import { useLoading } from '@/context/LoadingContext'
 import { useToast } from '@/hooks/useToast'
 import { useEffect, useState } from 'react'
-import { CONST_APP_IMAGE_URL, CONST_OOPCHAR_URL, MarketingReferenceEnum } from '@/utils/constants'
+import {
+  CONST_APP_IMAGE_URL,
+  CONST_OOPCHAR_ONLINE_CONSULTATION_URL,
+  CONST_OOPCHAR_URL,
+  MarketingReferenceEnum,
+} from '@/utils/constants'
 import AuthForm from './auth-forms/auth-form'
 import { getAllSourceUuid } from '@/lib/SourceUuid'
 
@@ -136,7 +141,11 @@ const Welcome = ({}: Props) => {
               Get top notch support from direct healthcare professionals.
             </div>
             <div>
-              <a href={CONST_OOPCHAR_URL} target='_blank' rel='noopener noreferrer'>
+              <a
+                href={CONST_OOPCHAR_ONLINE_CONSULTATION_URL}
+                target='_blank'
+                rel='noopener noreferrer'
+              >
                 <Button
                   variant='outlined'
                   color='mBlack'

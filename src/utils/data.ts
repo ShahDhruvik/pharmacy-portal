@@ -1,6 +1,6 @@
 import { COMMON_PATH, MAIN_PATH } from '../paths'
 import { HeaderLinkType } from '../types/common'
-import { CONST_OOPCHAR_URL } from './constants'
+import { CONST_OOPCHAR_IN_PERSON_CONSULTATION_URL } from './constants'
 type PlantTree = {
   icon?: string
   que: string
@@ -185,7 +185,7 @@ export const headerData: HeaderLinkType[] = [
   {
     id: 0,
     name: 'Book Appointment',
-    path: CONST_OOPCHAR_URL,
+    path: CONST_OOPCHAR_IN_PERSON_CONSULTATION_URL,
   },
   {
     id: 1,
