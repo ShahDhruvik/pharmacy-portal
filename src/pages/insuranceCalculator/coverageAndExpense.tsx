@@ -572,17 +572,17 @@ const CoverageAndExpenseBar = ({ open, handleClose, manageState }: Props) => {
                             validation={txtFieldValidation(true, 'PositiveNumbers')}
                             label='Amount*'
                           />
-                          {/* {i === 0 ? (
+                          {i === 0 && type === TYPE_ENUM.ADD_COVERAGE ? (
                             <div>
                               <CancelIcon
                                 sx={{ width: 20, height: 20, pointerEvents: 'none', opacity: 0.5 }}
                               />
                             </div>
-                          ) : ( */}
-                          <div role='button' onClick={() => remove(i)}>
-                            <CancelIcon sx={{ width: 20, height: 20 }} />
-                          </div>
-                          {/* )} */}
+                          ) : (
+                            <div role='button' onClick={() => remove(i)}>
+                              <CancelIcon sx={{ width: 20, height: 20 }} />
+                            </div>
+                          )}
                         </div>
                       </div>
                     )
