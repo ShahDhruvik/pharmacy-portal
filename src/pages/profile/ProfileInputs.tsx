@@ -24,13 +24,6 @@ import CustomDialog from '@/components/Dialog-custom'
 import SvgIcon from '@/components/SvgIcon'
 import { useLoading } from '@/context/LoadingContext'
 import { useToast } from '@/hooks/useToast'
-import {
-  getAllCountry,
-  profileCommunicationEdit,
-  profileCountryEdit,
-  profileEmailEditOtp,
-  profileMobileNumberEditOtp,
-} from '@/lib/Profile'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 
 type Props = {
@@ -78,50 +71,50 @@ const ConfirmPopUp = ({
 }) => {
   const { setLoading } = useLoading()
   const showToast = useToast()
-  const handleYes = async () => {
-    switch (fieldName.fieldName) {
-      case PROF_FIELDS.COMMUNICATION_PREFERENCE:
-        // API For Update
-        console.log(formData, 'ffff')
-        let c
-        if (formData?.SMS === true && formData?.Email === undefined) {
-          c = `${CommunicationPreferenceOpts.sms}`
-        }
-        if (formData?.SMS === undefined && formData?.Email === true) {
-          c = `${CommunicationPreferenceOpts.email}`
-        }
-        if (formData?.SMS === true && formData?.Email === true) {
-          c = `${CommunicationPreferenceOpts.sms}, ${CommunicationPreferenceOpts.email}`
-        }
-        const data = {
-          communicationPreference: c,
-        }
+  // const handleYes = async () => {
+  //   switch (fieldName.fieldName) {
+  //     case PROF_FIELDS.COMMUNICATION_PREFERENCE:
+  //       // API For Update
+  //       console.log(formData, 'ffff')
+  //       let c
+  //       if (formData?.SMS === true && formData?.Email === undefined) {
+  //         c = `${CommunicationPreferenceOpts.sms}`
+  //       }
+  //       if (formData?.SMS === undefined && formData?.Email === true) {
+  //         c = `${CommunicationPreferenceOpts.email}`
+  //       }
+  //       if (formData?.SMS === true && formData?.Email === true) {
+  //         c = `${CommunicationPreferenceOpts.sms}, ${CommunicationPreferenceOpts.email}`
+  //       }
+  //       const data = {
+  //         communicationPreference: c,
+  //       }
 
-        const respo = await profileCommunicationEdit(setLoading, showToast, data)
-        if (respo?.status === 200) {
-          reset((formValues) => {
-            return formValues
-          })
-          setFieldName({ ...fieldName, isConfirm: false })
-        }
-        break
-      case PROF_FIELDS.COUNTRY_FIELD:
-        // API For Update
-        console.log(formData, 'ffffddd')
+  //       const respo = await profileCommunicationEdit(setLoading, showToast, data)
+  //       if (respo?.status === 200) {
+  //         reset((formValues) => {
+  //           return formValues
+  //         })
+  //         setFieldName({ ...fieldName, isConfirm: false })
+  //       }
+  //       break
+  //     case PROF_FIELDS.COUNTRY_FIELD:
+  //       // API For Update
+  //       console.log(formData, 'ffffddd')
 
-        const response = await profileCountryEdit(setLoading, showToast, formData?.country)
-        if (response?.status === 200) {
-          reset((formValues) => {
-            return formValues
-          })
-          setFieldName({ ...fieldName, isConfirm: false })
-        }
-        break
-      default:
-        break
-    }
-    console.log(formData)
-  }
+  //       const response = await profileCountryEdit(setLoading, showToast, formData?.country)
+  //       if (response?.status === 200) {
+  //         reset((formValues) => {
+  //           return formValues
+  //         })
+  //         setFieldName({ ...fieldName, isConfirm: false })
+  //       }
+  //       break
+  //     default:
+  //       break
+  //   }
+  //   console.log(formData)
+  // }
   return (
     <CustomDialog
       action={{ component: null, isAction: false }}
@@ -170,7 +163,7 @@ const ConfirmPopUp = ({
           >
             No
           </Button>
-          <Button color='mPink' sx={{ minWidth: '140px' }} onClick={handleYes}>
+          <Button color='mPink' sx={{ minWidth: '140px' }} onClick={() => {}}>
             Yes
           </Button>
         </div>
@@ -199,24 +192,24 @@ const ProfileInputs = ({
   const showToast = useToast()
   const [country, setCountry] = useState<SelectDDL[]>([])
 
-  const getCountry = async () => {
-    const data = await getAllCountry(setLoading, showToast)
-    if (data) {
-      const con: SelectDDL[] = []
-      data?.records?.map((x: any) => {
-        const conItem: SelectDDL = { label: `${x.name}`, _id: x._id }
-        con.push(conItem)
-      })
-      setCountry(con)
-    }
-  }
-  console.log(fieldName, 'hh')
+  // const getCountry = async () => {
+  //   const data = await getAllCountry(setLoading, showToast)
+  //   if (data) {
+  //     const con: SelectDDL[] = []
+  //     data?.records?.map((x: any) => {
+  //       const conItem: SelectDDL = { label: `${x.name}`, _id: x._id }
+  //       con.push(conItem)
+  //     })
+  //     setCountry(con)
+  //   }
+  // }
+  // console.log(fieldName, 'hh')
 
-  useEffect(() => {
-    if (String(fieldName.fieldName) === PROF_FIELDS.COUNTRY_FIELD) {
-      getCountry()
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (String(fieldName.fieldName) === PROF_FIELDS.COUNTRY_FIELD) {
+  //     getCountry()
+  //   }
+  // }, [])
 
   switch (fieldName.fieldName) {
     case fieldName.fieldName === PROF_FIELDS.COMMUNICATION_MOBILE
@@ -305,22 +298,22 @@ const ProfileInputs = ({
                   const triggeredValue = await trigger(['comMobile', 'comMobileConfirm'])
                   console.log(triggeredValue, 'com')
                   const data = { communicationMobile: getValues('comMobileConfirm') }
-                  const res = await profileCommunicationEdit(setLoading, showToast, data)
-                  if (res?.status === 200) {
-                    handleDrawerState(DRAWERSTATE.NORMAL)
-                  }
+                  // const res = await profileCommunicationEdit(setLoading, showToast, data)
+                  // if (res?.status === 200) {
+                  //   handleDrawerState(DRAWERSTATE.NORMAL)
+                  // }
                   setIsOtp(false)
                 } else {
                   const triggeredValue = await trigger(['profMobile', 'profMobileConfirm'])
                   const data = getValues('profMobileConfirm')
-                  const res = await profileMobileNumberEditOtp(
-                    setLoading,
-                    showToast,
-                    data as string,
-                  )
-                  if (res?.status === 200) {
-                    setIsOtp(triggeredValue)
-                  }
+                  // const res = await profileMobileNumberEditOtp(
+                  //   setLoading,
+                  //   showToast,
+                  //   data as string,
+                  // )
+                  // if (res?.status === 200) {
+                  //   setIsOtp(triggeredValue)
+                  // }
                 }
               }}
             >
@@ -402,18 +395,18 @@ const ProfileInputs = ({
                 if (String(PROF_FIELDS.COMMUNICATION_EMAIL) === fieldName.fieldName) {
                   const triggeredValue = await trigger(['comEmail', 'comEmailConfirm'])
                   const data = { communicationEmail: getValues('comEmailConfirm') }
-                  const res = await profileCommunicationEdit(setLoading, showToast, data)
-                  if (res?.status === 200) {
-                    handleDrawerState(DRAWERSTATE.NORMAL)
-                  }
+                  // const res = await profileCommunicationEdit(setLoading, showToast, data)
+                  // if (res?.status === 200) {
+                  //   handleDrawerState(DRAWERSTATE.NORMAL)
+                  // }
                   setIsOtp(triggeredValue)
                 } else {
                   const triggeredValue = await trigger(['profEmail', 'profEmailConfirm'])
                   const data = getValues('profEmailConfirm')
-                  const res = await profileEmailEditOtp(setLoading, showToast, data as string)
-                  if (res?.status === 200) {
-                    setIsOtp(triggeredValue)
-                  }
+                  // const res = await profileEmailEditOtp(setLoading, showToast, data as string)
+                  // if (res?.status === 200) {
+                  //   setIsOtp(triggeredValue)
+                  // }1
                   setIsOtp(triggeredValue)
                 }
               }}

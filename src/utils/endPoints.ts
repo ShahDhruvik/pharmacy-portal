@@ -9,35 +9,23 @@ export const enum DEF_PATHS {
   common = '/common',
   patient = '/patient',
   practice = '/practice',
+  provider = '/provider',
 }
 
 export const enum AUTH_ENDPOINT {
-  PATIENT_LOGIN = DEF_PATHS.auth + DEF_PATHS.patient + '/login',
-  PATIENT_VERIFY_OTP = DEF_PATHS.auth + DEF_PATHS.patient + '/check-otp-auth',
-  PATIENT_VERIFY_RESEND_OTP = DEF_PATHS.auth + DEF_PATHS.patient + '/resend-otp',
+  PROVIDER_LOGIN = DEF_PATHS.auth + DEF_PATHS.provider + '/login',
+  PROVIDER_VERIFY_OTP = DEF_PATHS.auth + DEF_PATHS.provider + '/check-otp-auth',
+  PROVIDER_VERIFY_RESEND_OTP = DEF_PATHS.auth + DEF_PATHS.provider + '/resend-otp',
+  PROVIDER_CHANGE_PASSWORD = DEF_PATHS.main + DEF_PATHS.provider + '/change-password',
 }
 
 export const enum PROFILE {
-  GET = DEF_PATHS.main + DEF_PATHS.patient + '/profile',
-  PATIENT_PROFILE_PHONE_EDIT_OTP = DEF_PATHS.main + DEF_PATHS.patient + '/change-number-otp',
-  PATIENT_PROFILE_PHONE_EDIT = DEF_PATHS.main + DEF_PATHS.patient + '/change-number',
-  PATIENT_PROFILE_EMAIL_EDIT_OTP = DEF_PATHS.main + DEF_PATHS.patient + '/change-email-otp',
-  PATIENT_PROFILE_EMAIl_EDIT = DEF_PATHS.main + DEF_PATHS.patient + '/change-email',
-  PATIENT_PROFILE_COUNTRY_EDIT = DEF_PATHS.main + DEF_PATHS.patient + '/change-country',
-  PATIENT_PROFILE_COMMUNICATION_EDIT = DEF_PATHS.main + DEF_PATHS.patient + '/change-communication',
-  COUNTRY = DEF_PATHS.common + DEF_PATHS.patient + '/country-ddl',
-}
-
-export const enum FAMILY {
-  GET = DEF_PATHS.main + DEF_PATHS.patient + '/family-account',
-  CREATE = DEF_PATHS.main + DEF_PATHS.patient + '/family-account/create',
-  EDIT = DEF_PATHS.main + DEF_PATHS.patient + '/family-account/edit/',
-  DELETE = DEF_PATHS.main + DEF_PATHS.patient + '/family-account/delete/',
+  GET = DEF_PATHS.main + DEF_PATHS.practice + '/practice-user-by-id',
 }
 
 export const enum DASHBOARD_CONTENT {
-  GET_MAIN_IMG = DEF_PATHS.common + '/self-care/portal-images-list',
-  GET_FEATURE = DEF_PATHS.common + '/self-care/portal-feature-list',
+  GET_MAIN_IMG = DEF_PATHS.common + '/provider-care/portal-images-list',
+  GET_FEATURE = DEF_PATHS.common + '/provider-care/portal-feature-list',
 }
 
 export const enum DROPDOWN {
@@ -46,10 +34,12 @@ export const enum DROPDOWN {
   drpClinic = DEF_PATHS.main + DEF_PATHS.practice + '/patient/dropdown',
   drpCoverage = DEF_PATHS.main + DEF_PATHS.patient + '/coverage/dropdown',
   drpCoverageDetails = DEF_PATHS.main + DEF_PATHS.patient + '/coverage-details/dropdown',
+  drpAssignedTo = DEF_PATHS.main + DEF_PATHS.practice + '/practice-user/dropdown',
+  drpPractice = DEF_PATHS.main + DEF_PATHS.practice + '/dropdown',
 }
 
 export const enum APPOINTMENT {
-  GET = DEF_PATHS.main + DEF_PATHS.patient + '/appointment',
+  GET = DEF_PATHS.main + DEF_PATHS.provider + '/provider-appointment',
   CANCEL = DEF_PATHS.main + DEF_PATHS.patient + '/appointment/cancel/',
 }
 
@@ -66,6 +56,8 @@ export const enum FAQ {
   GET = DEF_PATHS.common + '/patient/faq/list',
 }
 
-export const enum SOURCE_UUID {
-  GET = DEF_PATHS.common + '/marketing-reference/get-all',
+export const enum TASK {
+  GET = DEF_PATHS.main + DEF_PATHS.practice + '/provider-task',
+  CREATE_TASK = DEF_PATHS.main + DEF_PATHS.practice + '/task/create',
+  EDIT_TASK = DEF_PATHS.main + DEF_PATHS.practice + '/task/edit/',
 }

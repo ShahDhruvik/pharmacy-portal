@@ -9,6 +9,8 @@ import { getAllProfile } from '@/lib/Profile'
 import { useLoading } from '@/context/LoadingContext'
 import { useToast } from '@/hooks/useToast'
 import { useAuth } from '@/context/AuthContext'
+import { changePasswordForProvider } from '@/lib/Auth'
+
 type Props = {
   handleDrawerState: (state: DrawerState) => void
   handleClose: () => void
@@ -47,7 +49,7 @@ export const FieldEdit = ({
         )}
 
         {name && <p className='text-lg ml-[6px] '>{name}</p>}
-        <Button
+        {/* <Button
           variant='text'
           color='mMidBlue'
           sx={{
@@ -61,7 +63,7 @@ export const FieldEdit = ({
           onClick={editFunction}
         >
           {data ? 'Edit' : 'Add new'}
-        </Button>
+        </Button> */}
       </div>
       {name && (
         <p className='ml-[6px] text-midGray-light text-lg mb-2'>{data ? data : 'Not available'}</p>
@@ -80,12 +82,15 @@ const Profile = ({ handleDrawerState, handleClose, handleField }: Props) => {
   const getData = async () => {
     const response = await getAllProfile(setLoading, showToast)
     setData(response)
-    console.log(response, 'res')
   }
 
   useEffect(() => {
     getData()
   }, [])
+
+  const changePassword = async () => {
+    await changePasswordForProvider(setLoading, showToast)
+  }
 
   if (!loading.isLoading && !loading.isIndependentLoader) {
     return (
@@ -134,102 +139,44 @@ const Profile = ({ handleDrawerState, handleClose, handleField }: Props) => {
               }}
               src={ProfileImg}
             />
-            <p className='font-bold'>{data && `${data?.firstName} ${data?.lastName}`}</p>
+            <p className='font-bold'>{data && `${data[0]?.name}`}</p>
           </div>
           <div>
             <Headers name={PROF_HEADER.PROFILE} />
-            <FieldEdit
-              name={PROF_FIELDS.PROFILE_MOBILE}
-              editFunction={() => {
-                handleField(PROF_FIELDS.PROFILE_MOBILE, data && data.contactNo, PROF_HEADER.PROFILE)
-                handleDrawerState(DRAWERSTATE.EDIT)
-              }}
-              data={data && data.contactNo}
-            />
-            <FieldEdit
-              name={PROF_FIELDS.PROFILE_EMAIL}
-              editFunction={() => {
-                handleField(
-                  PROF_FIELDS.PROFILE_EMAIL,
-                  data && data.profileEmail,
-                  PROF_HEADER.PROFILE,
-                )
-                handleDrawerState(DRAWERSTATE.EDIT)
-              }}
-              data={data && data.profileEmail}
-            />
-          </div>
-          <div>
-            <Headers name={PROF_HEADER.COMMUNICATION} />
             <FieldEdit
               name={PROF_FIELDS.COMMUNICATION_MOBILE}
               editFunction={() => {
                 handleField(
                   PROF_FIELDS.COMMUNICATION_MOBILE,
-                  data && data.communicationMobile,
-                  PROF_HEADER.COMMUNICATION,
+                  data && data.mobile,
+                  PROF_HEADER.PROFILE,
                 )
                 handleDrawerState(DRAWERSTATE.EDIT)
               }}
-              data={data && data.communicationMobile}
+              data={data && data[0].mobile}
             />
             <FieldEdit
               name={PROF_FIELDS.COMMUNICATION_EMAIL}
               editFunction={() => {
                 handleField(
                   PROF_FIELDS.COMMUNICATION_EMAIL,
-                  data && data.communicationEmail,
-                  PROF_HEADER.COMMUNICATION,
+                  data && data.email,
+                  PROF_HEADER.PROFILE,
                 )
                 handleDrawerState(DRAWERSTATE.EDIT)
               }}
-              data={data && data.communicationEmail}
-            />
-            <FieldEdit
-              name={PROF_FIELDS.COMMUNICATION_PREFERENCE}
-              editFunction={() => {
-                handleField(
-                  PROF_FIELDS.COMMUNICATION_PREFERENCE,
-                  data && data.communicationPreference,
-                  PROF_HEADER.COMMUNICATION,
-                )
-                handleDrawerState(DRAWERSTATE.EDIT)
-              }}
-              data={data && data.communicationPreference}
+              data={data && data[0].email}
             />
           </div>
-          <div>
-            <Headers name={PROF_HEADER.INSURANCE} />
-            <FieldEdit
-              name={undefined}
-              editFunction={() => {
-                handleField(
-                  PROF_FIELDS.INSURANCE_FIELD,
-                  `Canada life insurance 
-              Plan no : 123456789`,
-                  PROF_HEADER.INSURANCE,
-                )
-                handleDrawerState(DRAWERSTATE.EDIT)
-              }}
-              data={`Canada life insurance 
-            Plan no : 123456789`}
-            />
-          </div>
-          <div>
-            <Headers name={PROF_HEADER.COUNTRY} />
-            <FieldEdit
-              name={undefined}
-              editFunction={() => {
-                handleField(
-                  PROF_FIELDS.COUNTRY_FIELD,
-                  data && data?.country?.name,
-                  PROF_HEADER.COUNTRY,
-                )
-                handleDrawerState(DRAWERSTATE.EDIT)
-              }}
-              data={data && data?.country?.name}
-            />
-          </div>
+        </div>
+        <div
+          className='text-darkBlue-main'
+          role='button'
+          onClick={() => {
+            changePassword()
+          }}
+        >
+          Change Password
         </div>
       </div>
     )

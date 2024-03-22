@@ -7,6 +7,7 @@ export const enum COMMON_MESSAGE {
   Updated = 'Updated',
   Deleted = 'Deleted',
   Cancel = 'Cancel',
+  Change_Password = 'Change Password link send to your register email',
 }
 
 export const enum VALIDATION_MESSAGE {

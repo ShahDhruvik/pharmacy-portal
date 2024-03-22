@@ -1,9 +1,7 @@
 import { theme } from '@/context/ThemeProvider'
 import { Avatar, Box, Button, Divider } from '@mui/material'
-import img1 from '@/assets/images/Aspect_Ratio.jpg'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import QrCode2Icon from '@mui/icons-material/QrCode2'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import Diversity1Icon from '@mui/icons-material/Diversity1'
 import BookOnlineIcon from '@mui/icons-material/BookOnline'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
@@ -19,10 +17,8 @@ import {
   CONST_APP_IMAGE_URL,
   CONST_OOPCHAR_ONLINE_CONSULTATION_URL,
   CONST_OOPCHAR_URL,
-  MarketingReferenceEnum,
 } from '@/utils/constants'
 import AuthForm from './auth-forms/auth-form'
-import { getAllSourceUuid } from '@/lib/SourceUuid'
 
 interface Props {}
 
@@ -92,18 +88,9 @@ const Welcome = ({}: Props) => {
     }
   }
 
-  const getSourceUuid = async () => {
-    const response = await getAllSourceUuid(setLoading, showToast)
-    if (response) {
-      const sourceUuid = response?.find((x: any) => x.name === MarketingReferenceEnum.PatientPortal)
-      localStorage.setItem('uuid', sourceUuid?.uuid)
-    }
-  }
-
   useEffect(() => {
     getData()
     getFeature()
-    getSourceUuid()
   }, [])
 
   const [openSign, setOpenSign] = useState(false)

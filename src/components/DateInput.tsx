@@ -18,6 +18,7 @@ type Props = {
   handleChange: () => void
   isDisabled?: boolean
   sx?: SxProps<Theme>
+  handleOnChange?: (e: any) => void
 }
 
 export const DateInput = ({
@@ -31,6 +32,7 @@ export const DateInput = ({
   handleChange,
   isDisabled,
   sx,
+  handleOnChange,
 }: Props) => {
   const inputStyleProps: SxProps<Theme> = { ...sx, width: '100%' }
   const [OpenClender, setOpenClender] = useState(false)
@@ -57,6 +59,9 @@ export const DateInput = ({
             onClose={() => setOpenClender(false)}
             onChange={(e, val) => {
               onChange(e)
+              if (handleOnChange) {
+                handleOnChange(e || val)
+              }
               handleChange()
               if (val === undefined) {
                 setError(name, {

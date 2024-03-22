@@ -37,6 +37,13 @@ interface Props {
   data?: any[]
 }
 
+//Manage states
+export const enum MANAGE_STATE {
+  UPCOMING = 'upcoming',
+  COMPLETE = 'complete',
+  CANCEL = 'cancel',
+}
+
 const AppointmentCard = ({
   heading,
   upcoming,
@@ -62,25 +69,6 @@ const AppointmentCard = ({
     setOpenDrawer(true)
   }
 
-  //Manage states
-  const enum MANAGE_STATE {
-    UPCOMING = 'upcoming',
-    COMPLETE = 'complete',
-    CANCEL = 'cancel',
-  }
-
-  const cancelAppoint = async (id: string) => {
-    const res = await cancelAppointment(setLoading, showToast, id)
-    if (res?.status === 200) {
-      await getAllAppointments(setLoading, showToast)
-    }
-  }
-
-  // type ManageState = MANAGE_STATE.UPCOMING | MANAGE_STATE.COMPLETE | MANAGE_STATE.CANCEL | undefined
-
-  // const [manageState, setManageState] = useState<ManageState>(undefined)
-
-  // console.log(manageState, 'manageState')
   if (!loading.isLoading && !loading.isAppointmentLoader) {
     return (
       <>
@@ -186,12 +174,11 @@ const AppointmentCard = ({
                             />
                           </div>
                           <div className='leading-5'>
-                            <h1>{x?.providerName}</h1>
+                            <h1>{x?.practiceName}</h1>
                             <p className='text-darkBlue-main font-light text-[13px]'>
-                              {x?.practiceName}
+                              {x?.providerName}
                             </p>
                             <p className='text-darkGray-main font-light text-[13px] line-clamp-1'>
-                              {/* 3403 Fieldgate Drive, Mississauga, ON, L4X 2J4 */}
                               {`${x?.practiceCityName}, ${x?.practiceStateName}`}
                             </p>
                           </div>
@@ -206,34 +193,21 @@ const AppointmentCard = ({
                           <div className='leading-5'>
                             <h1>{`${x?.patientFirstName} ${x?.patientLastName}`}</h1>
                             <p className='text-darkBlue-main font-light text-[13px]'>
-                              {format(new Date(x?.appointmentDate), 'dd MMM yyyy')}
+                              {format(new Date(x?.date), 'dd MMM yyyy')}
                             </p>
                             <p className='text-darkBlue-main font-light text-[13px]'>
                               {`${format(
-                                parse(x?.appointmentStartTime, 'HH:mm', new Date()),
+                                parse(x?.startTime, 'HH:mm', new Date()),
                                 'hh:mm a',
-                              )} to ${format(
-                                parse(x?.appointmentEndTime, 'HH:mm', new Date()),
-                                'hh:mm a',
-                              )}`}
+                              )} to ${format(parse(x?.endTime, 'HH:mm', new Date()), 'hh:mm a')}`}
                             </p>
                           </div>
                         </div>
                       </div>
-                      <div className='flex flex-col gap-1'>
-                        <IconButton>
-                          <ChatOutlinedIcon
-                            sx={{
-                              color: theme.palette.mWhite?.main,
-                              backgroundColor: theme.palette.mDarkGray?.main,
-                              padding: '4px',
-                              borderRadius: '9999px',
-                            }}
-                          />
-                        </IconButton>
-                        {x?.practiceLat === null ? (
-                          <IconButton sx={{ cursor: 'not-allowed' }}>
-                            <LocationOnOutlinedIcon
+                      <div className='flex flex-col gap-1 h-40 items-start justify-start'>
+                        {upcoming && (
+                          <IconButton onClick={() => {}}>
+                            <HighlightOffOutlinedIcon
                               sx={{
                                 color: theme.palette.mWhite?.main,
                                 backgroundColor: theme.palette.mDarkGray?.main,
@@ -242,23 +216,18 @@ const AppointmentCard = ({
                               }}
                             />
                           </IconButton>
-                        ) : (
-                          <a
-                            aria-label='location'
-                            href={`https://maps.google.com/?q=${x?.practiceLat},${x?.practiceLong}`}
-                            target='_blank'
-                          >
-                            <IconButton>
-                              <LocationOnOutlinedIcon
-                                sx={{
-                                  color: theme.palette.mWhite?.main,
-                                  backgroundColor: theme.palette.mDarkGray?.main,
-                                  padding: '4px',
-                                  borderRadius: '9999px',
-                                }}
-                              />
-                            </IconButton>
-                          </a>
+                        )}
+                        {!upcoming && (
+                          <IconButton>
+                            <ChatOutlinedIcon
+                              sx={{
+                                color: theme.palette.mWhite?.main,
+                                backgroundColor: theme.palette.mDarkGray?.main,
+                                padding: '4px',
+                                borderRadius: '9999px',
+                              }}
+                            />
+                          </IconButton>
                         )}
                         <a aria-label='gmail' href={`mailto:${x?.practiceEmail}`} target='_blank'>
                           <IconButton>
@@ -272,65 +241,17 @@ const AppointmentCard = ({
                             />
                           </IconButton>
                         </a>
-                        {upcoming && (
-                          <IconButton
-                            onClick={() => {
-                              cancelAppoint(x?.appointmentInternalId)
-                            }}
-                          >
-                            <HighlightOffOutlinedIcon
-                              sx={{
-                                color: theme.palette.mWhite?.main,
-                                backgroundColor: theme.palette.mDarkGray?.main,
-                                padding: '4px',
-                                borderRadius: '9999px',
-                              }}
-                            />
-                          </IconButton>
-                        )}
-                        {complete && (
-                          <IconButton>
-                            <ThumbUpOutlinedIcon
-                              sx={{
-                                color: theme.palette.mWhite?.main,
-                                backgroundColor: theme.palette.mBlue?.main,
-                                padding: '4px',
-                                borderRadius: '9999px',
-                              }}
-                            />
-                          </IconButton>
-                        )}
-                        {cancel && (
-                          <a
-                            aria-label='reschedule'
-                            href={encodeURI(
-                              `${CONST_OOPCHAR_URL}book-in-person?sourceUuid=${uuid}&specialtyId=${x?.specialtyId}&cityId=${x?.practiceCityId}&consultationTypeId=${x?.consultationTypeInternalId}&findDate=${x?.appointmentDate}&practiceInternalId=${x?.practiceInternalId}`,
-                            )}
-                            target='_blank'
-                          >
-                            <IconButton>
-                              <MovieOutlinedIcon
-                                sx={{
-                                  color: theme.palette.mWhite?.main,
-                                  backgroundColor: theme.palette.mPink?.main,
-                                  padding: '4px',
-                                  borderRadius: '9999px',
-                                }}
-                              />
-                            </IconButton>
-                          </a>
-                        )}
                       </div>
                     </div>
                   </div>
                 </SwiperSlide>
               ))
             ) : (
-              <div className='flex items-center justify-center border-black-main rounded-md border-[1px] bg-yellowLight-main h-[215px] mt-3'>
+              <div className='flex items-center justify-center border-black-main rounded-md border-[1px] bg-yellowLight-main h-[202px] mt-3'>
                 There is nothing to show here!
               </div>
             )}
-            {upcoming && full && data && data?.length > 1 && (
+            {upcoming && full && (
               <span className='flex justify-end text-darkBlue-main font-light'>
                 <button
                   onClick={() => {
@@ -342,7 +263,7 @@ const AppointmentCard = ({
                 </button>
               </span>
             )}
-            {complete && full && data && data?.length > 1 && (
+            {complete && full && (
               <span className='flex justify-end text-darkBlue-main font-light'>
                 <button
                   onClick={() => {
@@ -354,7 +275,7 @@ const AppointmentCard = ({
                 </button>
               </span>
             )}
-            {cancel && full && data && data?.length > 1 && (
+            {cancel && full && (
               <span className='flex justify-end text-darkBlue-main font-light'>
                 <button
                   onClick={() => {
@@ -366,156 +287,31 @@ const AppointmentCard = ({
                 </button>
               </span>
             )}
-            {/* <SwiperSlide>
-            <div className='mt-3 rounded-md border-[1px] border-black-main bg-lightGray-main'>
-              <div className='relative border-black'>
-                <div className='absolute inset-0 flex items-center justify-end md:gap-3 gap-1 leading-5 text-white-main text-[12px]'>
-                  {upcoming && (
-                    <>
-                      <span className='rounded-md bg-darkBlue-main px-3'>In-person</span>
-                      <span className='rounded-md bg-green-main px-3'>Confirmed</span>
-                      <span className='mr-3 rounded-md bg-darkGray-main px-3'>Sexual Health</span>
-                    </>
-                  )}
-                  {complete && (
-                    <>
-                      <span className='rounded-md bg-blue-main px-3'>Virtual</span>
-                      <span className='rounded-md bg-yellow-main px-3 text-black-main'>Review</span>
-                      <span className='mr-3 rounded-md bg-darkGray-main px-3'>Sexual Health</span>
-                    </>
-                  )}
-                  {cancel && (
-                    <>
-                      <span className='rounded-md bg-orange-main px-3'>Rescheduled</span>
-                      <span className='mr-3 rounded-md bg-darkGray-main px-3'>Sexual Health</span>
-                    </>
-                  )}
-                </div>
-              </div>
-              <div className='flex items-center justify-between gap-5 p-5'>
-                <div className='flex w-4/5 flex-col gap-5'>
-                  <div className='flex items-start gap-5'>
-                    <div>
-                      {' '}
-                      <Avatar alt='Remy Sharp' src={img} />
-                    </div>
-                    <div className='leading-5'>
-                      <h1>Dr Vageesh Sabharwal</h1>
-                      <p className='text-darkBlue-main font-light text-[13px]'>
-                        Nakshtra Multi-speciality Clinic
-                      </p>
-                      <p className='text-darkGray-main font-light text-[13px]'>
-                        3403 Fieldgate Drive, Mississauga, ON, L4X 2J4
-                      </p>
-                    </div>
-                  </div>
-                  <div className='flex items-start gap-5'>
-                    <div>
-                      {' '}
-                      <Avatar alt='Remy Sharp' src={img} />
-                    </div>
-                    <div className='leading-5'>
-                      <h1>Yogi Pathare</h1>
-                      <p className='text-darkBlue-main font-light text-[13px]'>19 July 2023 </p>
-                      <p className='text-darkBlue-main font-light text-[13px]'>
-                        10:15 AM to 11:00 AM
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className='flex flex-col gap-1'>
-                  <IconButton>
-                    <ChatOutlinedIcon
-                      sx={{
-                        color: theme.palette.mWhite?.main,
-                        backgroundColor: theme.palette.mDarkGray?.main,
-                        padding: '4px',
-                        borderRadius: '9999px',
-                      }}
-                    />
-                  </IconButton>
-                  <IconButton>
-                    <LocationOnOutlinedIcon
-                      sx={{
-                        color: theme.palette.mWhite?.main,
-                        backgroundColor: theme.palette.mDarkGray?.main,
-                        padding: '4px',
-                        borderRadius: '9999px',
-                      }}
-                    />
-                  </IconButton>
-                  <IconButton>
-                    <EmailOutlinedIcon
-                      sx={{
-                        color: theme.palette.mWhite?.main,
-                        backgroundColor: theme.palette.mDarkGray?.main,
-                        padding: '4px',
-                        borderRadius: '9999px',
-                      }}
-                    />
-                  </IconButton>
-                  {upcoming && (
-                    <IconButton>
-                      <HighlightOffOutlinedIcon
-                        sx={{
-                          color: theme.palette.mWhite?.main,
-                          backgroundColor: theme.palette.mDarkGray?.main,
-                          padding: '4px',
-                          borderRadius: '9999px',
-                        }}
-                      />
-                    </IconButton>
-                  )}
-                  {complete && (
-                    <IconButton>
-                      <ThumbUpOutlinedIcon
-                        sx={{
-                          color: theme.palette.mWhite?.main,
-                          backgroundColor: theme.palette.mBlue?.main,
-                          padding: '4px',
-                          borderRadius: '9999px',
-                        }}
-                      />
-                    </IconButton>
-                  )}
-                  {cancel && (
-                    <IconButton>
-                      <MovieOutlinedIcon
-                        sx={{
-                          color: theme.palette.mWhite?.main,
-                          backgroundColor: theme.palette.mPink?.main,
-                          padding: '4px',
-                          borderRadius: '9999px',
-                        }}
-                      />
-                    </IconButton>
-                  )}
-                </div>
-              </div>
-            </div>
-          </SwiperSlide> */}
           </Swiper>
         </div>
         <ViewBar
           handleClose={handleCloseDrawer}
           open={openDrawer && manageState === MANAGE_STATE.UPCOMING}
-          heading='Upcoming Appointments'
+          heading='Upcoming Scheduled Appointments'
           upcoming={true}
-          data={data}
+          // data={data}
+          manageState={manageState}
         />
         <ViewBar
           handleClose={handleCloseDrawer}
           open={openDrawer && manageState === MANAGE_STATE.COMPLETE}
           heading='Complete Appointments'
           complete={true}
-          data={data}
+          // data={data}
+          manageState={manageState}
         />
         <ViewBar
           handleClose={handleCloseDrawer}
           open={openDrawer && manageState === MANAGE_STATE.CANCEL}
           heading='Cancel Appointments'
           cancel={true}
-          data={data}
+          // data={data}
+          manageState={manageState}
         />
       </>
     )

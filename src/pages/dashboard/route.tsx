@@ -11,8 +11,6 @@ const DashboardRoute = ({}: Props) => {
   return (
     <RouteWrapper>
       <Route index element={<Dashboard />} />
-      <Route path={DASHBOARD_PATH.TREE} element={<PlantTrees />} />
-      {/* Nested route */}
     </RouteWrapper>
   )
 }

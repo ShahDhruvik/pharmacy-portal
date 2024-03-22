@@ -1,6 +1,5 @@
 import AppointmentCard from '@/components/AppointmentCard'
 import Header from '@/components/Header'
-import SmallCard from '@/components/SmallCard'
 import { theme } from '@/context/ThemeProvider'
 import { getAllAppointments } from '@/lib/Appointment'
 import { Divider } from '@mui/material'
@@ -8,8 +7,7 @@ import { useEffect, useState } from 'react'
 import { useToast } from '@/hooks/useToast'
 import { useLoading } from '@/context/LoadingContext'
 import { useAuth } from '@/context/AuthContext'
-import { getAllFamily } from '@/lib/Family'
-import { FamilyField } from '@/types/FamilyTypes'
+import img from '@/assets/images/Aspect_Ratio.jpg'
 
 interface Props {}
 
@@ -61,7 +59,6 @@ const Banner = ({}: Props) => {
   const [appointmentDetails, setAppointmentDetails] = useState<any>(null)
   const { authParams } = useAuth()
   const [manageState, setManageState] = useState<ManageState>(undefined)
-  const [data, setData] = useState<FamilyField[]>([])
 
   const getAppData = async () => {
     const response = await getAllAppointments(setLoading, showToast)
@@ -70,21 +67,8 @@ const Banner = ({}: Props) => {
     }
   }
 
-  const getFamilyData = async () => {
-    const response = await getAllFamily(setLoading, showToast)
-    if (response) {
-      setData(response)
-    }
-  }
-
-  // useEffect(() => {
-  //   if (manageState === undefined) {
-  //   }
-  // }, [manageState])
-
   useEffect(() => {
     if (authParams?.isAuth) {
-      getFamilyData()
       getAppData()
     }
   }, [authParams?.isAuth])
@@ -104,17 +88,6 @@ const Banner = ({}: Props) => {
       </section>
       <section>
         <div>
-          <div className='flex justify-between gap-3 flex-wrap'>
-            <SmallCard family={true} heading='My Family' para='Manage' familyData={data} />
-            <SmallCard medicalForm={true} heading='Medical Forms' para='Manage' />
-            <SmallCard healthCard={true} heading='Health Card' para='Create' />
-            <SmallCard
-              insurance={true}
-              heading='Insurance Calculator'
-              para='Manage coverage and expenses'
-            />
-          </div>
-          <Divider sx={{ borderBottom: '3px solid', borderColor: theme.palette.mDarkGray?.main }} />
           <div className='flex justify-between flex-wrap'>
             <AppointmentCard
               heading='Upcoming Appointments'
@@ -124,7 +97,7 @@ const Banner = ({}: Props) => {
               setManageState={setManageState}
               manageState={manageState}
               full={true}
-              data={appointmentDetails?.upcomingAppointments}
+              data={appointmentDetails?.upcomingAppointments?.slice(0, 5)}
             />
             <AppointmentCard
               heading='Completed Appointments'
@@ -134,7 +107,7 @@ const Banner = ({}: Props) => {
               setManageState={setManageState}
               manageState={manageState}
               full={true}
-              data={appointmentDetails?.completedAppointments}
+              data={appointmentDetails?.completedAppointments?.slice(0, 5)}
             />
             <AppointmentCard
               heading='Cancelled Appointments'
@@ -144,8 +117,12 @@ const Banner = ({}: Props) => {
               setManageState={setManageState}
               manageState={manageState}
               full={true}
-              data={appointmentDetails?.cancelledAppointments}
+              data={appointmentDetails?.cancelledAppointments?.slice(0, 5)}
             />
+          </div>
+          {/* <Divider sx={{ borderBottom: '3px solid', borderColor: theme.palette.mDarkGray?.main }} /> */}
+          <div className='w-full'>
+            <img src={img} alt='img' className='w-full my-5 h-60' />
           </div>
           <span className='flex justify-end font-extralight text-sm pt-4'>
             Copyright © 2023 Triaina Health. All rights reserved.

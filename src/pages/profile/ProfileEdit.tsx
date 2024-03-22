@@ -12,7 +12,7 @@ import Spinner from '@/components/spinner'
 import { FieldStateProps } from './Profilebar'
 import { acDefaultValue } from '@/utils/form.validation'
 import { useToast } from '@/hooks/useToast'
-import { profileCommunicationEdit, profileEmailEdit, profileMobileNumberEdit } from '@/lib/Profile'
+// import { profileCommunicationEdit, profileEmailEdit, profileMobileNumberEdit } from '@/lib/Profile'
 import { useLoading } from '@/context/LoadingContext'
 
 type Props = {
@@ -97,50 +97,50 @@ const ProfileEdit = ({ handleDrawerState, fieldName, setFieldName }: Props) => {
       otp4: data.otp4,
       otp5: data.otp5,
     }
-    switch (fieldName.fieldName) {
-      case PROF_FIELDS.PROFILE_MOBILE || PROF_FIELDS.COMMUNICATION_MOBILE:
-        //API edit
-        console.log(data, 'mob')
+    // switch (fieldName.fieldName) {
+    //   case PROF_FIELDS.PROFILE_MOBILE || PROF_FIELDS.COMMUNICATION_MOBILE:
+    //     //API edit
+    //     console.log(data, 'mob')
 
-        const a = {
-          otp: Object.values(o).join(''),
-          contactNo: data.profMobileConfirm,
-        }
-        const res = await profileMobileNumberEdit(setLoading, showToast, a)
-        if (res?.status === 200) {
-          handleDrawerState(DRAWERSTATE.NORMAL)
-        }
-        break
-      case PROF_FIELDS.PROFILE_EMAIL || PROF_FIELDS.COMMUNICATION_EMAIL:
-        //API edit
-        console.log(data, 'email')
-        const b = {
-          otp: Object.values(o).join(''),
-          profileEmail: data.profEmailConfirm,
-        }
-        const resp = await profileEmailEdit(setLoading, showToast, b)
-        if (resp?.status === 200) {
-          handleDrawerState(DRAWERSTATE.NORMAL)
-        }
-        break
-      case PROF_FIELDS.COMMUNICATION_PREFERENCE:
-        //confirmation popUp
-        console.log(data, 'pref')
-        console.log('pref')
-        setFormData(data)
-        setFieldName({ ...fieldName, isConfirm: true })
-        break
-      case PROF_FIELDS.COUNTRY_FIELD:
-        //confirmation popUp
-        console.log(data)
-        console.log('country')
-        setFormData(data)
-        setFieldName({ ...fieldName, isConfirm: true })
-        break
+    //     const a = {
+    //       otp: Object.values(o).join(''),
+    //       contactNo: data.profMobileConfirm,
+    //     }
+    //     const res = await profileMobileNumberEdit(setLoading, showToast, a)
+    //     if (res?.status === 200) {
+    //       handleDrawerState(DRAWERSTATE.NORMAL)
+    //     }
+    //     break
+    //   case PROF_FIELDS.PROFILE_EMAIL || PROF_FIELDS.COMMUNICATION_EMAIL:
+    //     //API edit
+    //     console.log(data, 'email')
+    //     const b = {
+    //       otp: Object.values(o).join(''),
+    //       profileEmail: data.profEmailConfirm,
+    //     }
+    //     const resp = await profileEmailEdit(setLoading, showToast, b)
+    //     if (resp?.status === 200) {
+    //       handleDrawerState(DRAWERSTATE.NORMAL)
+    //     }
+    //     break
+    //   case PROF_FIELDS.COMMUNICATION_PREFERENCE:
+    //     //confirmation popUp
+    //     console.log(data, 'pref')
+    //     console.log('pref')
+    //     setFormData(data)
+    //     setFieldName({ ...fieldName, isConfirm: true })
+    //     break
+    //   case PROF_FIELDS.COUNTRY_FIELD:
+    //     //confirmation popUp
+    //     console.log(data)
+    //     console.log('country')
+    //     setFormData(data)
+    //     setFieldName({ ...fieldName, isConfirm: true })
+    //     break
 
-      default:
-        break
-    }
+    //   default:
+    //     break
+    // }
   }
 
   if (!loading.isLoading && !loading.isIndependentLoader) {

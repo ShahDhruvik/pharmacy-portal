@@ -14,6 +14,10 @@ import { loginUser } from '@/lib/Auth'
 import { useLoading } from '@/context/LoadingContext'
 import { useToast } from '@/hooks/useToast'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
+import TxtInput from '@/components/TxtInput'
+import { txtFieldValidation } from '@/utils/form.validation'
+import { useAuth } from '@/context/AuthContext'
+import PasswordInput from '@/components/PasswordInput'
 
 type Props = {
   open: boolean
@@ -24,16 +28,17 @@ type Props = {
 const AuthForm = ({ open, handleClose, isAssesstment }: Props) => {
   const { setLoading } = useLoading()
   const showToast = useToast()
+  const { addStorage } = useAuth()
 
   const [errorMessage, setErrorMessage] = useState('')
-  const [phone, setPhone] = useState('')
 
   const { control, watch, setValue, handleSubmit, formState, reset, trigger } = useForm({
     defaultValues: {
-      contactNo: '',
-      contryCode: '+91',
+      userName: '',
+      password: '',
       tNc: false,
       robo: false,
+      officeId: '',
     },
   })
 
@@ -49,10 +54,13 @@ const AuthForm = ({ open, handleClose, isAssesstment }: Props) => {
       return
     } else {
       setErrorMessage('')
-      const res = await loginUser(setLoading, showToast, data?.contactNo as string)
+      console.log(data, 'data')
+
+      const res = await loginUser(setLoading, showToast, data as any)
       if (res?.status === 200) {
-        setPhone(data.contactNo as string)
-        setSignType([FORMTYPE.OTP])
+        const { accessToken, refreshToken } = res.data.data
+        addStorage(accessToken, refreshToken)
+        handleClose()
       }
     }
   }
@@ -97,18 +105,29 @@ const AuthForm = ({ open, handleClose, isAssesstment }: Props) => {
         <form onSubmit={handleSubmit(onSubmitHandle as any)}>
           {!signType.includes(FORMTYPE.SIGNUP) && (
             <div className='flex flex-col justify-center gap-6 py-1 my-1'>
-              <MobileInput
+              <TxtInput
                 control={control}
-                name={'contactNo'}
-                placeholder='Enter Number'
-                setValue={setValue}
-                watch={watch}
+                name='userName'
                 handleChange={() => {}}
-                codeName='contryCode'
-                isDisabled={signType.includes(FORMTYPE.OTP)}
-                sx={{
-                  minWidth: 400,
-                }}
+                placeholder='Enter User Name'
+                validation={txtFieldValidation(true)}
+                label='User Name*'
+              />
+              <PasswordInput
+                control={control}
+                name='password'
+                handleChange={() => {}}
+                placeholder='Enter Password'
+                validation={txtFieldValidation(true)}
+                label='Password*'
+              />
+              <TxtInput
+                control={control}
+                name='officeId'
+                handleChange={() => {}}
+                placeholder='Enter Office Id'
+                validation={txtFieldValidation(true)}
+                label='Office Id*'
               />
               <PermissionForm
                 signType={signType}
@@ -121,64 +140,24 @@ const AuthForm = ({ open, handleClose, isAssesstment }: Props) => {
                 trigger={trigger}
                 isDisabled={signType.includes(FORMTYPE.OTP)}
               />
-              {signType.includes(FORMTYPE.SIGNIN) && (
-                <Box display={'flex'} justifyContent={'end'} gap={1} marginTop={1}>
-                  <Button
-                    variant='contained'
-                    color='mPink'
-                    sx={{
-                      maxHeight: 27,
-                      maxWidth: 'max-content',
-                      minWidth: 'max-content',
-                    }}
-                  >
-                    Sign in -get OTP
-                  </Button>
-                </Box>
-              )}
-            </div>
-          )}
-          {signType.length === 0 && (
-            <Box display={'flex'} justifyContent={'center'} gap={1} marginTop={'24px'}>
-              <Button
-                variant='contained'
-                color='mPink'
-                sx={{
-                  maxHeight: 27,
-                  maxWidth: 'max-content',
-                  minWidth: 'max-content',
-                }}
-                type='submit'
-              >
-                Sign in -get OTP
-              </Button>
-              <div>
-                {/* <Button
+              <Box display={'flex'} justifyContent={'end'} gap={1} marginTop={1}>
+                <Button
                   variant='contained'
                   color='mPink'
-                  onClick={() => setSignType([FORMTYPE.SIGNUP])}
                   sx={{
                     maxHeight: 27,
-                    maxWidth: 150,
-                    minWidth: 150,
+                    maxWidth: 'max-content',
+                    minWidth: 'max-content',
                   }}
+                  type='submit'
                 >
-                  Sign up
+                  Sign-In
                 </Button>
-                <p className='ml-3 text-sm'>Do not have account</p> */}
-              </div>
-            </Box>
+              </Box>
+            </div>
           )}
           {errorMessage !== '' && <p className='text-lightOrange-main text-sm'>{errorMessage}</p>}
         </form>
-        {signType.includes(FORMTYPE.SIGNUP) && (
-          <SignUpForm signType={signType} handleClose={handleClose} setSignType={setSignType} />
-        )}
-        {signType.includes(FORMTYPE.OTP) && (
-          <div className='mt-3'>
-            <OTPForm handleClose={handleClose} isAssesstMent={isAssesstment} phone={phone} />
-          </div>
-        )}
       </div>
     </CustomDialog>
   )

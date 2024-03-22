@@ -1,9 +1,9 @@
 export const enum MAIN_PATH {
   AUTH = '/auth/*',
   DASHBOARD = '/*',
-  ABOUT = '/about/*',
-  POST = '/posts/*',
-  USER = '/help/*',
+  CREATE_TASK = '/tasks/*',
+  CHAT = '/chat/*',
+  HELP = '/help/*',
   UNAUTHORIZED = '/unauthorized',
   CONTACT_US = '/contactUs/*',
 }
@@ -24,8 +24,4 @@ export const enum AUTH_PATH {
 
 export const enum DASHBOARD_PATH {
   TREE = '/tree',
-}
-
-export const enum POST_PATH {
-  INDPOST = ':slug',
 }

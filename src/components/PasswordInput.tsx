@@ -1,6 +1,8 @@
-import { theme } from '@/context/ThemeProvider'
-import { SxProps, TextField, Theme } from '@mui/material'
+import { IconButton, InputAdornment, SxProps, TextField, Theme } from '@mui/material'
 import { Controller, Control } from 'react-hook-form'
+import { useState } from 'react'
+import Eye from '@/assets/icons/eye.svg?react'
+
 type Props = {
   placeholder: string
   name: string
@@ -11,10 +13,11 @@ type Props = {
   sx?: SxProps<Theme>
   multiline?: number
   label?: string
-  handleOnChange?: (e: any) => void
+  handleClick?: () => void
+  readonly?: boolean
 }
 
-const TxtInput = ({
+const PasswordInput = ({
   placeholder,
   name,
   control,
@@ -24,8 +27,14 @@ const TxtInput = ({
   sx,
   multiline,
   label,
-  handleOnChange,
+  handleClick,
+  readonly,
 }: Props) => {
+  //Hide and show passowrd
+  const [showPassword, setShowPassword] = useState(false)
+  const toggleShowPassword = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword)
+  }
   const inputStyleProps: SxProps<Theme> = { ...sx, width: '100%' }
   return (
     <Controller
@@ -39,10 +48,13 @@ const TxtInput = ({
             onChange={(e) => {
               onChange(e)
               handleChange()
-              if (handleOnChange) {
-                handleOnChange(e)
+            }}
+            onClick={() => {
+              if (handleClick) {
+                handleClick()
               }
             }}
+            type={showPassword ? 'text' : 'password'}
             placeholder={placeholder}
             error={fieldState.invalid}
             helperText={fieldState.error?.message || ''}
@@ -51,6 +63,21 @@ const TxtInput = ({
             multiline={multiline ? true : false}
             minRows={multiline ?? 0}
             InputLabelProps={{ shrink: true }}
+            InputProps={{
+              readOnly: readonly ? readonly : false,
+              endAdornment: (
+                <InputAdornment position='end'>
+                  <IconButton
+                    onClick={toggleShowPassword}
+                    sx={{
+                      padding: 0,
+                    }}
+                  >
+                    <Eye />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
             label={label}
           />
         )
@@ -60,4 +87,4 @@ const TxtInput = ({
   )
 }
 
-export default TxtInput
+export default PasswordInput

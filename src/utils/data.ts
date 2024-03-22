@@ -27,26 +27,26 @@ export const PlantTree: PlantTree[] = [
 ]
 
 export const headerLinks: HeaderLinkType[] = [
-  {
-    id: 0,
-    name: 'What we treat?',
-    path: COMMON_PATH.DEFAULT,
-  },
-  {
-    id: 1,
-    name: 'Privacy',
-    path: MAIN_PATH.POST.split('/*')[0],
-  },
+  // {
+  //   id: 0,
+  //   name: 'What we treat?',
+  //   path: COMMON_PATH.DEFAULT,
+  // },
+  // {
+  //   id: 1,
+  //   name: 'Privacy',
+  //   path: MAIN_PATH.POST.split('/*')[0],
+  // },
   // {
   //   id: 2,
   //   name: 'Treatment Plan',
   //   path: MAIN_PATH.ABOUT.split('/*')[0],
   // },
-  {
-    id: 3,
-    name: 'Help',
-    path: MAIN_PATH.USER.split('/*')[0],
-  },
+  // {
+  //   id: 3,
+  //   name: 'Help',
+  //   path: MAIN_PATH.USER.split('/*')[0],
+  // },
 ]
 
 export const countryCodes = ['+1', '+91', '+44']
@@ -182,29 +182,19 @@ export const family = [
 ]
 
 export const headerData: HeaderLinkType[] = [
-  {
-    id: 0,
-    name: 'Book Appointment',
-    path: CONST_OOPCHAR_IN_PERSON_CONSULTATION_URL,
-  },
+  // {
+  //   id: 0,
+  //   name: 'Create Task',
+  //   path: CONST_OOPCHAR_IN_PERSON_CONSULTATION_URL,
+  // },
   {
     id: 1,
-    name: 'My Packages',
-    path: MAIN_PATH.POST.split('/*')[0],
+    name: 'Chat',
+    path: MAIN_PATH.CHAT.split('/*')[0],
   },
-  // {
-  //   id: 2,
-  //   name: 'Track Medicine',
-  //   path: MAIN_PATH.ABOUT.split('/*')[0],
-  // },
-  // {
-  //   id: 3,
-  //   name: 'Emergency/Triage',
-  //   path: MAIN_PATH.USER.split('/*')[0],
-  // },
   {
     id: 4,
     name: 'Help',
-    path: MAIN_PATH.USER.split('/*')[0],
+    path: MAIN_PATH.HELP.split('/*')[0],
   },
 ]

@@ -7,6 +7,7 @@ import { theme } from '@/context/ThemeProvider'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import ProfileBar from '../pages/profile/Profilebar'
 import HomeIcon from '@mui/icons-material/Home'
+import TaskBar from '@/pages/task-bar/task-bar'
 
 interface Props {}
 
@@ -24,11 +25,18 @@ const Header = ({}: Props) => {
   const id = open ? 'simple-popper' : undefined
   // Drawer
   const [openDrawer, setOpenDrawer] = useState(false)
+  const [openDrawerForTask, setOpenDrawerForTask] = useState(false)
   const handleCloseDrawer = () => {
     setOpenDrawer(false)
   }
   const handleopenDrawer = () => {
     setOpenDrawer(true)
+  }
+  const handleCloseDrawerForTask = () => {
+    setOpenDrawerForTask(false)
+  }
+  const handleOpenDrawerForTask = () => {
+    setOpenDrawerForTask(true)
   }
   return (
     <>
@@ -46,6 +54,13 @@ const Header = ({}: Props) => {
               className='cursor-pointer'
             />
             <h1 className='text-3xl text-darkBlue-main font-semibold'>Oopchar</h1>
+          </div>
+          <div
+            role='button'
+            className='hidden md:flex flex-row flex-wrap gap-5 text-darkBlue-main font-light items-center mr-5'
+            onClick={handleOpenDrawerForTask}
+          >
+            <span className='hover:underline bg-white-main px-3 py-1 rounded-sm'>Create Task</span>
           </div>
           <ul className='hidden md:flex flex-row flex-wrap gap-5 text-darkBlue-main font-light items-center'>
             {headerData?.map((x) => {
@@ -115,6 +130,7 @@ const Header = ({}: Props) => {
         </div>
       </nav>
       <ProfileBar handleClose={handleCloseDrawer} open={openDrawer} />
+      <TaskBar handleClose={handleCloseDrawerForTask} open={openDrawerForTask} />
     </>
   )
 }

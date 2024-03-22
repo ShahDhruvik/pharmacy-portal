@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { theme } from '@/context/ThemeProvider'
-import { Drawer, Button, Divider, Avatar, IconButton } from '@mui/material'
-import AppointmentCard from '@/components/AppointmentCard'
+import { Drawer, Button, Divider, Avatar, IconButton, Dialog, DialogContent } from '@mui/material'
 import { CONST_APP_IMAGE_URL } from '@/utils/constants'
 import { format, parse } from 'date-fns'
 import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined'
@@ -11,6 +10,25 @@ import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined'
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined'
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined'
 import MovieOutlinedIcon from '@mui/icons-material/MovieOutlined'
+import SelectInput from '@/components/SelectInput'
+import { useForm } from 'react-hook-form'
+import {
+  acDefaultValue,
+  dateSelectValidation,
+  searchSelectValidation,
+} from '@/utils/form.validation'
+import TxtInput from '@/components/TxtInput'
+import { dropdownPractice } from '@/lib/DropDownApis'
+import { SelectDDL } from '@/types/common'
+import { useLoading } from '@/context/LoadingContext'
+import { useToast } from '@/hooks/useToast'
+import { getAllAppointments, getAllAppointmentsForViewBar } from '@/lib/Appointment'
+import { MANAGE_STATE } from '@/components/AppointmentCard'
+import { LocalizationProvider, StaticDatePicker, pickersLayoutClasses } from '@mui/x-date-pickers'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { enGB } from 'date-fns/locale'
+import { DateInput } from '@/components/DateInput'
+import { values } from 'lodash'
 
 type Props = {
   handleClose: () => void
@@ -19,10 +37,96 @@ type Props = {
   upcoming?: boolean
   complete?: boolean
   cancel?: boolean
-  data?: any
+  // data?: any
+  manageState: any
 }
 
-const ViewBar = ({ open, handleClose, heading, upcoming, complete, cancel, data }: Props) => {
+const ViewBar = ({
+  open,
+  handleClose,
+  heading,
+  upcoming,
+  complete,
+  cancel,
+  manageState,
+}: Props) => {
+  const [show, setShow] = useState(false)
+  const [practice, setPractice] = useState<SelectDDL[]>([])
+  const [newData, setNewData] = useState<any>(undefined)
+  const { setLoading, loading } = useLoading()
+  const showToast = useToast()
+  const [search, setSearch] = useState<string>('')
+  const [openPicker, setOpenPicker] = useState<boolean>(false)
+  const [sDate, setSDate] = useState<any>(undefined)
+  const [eDate, setEDate] = useState<any>(undefined)
+
+  const { control, setValue, setError, clearErrors, handleSubmit, reset, getValues, watch } =
+    useForm({
+      defaultValues: {
+        practiceId: acDefaultValue,
+        patient: acDefaultValue,
+      },
+    })
+
+  const practiceWatch = watch('practiceId')
+
+  const drpPractice = async () => {
+    const res = await dropdownPractice(setLoading, showToast)
+    if (res) {
+      setPractice(res)
+    }
+  }
+
+  const getAppData = async (pId: any) => {
+    const data: any = {
+      startDate: sDate === undefined ? new Date() : sDate,
+      endDate: eDate === undefined ? new Date() : eDate,
+      practiceId: pId,
+      search: search,
+    }
+    const response = await getAllAppointmentsForViewBar(setLoading, showToast, data)
+    if (response) {
+      setNewData(response)
+    }
+  }
+
+  useEffect(() => {
+    if (manageState === MANAGE_STATE.UPCOMING) {
+      drpPractice()
+    }
+  }, [manageState])
+
+  useEffect(() => {
+    setNewData(undefined)
+    if (open) {
+      getAppData(-1)
+    }
+  }, [open])
+
+  useEffect(() => {
+    setNewData(undefined)
+    if (practiceWatch._id !== '00') {
+      getAppData(practiceWatch?._id as any)
+    }
+  }, [practiceWatch])
+
+  useEffect(() => {
+    setSearch('')
+    setNewData(undefined)
+    if (search !== '') {
+      getAppData(-1)
+    }
+  }, [search])
+
+  const dateClick = () => {
+    setOpenPicker(false)
+    if (practiceWatch._id !== '00') {
+      getAppData(practiceWatch?._id as any)
+    } else {
+      getAppData(-1)
+    }
+  }
+
   return (
     <Drawer
       anchor='right'
@@ -39,7 +143,7 @@ const ViewBar = ({ open, handleClose, heading, upcoming, complete, cancel, data 
     >
       <div>
         <div
-          className={`flex justify-end items-center mb-3 sticky top-0 z-10 py-[10px] bg-lightGray-main`}
+          className={`flex justify-between items-center mb-2 sticky top-0 z-10 py-[10px] bg-lightGray-main`}
           id='header'
         >
           <Button
@@ -49,14 +153,142 @@ const ViewBar = ({ open, handleClose, heading, upcoming, complete, cancel, data 
               color: theme.palette.mMidBlue?.main,
               minWidth: 'max-content',
               fontSize: '1rem',
-
+              height: 20,
+            }}
+            onClick={() => {
+              setShow(!show)
+            }}
+            disableRipple
+          >
+            {!show ? `Search by Patient` : `Search by Practice`}
+          </Button>
+          <Button
+            variant='text'
+            color='mMidBlue'
+            sx={{
+              color: theme.palette.mMidBlue?.main,
+              minWidth: 'max-content',
+              fontSize: '1rem',
               height: 20,
             }}
             onClick={handleClose}
             disableRipple
           >
-            Done
+            Cancel
           </Button>
+        </div>
+        <div className='mb-3'>
+          {!show ? (
+            <SelectInput
+              options={practice as any}
+              name={'practiceId'}
+              control={control}
+              label={'PracticeId*'}
+              setValue={setValue}
+              setError={setError}
+              clearErrors={clearErrors}
+              validation={searchSelectValidation('PracticeId')}
+              // handleChange={() => {
+              //   setPracId(getValues('practiceId')?._id as any)
+              // }}
+            />
+          ) : (
+            <TxtInput
+              control={control}
+              name='userName'
+              handleChange={() => {}}
+              placeholder='Enter patient name, mobile#'
+              validation={{}}
+              label='Search*'
+              handleOnChange={(e: any) => setSearch(e.target.value)}
+            />
+          )}
+        </div>
+        <div className='flex items-center justify-between my-2'>
+          <span className='max-mxs:text-sm text-darkBlue-main' role='button' onClick={() => {}}>
+            Today
+          </span>
+          <Button
+            className='max-mxs:text-sm'
+            variant='text'
+            color='mMidBlue'
+            sx={{
+              color: theme.palette?.mDarkBlue?.main,
+              minWidth: 'max-content',
+              fontWeight: 700,
+              fontSize: 15,
+            }}
+            onClick={() => setOpenPicker(!openPicker)}
+            onKeyDown={() => setOpenPicker(true)}
+          >
+            {`${new Date().toLocaleDateString()}`}
+          </Button>
+          <Dialog open={openPicker} onClose={() => setOpenPicker(false)}>
+            <DialogContent sx={{ display: 'flex', gap: '15px' }}>
+              <DateInput
+                name='startDate'
+                control={control}
+                clearErrors={clearErrors}
+                handleChange={() => {}}
+                validation={dateSelectValidation('Start Date')}
+                label={'Start Date*'}
+                setError={setError}
+                handleOnChange={(e: any) => setSDate(e)}
+              />
+              <DateInput
+                name='endDate'
+                control={control}
+                clearErrors={clearErrors}
+                handleChange={() => {}}
+                validation={dateSelectValidation('End Date')}
+                label={'End Date*'}
+                setError={setError}
+                handleOnChange={(e: any) => setEDate(e)}
+              />
+              <Button
+                className='max-mxs:text-sm'
+                variant='text'
+                color='mMidBlue'
+                sx={{
+                  color: theme.palette?.mDarkBlue?.main,
+                  minWidth: 'max-content',
+                  fontWeight: 700,
+                  fontSize: 15,
+                }}
+                onClick={dateClick}
+              >
+                Submit
+              </Button>
+              {/* <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={enGB}>
+                <StaticDatePicker
+                  value={new Date()}
+                  onClose={() => setOpenPicker(false)}
+                  sx={{ width: '100%' }}
+                  slotProps={{
+                    actionBar: {
+                      actions: ['clear', 'accept'],
+                      sx: {
+                        '& .MuiButtonBase-root': {
+                          color: 'white !important',
+                          minWidth: 100,
+                          maxWidth: 100,
+                          maxHeight: 20,
+                          background: theme.palette.mPink?.main,
+                          ':hover': {
+                            background: theme.palette.mPink?.main,
+                          },
+                        },
+                      },
+                    },
+                  }}
+                  onAccept={(date) => {
+                    // handleSlotChangeInPicker(date)
+                    // setSelectedDateFromPicker({ date, updateUsingMain: false })
+                  }}
+                />
+              </LocalizationProvider> */}
+            </DialogContent>
+          </Dialog>
         </div>
         <div className='flex flex-col gap-5 mb-3'>
           <div>
@@ -76,9 +308,9 @@ const ViewBar = ({ open, handleClose, heading, upcoming, complete, cancel, data 
                   full={false}
                   data={data}
                 /> */}
-                {data &&
-                  data?.length > 0 &&
-                  data?.map((x: any) => (
+                {newData !== undefined &&
+                  newData?.upcomingAppointments?.length > 0 &&
+                  newData?.upcomingAppointments?.map((x: any) => (
                     <div
                       className='my-7 rounded-md border-[1px] border-black-main bg-lightGray-main'
                       key={Math.random()}
@@ -102,13 +334,12 @@ const ViewBar = ({ open, handleClose, heading, upcoming, complete, cancel, data 
                               />
                             </div>
                             <div className='leading-5'>
-                              <h1>{x?.providerName}</h1>
+                              <h1>{x?.practiceName}</h1>
                               <p className='text-darkBlue-main font-light text-[13px]'>
-                                {x?.practiceName}
+                                {x?.providerName}
                               </p>
                               <p className='text-darkGray-main font-light text-[13px] line-clamp-1'>
-                                {/* 3403 Fieldgate Drive, Mississauga, ON, L4X 2J4 */}
-                                {`${x?.practiceAddressLineOne}, ${x?.practiceAddressLineTwo}`}
+                                {`${x?.practiceCityName}, ${x?.practiceStateName}`}
                               </p>
                             </div>
                           </div>
@@ -122,51 +353,18 @@ const ViewBar = ({ open, handleClose, heading, upcoming, complete, cancel, data 
                             <div className='leading-5'>
                               <h1>{`${x.patientFirstName} ${x.patientLastName}`}</h1>
                               <p className='text-darkBlue-main font-light text-[13px]'>
-                                {format(new Date(x?.appointmentDate), 'dd MMM yyyy')}
+                                {format(new Date(x?.date), 'dd MMM yyyy')}
                               </p>
                               <p className='text-darkBlue-main font-light text-[13px]'>
                                 {`${format(
-                                  parse(x?.appointmentStartTime, 'HH:mm', new Date()),
+                                  parse(x?.startTime, 'HH:mm', new Date()),
                                   'hh:mm a',
-                                )} to ${format(
-                                  parse(x?.appointmentEndTime, 'HH:mm', new Date()),
-                                  'hh:mm a',
-                                )}`}
+                                )} to ${format(parse(x?.endTime, 'HH:mm', new Date()), 'hh:mm a')}`}
                               </p>
                             </div>
                           </div>
                         </div>
-                        <div className='flex flex-col gap-1'>
-                          <IconButton>
-                            <ChatOutlinedIcon
-                              sx={{
-                                color: theme.palette.mWhite?.main,
-                                backgroundColor: theme.palette.mDarkGray?.main,
-                                padding: '4px',
-                                borderRadius: '9999px',
-                              }}
-                            />
-                          </IconButton>
-                          <IconButton>
-                            <LocationOnOutlinedIcon
-                              sx={{
-                                color: theme.palette.mWhite?.main,
-                                backgroundColor: theme.palette.mDarkGray?.main,
-                                padding: '4px',
-                                borderRadius: '9999px',
-                              }}
-                            />
-                          </IconButton>
-                          <IconButton>
-                            <EmailOutlinedIcon
-                              sx={{
-                                color: theme.palette.mWhite?.main,
-                                backgroundColor: theme.palette.mDarkGray?.main,
-                                padding: '4px',
-                                borderRadius: '9999px',
-                              }}
-                            />
-                          </IconButton>
+                        <div className='flex flex-col gap-1 h-40 items-start justify-start'>
                           {upcoming && (
                             <IconButton>
                               <HighlightOffOutlinedIcon
@@ -179,19 +377,41 @@ const ViewBar = ({ open, handleClose, heading, upcoming, complete, cancel, data 
                               />
                             </IconButton>
                           )}
+                          {!upcoming && (
+                            <IconButton>
+                              <ChatOutlinedIcon
+                                sx={{
+                                  color: theme.palette.mWhite?.main,
+                                  backgroundColor: theme.palette.mDarkGray?.main,
+                                  padding: '4px',
+                                  borderRadius: '9999px',
+                                }}
+                              />
+                            </IconButton>
+                          )}
+                          <a aria-label='gmail' href={`mailto:${x?.practiceEmail}`} target='_blank'>
+                            <IconButton>
+                              <EmailOutlinedIcon
+                                sx={{
+                                  color: theme.palette.mWhite?.main,
+                                  backgroundColor: theme.palette.mDarkGray?.main,
+                                  padding: '4px',
+                                  borderRadius: '9999px',
+                                }}
+                              />
+                            </IconButton>
+                          </a>
                         </div>
                       </div>
                     </div>
                   ))}
-                {/* <AppointmentCard heading='Upcoming Appointments' upcoming={true} full={false} />
-                <AppointmentCard heading='Upcoming Appointments' upcoming={true} full={false} /> */}
               </>
             )}
-            {complete && (
+            {/* {complete && (
               <>
-                {data &&
-                  data?.length > 0 &&
-                  data?.map((x: any) => (
+                {newData &&
+                  newData?.length > 0 &&
+                  newData?.map((x: any) => (
                     <div
                       className='my-7 rounded-md border-[1px] border-black-main bg-lightGray-main'
                       key={Math.random()}
@@ -217,13 +437,12 @@ const ViewBar = ({ open, handleClose, heading, upcoming, complete, cancel, data 
                               />
                             </div>
                             <div className='leading-5'>
-                              <h1>{x?.providerName}</h1>
+                              <h1>{x?.practiceName}</h1>
                               <p className='text-darkBlue-main font-light text-[13px]'>
-                                {x?.practiceName}
+                                {x?.providerName}
                               </p>
                               <p className='text-darkGray-main font-light text-[13px] line-clamp-1'>
-                                {/* 3403 Fieldgate Drive, Mississauga, ON, L4X 2J4 */}
-                                {`${x?.practiceAddressLineOne}, ${x?.practiceAddressLineTwo}`}
+                                {`${x?.practiceCityName}, ${x?.practiceStateName}`}
                               </p>
                             </div>
                           </div>
@@ -237,16 +456,13 @@ const ViewBar = ({ open, handleClose, heading, upcoming, complete, cancel, data 
                             <div className='leading-5'>
                               <h1>{`${x.patientFirstName} ${x.patientLastName}`}</h1>
                               <p className='text-darkBlue-main font-light text-[13px]'>
-                                {format(new Date(x?.appointmentDate), 'dd MMM yyyy')}
+                                {format(new Date(x?.date), 'dd MMM yyyy')}
                               </p>
                               <p className='text-darkBlue-main font-light text-[13px]'>
                                 {`${format(
-                                  parse(x?.appointmentStartTime, 'HH:mm', new Date()),
+                                  parse(x?.startTime, 'HH:mm', new Date()),
                                   'hh:mm a',
-                                )} to ${format(
-                                  parse(x?.appointmentEndTime, 'HH:mm', new Date()),
-                                  'hh:mm a',
-                                )}`}
+                                )} to ${format(parse(x?.endTime, 'HH:mm', new Date()), 'hh:mm a')}`}
                               </p>
                             </div>
                           </div>
@@ -296,16 +512,13 @@ const ViewBar = ({ open, handleClose, heading, upcoming, complete, cancel, data 
                       </div>
                     </div>
                   ))}
-                {/* <AppointmentCard heading='Completed Appointments' complete={true} full={false} />
-                <AppointmentCard heading='Completed Appointments' complete={true} full={false} />
-                <AppointmentCard heading='Completed Appointments' complete={true} full={false} /> */}
               </>
             )}
             {cancel && (
               <>
-                {data &&
-                  data?.length > 0 &&
-                  data?.map((x: any) => (
+                {newData &&
+                  newData?.length > 0 &&
+                  newData?.map((x: any) => (
                     <div
                       className='my-7 rounded-md border-[1px] border-black-main bg-lightGray-main'
                       key={Math.random()}
@@ -328,13 +541,12 @@ const ViewBar = ({ open, handleClose, heading, upcoming, complete, cancel, data 
                               />
                             </div>
                             <div className='leading-5'>
-                              <h1>{x?.providerName}</h1>
+                              <h1>{x?.practiceName}</h1>
                               <p className='text-darkBlue-main font-light text-[13px]'>
-                                {x?.practiceName}
+                                {x?.providerName}
                               </p>
                               <p className='text-darkGray-main font-light text-[13px] line-clamp-1'>
-                                {/* 3403 Fieldgate Drive, Mississauga, ON, L4X 2J4 */}
-                                {`${x?.practiceAddressLineOne}, ${x?.practiceAddressLineTwo}`}
+                                {`${x?.practiceCityName}, ${x?.practiceStateName}`}
                               </p>
                             </div>
                           </div>
@@ -348,16 +560,13 @@ const ViewBar = ({ open, handleClose, heading, upcoming, complete, cancel, data 
                             <div className='leading-5'>
                               <h1>{`${x.patientFirstName} ${x.patientLastName}`}</h1>
                               <p className='text-darkBlue-main font-light text-[13px]'>
-                                {format(new Date(x?.appointmentDate), 'dd MMM yyyy')}
+                                {format(new Date(x?.date), 'dd MMM yyyy')}
                               </p>
                               <p className='text-darkBlue-main font-light text-[13px]'>
                                 {`${format(
-                                  parse(x?.appointmentStartTime, 'HH:mm', new Date()),
+                                  parse(x?.startTime, 'HH:mm', new Date()),
                                   'hh:mm a',
-                                )} to ${format(
-                                  parse(x?.appointmentEndTime, 'HH:mm', new Date()),
-                                  'hh:mm a',
-                                )}`}
+                                )} to ${format(parse(x?.endTime, 'HH:mm', new Date()), 'hh:mm a')}`}
                               </p>
                             </div>
                           </div>
@@ -407,11 +616,8 @@ const ViewBar = ({ open, handleClose, heading, upcoming, complete, cancel, data 
                       </div>
                     </div>
                   ))}
-                {/* <AppointmentCard heading='Cancelled Appointments' cancel={true} full={false} />
-                <AppointmentCard heading='Cancelled Appointments' cancel={true} full={false} />
-                <AppointmentCard heading='Cancelled Appointments' cancel={true} full={false} /> */}
               </>
-            )}
+            )} */}
           </div>
         </div>
       </div>
