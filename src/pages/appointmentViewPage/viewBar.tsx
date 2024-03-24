@@ -219,8 +219,7 @@ const ViewBar = ({
             />
             {upcoming && (
               <>
-                {newData !== undefined &&
-                  newData?.upcomingAppointments?.length > 0 &&
+                {newData !== undefined && newData?.upcomingAppointments?.length > 0 ? (
                   newData?.upcomingAppointments?.map((x: any) => (
                     <div
                       className='my-7 rounded-md border-[1px] border-black-main bg-lightGray-main'
@@ -315,13 +314,17 @@ const ViewBar = ({
                         </div>
                       </div>
                     </div>
-                  ))}
+                  ))
+                ) : (
+                  <div className='flex items-center justify-center h-[202px] mt-3'>
+                    There is nothing to show here!
+                  </div>
+                )}
               </>
             )}
             {complete && (
               <>
-                {newData !== undefined &&
-                  newData?.completedAppointments?.length > 0 &&
+                {newData !== undefined && newData?.completedAppointments?.length > 0 ? (
                   newData?.completedAppointments?.map((x: any) => (
                     <div
                       className='my-7 rounded-md border-[1px] border-black-main bg-lightGray-main'
@@ -422,13 +425,17 @@ const ViewBar = ({
                         </div>
                       </div>
                     </div>
-                  ))}
+                  ))
+                ) : (
+                  <div className='flex items-center justify-center h-[202px] mt-3'>
+                    There is nothing to show here!
+                  </div>
+                )}
               </>
             )}
             {cancel && (
               <>
-                {newData !== undefined &&
-                  newData?.cancelledAppointments?.length > 0 &&
+                {newData !== undefined && newData?.cancelledAppointments?.length > 0 ? (
                   newData?.cancelledAppointments?.map((x: any) => (
                     <div
                       className='my-7 rounded-md border-[1px] border-black-main bg-lightGray-main'
@@ -526,7 +533,12 @@ const ViewBar = ({
                         </div>
                       </div>
                     </div>
-                  ))}
+                  ))
+                ) : (
+                  <div className='flex items-center justify-center h-[202px] mt-3'>
+                    There is nothing to show here!
+                  </div>
+                )}
               </>
             )}
           </div>
