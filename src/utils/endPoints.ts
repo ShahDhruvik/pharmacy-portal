@@ -17,6 +17,7 @@ export const enum AUTH_ENDPOINT {
   PROVIDER_VERIFY_OTP = DEF_PATHS.auth + DEF_PATHS.provider + '/check-otp-auth',
   PROVIDER_VERIFY_RESEND_OTP = DEF_PATHS.auth + DEF_PATHS.provider + '/resend-otp',
   PROVIDER_CHANGE_PASSWORD = DEF_PATHS.main + DEF_PATHS.provider + '/change-password',
+  PROVIDER_RECAPTCHA = DEF_PATHS.auth + '/verifyRecaptcha',
 }
 
 export const enum PROFILE {
@@ -36,6 +37,7 @@ export const enum DROPDOWN {
   drpCoverageDetails = DEF_PATHS.main + DEF_PATHS.patient + '/coverage-details/dropdown',
   drpAssignedTo = DEF_PATHS.main + DEF_PATHS.practice + '/practice-user/dropdown',
   drpPractice = DEF_PATHS.main + DEF_PATHS.practice + '/dropdown',
+  drpOrg = DEF_PATHS.main + '/organization/get-all-by-provider',
 }
 
 export const enum APPOINTMENT {
@@ -58,6 +60,6 @@ export const enum FAQ {
 
 export const enum TASK {
   GET = DEF_PATHS.main + DEF_PATHS.practice + '/provider-task',
-  CREATE_TASK = DEF_PATHS.main + DEF_PATHS.practice + '/task/create',
+  CREATE_TASK = DEF_PATHS.main + DEF_PATHS.practice + '/task/create-provider',
   EDIT_TASK = DEF_PATHS.main + DEF_PATHS.practice + '/task/edit/',
 }

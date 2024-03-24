@@ -12,13 +12,10 @@ const loginUser = async (
     loading({ isLoading: true, isPage: false })
     const data = {
       email: formData?.userName,
-      password: formData?.password,
-      officeId: formData?.officeId,
     }
     const res = await axiosInstance.post(`${AUTH_ENDPOINT.PROVIDER_LOGIN}`, data)
 
     if (res.data.success) {
-      // toast('success', COMMON_MESSAGE.Login)
       return res
     } else {
       toast('error', res.data.message)
@@ -38,29 +35,21 @@ const loginUser = async (
 const verifyOtp = async (
   loading: LoadingState['setLoading'],
   toast: ShowToastFunction,
-  //   setIsPass: Dispatch<SetStateAction<boolean>>,
-  //   setUuid: Dispatch<SetStateAction<string | undefined>>,
-  otp: string,
+  formData: any,
 ) => {
   try {
     loading({ isLoading: true, isPage: false })
 
-    const data = {
-      otp: otp,
+    const data: any = {
+      email: formData?.email,
+      otp: formData?.otp,
     }
     const res = await axiosInstance.post(`${AUTH_ENDPOINT.PROVIDER_VERIFY_OTP}`, data)
     if (res.data.success) {
-      //   setIsPass(true)
-      //   console.log(res.data.data.uuid)
-      //   if (res.data.data) {
-      //     setUuid(res.data.data.uuid)
-      //   } else {
-      //     setUuid(undefined)
-      //   }
       toast('success', COMMON_MESSAGE.Login)
       return res
     } else {
-      // toast('error', res.data.message);
+      toast('error', res.data.message)
     }
   } catch (error: any) {
     console.log(error)
@@ -69,7 +58,6 @@ const verifyOtp = async (
     } else {
       toast('error', error.response.statusText)
     }
-    // toast("error", error.message);
   } finally {
     loading({ isLoading: false, isPage: false })
   }
@@ -132,4 +120,31 @@ const changePasswordForProvider = async (
   }
 }
 
-export { loginUser, verifyOtp, resendOtp, changePasswordForProvider }
+const verifyRecaptcha = async (
+  loading: LoadingState['setLoading'],
+  toast: ShowToastFunction,
+  token: any,
+) => {
+  try {
+    loading({ isLoading: true, isPage: false })
+    const res = await axiosInstance.post(`${AUTH_ENDPOINT.PROVIDER_RECAPTCHA}`, {
+      captchaToken: token,
+    })
+    if (res.data.success) {
+      return res
+    } else {
+      toast('error', res.data.message)
+    }
+  } catch (error: any) {
+    console.log(error)
+    if (error.response.status === 400) {
+      toast('error', error.response.data.message)
+    } else {
+      toast('error', error.response.statusText)
+    }
+  } finally {
+    loading({ isLoading: false, isPage: false })
+  }
+}
+
+export { loginUser, verifyOtp, resendOtp, changePasswordForProvider, verifyRecaptcha }

@@ -169,7 +169,7 @@ const Profile = ({ handleDrawerState, handleClose, handleField }: Props) => {
             />
           </div>
         </div>
-        <div
+        {/* <div
           className='text-darkBlue-main'
           role='button'
           onClick={() => {
@@ -177,7 +177,7 @@ const Profile = ({ handleDrawerState, handleClose, handleField }: Props) => {
           }}
         >
           Change Password
-        </div>
+        </div> */}
       </div>
     )
   } else {

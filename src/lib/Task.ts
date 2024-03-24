@@ -16,6 +16,7 @@ export const createTask = async (
       assignedToId: formData?.assignedTo?._id,
       targetedDate: formData?.targetedDate,
       taskTabId: 1,
+      organizationId: Number(formData?.orgId?._id),
     }
     const res = await axiosInstance.post(TASK.CREATE_TASK, data)
 
@@ -36,11 +37,14 @@ export const createTask = async (
 export const getAllTaskDetails = async (
   loading: LoadingState['setLoading'],
   toast: ShowToastFunction,
-  type: number,
+  formData: any,
 ) => {
   try {
     loading({ isLoading: true, isCoverageLoader: true, isPage: false })
-    const res = await axiosInstance.post(TASK.GET, { type: type })
+    const res = await axiosInstance.post(TASK.GET, {
+      type: formData?.type,
+      organizationId: formData.orgId,
+    })
     if (res.data.success) {
       return res.data.data
     }

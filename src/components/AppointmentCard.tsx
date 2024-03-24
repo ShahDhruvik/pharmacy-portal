@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Avatar, IconButton } from '@mui/material'
-import img from '@/assets/images/Aspect_Ratio.jpg'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined'
-import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined'
-import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined'
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined'
-import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined'
-import MovieOutlinedIcon from '@mui/icons-material/MovieOutlined'
 import { theme } from '@/context/ThemeProvider'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper/modules'
@@ -16,13 +11,12 @@ import 'swiper/css'
 import 'swiper/css/autoplay'
 import '@/styles/Manage-card-Slider.css'
 import ViewBar from '@/pages/appointmentViewPage/viewBar'
-import { CONST_APP_IMAGE_URL, CONST_OOPCHAR_URL, uuid } from '@/utils/constants'
+import { CONST_APP_IMAGE_URL, uuid } from '@/utils/constants'
 import { format, parse } from 'date-fns'
 import Spinner from './spinner'
 import { useLoading } from '@/context/LoadingContext'
 import { useToast } from '@/hooks/useToast'
-import { cancelAppointment, getAllAppointments } from '@/lib/Appointment'
-
+import DuoIcon from '@mui/icons-material/Duo'
 interface Props {
   heading: string
   upcoming?: boolean
@@ -207,7 +201,7 @@ const AppointmentCard = ({
                       <div className='flex flex-col gap-1 h-40 items-start justify-start'>
                         {upcoming && (
                           <IconButton onClick={() => {}}>
-                            <HighlightOffOutlinedIcon
+                            <DuoIcon
                               sx={{
                                 color: theme.palette.mWhite?.main,
                                 backgroundColor: theme.palette.mDarkGray?.main,

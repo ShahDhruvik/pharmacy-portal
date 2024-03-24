@@ -12,12 +12,11 @@ import { useAuth } from '@/context/AuthContext'
 
 type Props = {
   handleClose: () => void
-  isAssesstMent: boolean
-  phone: string
+  email: string
+  maxWidth?: number
 }
 
-const OTPForm = ({ handleClose, isAssesstMent, phone }: Props) => {
-  const { setArea } = useAssessment()
+const OTPForm = ({ handleClose, email, maxWidth }: Props) => {
   const { setLoading } = useLoading()
   const showToast = useToast()
   const { addStorage } = useAuth()
@@ -32,20 +31,19 @@ const OTPForm = ({ handleClose, isAssesstMent, phone }: Props) => {
     },
   })
   const onSubmitHandle: SubmitHandler<OtpFormFields> = async (data) => {
+    console.log(Object.values(data).join(''))
+    const o = Object.values(data).join('')
     const a = {
-      otp: Object.values(data).join(''),
+      email: email,
+      otp: o,
     }
 
-    const res = await verifyOtp(setLoading, showToast, a.otp as string)
+    const res = await verifyOtp(setLoading, showToast, a)
     if (res) {
       const { accessToken, refreshToken } = res.data.data
       addStorage(accessToken, refreshToken)
       handleClose()
     }
-    // if (isAssesstMent) {
-    //   setArea([ASSESST_AREA.QNA, ASSESST_AREA.SLIDER])
-    // } else {
-    // }
   }
 
   const handleResendOtp = async (data: string) => {
@@ -60,9 +58,9 @@ const OTPForm = ({ handleClose, isAssesstMent, phone }: Props) => {
           <p className='ml-2'>You have 30 second left</p>
           <button
             className='mr-2 text-mediumBlue-main'
-            onClick={() => {
-              handleResendOtp(phone)
-            }}
+            // onClick={() => {
+            //   handleResendOtp(phone)
+            // }}
           >
             <span>
               <LoopIcon />

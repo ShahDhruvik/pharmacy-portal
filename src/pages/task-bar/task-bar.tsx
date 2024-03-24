@@ -13,7 +13,7 @@ import TxtInput from '@/components/TxtInput'
 import SelectInput from '@/components/SelectInput'
 import EditIcon from '@mui/icons-material/Edit'
 import { DateInput } from '@/components/DateInput'
-import { dropdownAssignedTo } from '@/lib/DropDownApis'
+import { dropdownAssignedTo, dropdownOrg } from '@/lib/DropDownApis'
 import { useLoading } from '@/context/LoadingContext'
 import { useToast } from '@/hooks/useToast'
 import { createTask, getAllTaskDetails } from '@/lib/Task'
@@ -34,20 +34,24 @@ const TaskBar = ({ open, handleClose }: Props) => {
   const { setLoading, loading } = useLoading()
   const showToast = useToast()
 
+  const [org, setOrg] = useState<SelectDDL[]>([])
   const [assignedTo, setAssignedTo] = useState<SelectDDL[]>([])
   const [data, setData] = useState<any[]>([])
 
-  const { control, setError, setValue, clearErrors, getValues, reset, handleSubmit } = useForm({
-    defaultValues: {
-      title: '',
-      description: '',
-      assignedTo: acDefaultValue,
-      targetedDate: null as Date | null,
-    },
-  })
+  const { control, setError, setValue, clearErrors, getValues, reset, handleSubmit, watch } =
+    useForm({
+      defaultValues: {
+        title: '',
+        description: '',
+        assignedTo: acDefaultValue,
+        targetedDate: null as Date | null,
+        orgId: acDefaultValue,
+      },
+    })
+  const orgWatch = watch('orgId') as any
 
-  const getData = async (type: number) => {
-    const response = await getAllTaskDetails(setLoading, showToast, type)
+  const getData = async (type: number, orgId: any) => {
+    const response = await getAllTaskDetails(setLoading, showToast, { type: type, orgId: orgId })
     if (response) {
       setData(response)
     }
@@ -57,12 +61,23 @@ const TaskBar = ({ open, handleClose }: Props) => {
     setShow(false)
     reset()
     setData([])
-    if (tabIndex === 0) {
-      getData(0)
-    } else {
-      getData(1)
+    if (tabIndex === 0 && orgWatch._id !== '00') {
+      getData(0, orgWatch?._id)
+    }
+    if (tabIndex === 1 && orgWatch._id !== '00') {
+      getData(1, orgWatch?._id)
     }
   }, [open, tabIndex])
+
+  const drpOrg = async () => {
+    const res = await dropdownOrg(setLoading, showToast)
+    if (res) {
+      setOrg(res)
+    }
+  }
+  useEffect(() => {
+    drpOrg()
+  }, [open])
 
   const drpAssignedTo = async () => {
     const res = await dropdownAssignedTo(setLoading, showToast)
@@ -140,6 +155,19 @@ const TaskBar = ({ open, handleClose }: Props) => {
           Done
         </Button>
       </div>
+      <div>
+        <SelectInput
+          options={org as any}
+          name={'orgId'}
+          control={control}
+          label={'Organization*'}
+          setValue={setValue}
+          setError={setError}
+          clearErrors={clearErrors}
+          validation={searchSelectValidation('Organization')}
+          selectDefault={true}
+        />
+      </div>
       {!show && (
         <Tabs
           value={tabIndex}
@@ -152,11 +180,11 @@ const TaskBar = ({ open, handleClose }: Props) => {
             },
           }}
         >
-          <Tab label={<p className='capitalize'>Assigned (view only)</p>} value={0} />
+          <Tab label={<p className='capitalize'>Assigned</p>} value={0} />
           <Tab
             label={
               <Badge>
-                <p className='capitalize'>Created (view only)</p>
+                <p className='capitalize'>Created</p>
               </Badge>
             }
             value={1}
@@ -261,7 +289,7 @@ const TaskBar = ({ open, handleClose }: Props) => {
                 clearErrors={clearErrors}
                 handleChange={() => {}}
                 validation={dateSelectValidation('Targeted Date')}
-                label={'Targeted Date*'}
+                label={'Target Date*'}
                 setError={setError}
               />
             </div>

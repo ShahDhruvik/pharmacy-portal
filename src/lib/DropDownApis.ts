@@ -240,3 +240,34 @@ export const dropdownPractice = async (
     loading({ isLoading: false, isPage: false })
   }
 }
+
+export const dropdownOrg = async (
+  loading: LoadingState['setLoading'],
+  toast: ShowToastFunction,
+  isMulti?: SelectDDL,
+) => {
+  try {
+    loading({ isLoading: true, isIndependentLoader: true, isPage: false })
+    const res = await axiosInstance.post(DROPDOWN.drpOrg, {})
+    if (res && res.data.success && res.data) {
+      const { data } = res
+      const drpValues: SelectDDL[] = [isMulti ? isMulti : acDefaultValue]
+      ;(data.data as DrpType[]).map((x) => {
+        drpValues.push({ _id: String(x.id), label: x.name })
+      })
+      // drpValues.push({ _id: String(-1), label: 'Other' })
+      return drpValues
+    } else {
+      return []
+    }
+  } catch (error: any) {
+    console.log(error)
+    if (error.response.status === 404) {
+      return []
+    } else {
+      toast('error', error.response.statusText)
+    }
+  } finally {
+    loading({ isLoading: false, isPage: false })
+  }
+}

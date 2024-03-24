@@ -14,56 +14,19 @@ import { useLoading } from '@/context/LoadingContext'
 import { useToast } from '@/hooks/useToast'
 import { useEffect, useState } from 'react'
 import {
+  CONST_ABHA_URL,
   CONST_APP_IMAGE_URL,
-  CONST_OOPCHAR_ONLINE_CONSULTATION_URL,
-  CONST_OOPCHAR_URL,
+  CONST_PRACTICE_URL,
+  FORMTYPE,
 } from '@/utils/constants'
 import AuthForm from './auth-forms/auth-form'
 
 interface Props {}
 
-const arr = [
-  {
-    id: 1,
-    icon: <Diversity1Icon sx={{ color: theme.palette.mDarkGray?.main }} />,
-    heading: 'Manage Family',
-    para: 'Explore health care and related products and services',
-  },
-  {
-    id: 2,
-    icon: <BookOnlineIcon sx={{ color: theme.palette.mDarkGray?.main }} />,
-    heading: 'Manage Appointments',
-    para: 'Explore health care and related products and services',
-  },
-  {
-    id: 3,
-    icon: <AccountCircleIcon sx={{ color: theme.palette.mDarkGray?.main }} />,
-    heading: 'Update Profile',
-    para: 'Explore health care and related products and services',
-  },
-  {
-    id: 4,
-    icon: <ListAltIcon sx={{ color: theme.palette.mDarkGray?.main }} />,
-    heading: 'Manage Medical Forms',
-    para: 'Explore health care and related products and services',
-  },
-  {
-    id: 5,
-    icon: <EmojiEventsIcon sx={{ color: theme.palette.mDarkGray?.main }} />,
-    heading: 'Earn Rewards',
-    para: 'Explore health care and related products and services',
-  },
-  {
-    id: 6,
-    icon: <ChatIcon sx={{ color: theme.palette.mDarkGray?.main }} />,
-    heading: 'Chat with Clinics',
-    para: 'Explore health care and related products and services',
-  },
-]
-
 const Welcome = ({}: Props) => {
   const { setLoading } = useLoading()
   const showToast = useToast()
+  const [signType, setSignType] = useState<any>([])
 
   const [data, setData] = useState<any>(null)
   const [data1, setData1] = useState<any>(null)
@@ -94,7 +57,10 @@ const Welcome = ({}: Props) => {
   }, [])
 
   const [openSign, setOpenSign] = useState(false)
-  const handleOpenForm = () => setOpenSign(true)
+  const handleOpenForm = () => {
+    setSignType(FORMTYPE.SIGNIN)
+    setOpenSign(true)
+  }
   const handleCloseForm = () => setOpenSign(false)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
@@ -125,14 +91,10 @@ const Welcome = ({}: Props) => {
         <div className='flex-1 items-center justify-center flex gap-5 py-5 flex-wrap'>
           <div className='flex-1 pl-20 flex-wrap'>
             <div className='text-base font-light'>
-              Get top notch support from direct healthcare professionals.
+              Take command of your schedule and oversee your appointments efficiently.{' '}
             </div>
             <div>
-              <a
-                href={CONST_OOPCHAR_ONLINE_CONSULTATION_URL}
-                target='_blank'
-                rel='noopener noreferrer'
-              >
+              <a href={CONST_PRACTICE_URL} target='_blank' rel='noopener noreferrer'>
                 <Button
                   variant='outlined'
                   color='mBlack'
@@ -147,10 +109,10 @@ const Welcome = ({}: Props) => {
                     fontWeight: 'bold',
                   }}
                 >
-                  Book Online Consultation
+                  Sign In To The Practice
                 </Button>
               </a>
-              <a href={CONST_OOPCHAR_URL} target='_blank' rel='noopener noreferrer'>
+              <a href={CONST_ABHA_URL} target='_blank' rel='noopener noreferrer'>
                 <Button
                   variant='outlined'
                   color='mBlack'
@@ -165,14 +127,14 @@ const Welcome = ({}: Props) => {
                     fontWeight: 'bold',
                   }}
                 >
-                  Take Free Assessment
+                  Create ABHA ID
                 </Button>
               </a>
             </div>
           </div>
           <Divider orientation='vertical' />
           <div className='flex-1 flex-wrap'>
-            <h2 className='text-xl text-black-main font-semibold'>EasyWeb: Patient Self-care</h2>
+            <h2 className='text-xl text-black-main font-semibold'>EasyWeb: Provider Self-care</h2>
             <Button
               variant='contained'
               color='mPink'
@@ -186,7 +148,10 @@ const Welcome = ({}: Props) => {
                 alignItems: 'center',
                 gap: '10px',
               }}
-              onClick={handleOpenForm}
+              onClick={() => {
+                setSignType([FORMTYPE.SIGNIN])
+                setOpenSign(true)
+              }}
             >
               <LockOutlinedIcon />
               Sign in
@@ -254,21 +219,14 @@ const Welcome = ({}: Props) => {
           </div>
         </div>
       </section>
-      <section className='flex justify-end pr-10 pb-2'>
-        {/* <div> */}
-        <ModeCommentOutlinedIcon
-          sx={{
-            color: theme.palette.mWhite?.main,
-            backgroundColor: theme.palette.mBlack?.main,
-            height: '25px',
-            width: '25px',
-            padding: '4px',
-            borderRadius: '9999px',
-          }}
+      {signType.includes(FORMTYPE.SIGNIN) && (
+        <AuthForm
+          open={openSign}
+          signType={signType}
+          setSignType={setSignType}
+          handleClose={handleCloseForm}
         />
-        {/* </div> */}
-      </section>
-      <AuthForm open={openSign} handleClose={handleCloseForm} isAssesstment={false} />
+      )}
     </>
   )
 }

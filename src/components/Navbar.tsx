@@ -6,6 +6,7 @@ import { IconButton, Popper } from '@mui/material'
 import AuthForm from '../pages/dashboard/container/auth-forms/auth-form'
 import HomeIcon from '@mui/icons-material/Home'
 import { theme } from '@/context/ThemeProvider'
+import { FORMTYPE } from '@/utils/constants'
 
 interface Props {}
 
@@ -13,6 +14,8 @@ const Navbar = ({}: Props) => {
   const nav = useNavigate()
 
   const [openSign, setOpenSign] = useState(false)
+  const [signType, setSignType] = useState<any>([])
+
   const handleOpenForm = () => setOpenSign(true)
   const handleCloseForm = () => setOpenSign(false)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -40,7 +43,7 @@ const Navbar = ({}: Props) => {
             />
             <h1 className='text-3xl text-black-main font-semibold'>Oopchar</h1>
             <span className='text-lg text-black-main font-semibold'>
-              EasyWeb: Patient Self-care
+              EasyWeb: Provider Self-care
             </span>
           </div>
           <ul className='hidden md:flex  flex-row flex-wrap  gap-5 text-darkBlue-main font-extralight'>
@@ -53,7 +56,11 @@ const Navbar = ({}: Props) => {
             })}
             <button
               className='hover:underline p-1 bg-darkGray-main rounded-full h-6 aspect-square flex items-center justify-center'
-              onClick={handleOpenForm}
+              // onClick={handleOpenForm}
+              onClick={() => {
+                setSignType([FORMTYPE.SIGNIN])
+                setOpenSign(true)
+              }}
             >
               <HomeIcon sx={{ color: theme.palette.mWhite?.main, fontSize: '15px', p: 0 }} />
             </button>
@@ -104,13 +111,24 @@ const Navbar = ({}: Props) => {
                 bgcolor: theme.palette.mDarkGray?.main,
                 borderColor: theme.palette.mDarkGray?.main,
               }}
+              onClick={() => {
+                setSignType([FORMTYPE.SIGNIN])
+                setOpenSign(true)
+              }}
             >
               <HomeIcon />
             </IconButton>
           </div>
         </div>
       </nav>
-      <AuthForm open={openSign} handleClose={handleCloseForm} isAssesstment={false} />
+      {signType.includes(FORMTYPE.SIGNIN) && (
+        <AuthForm
+          open={openSign}
+          signType={signType}
+          setSignType={setSignType}
+          handleClose={handleCloseForm}
+        />
+      )}
     </>
   )
 }

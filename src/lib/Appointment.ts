@@ -47,7 +47,7 @@ export const getAllAppointmentsForViewBar = async (
     const res = await axiosInstance.post(APPOINTMENT.GET, {
       startDate: formData?.startDate,
       endDate: formData?.endDate,
-      practiceId: formData?.practiceId,
+      // practiceId: formData?.practiceId,
       search: formData?.search,
     })
     console.log(res, 'res')

@@ -75,10 +75,10 @@ const CustomDialog = ({
     ...alignFnc(align, isFullScreen),
     open: open,
     onClose: () => {
-      if (disableClickAway) {
-      } else {
-        handleClose()
-      }
+      // if (disableClickAway) {
+      // } else {
+      handleClose()
+      // }
     },
     scroll: 'paper',
     maxWidth: maxWidth,

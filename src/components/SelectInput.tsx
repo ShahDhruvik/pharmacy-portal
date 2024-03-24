@@ -115,7 +115,7 @@ const SelectInput = ({
       const isCurrentValueDefault = field?.value && field?.value?._id === acDefaultValue?._id
 
       if (isCurrentValueDefault) {
-        setValue(name, options[0])
+        setValue(name, options[1])
       }
     }
   }, [selectDefault, options, field.value])

@@ -3,32 +3,23 @@ import React, { useEffect, useState } from 'react'
 import { theme } from '@/context/ThemeProvider'
 import { Drawer, Button, Divider, Avatar, IconButton, Dialog, DialogContent } from '@mui/material'
 import { CONST_APP_IMAGE_URL } from '@/utils/constants'
-import { format, parse } from 'date-fns'
+import { addMonths, format, parse } from 'date-fns'
 import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined'
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined'
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined'
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined'
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined'
 import MovieOutlinedIcon from '@mui/icons-material/MovieOutlined'
-import SelectInput from '@/components/SelectInput'
 import { useForm } from 'react-hook-form'
-import {
-  acDefaultValue,
-  dateSelectValidation,
-  searchSelectValidation,
-} from '@/utils/form.validation'
+import { acDefaultValue } from '@/utils/form.validation'
 import TxtInput from '@/components/TxtInput'
-import { dropdownPractice } from '@/lib/DropDownApis'
-import { SelectDDL } from '@/types/common'
 import { useLoading } from '@/context/LoadingContext'
 import { useToast } from '@/hooks/useToast'
-import { getAllAppointments, getAllAppointmentsForViewBar } from '@/lib/Appointment'
-import { MANAGE_STATE } from '@/components/AppointmentCard'
-import { LocalizationProvider, StaticDatePicker, pickersLayoutClasses } from '@mui/x-date-pickers'
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
-import { enGB } from 'date-fns/locale'
-import { DateInput } from '@/components/DateInput'
-import { values } from 'lodash'
+import { getAllAppointmentsForViewBar } from '@/lib/Appointment'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import DuoIcon from '@mui/icons-material/Duo'
+import { debounce } from 'lodash'
 
 type Props = {
   handleClose: () => void
@@ -50,39 +41,33 @@ const ViewBar = ({
   cancel,
   manageState,
 }: Props) => {
-  const [show, setShow] = useState(false)
-  const [practice, setPractice] = useState<SelectDDL[]>([])
   const [newData, setNewData] = useState<any>(undefined)
   const { setLoading, loading } = useLoading()
   const showToast = useToast()
   const [search, setSearch] = useState<string>('')
   const [openPicker, setOpenPicker] = useState<boolean>(false)
-  const [sDate, setSDate] = useState<any>(undefined)
-  const [eDate, setEDate] = useState<any>(undefined)
+  const [startDate, setStartDate] = useState(new Date())
+  const [endDate, setEndDate] = useState(null)
+
+  const onChange = (dates: any) => {
+    const [start, end] = dates
+    setStartDate(start)
+    setEndDate(end)
+    getAppData('')
+  }
 
   const { control, setValue, setError, clearErrors, handleSubmit, reset, getValues, watch } =
     useForm({
       defaultValues: {
-        practiceId: acDefaultValue,
         patient: acDefaultValue,
       },
     })
 
-  const practiceWatch = watch('practiceId')
-
-  const drpPractice = async () => {
-    const res = await dropdownPractice(setLoading, showToast)
-    if (res) {
-      setPractice(res)
-    }
-  }
-
-  const getAppData = async (pId: any) => {
+  const getAppData = async (s: string) => {
     const data: any = {
-      startDate: sDate === undefined ? new Date() : sDate,
-      endDate: eDate === undefined ? new Date() : eDate,
-      practiceId: pId,
-      search: search,
+      startDate: startDate,
+      endDate: endDate === null ? new Date() : endDate,
+      search: s,
     }
     const response = await getAllAppointmentsForViewBar(setLoading, showToast, data)
     if (response) {
@@ -91,41 +76,31 @@ const ViewBar = ({
   }
 
   useEffect(() => {
-    if (manageState === MANAGE_STATE.UPCOMING) {
-      drpPractice()
-    }
-  }, [manageState])
-
-  useEffect(() => {
     setNewData(undefined)
+    setSearch('')
     if (open) {
-      getAppData(-1)
+      getAppData('')
     }
   }, [open])
 
-  useEffect(() => {
-    setNewData(undefined)
-    if (practiceWatch._id !== '00') {
-      getAppData(practiceWatch?._id as any)
-    }
-  }, [practiceWatch])
+  // useEffect(() => {
+  //   setSearch('')
+  //   setNewData(undefined)
+  //   if (search !== '') {
+  //     getAppData()
+  //   }
+  // }, [search])
 
-  useEffect(() => {
-    setSearch('')
+  const handleSearch = debounce((term: string) => {
     setNewData(undefined)
-    if (search !== '') {
-      getAppData(-1)
-    }
-  }, [search])
+    setSearch(term)
+    getAppData(term)
+  }, 300)
 
-  const dateClick = () => {
-    setOpenPicker(false)
-    if (practiceWatch._id !== '00') {
-      getAppData(practiceWatch?._id as any)
-    } else {
-      getAppData(-1)
-    }
-  }
+  const currentDate = new Date()
+  const formattedDate = format(currentDate, 'do MMMM yyyy')
+  const sDate = format(startDate, 'do MMMM yyyy')
+  const eDate = endDate !== null && format(endDate, 'do MMMM yyyy')
 
   return (
     <Drawer
@@ -155,12 +130,9 @@ const ViewBar = ({
               fontSize: '1rem',
               height: 20,
             }}
-            onClick={() => {
-              setShow(!show)
-            }}
             disableRipple
           >
-            {!show ? `Search by Patient` : `Search by Practice`}
+            Search by Patient
           </Button>
           <Button
             variant='text'
@@ -178,31 +150,16 @@ const ViewBar = ({
           </Button>
         </div>
         <div className='mb-3'>
-          {!show ? (
-            <SelectInput
-              options={practice as any}
-              name={'practiceId'}
-              control={control}
-              label={'PracticeId*'}
-              setValue={setValue}
-              setError={setError}
-              clearErrors={clearErrors}
-              validation={searchSelectValidation('PracticeId')}
-              // handleChange={() => {
-              //   setPracId(getValues('practiceId')?._id as any)
-              // }}
-            />
-          ) : (
-            <TxtInput
-              control={control}
-              name='userName'
-              handleChange={() => {}}
-              placeholder='Enter patient name, mobile#'
-              validation={{}}
-              label='Search*'
-              handleOnChange={(e: any) => setSearch(e.target.value)}
-            />
-          )}
+          <TxtInput
+            control={control}
+            name='userName'
+            handleChange={() => {}}
+            placeholder='Enter patient name, mobile#'
+            validation={{}}
+            label='Search*'
+            // handleOnChange={(e: any) => setSearch(e.target.value)}
+            handleOnChange={(e) => handleSearch(e.target.value)}
+          />
         </div>
         <div className='flex items-center justify-between my-2'>
           <span className='max-mxs:text-sm text-darkBlue-main' role='button' onClick={() => {}}>
@@ -221,72 +178,32 @@ const ViewBar = ({
             onClick={() => setOpenPicker(!openPicker)}
             onKeyDown={() => setOpenPicker(true)}
           >
-            {`${new Date().toLocaleDateString()}`}
+            {endDate === null ? `${formattedDate}` : `${sDate} - ${eDate}`}
           </Button>
           <Dialog open={openPicker} onClose={() => setOpenPicker(false)}>
             <DialogContent sx={{ display: 'flex', gap: '15px' }}>
-              <DateInput
-                name='startDate'
-                control={control}
-                clearErrors={clearErrors}
-                handleChange={() => {}}
-                validation={dateSelectValidation('Start Date')}
-                label={'Start Date*'}
-                setError={setError}
-                handleOnChange={(e: any) => setSDate(e)}
-              />
-              <DateInput
-                name='endDate'
-                control={control}
-                clearErrors={clearErrors}
-                handleChange={() => {}}
-                validation={dateSelectValidation('End Date')}
-                label={'End Date*'}
-                setError={setError}
-                handleOnChange={(e: any) => setEDate(e)}
-              />
-              <Button
-                className='max-mxs:text-sm'
-                variant='text'
-                color='mMidBlue'
-                sx={{
-                  color: theme.palette?.mDarkBlue?.main,
-                  minWidth: 'max-content',
-                  fontWeight: 700,
-                  fontSize: 15,
-                }}
-                onClick={dateClick}
-              >
-                Submit
-              </Button>
-              {/* <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={enGB}>
-                <StaticDatePicker
-                  value={new Date()}
-                  onClose={() => setOpenPicker(false)}
-                  sx={{ width: '100%' }}
-                  slotProps={{
-                    actionBar: {
-                      actions: ['clear', 'accept'],
-                      sx: {
-                        '& .MuiButtonBase-root': {
-                          color: 'white !important',
-                          minWidth: 100,
-                          maxWidth: 100,
-                          maxHeight: 20,
-                          background: theme.palette.mPink?.main,
-                          ':hover': {
-                            background: theme.palette.mPink?.main,
-                          },
-                        },
-                      },
-                    },
-                  }}
-                  onAccept={(date) => {
-                    // handleSlotChangeInPicker(date)
-                    // setSelectedDateFromPicker({ date, updateUsingMain: false })
-                  }}
+              <div className='flex flex-col'>
+                <DatePicker
+                  selected={startDate}
+                  onChange={onChange}
+                  maxDate={addMonths(new Date(), 5)}
+                  startDate={startDate}
+                  endDate={endDate}
+                  selectsRange
+                  inline
+                  showDisabledMonthNavigation
                 />
-              </LocalizationProvider> */}
+                <div className='bg-pink-main flex items-center justify-center my-2'>
+                  <button
+                    className=' text-center'
+                    onClick={() => {
+                      setOpenPicker(false)
+                    }}
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
             </DialogContent>
           </Dialog>
         </div>
@@ -302,12 +219,6 @@ const ViewBar = ({
             />
             {upcoming && (
               <>
-                {/* <AppointmentCard
-                  heading='Upcoming Appointments'
-                  upcoming={true}
-                  full={false}
-                  data={data}
-                /> */}
                 {newData !== undefined &&
                   newData?.upcomingAppointments?.length > 0 &&
                   newData?.upcomingAppointments?.map((x: any) => (
@@ -367,7 +278,7 @@ const ViewBar = ({
                         <div className='flex flex-col gap-1 h-40 items-start justify-start'>
                           {upcoming && (
                             <IconButton>
-                              <HighlightOffOutlinedIcon
+                              <DuoIcon
                                 sx={{
                                   color: theme.palette.mWhite?.main,
                                   backgroundColor: theme.palette.mDarkGray?.main,
@@ -407,11 +318,11 @@ const ViewBar = ({
                   ))}
               </>
             )}
-            {/* {complete && (
+            {complete && (
               <>
-                {newData &&
-                  newData?.length > 0 &&
-                  newData?.map((x: any) => (
+                {newData !== undefined &&
+                  newData?.completedAppointments?.length > 0 &&
+                  newData?.completedAppointments?.map((x: any) => (
                     <div
                       className='my-7 rounded-md border-[1px] border-black-main bg-lightGray-main'
                       key={Math.random()}
@@ -478,7 +389,7 @@ const ViewBar = ({
                               }}
                             />
                           </IconButton>
-                          <IconButton>
+                          {/* <IconButton>
                             <LocationOnOutlinedIcon
                               sx={{
                                 color: theme.palette.mWhite?.main,
@@ -487,7 +398,7 @@ const ViewBar = ({
                                 borderRadius: '9999px',
                               }}
                             />
-                          </IconButton>
+                          </IconButton> */}
                           <IconButton>
                             <EmailOutlinedIcon
                               sx={{
@@ -498,7 +409,7 @@ const ViewBar = ({
                               }}
                             />
                           </IconButton>
-                          <IconButton>
+                          {/* <IconButton>
                             <ThumbUpOutlinedIcon
                               sx={{
                                 color: theme.palette.mWhite?.main,
@@ -507,7 +418,7 @@ const ViewBar = ({
                                 borderRadius: '9999px',
                               }}
                             />
-                          </IconButton>
+                          </IconButton> */}
                         </div>
                       </div>
                     </div>
@@ -516,9 +427,9 @@ const ViewBar = ({
             )}
             {cancel && (
               <>
-                {newData &&
-                  newData?.length > 0 &&
-                  newData?.map((x: any) => (
+                {newData !== undefined &&
+                  newData?.cancelledAppointments?.length > 0 &&
+                  newData?.cancelledAppointments?.map((x: any) => (
                     <div
                       className='my-7 rounded-md border-[1px] border-black-main bg-lightGray-main'
                       key={Math.random()}
@@ -582,7 +493,7 @@ const ViewBar = ({
                               }}
                             />
                           </IconButton>
-                          <IconButton>
+                          {/* <IconButton>
                             <LocationOnOutlinedIcon
                               sx={{
                                 color: theme.palette.mWhite?.main,
@@ -591,7 +502,7 @@ const ViewBar = ({
                                 borderRadius: '9999px',
                               }}
                             />
-                          </IconButton>
+                          </IconButton> */}
                           <IconButton>
                             <EmailOutlinedIcon
                               sx={{
@@ -602,7 +513,7 @@ const ViewBar = ({
                               }}
                             />
                           </IconButton>
-                          <IconButton>
+                          {/* <IconButton>
                             <MovieOutlinedIcon
                               sx={{
                                 color: theme.palette.mWhite?.main,
@@ -611,13 +522,13 @@ const ViewBar = ({
                                 borderRadius: '9999px',
                               }}
                             />
-                          </IconButton>
+                          </IconButton> */}
                         </div>
                       </div>
                     </div>
                   ))}
               </>
-            )} */}
+            )}
           </div>
         </div>
       </div>
