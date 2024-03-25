@@ -25,6 +25,7 @@ export const CONST_PRACTICE_URL = `https://practice-dev.oopchar.com/`
 export const CONST_OOPCHAR_IN_PERSON_CONSULTATION_URL = `https://dev.oopchar.com/book-in-person?sourceUuid=${uuid}`
 export const CONST_ABHA_URL = `https://abha.oopchar.com/`
 export const SITE_KEY = `6Ld_4aEpAAAAAMV7S6jHzrwAxEtb7sJ61MeNr00f`
+export const MARKETING_EMAIL = 'marketing@oopchar.com'
 
 //LOCAL
 // export const CONST_API_URL = 'http://localhost:8000/api'

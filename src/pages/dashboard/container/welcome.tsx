@@ -193,10 +193,8 @@ const Welcome = ({}: Props) => {
       <section>
         <div>
           <div className='flex flex-col items-center py-5'>
-            <h1 className='text-2xl'>Welcome to Oopchar Self-care</h1>
-            <p className='text-base font-light'>
-              Explore health care and related products and services
-            </p>
+            <h1 className='text-2xl'>Welcome to Provider Self-care</h1>
+            <p className='text-base font-light'>Explore unlimited possibilities of patient care </p>
             <div className='flex items-center gap-8 flex-wrap px-12 justify-between py-5'>
               {feature?.map((x: any) => (
                 <div className='flex items-center gap-5 max-w-96 w-80' key={x._id}>

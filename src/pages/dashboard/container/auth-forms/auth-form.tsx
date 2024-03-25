@@ -123,12 +123,14 @@ const AuthForm = ({ open, handleClose, signType, setSignType }: Props) => {
                 trigger={trigger}
                 isDisabled={signType.includes(FORMTYPE.OTP)}
               /> */}
-              <ReCAPTCHA
-                ref={captchaRef}
-                sitekey={SITE_KEY}
-                size='normal'
-                onChange={handleCaptchaChange}
-              />
+              {watch('userName') && (
+                <ReCAPTCHA
+                  ref={captchaRef}
+                  sitekey={SITE_KEY}
+                  size='normal'
+                  onChange={handleCaptchaChange}
+                />
+              )}
               <Box display={'flex'} justifyContent={'end'} gap={1} marginTop={1}>
                 <Button
                   variant='contained'
@@ -141,7 +143,7 @@ const AuthForm = ({ open, handleClose, signType, setSignType }: Props) => {
                   type='submit'
                   disabled={signType.includes(FORMTYPE.OTP)}
                 >
-                  Login in -get OTP
+                  Get OTP
                 </Button>
               </Box>
             </div>

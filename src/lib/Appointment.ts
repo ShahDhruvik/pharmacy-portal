@@ -63,7 +63,7 @@ export const getAllAppointmentsForViewBar = async (
       toast('error', error.response.statusText)
     }
   } finally {
-    loading({ isLoading: false, isAppointmentLoader: false, isPage: false })
+    loading({ isLoading: false, isIndependentLoader: false, isPage: false })
   }
 }
 

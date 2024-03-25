@@ -192,9 +192,9 @@ export const headerData: HeaderLinkType[] = [
     name: 'Chat',
     path: MAIN_PATH.CHAT.split('/*')[0],
   },
-  {
-    id: 4,
-    name: 'Help',
-    path: MAIN_PATH.HELP.split('/*')[0],
-  },
+  // {
+  //   id: 4,
+  //   name: 'Help',
+  //   path: MAIN_PATH.HELP.split('/*')[0],
+  // },
 ]

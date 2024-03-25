@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { theme } from '@/context/ThemeProvider'
 import { Drawer, Button, Divider, Avatar, IconButton, Dialog, DialogContent } from '@mui/material'
-import { CONST_APP_IMAGE_URL } from '@/utils/constants'
+import { CONST_APP_IMAGE_URL, MARKETING_EMAIL } from '@/utils/constants'
 import { addMonths, format, parse } from 'date-fns'
 import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined'
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined'
@@ -20,6 +20,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import DuoIcon from '@mui/icons-material/Duo'
 import { debounce } from 'lodash'
+import Spinner from '@/components/spinner'
 
 type Props = {
   handleClose: () => void
@@ -81,7 +82,7 @@ const ViewBar = ({
     if (open) {
       getAppData('')
     }
-  }, [open])
+  }, [open, endDate])
 
   // useEffect(() => {
   //   setSearch('')
@@ -97,10 +98,24 @@ const ViewBar = ({
     getAppData(term)
   }, 300)
 
+  // const getAppDataForToday = async () => {
+  //   setNewData(undefined)
+  //   setStartDate(new Date())
+  //   const data: any = {
+  //     startDate: new Date(),
+  //     endDate: new Date(),
+  //     search: '',
+  //   }
+  //   const response = await getAllAppointmentsForViewBar(setLoading, showToast, data)
+  //   if (response) {
+  //     setNewData(response)
+  //   }
+  // }
+
   const currentDate = new Date()
-  const formattedDate = format(currentDate, 'do MMMM yyyy')
-  const sDate = format(startDate, 'do MMMM yyyy')
-  const eDate = endDate !== null && format(endDate, 'do MMMM yyyy')
+  const formattedDate = format(currentDate, 'do MMM yy')
+  const sDate = format(startDate, 'do MMM yy')
+  const eDate = endDate !== null && format(endDate, 'do MMM yy')
 
   return (
     <Drawer
@@ -108,9 +123,9 @@ const ViewBar = ({
       open={open}
       onClose={handleClose}
       sx={{
-        width: '28%',
+        width: '30%',
         '& .MuiDrawer-paper': {
-          width: '28%',
+          width: '30%',
           px: '20px',
           backgroundColor: theme.palette.mLightGray?.main,
         },
@@ -118,10 +133,10 @@ const ViewBar = ({
     >
       <div>
         <div
-          className={`flex justify-between items-center mb-2 sticky top-0 z-10 py-[10px] bg-lightGray-main`}
+          className={`flex justify-end items-end mb-2 sticky top-0 z-10 py-[10px] bg-lightGray-main`}
           id='header'
         >
-          <Button
+          {/* <Button
             variant='text'
             color='mMidBlue'
             sx={{
@@ -133,7 +148,7 @@ const ViewBar = ({
             disableRipple
           >
             Search by Patient
-          </Button>
+          </Button> */}
           <Button
             variant='text'
             color='mMidBlue'
@@ -146,7 +161,7 @@ const ViewBar = ({
             onClick={handleClose}
             disableRipple
           >
-            Cancel
+            Done
           </Button>
         </div>
         <div className='mb-3'>
@@ -161,18 +176,23 @@ const ViewBar = ({
             handleOnChange={(e) => handleSearch(e.target.value)}
           />
         </div>
-        <div className='flex items-center justify-between my-2'>
-          <span className='max-mxs:text-sm text-darkBlue-main' role='button' onClick={() => {}}>
+        <div className='flex items-center justify-between my-2 '>
+          <span
+            className='max-mxs:text-sm text-darkBlue-main underline'
+            role='button'
+            // onClick={getAppDataForToday}
+          >
             Today
           </span>
           <Button
-            className='max-mxs:text-sm'
+            className='max-mxs:text-sm text-end'
             variant='text'
             color='mMidBlue'
             sx={{
               color: theme.palette?.mDarkBlue?.main,
               minWidth: 'max-content',
-              fontWeight: 700,
+              marginLeft: 19,
+              fontWeight: 400,
               fontSize: 15,
             }}
             onClick={() => setOpenPicker(!openPicker)}
@@ -180,40 +200,51 @@ const ViewBar = ({
           >
             {endDate === null ? `${formattedDate}` : `${sDate} - ${eDate}`}
           </Button>
-          <Dialog open={openPicker} onClose={() => setOpenPicker(false)}>
-            <DialogContent sx={{ display: 'flex', gap: '15px' }}>
-              <div className='flex flex-col'>
-                <DatePicker
-                  selected={startDate}
-                  onChange={onChange}
-                  maxDate={addMonths(new Date(), 5)}
-                  startDate={startDate}
-                  endDate={endDate}
-                  selectsRange
-                  inline
-                  showDisabledMonthNavigation
-                />
-                <div className='bg-pink-main flex items-center justify-center my-2'>
-                  <button
-                    className=' text-center'
-                    onClick={() => {
-                      setOpenPicker(false)
-                    }}
-                  >
-                    Submit
-                  </button>
+          <div>
+            <Dialog
+              open={openPicker}
+              onClose={() => setOpenPicker(false)}
+              sx={{
+                display: 'flex',
+                justifyContent: 'end',
+                alignItems: 'end',
+                height: '100%',
+              }}
+            >
+              <DialogContent sx={{ display: 'flex', gap: '15px' }}>
+                <div className='flex flex-col'>
+                  <DatePicker
+                    selected={startDate}
+                    onChange={onChange}
+                    maxDate={addMonths(new Date(), 5)}
+                    startDate={startDate}
+                    endDate={endDate}
+                    selectsRange
+                    inline
+                    showDisabledMonthNavigation
+                  />
+                  <div className='bg-pink-main flex items-center justify-center my-2 text-white-main'>
+                    <button
+                      className=' text-center'
+                      onClick={() => {
+                        setOpenPicker(false)
+                      }}
+                    >
+                      Submit
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </DialogContent>
-          </Dialog>
+              </DialogContent>
+            </Dialog>
+          </div>
         </div>
         <div className='flex flex-col gap-5 mb-3'>
           <div>
             <h2>{heading}</h2>
             <Divider
               sx={{
-                borderColor: theme.palette.mDarkGray?.main,
-                borderWidth: '1.5px',
+                borderColor: theme.palette.mMediumGray?.main,
+                borderWidth: '1/2px',
                 marginBottom: '15px',
               }}
             />
@@ -227,8 +258,13 @@ const ViewBar = ({
                     >
                       <div className='relative border-black'>
                         <div className='absolute inset-0 flex items-center justify-end md:gap-3 gap-1 leading-5 text-white-main text-[12px]'>
-                          <span className='rounded-md bg-darkBlue-main px-3'>In-person</span>
-                          <span className='rounded-md bg-green-main px-3'>Confirmed</span>
+                          <span className='rounded-md bg-darkBlue-main px-3'>
+                            {x?.appointmentMode}
+                          </span>
+                          <span className='rounded-md bg-green-main px-3'>
+                            {' '}
+                            {x?.appointmentStatus?.enumType}
+                          </span>
                           <span className='mr-3 rounded-md bg-darkGray-main px-3'>
                             Sexual Health
                           </span>
@@ -287,18 +323,18 @@ const ViewBar = ({
                               />
                             </IconButton>
                           )}
-                          {!upcoming && (
-                            <IconButton>
-                              <ChatOutlinedIcon
-                                sx={{
-                                  color: theme.palette.mWhite?.main,
-                                  backgroundColor: theme.palette.mDarkGray?.main,
-                                  padding: '4px',
-                                  borderRadius: '9999px',
-                                }}
-                              />
-                            </IconButton>
-                          )}
+                          {/* {!upcoming && ( */}
+                          <IconButton>
+                            <ChatOutlinedIcon
+                              sx={{
+                                color: theme.palette.mWhite?.main,
+                                backgroundColor: theme.palette.mDarkGray?.main,
+                                padding: '4px',
+                                borderRadius: '9999px',
+                              }}
+                            />
+                          </IconButton>
+                          {/* )} */}
                           <a aria-label='gmail' href={`mailto:${x?.practiceEmail}`} target='_blank'>
                             <IconButton>
                               <EmailOutlinedIcon
@@ -332,9 +368,9 @@ const ViewBar = ({
                     >
                       <div className='relative border-black'>
                         <div className='absolute inset-0 flex items-center justify-end md:gap-3 gap-1 leading-5 text-white-main text-[12px]'>
-                          <span className='rounded-md bg-blue-main px-3'>Virtual</span>
+                          <span className='rounded-md bg-blue-main px-3'>{x?.appointmentMode}</span>
                           <span className='rounded-md bg-yellow-main px-3 text-black-main'>
-                            Review
+                            {x?.appointmentStatus?.enumType}
                           </span>
                           <span className='mr-3 rounded-md bg-darkGray-main px-3'>
                             Sexual Health
@@ -443,7 +479,9 @@ const ViewBar = ({
                     >
                       <div className='relative border-black'>
                         <div className='absolute inset-0 flex items-center justify-end md:gap-3 gap-1 leading-5 text-white-main text-[12px]'>
-                          <span className='rounded-md bg-orange-main px-3'>Rescheduled</span>
+                          <span className='rounded-md bg-orange-main px-3'>
+                            {x?.appointmentStatus?.enumType}
+                          </span>
                           <span className='mr-3 rounded-md bg-darkGray-main px-3'>
                             Sexual Health
                           </span>
@@ -543,6 +581,20 @@ const ViewBar = ({
             )}
           </div>
         </div>
+      </div>
+      <div className='h-full text-xs'>
+        <span className='flex items-end justify-end h-[265px] text-xs'>
+          Ask about our marketing package today and get more appointments in your schedule. Contact
+          us at
+        </span>
+        <a
+          aria-label='gmail'
+          href={`mailto:${MARKETING_EMAIL}`}
+          target='_blank'
+          className='text-darkBlue-main text-sm'
+        >
+          marketing@oopchar.com
+        </a>
       </div>
     </Drawer>
   )

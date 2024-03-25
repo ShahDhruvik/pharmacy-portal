@@ -200,7 +200,10 @@ const AppointmentCard = ({
                       </div>
                       <div className='flex flex-col gap-1 h-40 items-start justify-start'>
                         {upcoming && (
-                          <IconButton onClick={() => {}}>
+                          <IconButton
+                            onClick={() => {}}
+                            disabled={x?.appointmentMode === 'In Person' ? true : false}
+                          >
                             <DuoIcon
                               sx={{
                                 color: theme.palette.mWhite?.main,
@@ -211,18 +214,18 @@ const AppointmentCard = ({
                             />
                           </IconButton>
                         )}
-                        {!upcoming && (
-                          <IconButton>
-                            <ChatOutlinedIcon
-                              sx={{
-                                color: theme.palette.mWhite?.main,
-                                backgroundColor: theme.palette.mDarkGray?.main,
-                                padding: '4px',
-                                borderRadius: '9999px',
-                              }}
-                            />
-                          </IconButton>
-                        )}
+                        {/* {!upcoming && ( */}
+                        <IconButton>
+                          <ChatOutlinedIcon
+                            sx={{
+                              color: theme.palette.mWhite?.main,
+                              backgroundColor: theme.palette.mDarkGray?.main,
+                              padding: '4px',
+                              borderRadius: '9999px',
+                            }}
+                          />
+                        </IconButton>
+                        {/* )} */}
                         <a aria-label='gmail' href={`mailto:${x?.practiceEmail}`} target='_blank'>
                           <IconButton>
                             <EmailOutlinedIcon
@@ -286,7 +289,7 @@ const AppointmentCard = ({
         <ViewBar
           handleClose={handleCloseDrawer}
           open={openDrawer && manageState === MANAGE_STATE.UPCOMING}
-          heading='Upcoming Scheduled Appointments'
+          heading='Upcoming Appointments'
           upcoming={true}
           // data={data}
           manageState={manageState}

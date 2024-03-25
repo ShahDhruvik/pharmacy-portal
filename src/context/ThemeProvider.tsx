@@ -288,6 +288,9 @@ export const theme: Theme = createTheme({
               border: `1px solid black`,
             },
           },
+          '& .MuiInputBase-input::placeholder': {
+            fontSize: '12px',
+          },
           borderRadius: '8px',
         },
         input: {

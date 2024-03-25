@@ -107,34 +107,38 @@ const TaskBar = ({ open, handleClose }: Props) => {
       open={open}
       onClose={handleClose}
       sx={{
-        width: '30%',
+        width: '28%',
         '& .MuiDrawer-paper': {
-          width: '30%',
+          width: '28%',
           px: '20px',
           backgroundColor: theme.palette.mLightGray?.main,
         },
       }}
     >
       <div
-        className={`flex justify-between items-center mb-2 sticky top-0 z-10 py-[10px] bg-lightGray-main`}
+        className={`flex ${
+          !show ? 'justify-between' : 'justify-end'
+        } items-center mb-2 sticky top-0 z-10 py-[10px] bg-lightGray-main`}
         id='header'
       >
-        <Button
-          variant='text'
-          color='mMidBlue'
-          sx={{
-            color: theme.palette.mMidBlue?.main,
-            minWidth: 'max-content',
-            fontSize: '1rem',
-            height: 20,
-          }}
-          onClick={() => {
-            setShow(true)
-          }}
-          disableRipple
-        >
-          Add task
-        </Button>
+        {!show && (
+          <Button
+            variant='text'
+            color='mMidBlue'
+            sx={{
+              color: theme.palette.mMidBlue?.main,
+              minWidth: 'max-content',
+              fontSize: '1rem',
+              height: 20,
+            }}
+            onClick={() => {
+              setShow(true)
+            }}
+            disableRipple
+          >
+            Add task
+          </Button>
+        )}
         <Button
           variant='text'
           color='mMidBlue'
@@ -214,7 +218,9 @@ const TaskBar = ({ open, handleClose }: Props) => {
               </div>
             ))
           ) : (
-            <div className='h-40 flex items-center justify-center'>Assigned Task Not Found!!</div>
+            <div className='h-40 flex items-center justify-center'>
+              There is nothing to show here!
+            </div>
           )}
         </div>
       )}
@@ -244,7 +250,9 @@ const TaskBar = ({ open, handleClose }: Props) => {
               </div>
             ))
           ) : (
-            <div className='h-40 flex items-center justify-center'>Created Task Not Found!!</div>
+            <div className='h-40 flex items-center justify-center'>
+              There is nothing to show here!
+            </div>
           )}
         </div>
       )}
@@ -253,7 +261,9 @@ const TaskBar = ({ open, handleClose }: Props) => {
           <div className='pt-5 flex flex-col gap-5 min-h-screen'>
             <div>
               <p className='font-semibold text-xl ml-[6px] '>Add Task</p>
-              <Divider sx={{ borderColor: theme.palette.mDarkGray?.main, borderWidth: '1.5px' }} />
+              <Divider
+                sx={{ borderColor: theme.palette.mMediumGray?.main, borderWidth: '1/2px' }}
+              />
             </div>
             <div className='flex flex-col flex-1 gap-5'>
               <TxtInput
@@ -293,9 +303,19 @@ const TaskBar = ({ open, handleClose }: Props) => {
                 setError={setError}
               />
             </div>
-            <div className='sticky bottom-0 flex items-end justify-end bg-lightGray-main py-5 w-full'>
-              <Button color='mPink' type='submit'>
-                Add task
+            <div className='sticky bottom-0 flex items-end justify-end bg-lightGray-main py-5 w-full gap-2'>
+              <Button
+                color='mPink'
+                type='submit'
+                sx={{ minWidth: '100px' }}
+                onClick={() => {
+                  setShow(false)
+                }}
+              >
+                Cancel
+              </Button>
+              <Button color='mPink' type='submit' sx={{ minWidth: '100px' }}>
+                Add Task
               </Button>
             </div>
           </div>

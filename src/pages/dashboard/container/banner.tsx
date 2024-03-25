@@ -79,7 +79,7 @@ const Banner = ({}: Props) => {
       <section className='bg-pink-main mt-2 mb-5'>
         <div>
           <div className='py-5 text-white-main'>
-            <ul className='flex justify-between items-center list-disc'>
+            <ul className='list-disc scrolling-text'>
               <li>Latest news/updates in healthcare for patients</li>
               <li>Medicine Reminders</li>
             </ul>
@@ -125,7 +125,7 @@ const Banner = ({}: Props) => {
             <img src={img} alt='img' className='w-full my-5 h-60' />
           </div>
           <span className='flex justify-end font-extralight text-sm pt-4'>
-            Copyright © 2023 Triaina Health. All rights reserved.
+            Copyright © 2024 Triaina Health. All rights reserved.
           </span>
         </div>
       </section>

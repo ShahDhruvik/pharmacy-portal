@@ -55,7 +55,7 @@ const OTPForm = ({ handleClose, email, maxWidth }: Props) => {
       <div className='flex flex-col justify-center '>
         <OtpInput name={['otp0', 'otp1', 'otp2', 'otp3', 'otp4', 'otp5']} control={control} />
         <div className='flex justify-between mb-4'>
-          <p className='ml-2'>You have 30 second left</p>
+          {/* <p className='ml-2'>You have 30 second left</p> */}
           <button
             className='mr-2 text-mediumBlue-main'
             // onClick={() => {

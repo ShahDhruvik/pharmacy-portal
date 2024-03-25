@@ -70,9 +70,13 @@ const Header = ({}: Props) => {
                 </Link>
               )
             })}
-            {/* <span className='underline' onClick={() => nav('/help')}>
-              Help
-            </span> */}
+            <a
+              href={`https://help.oopchar.com`}
+              target='_blank'
+              className='hover:underline bg-white-main px-3 py-1 rounded-sm'
+            >
+              <span>Help</span>
+            </a>
             <button className='hover:underline' onClick={handleopenDrawer}>
               <AccountCircleIcon
                 sx={{
