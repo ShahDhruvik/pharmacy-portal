@@ -10,6 +10,11 @@ export const enum DEF_PATHS {
   patient = '/patient',
   practice = '/practice',
   provider = '/provider',
+  chat = '/chat',
+}
+export const enum CHAT {
+  listAll = DEF_PATHS.chat + DEF_PATHS.practice + "/office/chat-conversation",
+  getOne = DEF_PATHS.chat + DEF_PATHS.practice + "/office/chat-conversation/"
 }
 
 export const enum AUTH_ENDPOINT {

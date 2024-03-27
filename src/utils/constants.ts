@@ -5,7 +5,9 @@ import { enUS } from 'date-fns/locale'
 export const x = 10
 
 export const currencySymbol = '₹'
-
+export enum MessageActions {
+  Delete = 'Delete',
+}
 export const BlogPosts: Record<string, { title: string; description: string }> = {
   'first-blog-post': {
     title: 'First Blog Post',
@@ -26,6 +28,7 @@ export const CONST_OOPCHAR_IN_PERSON_CONSULTATION_URL = `https://dev.oopchar.com
 export const CONST_ABHA_URL = `https://abha.oopchar.com/`
 export const SITE_KEY = `6Ld_4aEpAAAAAMV7S6jHzrwAxEtb7sJ61MeNr00f`
 export const MARKETING_EMAIL = 'marketing@oopchar.com'
+export const CONST_SOCKET_SERVER_URL = "https://api-dev.oopchar.com"
 
 //LOCAL
 // export const CONST_API_URL = 'http://localhost:8000/api'
@@ -41,6 +44,14 @@ export const enum CACHE_KEYS {
   POST = 'post',
   USER = 'user',
   TODO1 = 'todo1',
+}
+export enum PracticePatientChatUserTypeEnum {
+  organization = 'organization',
+  patient = 'patient',
+}
+export enum PracticeOfficeMessageTypeEnum {
+  media = 'media',
+  message = 'message',
 }
 
 export const enum TOAST_TYPES {

@@ -9,6 +9,8 @@ export type PaletteColor = {
   dark?: string
   contrastText?: string
 }
+export type EnumValues<T extends Record<string, string | number>> = T[keyof T];
+
 
 export type AuthState = {
   isAuthenticated: boolean

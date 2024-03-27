@@ -31,6 +31,7 @@
       "@/types/*": ["./src/types/*"],
       "@/utils/*": ["./src/utils/*"],
       "@/styles/*": ["./src/styles/*"],
+      "@/socket/*": ["./src/socket/*"],
     },
   },
   "include": ["src/**/*"],

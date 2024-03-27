@@ -12,6 +12,7 @@ import { AuthProvider } from './context/AuthContext'
 import { ToastContainer } from 'react-toastify'
 import { LoadingProvider } from './context/LoadingContext'
 import { AssessmentProvider } from './context/AssessmentContext'
+import { ChatProvider } from './context/ChatContext'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
@@ -34,7 +35,9 @@ root.render(
                 icon={false}
               />
               <AssessmentProvider>
-                <App />
+                <ChatProvider>
+                  <App />
+                </ChatProvider>
               </AssessmentProvider>
             </LoadingProvider>
           </AppThemeProvider>

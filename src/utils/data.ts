@@ -1,4 +1,4 @@
-import { COMMON_PATH, MAIN_PATH } from '../paths'
+import { COMMON_PATH, MAIN_PATH } from '../Paths'
 import { HeaderLinkType } from '../types/common'
 import { CONST_OOPCHAR_IN_PERSON_CONSULTATION_URL } from './constants'
 type PlantTree = {
@@ -187,11 +187,11 @@ export const headerData: HeaderLinkType[] = [
   //   name: 'Create Task',
   //   path: CONST_OOPCHAR_IN_PERSON_CONSULTATION_URL,
   // },
-  {
-    id: 1,
-    name: 'Chat',
-    path: MAIN_PATH.CHAT.split('/*')[0],
-  },
+  // {
+  //   id: 1,
+  //   name: 'Chat',
+  //   path: MAIN_PATH.CHAT.split('/*')[0],
+  // },
   // {
   //   id: 4,
   //   name: 'Help',
