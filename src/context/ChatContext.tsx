@@ -178,6 +178,8 @@ export interface ChatContextType {
   setParticularMessage: Dispatch<SetStateAction<MessageData['records'][0] | undefined>>
   notify: boolean
   setNotify: Dispatch<SetStateAction<boolean>>
+  networkStatus: boolean
+  setNetworkStatus: Dispatch<SetStateAction<boolean>>
 }
 export const ChatContextInitialVal: ChatContextType = {
   chatLoading: { loading: false },
@@ -227,6 +229,8 @@ export const ChatContextInitialVal: ChatContextType = {
   isTyping: { id: '', typing: false },
   notify: false,
   setNotify: () => {},
+  networkStatus: true,
+  setNetworkStatus: () => {},
 }
 const ChatContext = createContext<ChatContextType>(ChatContextInitialVal)
 
@@ -315,6 +319,10 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   )
   //Particular message state
   const [notify, setNotify] = useState<ChatContextType['notify']>(ChatContextInitialVal['notify'])
+  //network status
+  const [networkStatus, setNetworkStatus] = useState<ChatContextType['networkStatus']>(
+    ChatContextInitialVal['networkStatus'],
+  )
   return (
     <ChatContext.Provider
       value={{
@@ -365,6 +373,8 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         setScrollButton,
         notify,
         setNotify,
+        networkStatus,
+        setNetworkStatus,
       }}
     >
       {children}

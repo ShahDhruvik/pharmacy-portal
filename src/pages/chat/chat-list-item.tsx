@@ -13,7 +13,7 @@ import socket from '@/socket/socket'
 import { chatPatientHistory } from '@/socket/socket-functions'
 import { SOCKET_STRING } from '@/socket/socket-string'
 import { PracticePatientChatUserTypeEnum } from '@/utils/constants'
-import { ListItemButton } from '@mui/material'
+import { Avatar, ListItemButton } from '@mui/material'
 import React, { useEffect } from 'react'
 
 type Props = {
@@ -135,11 +135,18 @@ const ChatListItem = ({ chatData }: Props) => {
         afterClickingRoom(countCondition, chatData)
       }}
     >
-      <div className='min-w-[80%] max-w-[80%]'>
-        <p className='text-lg text-darkBlue-main font-semibold'>
-          {chatData?.orgUsers[0]?.name ?? ''}
-        </p>
-        {countCondition && <p className='text-base'>{chatData?.lastMessage?.message ?? '--'}</p>}
+      <div className='min-w-[80%] max-w-[80%] flex items-center gap-3'>
+        <Avatar src='/' alt={chatData?.orgUsers[0]?.name ?? ''} />
+        <div className='flex-col'>
+          <p className='text-lg text-darkBlue-main font-semibold'>
+            {chatData?.orgUsers[0]?.name ?? ''}
+          </p>
+          {countCondition && (
+            <p className='text-base font-semibold text-darkGray-main'>
+              {chatData?.lastMessage?.message ?? '--'}
+            </p>
+          )}
+        </div>
       </div>
       {countCondition && (
         <div className='w-10 aspect-square bg-green-main text-white-main flex items-center justify-center rounded-full'>
