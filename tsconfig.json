@@ -26,7 +26,7 @@
       "@/lib/*": ["./src/lib/*"],
       "@/middleware/*": ["./src/middleware/*"],
       "@/pages/*": ["./src/pages/*"],
-      "@/paths/*": ["./src/paths/*"],
+      "@/paths/*": ["src/paths/*"],
       "@/store/*": ["./src/store/*"],
       "@/types/*": ["./src/types/*"],
       "@/utils/*": ["./src/utils/*"],
