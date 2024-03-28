@@ -12,7 +12,7 @@ export default defineConfig({
   ],
   server: {
     open: true,
-    port: 8080,
+    port: 4002,
     strictPort: true,
   },
   resolve: {
@@ -29,6 +29,7 @@ export default defineConfig({
       '@/types': `${path.resolve(__dirname, './src/types/')}`,
       '@/utils': `${path.resolve(__dirname, './src/utils/')}`,
       '@/styles': `${path.resolve(__dirname, './src/styles/')}`,
+      '@/socket': `${path.resolve(__dirname, './src/socket/')}`,
     },
   },
 })

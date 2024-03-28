@@ -10,6 +10,7 @@ import { useLoading } from '@/context/LoadingContext'
 import { useToast } from '@/hooks/useToast'
 import { useAuth } from '@/context/AuthContext'
 import { changePasswordForProvider } from '@/lib/Auth'
+import socket from '@/socket/socket'
 
 type Props = {
   handleDrawerState: (state: DrawerState) => void
@@ -125,7 +126,10 @@ const Profile = ({ handleDrawerState, handleClose, handleField }: Props) => {
               height: 20,
             }}
             disableRipple
-            onClick={clearStorage}
+            onClick={() => {
+              socket.disconnect()
+              clearStorage()
+            }}
           >
             Sign out
           </Button>

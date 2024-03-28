@@ -9,6 +9,8 @@ import { resendOtp, verifyOtp } from '@/lib/Auth'
 import { useLoading } from '@/context/LoadingContext'
 import { useToast } from '@/hooks/useToast'
 import { useAuth } from '@/context/AuthContext'
+import { getProfileAfterLogin } from '@/lib/Profile'
+import { useChat } from '@/context/ChatContext'
 
 type Props = {
   handleClose: () => void
@@ -17,6 +19,7 @@ type Props = {
 }
 
 const OTPForm = ({ handleClose, email, maxWidth }: Props) => {
+  const { setCurrentUser } = useChat()
   const { setLoading } = useLoading()
   const showToast = useToast()
   const { addStorage } = useAuth()
@@ -41,6 +44,11 @@ const OTPForm = ({ handleClose, email, maxWidth }: Props) => {
     const res = await verifyOtp(setLoading, showToast, a)
     if (res) {
       const { accessToken, refreshToken } = res.data.data
+      const resp = await getProfileAfterLogin(setLoading, showToast, accessToken, refreshToken)
+      if (resp) {
+        localStorage.setItem('user', JSON.stringify(resp[0]))
+        setCurrentUser(resp[0])
+      }
       addStorage(accessToken, refreshToken)
       handleClose()
     }

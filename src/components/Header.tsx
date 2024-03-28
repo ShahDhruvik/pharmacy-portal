@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Logo from '../assets/images/new-logo.png'
 import { headerData } from '../utils/data'
@@ -8,12 +9,17 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import ProfileBar from '../pages/profile/Profilebar'
 import HomeIcon from '@mui/icons-material/Home'
 import TaskBar from '@/pages/task-bar/task-bar'
+import { useChat } from '@/context/ChatContext'
+import socket from '@/socket/socket'
+import { SOCKET_STRING } from '@/socket/socket-string'
 
 interface Props {}
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right'
 
 const Header = ({}: Props) => {
+  const { openChatDrawer, setOpenChatDrawer, currentUser, setNotify, notify } = useChat()
+
   const nav = useNavigate()
 
   //Mobile  pop-up
@@ -38,6 +44,22 @@ const Header = ({}: Props) => {
   const handleOpenDrawerForTask = () => {
     setOpenDrawerForTask(true)
   }
+  useEffect(() => {
+    const handleListUpdate = (userId: string[]) => {
+      if (currentUser) {
+        console.log(userId.includes(String(currentUser?.internalId)) && !openChatDrawer)
+        if (userId.includes(String(currentUser?.internalId)) && !openChatDrawer) {
+          setNotify(true)
+        } else {
+          setNotify(false)
+        }
+      }
+    }
+    socket.on(SOCKET_STRING.PRACTICE_OFFICE_NOTIFY, handleListUpdate)
+    return () => {
+      socket.off(SOCKET_STRING.PRACTICE_OFFICE_NOTIFY, handleListUpdate)
+    }
+  }, [socket, currentUser, openChatDrawer])
   return (
     <>
       <nav>
@@ -63,6 +85,18 @@ const Header = ({}: Props) => {
             <span className='hover:underline bg-white-main px-3 py-1 rounded-sm'>Create Task</span>
           </div>
           <ul className='hidden md:flex flex-row flex-wrap gap-5 text-darkBlue-main font-light items-center'>
+            <button
+              onClick={() => {
+                setOpenChatDrawer(true)
+                setNotify(false)
+              }}
+              className='flex items-center gap-2 bg-white-main px-3 py-1'
+            >
+              <p className='hover:underline   rounded-sm'>{'Office Chat'}</p>
+              {notify && (
+                <span className='w-2 h-2 bg-green-main rounded-full animate-pulse '></span>
+              )}
+            </button>
             {headerData?.map((x) => {
               return (
                 <Link to={x.path} key={x.id}>
