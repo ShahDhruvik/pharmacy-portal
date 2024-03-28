@@ -8,6 +8,8 @@ import { useToast } from '@/hooks/useToast'
 import { useLoading } from '@/context/LoadingContext'
 import { useAuth } from '@/context/AuthContext'
 import img from '@/assets/images/Aspect_Ratio.jpg'
+import { RibbonField } from '@/types/ribbonTypes'
+import { getAllRibbon } from '@/lib/DashboardContent'
 
 interface Props {}
 
@@ -59,11 +61,18 @@ const Banner = ({}: Props) => {
   const [appointmentDetails, setAppointmentDetails] = useState<any>(null)
   const { authParams } = useAuth()
   const [manageState, setManageState] = useState<ManageState>(undefined)
+  const [ribbon, setRibbon] = useState<RibbonField[]>([])
 
   const getAppData = async () => {
     const response = await getAllAppointments(setLoading, showToast)
     if (response) {
       setAppointmentDetails(response)
+    }
+  }
+  const getRibbonData = async () => {
+    const response = await getAllRibbon(setLoading, showToast)
+    if (response) {
+      setRibbon(response)
     }
   }
 
@@ -80,8 +89,7 @@ const Banner = ({}: Props) => {
         <div>
           <div className='py-5 text-white-main'>
             <ul className='list-disc scrolling-text'>
-              <li>Latest news/updates in healthcare for patients</li>
-              <li>Medicine Reminders</li>
+              {ribbon?.length > 0 && ribbon?.map((x) => <li key={x._id}>{x?.displayName}</li>)}
             </ul>
           </div>
         </div>

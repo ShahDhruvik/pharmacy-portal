@@ -27,6 +27,7 @@ export const enum PROFILE {
 export const enum DASHBOARD_CONTENT {
   GET_MAIN_IMG = DEF_PATHS.common + '/provider-care/portal-images-list',
   GET_FEATURE = DEF_PATHS.common + '/provider-care/portal-feature-list',
+  GET_RIBBON = DEF_PATHS.common + '/provider-care/portal-ribbon-list',
 }
 
 export const enum DROPDOWN {
