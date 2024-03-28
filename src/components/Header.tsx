@@ -12,13 +12,22 @@ import TaskBar from '@/pages/task-bar/task-bar'
 import { useChat } from '@/context/ChatContext'
 import socket from '@/socket/socket'
 import { SOCKET_STRING } from '@/socket/socket-string'
+import ReactPlayer from 'react-player'
 
 interface Props {}
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right'
 
 const Header = ({}: Props) => {
-  const { openChatDrawer, setOpenChatDrawer, currentUser, setNotify, notify } = useChat()
+  const {
+    openChatDrawer,
+    setOpenChatDrawer,
+    playTune,
+    currentUser,
+    setPlayTune,
+    setNotify,
+    notify,
+  } = useChat()
 
   const nav = useNavigate()
 
@@ -49,9 +58,9 @@ const Header = ({}: Props) => {
       if (currentUser) {
         console.log(userId.includes(String(currentUser?.internalId)) && !openChatDrawer)
         if (userId.includes(String(currentUser?.internalId)) && !openChatDrawer) {
-          setNotify(true)
+          setNotify((prev) => prev + 1)
         } else {
-          setNotify(false)
+          setNotify(0)
         }
       }
     }
@@ -60,6 +69,11 @@ const Header = ({}: Props) => {
       socket.off(SOCKET_STRING.PRACTICE_OFFICE_NOTIFY, handleListUpdate)
     }
   }, [socket, currentUser, openChatDrawer])
+  useEffect(() => {
+    if (notify) {
+      setPlayTune(true) // Start playing when notify is true
+    }
+  }, [notify])
   return (
     <>
       <nav>
@@ -88,13 +102,22 @@ const Header = ({}: Props) => {
             <button
               onClick={() => {
                 setOpenChatDrawer(true)
-                setNotify(false)
+                setNotify(0)
               }}
               className='flex items-center gap-2 bg-white-main px-3 py-1'
             >
               <p className='hover:underline   rounded-sm'>{'Office Chat'}</p>
-              {notify && (
-                <span className='w-2 h-2 bg-green-main rounded-full animate-pulse '></span>
+              {notify > 0 && (
+                <>
+                  <ReactPlayer
+                    url='src/assets/tunes/beep.mp3'
+                    style={{ display: 'none' }}
+                    controls
+                    playing={playTune}
+                    onEnded={() => setPlayTune(false)}
+                  />
+                  <span className='w-2 h-2 bg-green-main rounded-full animate-pulse '></span>
+                </>
               )}
             </button>
             {headerData?.map((x) => {

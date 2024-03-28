@@ -176,10 +176,12 @@ export interface ChatContextType {
   setMessageActionType: Dispatch<SetStateAction<MessageActions | undefined>>
   particularMessage: MessageData['records'][0] | undefined
   setParticularMessage: Dispatch<SetStateAction<MessageData['records'][0] | undefined>>
-  notify: boolean
-  setNotify: Dispatch<SetStateAction<boolean>>
+  notify: number
+  setNotify: Dispatch<SetStateAction<number>>
   networkStatus: boolean
   setNetworkStatus: Dispatch<SetStateAction<boolean>>
+  playTune: boolean
+  setPlayTune: Dispatch<SetStateAction<boolean>>
 }
 export const ChatContextInitialVal: ChatContextType = {
   chatLoading: { loading: false },
@@ -227,10 +229,12 @@ export const ChatContextInitialVal: ChatContextType = {
   setParticularMessage: () => {},
   setIsTyping: () => {},
   isTyping: { id: '', typing: false },
-  notify: false,
+  notify: 0,
   setNotify: () => {},
   networkStatus: true,
   setNetworkStatus: () => {},
+  playTune: false,
+  setPlayTune: () => {},
 }
 const ChatContext = createContext<ChatContextType>(ChatContextInitialVal)
 
@@ -323,6 +327,9 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   const [networkStatus, setNetworkStatus] = useState<ChatContextType['networkStatus']>(
     ChatContextInitialVal['networkStatus'],
   )
+  const [playTune, setPlayTune] = useState<ChatContextType['playTune']>(
+    ChatContextInitialVal['playTune'],
+  )
   return (
     <ChatContext.Provider
       value={{
@@ -375,6 +382,8 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         setNotify,
         networkStatus,
         setNetworkStatus,
+        playTune,
+        setPlayTune,
       }}
     >
       {children}
