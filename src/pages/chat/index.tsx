@@ -48,8 +48,8 @@ const ChatDrawer = (props: Props) => {
       anchor='right'
       PaperProps={{
         sx: {
-          maxWidth: '30%',
-          minWidth: '30%',
+          maxWidth: '40%',
+          minWidth: '40%',
           background: theme.palette.mLightGray?.main,
         },
       }}
