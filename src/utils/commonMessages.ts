@@ -2,14 +2,14 @@
 export const enum COMMON_MESSAGE {
   Success = 'Success',
   Error = 'Error',
-  Login = 'log In ',
-  LogOut = 'loggedOut Succesfully',
+  Login = 'Sign ‘in successful',
+  LogOut = 'Sign out successful',
   Updated = 'Updated',
   Deleted = 'Deleted',
-  Cancel = 'Cancel',
-  Change_Password = 'Change Password link send to your register email',
+  Cancel = 'Canceled',
+  Change_Password = 'A password reset link has been sent to your registered email address.',
 }
 
 export const enum VALIDATION_MESSAGE {
-  checkBoxValidation = 'Check Box Select',
+  checkBoxValidation = '*Please verify your response.',
 }
