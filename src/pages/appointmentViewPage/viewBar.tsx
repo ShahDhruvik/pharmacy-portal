@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { theme } from '@/context/ThemeProvider'
 import { Drawer, Button, Divider, Avatar, IconButton, Dialog, DialogContent } from '@mui/material'
-import { CONST_APP_IMAGE_URL, MARKETING_EMAIL } from '@/utils/constants'
+import { CONST_APP_IMAGE_URL, MARKETING_EMAIL, PracticeModeEnum } from '@/utils/constants'
 import { addMonths, format, parse } from 'date-fns'
 import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined'
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined'
@@ -312,16 +312,31 @@ const ViewBar = ({
                         </div>
                         <div className='flex flex-col gap-1 h-40 items-start justify-start'>
                           {upcoming && (
-                            <IconButton>
-                              <DuoIcon
-                                sx={{
-                                  color: theme.palette.mWhite?.main,
-                                  backgroundColor: theme.palette.mDarkGray?.main,
-                                  padding: '4px',
-                                  borderRadius: '9999px',
-                                }}
-                              />
-                            </IconButton>
+                            <a
+                              href={
+                                x?.appointmentMode === PracticeModeEnum.VIRTUAL_CARE &&
+                                x?.meetStartLink
+                              }
+                              target='_blank'
+                              rel='noopener noreferrer'
+                            >
+                              <IconButton
+                                sx={
+                                  x?.appointmentMode !== PracticeModeEnum.VIRTUAL_CARE
+                                    ? { cursor: 'not-allowed' }
+                                    : { cursor: 'pointer' }
+                                }
+                              >
+                                <DuoIcon
+                                  sx={{
+                                    color: theme.palette.mWhite?.main,
+                                    backgroundColor: theme.palette.mDarkGray?.main,
+                                    padding: '4px',
+                                    borderRadius: '9999px',
+                                  }}
+                                />
+                              </IconButton>
+                            </a>
                           )}
                           {/* {!upcoming && ( */}
                           <IconButton>

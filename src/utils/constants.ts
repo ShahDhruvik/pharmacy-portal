@@ -28,7 +28,7 @@ export const CONST_OOPCHAR_IN_PERSON_CONSULTATION_URL = `https://dev.oopchar.com
 export const CONST_ABHA_URL = `https://abha.oopchar.com/`
 export const SITE_KEY = `6Ld_4aEpAAAAAMV7S6jHzrwAxEtb7sJ61MeNr00f`
 export const MARKETING_EMAIL = 'marketing@oopchar.com'
-export const CONST_SOCKET_SERVER_URL = "https://api-dev.oopchar.com"
+export const CONST_SOCKET_SERVER_URL = 'https://api-dev.oopchar.com'
 
 //LOCAL
 // export const CONST_API_URL = 'http://localhost:8000/api'
@@ -142,4 +142,10 @@ export enum MarketingReferenceEnum {
   PatientPortal = 'PatientPortal',
   PracticePortal = 'PracticePortal',
   Default = 'Default',
+}
+
+export enum PracticeModeEnum {
+  VIRTUAL_CARE = 'Virtual Care',
+  IN_PERSON_CARE = 'In-person Care',
+  HYBRID_CARE = 'Hybrid Care',
 }

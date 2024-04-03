@@ -11,7 +11,7 @@ import 'swiper/css'
 import 'swiper/css/autoplay'
 import '@/styles/Manage-card-Slider.css'
 import ViewBar from '@/pages/appointmentViewPage/viewBar'
-import { CONST_APP_IMAGE_URL, uuid } from '@/utils/constants'
+import { CONST_APP_IMAGE_URL, PracticeModeEnum, uuid } from '@/utils/constants'
 import { format, parse } from 'date-fns'
 import Spinner from './spinner'
 import { useLoading } from '@/context/LoadingContext'
@@ -200,19 +200,35 @@ const AppointmentCard = ({
                       </div>
                       <div className='flex flex-col gap-1 h-40 items-start justify-start'>
                         {upcoming && (
-                          <IconButton
-                            onClick={() => {}}
-                            disabled={x?.appointmentMode === 'In Person' ? true : false}
+                          <a
+                            href={
+                              x?.appointmentMode === PracticeModeEnum.VIRTUAL_CARE &&
+                              x?.meetStartLink
+                            }
+                            target='_blank'
+                            rel='noopener noreferrer'
                           >
-                            <DuoIcon
-                              sx={{
-                                color: theme.palette.mWhite?.main,
-                                backgroundColor: theme.palette.mDarkGray?.main,
-                                padding: '4px',
-                                borderRadius: '9999px',
-                              }}
-                            />
-                          </IconButton>
+                            <IconButton
+                              onClick={() => {}}
+                              disabled={
+                                x?.appointmentMode !== PracticeModeEnum.VIRTUAL_CARE ? true : false
+                              }
+                              sx={
+                                x?.appointmentMode !== PracticeModeEnum.VIRTUAL_CARE
+                                  ? { cursor: 'not-allowed' }
+                                  : { cursor: 'pointer' }
+                              }
+                            >
+                              <DuoIcon
+                                sx={{
+                                  color: theme.palette.mWhite?.main,
+                                  backgroundColor: theme.palette.mDarkGray?.main,
+                                  padding: '4px',
+                                  borderRadius: '9999px',
+                                }}
+                              />
+                            </IconButton>
+                          </a>
                         )}
                         {/* {!upcoming && ( */}
                         <IconButton>

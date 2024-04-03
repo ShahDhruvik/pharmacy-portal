@@ -78,6 +78,7 @@ const Banner = ({}: Props) => {
 
   useEffect(() => {
     if (authParams?.isAuth) {
+      getRibbonData()
       getAppData()
     }
   }, [authParams?.isAuth])
