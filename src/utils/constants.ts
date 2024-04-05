@@ -25,7 +25,7 @@ export const CONST_API_URL = 'https://api-dev.oopchar.com/api'
 export const CONST_APP_IMAGE_URL = 'https://oopchar-editor-dev-1.s3.ap-south-1.amazonaws.com/'
 export const CONST_PRACTICE_URL = `https://practice-dev.oopchar.com/`
 export const CONST_OOPCHAR_IN_PERSON_CONSULTATION_URL = `https://dev.oopchar.com/book-in-person?sourceUuid=${uuid}`
-export const CONST_ABHA_URL = `https://abha.oopchar.com/`
+export const CONST_ABHA_URL = `https://abha-dev.triainahealth.com/`
 export const SITE_KEY = `6Ld_4aEpAAAAAMV7S6jHzrwAxEtb7sJ61MeNr00f`
 export const MARKETING_EMAIL = 'marketing@oopchar.com'
 export const CONST_SOCKET_SERVER_URL = 'https://api-dev.oopchar.com'
