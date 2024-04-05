@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import Logo from '../assets/images/new-logo.png'
+import Logo from '../assets/images/pink.png'
+import Text from '../assets/images/black-text.png'
 import { headerData } from '../utils/data'
 import { Avatar, Box, Divider, Drawer, IconButton, Popper } from '@mui/material'
 import { theme } from '@/context/ThemeProvider'
@@ -82,14 +83,24 @@ const Header = ({}: Props) => {
             <img
               src={Logo}
               alt='Logo'
-              width={50}
+              width={60}
+              height={60}
+              onClick={() => {
+                nav('/')
+              }}
+              className='cursor-pointer'
+            />
+            <img
+              src={Text}
+              alt={'Triaina Health'}
+              width={130}
               height={50}
               onClick={() => {
                 nav('/')
               }}
               className='cursor-pointer'
             />
-            <h1 className='text-3xl text-darkBlue-main font-semibold'>Oopchar</h1>
+            {/* <h1 className='text-3xl text-darkBlue-main font-semibold'>Triaina Health</h1> */}
           </div>
           <div
             role='button'

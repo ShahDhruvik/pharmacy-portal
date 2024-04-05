@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import Logo from '../assets/images/new-logo.png'
+import Logo from '../assets/images/pink.png'
+import Text from '../assets/images/black-text.png'
 import { headerLinks } from '../utils/data'
 import { IconButton, Popper } from '@mui/material'
 import AuthForm from '../pages/dashboard/container/auth-forms/auth-form'
@@ -34,14 +35,24 @@ const Navbar = ({}: Props) => {
             <img
               src={Logo}
               alt='Logo'
-              width={50}
+              width={60}
+              height={60}
+              onClick={() => {
+                nav('/')
+              }}
+              className='cursor-pointer'
+            />
+            <img
+              src={Text}
+              alt={'Triaina Health'}
+              width={130}
               height={50}
               onClick={() => {
                 nav('/')
               }}
               className='cursor-pointer'
             />
-            <h1 className='text-3xl text-black-main font-semibold'>Oopchar</h1>
+            {/* <h1 className='text-3xl text-black-main font-semibold'>Triaina Health</h1> */}
             <span className='text-lg text-black-main font-semibold'>
               EasyWeb: Provider Self-care
             </span>
