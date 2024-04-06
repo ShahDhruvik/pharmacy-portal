@@ -74,6 +74,13 @@ axiosInstance.interceptors.response.use(
     // Any status codes that fall outside the range of 2xx cause this function to trigger
     // Do something with response error
     if (error.response.status === 401 || error.response.status === 500) {
+      toast.error(`${error.response.data.message}`, {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: true,
+        draggable: false,
+        progress: 0,
+      })
       localStorage.clear()
       window.location.href = `${CONST_FRONTEND_URL}`
     }
