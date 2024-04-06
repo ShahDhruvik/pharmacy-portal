@@ -29,8 +29,10 @@ export const CONST_ABHA_URL = `https://abha-dev.triainahealth.com/`
 export const SITE_KEY = `6Ld_4aEpAAAAAMV7S6jHzrwAxEtb7sJ61MeNr00f`
 export const MARKETING_EMAIL = 'marketing@oopchar.com'
 export const CONST_SOCKET_SERVER_URL = 'https://api-dev.oopchar.com'
+export const CONST_FRONTEND_URL = 'https://provider-dev.oopchar.com/'
 
 //LOCAL
+// export const CONST_FRONTEND_URL = 'https://localhost:4002'
 // export const CONST_API_URL = 'http://localhost:8000/api'
 // export const CONST_APP_IMAGE_URL = 'https://oopchar-editor-dev-1.s3.ap-south-1.amazonaws.com/'
 // export const CONST_OOPCHAR_URL = 'https://dev.oopchar.com/'

@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse, CancelTokenSource } from 'axios'
 import { VITE_APP_API_URL } from '@/utils/envVariables'
 import { CONST_API_URL } from '@/utils/constants'
+import { CONST_FRONTEND_URL } from './src/utils/constants'
 
 //Cancel Token
 const _cancelTokenQueue = new Map<string, CancelTokenSource>()
@@ -74,7 +75,7 @@ axiosInstance.interceptors.response.use(
     // Do something with response error
     if (error.response.status === 401 || error.response.status === 500) {
       localStorage.clear()
-      // window.location.href = `${VITE_APP_FRONTEND_URL}/auth/login`;
+      window.location.href = `${CONST_FRONTEND_URL}`
     }
     return Promise.reject(error)
   },
