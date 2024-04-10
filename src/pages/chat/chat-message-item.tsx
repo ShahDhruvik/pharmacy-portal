@@ -7,7 +7,6 @@ import {
   ListItemButton,
   Paper,
   Button,
-  CircularProgress,
   Popover,
   IconButton,
   Popper,

@@ -68,6 +68,8 @@ export type ChatRoomType = {
     __v: number
   }
   message?: string
+  isConfirmed: boolean
+  createdBy: string
 }
 export type MessageData = {
   messageDate: string
@@ -120,10 +122,12 @@ export type ChatPatientRoomData = {
   total: number
   currentPage: number
   dataLength?: number
+  createdBy: string
+  isConfirmed: boolean
 }
 export interface ChatLoadingType {
   loading: boolean
-  loadingProps?: { list?: boolean; room?: boolean }
+  loadingProps?: { list?: boolean; room?: boolean; accept_reject?: boolean }
 }
 export interface ChatNotFoundType {
   notFoundStatus: boolean

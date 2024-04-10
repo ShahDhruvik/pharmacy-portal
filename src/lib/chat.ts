@@ -58,6 +58,62 @@ export const getOneOfficeChatConversation = async (
         setLoading({ isLoading: false, isIndependentLoader: false, isPage: false })
     }
 };
+export const updateOfficeChatConversation = async (
+    setLoading: LoadingState["setLoading"],
+    chatConversationId: string,
+    toast: ShowToastFunction,
+) => {
+    try {
+        setLoading({ isLoading: true, isIndependentLoader: true, isPage: false })
+        const res = await axiosInstance.post(CHAT.update + chatConversationId, { isConfirmed: true });
+        if (res) {
+            if (res.data?.success) {
+                return res.data?.data
+            } else {
+                return undefined;
+            }
+        } else {
+            return undefined;
+        }
+    } catch (error: any) {
+        console.log(error)
+        if (error.response.status === 404) {
+            toast('error', error.response.data.message)
+        } else {
+            toast('error', error.response.statusText)
+        }
+    } finally {
+        setLoading({ isLoading: false, isIndependentLoader: false, isPage: false })
+    }
+};
+export const deleteOfficeChatConversation = async (
+    setLoading: LoadingState["setLoading"],
+    chatConversationId: string,
+    toast: ShowToastFunction,
+) => {
+    try {
+        setLoading({ isLoading: true, isIndependentLoader: true, isPage: false })
+        const res = await axiosInstance.post(CHAT.delete + chatConversationId, {});
+        if (res) {
+            if (res.data?.success) {
+                return res.data?.success
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    } catch (error: any) {
+        console.log(error)
+        if (error.response.status === 404) {
+            toast('error', error.response.data.message)
+        } else {
+            toast('error', error.response.statusText)
+        }
+    } finally {
+        setLoading({ isLoading: false, isIndependentLoader: false, isPage: false })
+    }
+};
 
 // export const getOnePatientChat = async (
 //     setLoading: LoadingContextType["setLoading"],

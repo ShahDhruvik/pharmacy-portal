@@ -13,7 +13,8 @@ import socket from '@/socket/socket'
 import { chatPatientHistory } from '@/socket/socket-functions'
 import { SOCKET_STRING } from '@/socket/socket-string'
 import { PracticePatientChatUserTypeEnum } from '@/utils/constants'
-import { Avatar, ListItemButton } from '@mui/material'
+import { Avatar, Badge, ListItemButton } from '@mui/material'
+import clsx from 'clsx'
 import React, { useEffect } from 'react'
 
 type Props = {
@@ -135,7 +136,17 @@ const ChatListItem = ({ chatData }: Props) => {
         afterClickingRoom(countCondition, chatData)
       }}
     >
-      <div className='min-w-[80%] max-w-[80%] flex items-center gap-3'>
+      <div
+        className={clsx(
+          'flex items-center gap-3',
+          chatData.createdBy !== currentUser.internalId &&
+            !chatData?.isConfirmed &&
+            'min-w-[70%] max-w-[70%]',
+          chatData.createdBy !== currentUser.internalId &&
+            chatData?.isConfirmed &&
+            'min-w-[80%] max-w-[80%]',
+        )}
+      >
         <Avatar src='/' alt={chatData?.orgUsers[0]?.name ?? ''} />
         <div className='flex-col'>
           <p className='text-lg text-darkBlue-main font-semibold'>
@@ -152,6 +163,11 @@ const ChatListItem = ({ chatData }: Props) => {
         <div className='w-10 aspect-square bg-green-main text-white-main flex items-center justify-center rounded-full'>
           <p className='text-lg font-semibold'>{chatData?.unseenCount ?? 0}</p>
         </div>
+      )}
+      {chatData.createdBy !== currentUser.internalId && !chatData?.isConfirmed && (
+        <p className='font-semibold text-xs bg-green-main px-3 py-1 text-white-main rounded-md'>
+          new request
+        </p>
       )}
     </ListItemButton>
   )

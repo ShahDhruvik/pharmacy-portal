@@ -399,7 +399,9 @@ const ChatMessageArea = (props: Props) => {
         <>
           <ChatMessageHeader />
           <ChatMessageSpace />
-          <ChatMessageInput />
+          {chatRoom.createdBy !== currentUser.internalId && chatRoom.isConfirmed && (
+            <ChatMessageInput />
+          )}
           {scrollButton && (
             <div className='w-max absolute bottom-[70px] right-5 bg-blue-main rounded-full self-end shadow-box-out'>
               <IconButton
