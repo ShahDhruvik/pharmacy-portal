@@ -56,22 +56,7 @@ const ChatListItem = ({ chatData }: Props) => {
     } else {
       setMessageId('')
     }
-    const isRoomExist = chatRooms?.find((rm) => rm._id === x._id)
-    if (isRoomExist) {
-      const updatedRooms = chatRooms?.map((rm) => {
-        if (rm?._id === isRoomExist?._id) {
-          return {
-            ...rm,
-            unseenCount: 0,
-            lastMessage: undefined,
-          }
-        }
-        return {
-          ...rm,
-        }
-      })
-      setChatRooms(updatedRooms)
-    }
+
     setInitialScroll(true)
   }
   useEffect(() => {
@@ -139,12 +124,9 @@ const ChatListItem = ({ chatData }: Props) => {
       <div
         className={clsx(
           'flex items-center gap-3',
-          chatData.createdBy !== currentUser.internalId &&
-            !chatData?.isConfirmed &&
-            'min-w-[70%] max-w-[70%]',
-          chatData.createdBy !== currentUser.internalId &&
-            chatData?.isConfirmed &&
-            'min-w-[80%] max-w-[80%]',
+
+          !chatData?.isConfirmed && 'min-w-[70%] max-w-[70%]',
+          chatData?.isConfirmed && 'min-w-[80%] max-w-[80%]',
         )}
       >
         <Avatar src='/' alt={chatData?.orgUsers[0]?.name ?? ''} />
@@ -164,7 +146,7 @@ const ChatListItem = ({ chatData }: Props) => {
           <p className='text-lg font-semibold'>{chatData?.unseenCount ?? 0}</p>
         </div>
       )}
-      {chatData.createdBy !== currentUser.internalId && !chatData?.isConfirmed && (
+      {!chatData?.isConfirmed && (
         <p className='font-semibold text-xs bg-green-main px-3 py-1 text-white-main rounded-md'>
           new request
         </p>

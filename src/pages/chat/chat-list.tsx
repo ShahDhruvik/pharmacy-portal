@@ -31,7 +31,8 @@ function filterRecordsAndRemoveOrgUsers(
 }
 
 const ChatList = (props: Props) => {
-  const { currentUser, chatNotFound, setChatNotFound, setChatRooms, chatRooms } = useChat()
+  const { currentUser, chatNotFound, setChatNotFound, setChatRooms, chatRooms, updateChatRooms } =
+    useChat()
   const { setLoading, loading } = useLoading()
   const showToast = useToast()
   const fetchChatList = async () => {
@@ -48,6 +49,9 @@ const ChatList = (props: Props) => {
   useEffect(() => {
     fetchChatList()
   }, [currentUser])
+  useEffect(() => {
+    fetchChatList()
+  }, [updateChatRooms])
   //update Room in roomList
   useEffect(() => {
     const handleNewRoom = (data: any) => {

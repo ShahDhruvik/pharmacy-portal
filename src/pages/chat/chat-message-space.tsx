@@ -15,7 +15,7 @@ const ChatMessageSpace = (props: Props) => {
   return (
     <>
       {message && message.length !== 0 && (
-        <div className=' max-h-[75%]  min-h-[75%] overflow-y-scroll qnaScroll pb-1' id='chat'>
+        <div className='z-10 max-h-[75%]  min-h-[75%] overflow-y-scroll qnaScroll pb-1' id='chat'>
           {messageLoading && (
             <div className='flex justify-center py-2 items-center gap-2  '>
               <CircularProgress
@@ -63,9 +63,7 @@ const ChatMessageSpace = (props: Props) => {
           <p className='text-4xl'>Start chat here!</p>
         </div>
       )}
-      {message && message.length === 0 && createdBy !== currentUser.internalId && !isConfirmed && (
-        <ChatAcceptRejectArea />
-      )}
+      {message && message.length === 0 && !isConfirmed && <ChatAcceptRejectArea />}
       {!message && (
         <div className=' bg-white-main text-darkestGray-main px-2 flex-1  flex flex-col items-center justify-center gap-2  max-h-[68vh] min-h-[68vh] overflow-y-scroll chatScroll pb-1'>
           <Spinner />
