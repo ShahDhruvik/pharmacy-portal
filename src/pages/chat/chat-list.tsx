@@ -31,8 +31,15 @@ function filterRecordsAndRemoveOrgUsers(
 }
 
 const ChatList = (props: Props) => {
-  const { currentUser, chatNotFound, setChatNotFound, setChatRooms, chatRooms, updateChatRooms } =
-    useChat()
+  const {
+    currentUser,
+    chatNotFound,
+    setUpdateChatRooms,
+    setChatNotFound,
+    setChatRooms,
+    chatRooms,
+    updateChatRooms,
+  } = useChat()
   const { setLoading, loading } = useLoading()
   const showToast = useToast()
   const fetchChatList = async () => {
@@ -80,11 +87,16 @@ const ChatList = (props: Props) => {
   }, [socket, chatRooms])
   //Add new add rooms in roomList
   useEffect(() => {
-    const handleNewRoom = (data: any) => {
-      const existingRoomIndex = chatRooms?.find((room) => room?._id === data.response._id)
-      if (!existingRoomIndex && data.response) {
-        const updatedRooms = [{ ...data.response }, ...chatRooms]
-        setChatRooms(updatedRooms)
+    const handleNewRoom = async (data: any) => {
+      console.log('PRACTICE_OFFICE_ADD_ROOM_NOTIFY')
+      const res = await getOfficeChatConversation(setLoading, showToast)
+      if (res) {
+        const dataWithOutSelf = filterRecordsAndRemoveOrgUsers(res, currentUser?.id)
+        setChatRooms(dataWithOutSelf)
+        setChatNotFound({ notFoundStatus: false, notFoundProps: { list: true } })
+      } else {
+        setChatRooms([])
+        setChatNotFound({ notFoundStatus: true, notFoundProps: { list: true } })
       }
     }
     socket.on(SOCKET_STRING.PRACTICE_OFFICE_ADD_ROOM_NOTIFY, handleNewRoom)
@@ -92,6 +104,16 @@ const ChatList = (props: Props) => {
       socket.off(SOCKET_STRING.PRACTICE_OFFICE_ADD_ROOM_NOTIFY, handleNewRoom)
     }
   }, [socket, chatRooms])
+  //Accept-RejectResponse
+  useEffect(() => {
+    const handleNewRoom = async (data: any) => {
+      setUpdateChatRooms(!updateChatRooms)
+    }
+    socket.on(SOCKET_STRING.PRACTICE_OFFICE_UPDATE_ROOM_ACCEPT_OR_REJECT_RESPONSE, handleNewRoom)
+    return () => {
+      socket.off(SOCKET_STRING.PRACTICE_OFFICE_UPDATE_ROOM_ACCEPT_OR_REJECT_RESPONSE, handleNewRoom)
+    }
+  }, [socket, updateChatRooms])
   return (
     <List>
       {!loading.isLoading &&

@@ -58,14 +58,13 @@ const ChatAcceptRejectArea = (props: Props) => {
         setChatLoading({ loading: false, loadingProps: { room: true } })
       } else {
         setChatArea(ChatAreaType.List)
-        setUpdateChatRooms((prev) => !prev)
       }
     }
     socket.on(SOCKET_STRING.PRACTICE_OFFICE_UPDATE_ROOM_ACCEPT_OR_REJECT_RESPONSE, handleNewRoom)
     return () => {
       socket.off(SOCKET_STRING.PRACTICE_OFFICE_UPDATE_ROOM_ACCEPT_OR_REJECT_RESPONSE, handleNewRoom)
     }
-  }, [socket])
+  }, [socket, setUpdateChatRooms])
   if (chatLoading.loading && chatLoading.loadingProps?.accept_reject) {
     return (
       <div className=' bg-white-main text-darkestGray-main px-2 flex-1 max-h-[68vh] min-h-[68vh] flex flex-col items-center justify-center gap-2   overflow-y-scroll chatScroll pb-1'>
