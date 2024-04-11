@@ -124,7 +124,6 @@ const ChatListItem = ({ chatData }: Props) => {
       <div
         className={clsx(
           'flex items-center gap-3',
-
           !chatData?.isConfirmed && 'min-w-[70%] max-w-[70%]',
           chatData?.isConfirmed && 'min-w-[80%] max-w-[80%]',
         )}

@@ -40,7 +40,7 @@ const ChatMessageItem = ({
   noAvatar?: boolean
   selfId?: string
 }) => {
-  const { setIsConfirmPopUp, setMessageActionType, setParticularMessage } = useChat()
+  const { setIsConfirmPopUp, setMessageActionType, setParticularMessage, chatRoom } = useChat()
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
 
   const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -61,6 +61,8 @@ const ChatMessageItem = ({
       setIsConfirmPopUp(true)
     }
   }
+  const userName =
+    (chatRoom?.orgUsers && chatRoom?.orgUsers.length > 0 ? chatRoom?.orgUsers[0]?.name : '') ?? ''
   if (right) {
     return (
       <div className={`flex flex-col justify-end `}>
@@ -121,7 +123,7 @@ const ChatMessageItem = ({
         </div>
         <div className='flex items-center justify-end gap-3'>
           <div
-            className='bg-midGray-dark  px-3 py-1 rounded-md rounded-br-none  font-semibold max-w-xl'
+            className='bg-midGray-dark shadow-md  px-3 py-1 rounded-md rounded-br-none  font-semibold max-w-xl'
             style={{ wordWrap: 'break-word' }}
           >
             <p className='flex-1 '>{mes.message}</p>
@@ -142,7 +144,7 @@ const ChatMessageItem = ({
   } else {
     return (
       <div className={`flex flex-col  justify-start `}>
-        <p className='self-start ml-[7px] text-sm font-semibold italic'>{` ${
+        <p className='self-start ml-[7px] text-sm font-semibold italic'>{`${userName}, ${
           mes.createdAt ? formatCreatedAt(mes.createdAt) : ''
         }`}</p>
         <div className='flex items-center justify-start gap-3'>
@@ -158,7 +160,7 @@ const ChatMessageItem = ({
             )}
           </div> */}
           <div
-            className='bg-gray-main px-3 py-1 rounded-md rounded-br-none  font-semibold max-w-xl'
+            className='bg-white-main shadow-md px-3 py-1 rounded-md rounded-br-none  font-semibold max-w-xl'
             style={{ wordWrap: 'break-word' }}
           >
             <p className='flex-1 '>{mes.message}</p>
