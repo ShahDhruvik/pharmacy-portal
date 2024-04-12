@@ -7,6 +7,7 @@ export const x = 10
 export const currencySymbol = '₹'
 export enum MessageActions {
   Delete = 'Delete',
+  Edit = 'Edit',
 }
 export const BlogPosts: Record<string, { title: string; description: string }> = {
   'first-blog-post': {

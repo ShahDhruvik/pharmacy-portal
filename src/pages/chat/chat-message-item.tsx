@@ -28,6 +28,13 @@ export const MessageActionSvGs: Record<string, any> = {
       }}
     />
   ),
+  [MessageActions.Edit]: (
+    <DeleteIcon
+      sx={{
+        fontSize: '20px',
+      }}
+    />
+  ),
 }
 const ChatMessageItem = ({
   mes,
@@ -60,28 +67,35 @@ const ChatMessageItem = ({
       setParticularMessage(message)
       setIsConfirmPopUp(true)
     }
+    if (type === MessageActions.Edit) {
+      setMessageActionType(type)
+      setParticularMessage(message)
+      setIsConfirmPopUp(true)
+    }
   }
   const userName =
     (chatRoom?.orgUsers && chatRoom?.orgUsers.length > 0 ? chatRoom?.orgUsers[0]?.name : '') ?? ''
   if (right) {
     return (
       <div className={`flex flex-col justify-end `}>
-        <div className='flex justify-end items-center mr-[15px] relative'>
+        <div className='flex justify-end items-center  relative'>
           <p className='self-end text-sm font-semibold italic'>
             {mes.createdAt ? formatCreatedAt(mes.createdAt) : ''}
           </p>
-          {selfId === String(mes.practiceOfficeChatConversationId) && (
-            <IconButton
-              onClick={handleOpenMenu}
-              className='relative'
-              sx={{
-                p: 0,
-              }}
-            >
-              <MoreVertIcon sx={{ fontSize: '17px' }} />
-            </IconButton>
-          )}
-          <Popper open={Boolean(anchorEl)} anchorEl={anchorEl}>
+          <IconButton
+            onClick={handleOpenMenu}
+            className='relative'
+            sx={{
+              p: 0,
+            }}
+          >
+            <MoreVertIcon sx={{ fontSize: '17px' }} />
+          </IconButton>
+          <Popper
+            open={Boolean(anchorEl)}
+            anchorEl={anchorEl}
+            sx={{ zIndex: theme.zIndex.drawer + 1 }}
+          >
             <ClickAwayListener onClickAway={handleCloseMenu}>
               <Paper
                 sx={{
@@ -89,29 +103,36 @@ const ChatMessageItem = ({
                   right: '20px',
                   bottom: '5px',
                   minWidth: '30%',
-                  px: 1,
+                  px: 0,
                 }}
                 elevation={5}
               >
-                <List disablePadding>
+                <List disablePadding sx={{ minWidth: '150px' }}>
                   {Object.keys(MessageActions).map((x) => {
                     return (
                       <ListItemButton
                         onClick={() => {
-                          handleActions(MessageActions.Delete, mes)
+                          handleActions(
+                            (MessageActions as Record<string, string>)[x] as MessageActions,
+                            mes,
+                          )
                         }}
-                        key={(MessageActions as any)[x]}
+                        key={(MessageActions as Record<string, string>)[x]}
                         sx={{
                           '&.MuiListItemButton-root': {
-                            px: 0,
+                            px: 1,
+                            py: '3px',
                             ':hover': { color: theme.palette.primary.main },
                           },
+                          minWidth: '100%',
                         }}
                         divider
                       >
                         <div className='flex items-center gap-2 justify-start'>
-                          {MessageActionSvGs[(MessageActions as any)[x]]}
-                          <p className='font-bold'>{(MessageActions as any)[x]}</p>
+                          {MessageActionSvGs[(MessageActions as Record<string, string>)[x]]}
+                          <p className='font-bold'>
+                            {(MessageActions as Record<string, string>)[x]}
+                          </p>
                         </div>
                       </ListItemButton>
                     )

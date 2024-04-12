@@ -12,4 +12,5 @@ export const enum COMMON_MESSAGE {
 
 export const enum VALIDATION_MESSAGE {
   checkBoxValidation = '*Please verify your response.',
+  required = '*required',
 }
