@@ -14,6 +14,7 @@ import { useChat } from '@/context/ChatContext'
 import socket from '@/socket/socket'
 import { SOCKET_STRING } from '@/socket/socket-string'
 import ReactPlayer from 'react-player'
+import MenuIcon from '@mui/icons-material/Menu'
 
 interface Props {}
 
@@ -44,15 +45,19 @@ const Header = ({}: Props) => {
   const [openDrawerForTask, setOpenDrawerForTask] = useState(false)
   const handleCloseDrawer = () => {
     setOpenDrawer(false)
+    setAnchorEl(null)
   }
   const handleopenDrawer = () => {
     setOpenDrawer(true)
+    setAnchorEl(null)
   }
   const handleCloseDrawerForTask = () => {
     setOpenDrawerForTask(false)
+    setAnchorEl(null)
   }
   const handleOpenDrawerForTask = () => {
     setOpenDrawerForTask(true)
+    setAnchorEl(null)
   }
   useEffect(() => {
     const handleListUpdate = (userId: string[]) => {
@@ -72,7 +77,7 @@ const Header = ({}: Props) => {
   }, [socket, currentUser, openChatDrawer])
   useEffect(() => {
     if (notify) {
-      setPlayTune(true) // Start playing when notify is true
+      setPlayTune(true)
     }
   }, [notify])
   return (
@@ -165,7 +170,7 @@ const Header = ({}: Props) => {
                   padding: 0,
                 }}
               >
-                <HomeIcon />
+                <MenuIcon />
               </IconButton>
               <Popper
                 id={id}
@@ -177,8 +182,35 @@ const Header = ({}: Props) => {
                   minWidth: 'max-content',
                 }}
               >
-                <div className='bg-white drop-shadow-xl p-5 rounded-lg border-black border-[1px] border-opacity-20 mt-2'>
-                  <ul className='flex flex-col  gap-5 text-darkBlue-main font-extralight'>
+                <div className='bg-white-main shadow-2xl p-5 rounded-lg mt-2'>
+                  <ul className='flex flex-col gap-5 text-darkBlue-main font-medium'>
+                    <div role='button' onClick={handleOpenDrawerForTask}>
+                      Create Task
+                    </div>
+                    <button
+                      onClick={() => {
+                        setOpenChatDrawer(true)
+                        setNotify(0)
+                      }}
+                      className='flex items-center gap-2 bg-white-main'
+                    >
+                      <p className='hover:underline   rounded-sm'>{'Office Chat'}</p>
+                      {notify > 0 && (
+                        <>
+                          <ReactPlayer
+                            url='src/assets/tunes/beep.mp3'
+                            style={{ display: 'none' }}
+                            controls
+                            playing={playTune}
+                            onEnded={() => setPlayTune(false)}
+                          />
+                          <span className='w-2 h-2 text-white-main font-bold text-xs flex items-center justify-center  bg-green-main rounded-full animate-pulse '></span>
+                        </>
+                      )}
+                    </button>
+                    <a href={`https://help.oopchar.com`} target='_blank'>
+                      Help
+                    </a>
                     {headerData?.map((x) => {
                       return (
                         <Link to={x.path} key={x.id} onClick={handleClick}>
@@ -190,13 +222,13 @@ const Header = ({}: Props) => {
                 </div>
               </Popper>
             </div>
-            <IconButton
-              sx={{
-                minWidth: 'max-content',
-                padding: 0,
-              }}
-            >
-              <HomeIcon />
+            <IconButton onClick={handleopenDrawer}>
+              <AccountCircleIcon
+                sx={{
+                  color: theme.palette.mBlack?.main,
+                  fontSize: '2rem',
+                }}
+              />
             </IconButton>
           </div>
         </div>

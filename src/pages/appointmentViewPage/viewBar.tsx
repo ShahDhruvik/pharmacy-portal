@@ -21,6 +21,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import DuoIcon from '@mui/icons-material/Duo'
 import { debounce } from 'lodash'
 import Spinner from '@/components/spinner'
+import { useDrawerWidth } from '@/components/DrawerWidth'
 
 type Props = {
   handleClose: () => void
@@ -116,16 +117,15 @@ const ViewBar = ({
   const formattedDate = format(currentDate, 'do MMM yy')
   const sDate = format(startDate, 'do MMM yy')
   const eDate = endDate !== null && format(endDate, 'do MMM yy')
-
+  const drawerWidth = useDrawerWidth()
   return (
     <Drawer
       anchor='right'
       open={open}
       onClose={handleClose}
       sx={{
-        width: '30%',
         '& .MuiDrawer-paper': {
-          width: '30%',
+          width: drawerWidth,
           px: '20px',
           backgroundColor: theme.palette.mLightGray?.main,
         },
@@ -136,19 +136,6 @@ const ViewBar = ({
           className={`flex justify-end items-end mb-2 sticky top-0 z-10 py-[10px] bg-lightGray-main`}
           id='header'
         >
-          {/* <Button
-            variant='text'
-            color='mMidBlue'
-            sx={{
-              color: theme.palette.mMidBlue?.main,
-              minWidth: 'max-content',
-              fontSize: '1rem',
-              height: 20,
-            }}
-            disableRipple
-          >
-            Search by Patient
-          </Button> */}
           <Button
             variant='text'
             color='mMidBlue'
@@ -158,7 +145,10 @@ const ViewBar = ({
               fontSize: '1rem',
               height: 20,
             }}
-            onClick={handleClose}
+            onClick={() => {
+              handleClose()
+              setSearch('')
+            }}
             disableRipple
           >
             Done
@@ -184,59 +174,57 @@ const ViewBar = ({
           >
             Today
           </span>
-          <Button
-            className='max-mxs:text-sm text-end'
-            variant='text'
-            color='mMidBlue'
-            sx={{
-              color: theme.palette?.mDarkBlue?.main,
-              minWidth: 'max-content',
-              marginLeft: 19,
-              fontWeight: 400,
-              fontSize: 15,
-            }}
+          <button
+            className='text-darkBlue-main font-normal text-sm max-mxs:text-sm text-end'
+            // variant='text'
+            // color='mMidBlue'
+            // sx={{
+            //   color: theme.palette?.mDarkBlue?.main,
+            //   minWidth: 'max-content',
+            //   marginLeft: 19,
+            //   fontWeight: 400,
+            //   fontSize: 15,
+            // }}
             onClick={() => setOpenPicker(!openPicker)}
             onKeyDown={() => setOpenPicker(true)}
           >
             {endDate === null ? `${formattedDate}` : `${sDate} - ${eDate}`}
-          </Button>
-          <div>
-            <Dialog
-              open={openPicker}
-              onClose={() => setOpenPicker(false)}
-              sx={{
-                display: 'flex',
-                justifyContent: 'end',
-                alignItems: 'end',
-                height: '100%',
-              }}
-            >
-              <DialogContent sx={{ display: 'flex', gap: '15px' }}>
-                <div className='flex flex-col'>
-                  <DatePicker
-                    selected={startDate}
-                    onChange={onChange}
-                    maxDate={addMonths(new Date(), 5)}
-                    startDate={startDate}
-                    endDate={endDate}
-                    selectsRange
-                    inline
-                    showDisabledMonthNavigation
-                  />
-                  <div className='bg-pink-main flex items-center justify-center my-2 text-white-main'>
-                    <button
-                      className=' text-center'
-                      onClick={() => {
-                        setOpenPicker(false)
-                      }}
-                    >
-                      Submit
-                    </button>
-                  </div>
+          </button>
+          <Dialog
+            open={openPicker}
+            onClose={() => setOpenPicker(false)}
+            sx={{
+              display: 'flex',
+              justifyContent: 'end',
+              alignItems: 'end',
+              height: '100%',
+            }}
+          >
+            <DialogContent sx={{ display: 'flex', gap: '15px' }}>
+              <div className='flex flex-col'>
+                <DatePicker
+                  selected={startDate}
+                  onChange={onChange}
+                  maxDate={addMonths(new Date(), 5)}
+                  startDate={startDate}
+                  endDate={endDate}
+                  selectsRange
+                  inline
+                  showDisabledMonthNavigation
+                />
+                <div className='bg-pink-main flex items-center justify-center my-2 text-white-main'>
+                  <button
+                    className=' text-center'
+                    onClick={() => {
+                      setOpenPicker(false)
+                    }}
+                  >
+                    Submit
+                  </button>
                 </div>
-              </DialogContent>
-            </Dialog>
-          </div>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
         <div className='flex flex-col gap-5 mb-3'>
           <div>
@@ -261,7 +249,7 @@ const ViewBar = ({
                           <span className='rounded-md bg-darkBlue-main px-3'>
                             {x?.appointmentMode}
                           </span>
-                          <span className='rounded-md bg-green-main px-3'>
+                          <span className='rounded-md bg-green-main px-3 lg:block hidden'>
                             {' '}
                             {x?.appointmentStatus?.enumType}
                           </span>
@@ -384,7 +372,7 @@ const ViewBar = ({
                       <div className='relative border-black'>
                         <div className='absolute inset-0 flex items-center justify-end md:gap-3 gap-1 leading-5 text-white-main text-[12px]'>
                           <span className='rounded-md bg-blue-main px-3'>{x?.appointmentMode}</span>
-                          <span className='rounded-md bg-yellow-main px-3 text-black-main'>
+                          <span className='rounded-md bg-yellow-main px-3 text-black-main lg:block hidden'>
                             {x?.appointmentStatus?.enumType}
                           </span>
                           <span className='mr-3 rounded-md bg-darkGray-main px-3'>
@@ -494,7 +482,7 @@ const ViewBar = ({
                     >
                       <div className='relative border-black'>
                         <div className='absolute inset-0 flex items-center justify-end md:gap-3 gap-1 leading-5 text-white-main text-[12px]'>
-                          <span className='rounded-md bg-orange-main px-3'>
+                          <span className='rounded-md bg-orange-main px-3 lg:block hidden'>
                             {x?.appointmentStatus?.enumType}
                           </span>
                           <span className='mr-3 rounded-md bg-darkGray-main px-3'>

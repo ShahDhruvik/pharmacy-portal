@@ -1,14 +1,7 @@
 import { theme } from '@/context/ThemeProvider'
-import { Avatar, Box, Button, Divider } from '@mui/material'
+import { Avatar, Box, Button, Divider, useMediaQuery } from '@mui/material'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import QrCode2Icon from '@mui/icons-material/QrCode2'
-import Diversity1Icon from '@mui/icons-material/Diversity1'
-import BookOnlineIcon from '@mui/icons-material/BookOnline'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle'
-import ListAltIcon from '@mui/icons-material/ListAlt'
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
-import ChatIcon from '@mui/icons-material/Chat'
-import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined'
 import { getAllFeature, getAllImage } from '@/lib/DashboardContent'
 import { useLoading } from '@/context/LoadingContext'
 import { useToast } from '@/hooks/useToast'
@@ -71,29 +64,39 @@ const Welcome = ({}: Props) => {
   const open = Boolean(anchorEl)
   const id = open ? 'simple-popper' : undefined
 
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down(1280))
+  const isMediumScreen = useMediaQuery(theme.breakpoints.between(1280, 1432))
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up(1600))
+
   return (
     <>
-      <div className='flex w-full gap-5 flex-wrap min-h-fit'>
-        <div className='flex-1 items-center justify-center flex flex-wrap'>
-          <div className='top-0 left-0 relative'>
-            <img
-              src={`${CONST_APP_IMAGE_URL}${data1?.image}`}
-              alt=''
-              className='relative full aspect-video h-96'
-            />
-            <img
-              src={`${CONST_APP_IMAGE_URL}${data?.image}`}
-              alt=''
-              className='w-60 aspect-square absolute top-20 -right-16 md:block hidden'
-            />
-          </div>
+      <div
+        className={`flex w-full gap-5 flex-wrap min-h-fit ${
+          isLargeScreen && 'container mx-auto px-12'
+        } `}
+      >
+        <div className='top-0 left-0 relative'>
+          <img
+            src={`${CONST_APP_IMAGE_URL}${data1?.image}`}
+            alt=''
+            className={`relative aspect-video ${
+              isMediumScreen || isSmallScreen ? 'h-full' : 'h-96'
+            }`}
+          />
+          <img
+            src={`${CONST_APP_IMAGE_URL}${data?.image}`}
+            alt=''
+            className={`w-60 aspect-square absolute top-20 -right-16 ${
+              isMediumScreen || isSmallScreen ? 'hidden' : 'block'
+            }`}
+          />
         </div>
-        <div className='flex-1 items-center justify-center flex gap-5 py-5 flex-wrap'>
-          <div className='flex-1 pl-20 flex-wrap'>
-            <div className='text-base font-light'>
+        <div className='sm:flex sm:flex-1 xs:flex xs:flex-col'>
+          <div className='flex-1 md:pl-20 my-auto mx-5 flex flex-col md:items-start items-center'>
+            <div className='text-base font-light md:text-start text-center'>
               Take command of your schedule and oversee your appointments efficiently.{' '}
             </div>
-            <div>
+            <div className='flex flex-col'>
               <a href={CONST_PRACTICE_URL} target='_blank' rel='noopener noreferrer'>
                 <Button
                   variant='outlined'
@@ -132,8 +135,8 @@ const Welcome = ({}: Props) => {
               </a>
             </div>
           </div>
-          <Divider orientation='vertical' />
-          <div className='flex-1 flex-wrap'>
+          <div className='lg:border-l-[1px] border-gray-main lg:my-10 lg:mr-10'></div>
+          <div className='flex-1 my-auto mx-5 flex flex-col md:items-start lg:items-center items-center'>
             <h2 className='text-xl text-black-main font-semibold'>EasyWeb: Provider Self-care</h2>
             <Button
               variant='contained'
@@ -148,25 +151,11 @@ const Welcome = ({}: Props) => {
                 alignItems: 'center',
                 gap: '10px',
               }}
-              onClick={() => {
-                setSignType([FORMTYPE.SIGNIN])
-                setOpenSign(true)
-              }}
+              onClick={handleOpenForm}
             >
               <LockOutlinedIcon />
               Sign in
             </Button>
-            {/* <div className='text-darkBlue-main font-light flex py-2 gap-3 mb-3'>
-              <span className='flex '>
-                Register
-                <ChevronRightIcon sx={{ color: theme.palette.mBlack?.main }} />
-              </span>
-              <span className='flex '>
-                Security Guarantee
-                <ChevronRightIcon sx={{ color: theme.palette.mBlack?.main }} />
-              </span>
-            </div> */}
-            {/* <Divider sx={{ marginRight: '40px' }} /> */}
             <h3 className='text-xl my-2'>Download Mobile App</h3>
             <div className='flex'>
               <a
@@ -189,17 +178,21 @@ const Welcome = ({}: Props) => {
           </div>
         </div>
       </div>
-      <Divider sx={{ borderBottom: '2px solid', borderColor: theme.palette.mDarkGray?.main }} />
+      <Divider
+        sx={{ borderBottom: '2px solid', borderColor: theme.palette.mDarkGray?.main }}
+        className={`${isMediumScreen || isSmallScreen ? 'hidden' : 'block'}`}
+      />
       <section>
         <div>
           <div className='flex flex-col items-center py-5'>
-            <h1 className='text-2xl'>Welcome to Provider Self-care</h1>
-            <p className='text-base font-light'>Explore unlimited possibilities of patient care </p>
-            <div className='flex items-center gap-8 flex-wrap px-12 justify-between py-5'>
+            {/* <h1 className='text-2xl text-center'>Welcome to Oopchar Self-care</h1> */}
+            <p className='text-xl font-normal text-center'>
+              Explore health care and related products and services
+            </p>
+            <div className='flex items-center gap-8 flex-wrap md:justify-between justify-center mx-5 py-5'>
               {feature?.map((x: any) => (
-                <div className='flex items-center gap-5 max-w-96 w-80' key={x._id}>
+                <div className='flex items-center gap-5 max-w-96 md:w-80 w-72' key={x._id}>
                   <div className='border-2 rounded-full border-gray-main p-1 aspect-square'>
-                    {/* <img src={`${CONST_APP_IMAGE_URL}${x?.icon}`} alt='Img' width={'100px'} /> */}
                     <Box padding={1}>
                       <Avatar
                         src={x?.icon ? `${CONST_APP_IMAGE_URL}${x?.icon}` : ''}
@@ -217,14 +210,12 @@ const Welcome = ({}: Props) => {
           </div>
         </div>
       </section>
-      {signType.includes(FORMTYPE.SIGNIN) && (
-        <AuthForm
-          open={openSign}
-          signType={signType}
-          setSignType={setSignType}
-          handleClose={handleCloseForm}
-        />
-      )}
+      <AuthForm
+        open={openSign}
+        signType={signType}
+        setSignType={setSignType}
+        handleClose={handleCloseForm}
+      />
     </>
   )
 }

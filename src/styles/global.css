@@ -135,7 +135,7 @@ input[type='number'] {
   @apply absolute text-black-main font-thin -top-3 left-3;
 }
 
-@keyframes scrolling {
+@keyframes scroll {
   0% {
     transform: translateX(100%);
   }
@@ -144,15 +144,10 @@ input[type='number'] {
   }
 }
 
-.text-container {
+.scrollable-list {
   overflow: hidden;
 }
 
-.scrolling-text {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  white-space: nowrap;
-  /* display: inline-block; */
-  animation: scrolling 20s linear infinite;
+.scrollable-list {
+  animation: scroll 10s linear infinite;
 }

@@ -7,6 +7,7 @@ import ChatMessageArea from './chat-message-area'
 import { useLayoutEffect, useRef } from 'react'
 import useOnlineStatus from '@/hooks/useOnline'
 import Offline from '@/components/offline'
+import { useDrawerWidth } from '@/components/DrawerWidth'
 
 type Props = {}
 
@@ -36,6 +37,7 @@ const ChatDrawer = (props: Props) => {
       setNetworkStatus(online)
     }
   }, [online])
+  const drawerWidth = useDrawerWidth()
   return (
     <Drawer
       open={openChatDrawer}
@@ -46,11 +48,11 @@ const ChatDrawer = (props: Props) => {
         setChatRooms([])
       }}
       anchor='right'
-      PaperProps={{
-        sx: {
-          maxWidth: '40%',
-          minWidth: '40%',
-          background: theme.palette.mLightGray?.main,
+      sx={{
+        '& .MuiDrawer-paper': {
+          width: drawerWidth,
+          px: '20px',
+          backgroundColor: theme.palette.mLightGray?.main,
         },
       }}
     >

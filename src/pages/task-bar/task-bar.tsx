@@ -18,6 +18,7 @@ import { useLoading } from '@/context/LoadingContext'
 import { useToast } from '@/hooks/useToast'
 import { createTask, getAllTaskDetails } from '@/lib/Task'
 import { CONST_APP_IMAGE_URL, formatDate } from '@/utils/constants'
+import { useDrawerWidth } from '@/components/DrawerWidth'
 
 type Props = {
   handleClose: () => void
@@ -101,15 +102,15 @@ const TaskBar = ({ open, handleClose }: Props) => {
       reset()
     }
   }
+  const drawerWidth = useDrawerWidth()
   return (
     <Drawer
       anchor='right'
       open={open}
       onClose={handleClose}
       sx={{
-        width: '28%',
         '& .MuiDrawer-paper': {
-          width: '28%',
+          width: drawerWidth,
           px: '20px',
           backgroundColor: theme.palette.mLightGray?.main,
         },
