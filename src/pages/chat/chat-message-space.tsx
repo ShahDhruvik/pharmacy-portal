@@ -1,16 +1,17 @@
 import React from 'react'
 import ChatMessageItem from './chat-message-item'
 import { ChatPatientRoomData, MessageData, useChat } from '@/context/ChatContext'
-import { CircularProgress, Divider } from '@mui/material'
+import { Button, CircularProgress, Divider } from '@mui/material'
 import { theme } from '@/context/ThemeProvider'
 import { formatMessageDate } from '@/socket/chat-time-function'
 import Spinner from '@/components/spinner'
+import ChatAcceptRejectArea from './chat-accept-reject-area'
 
 type Props = {}
 
 const ChatMessageSpace = (props: Props) => {
-  const { chatRoom, messageLoading, currentUser } = useChat()
-  const { message } = chatRoom as ChatPatientRoomData
+  const { chatRoom, messageLoading, currentUser, setChatLoading } = useChat()
+  const { message, isConfirmed, createdBy } = chatRoom as ChatPatientRoomData
   return (
     <>
       {message && message.length !== 0 && (
@@ -27,7 +28,7 @@ const ChatMessageSpace = (props: Props) => {
               <p className='text-darkestGray-main font-bold'>loading...</p>
             </div>
           )}
-          <div className='z-10  bg-white-main text-darkestGray-main px-2 flex-1  flex flex-col justify-end  gap-2 min-h-full '>
+          <div className='z-10   text-darkestGray-main px-2 flex-1  flex flex-col justify-end  gap-2 min-h-full '>
             {message.map((y: MessageData) => {
               return (
                 <div key={Math.random()}>
@@ -42,7 +43,7 @@ const ChatMessageSpace = (props: Props) => {
                   </div>
                   {y.records.map((rec, i) => {
                     return (
-                      <div key={Math.random()} id={rec._id}>
+                      <div key={Math.random()} id={rec._id} className='my-2'>
                         <ChatMessageItem
                           mes={rec}
                           right={rec.sentBy === String(currentUser?.internalId)}
@@ -57,11 +58,12 @@ const ChatMessageSpace = (props: Props) => {
           </div>
         </div>
       )}
-      {message && message.length === 0 && (
-        <div className=' bg-white-main text-darkestGray-main px-2 flex-1 max-h-[68vh] min-h-[68vh] flex flex-col items-center justify-center gap-2   overflow-y-scroll chatScroll pb-1'>
+      {message && message.length === 0 && isConfirmed && (
+        <div className='z-10 bg-white-main text-darkestGray-main px-2 flex-1 max-h-[68vh] min-h-[68vh] flex flex-col items-center justify-center gap-2   overflow-y-scroll chatScroll pb-1'>
           <p className='text-4xl'>Start chat here!</p>
         </div>
       )}
+      {message && message.length === 0 && !isConfirmed && <ChatAcceptRejectArea />}
       {!message && (
         <div className=' bg-white-main text-darkestGray-main px-2 flex-1  flex flex-col items-center justify-center gap-2  max-h-[68vh] min-h-[68vh] overflow-y-scroll chatScroll pb-1'>
           <Spinner />

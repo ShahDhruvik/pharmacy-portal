@@ -3,6 +3,7 @@ import { Button, Divider } from '@mui/material'
 import ChatList from './chat-list'
 import { theme } from '@/context/ThemeProvider'
 import { ChatAreaType, useChat } from '@/context/ChatContext'
+import ChatRoomSearchInput from './chat-search-input'
 
 type Props = {}
 
@@ -49,11 +50,13 @@ const ChatListArea = (props: Props) => {
   </Button> */}
       </div>
       <Divider />
+
       <div className='pr-1 pl-2 pt-5 pb-1'>
         <p className='text-xl pl-3 font-semibold '>Office Chat</p>
         <Divider
-          sx={{ width: '90%', border: '1px solid', borderColor: theme.palette.mBlack?.main }}
+          sx={{ width: '90%', border: '1px solid', mb: 2, borderColor: theme.palette.mBlack?.main }}
         />
+        <ChatRoomSearchInput />
         <ChatList />
       </div>
     </>

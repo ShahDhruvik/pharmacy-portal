@@ -14,7 +14,11 @@ export const enum DEF_PATHS {
 }
 export const enum CHAT {
   listAll = DEF_PATHS.chat + DEF_PATHS.practice + "/office/chat-conversation",
-  getOne = DEF_PATHS.chat + DEF_PATHS.practice + "/office/chat-conversation/"
+  userAll = DEF_PATHS.main + DEF_PATHS.provider + "/search-provider",
+  getOne = DEF_PATHS.chat + DEF_PATHS.practice + "/office/chat-conversation/",
+  update = DEF_PATHS.chat + DEF_PATHS.practice + "/office/chat-conversation/update/",
+  delete = DEF_PATHS.chat + DEF_PATHS.practice + "/office/chat-conversation/delete/",
+  create = DEF_PATHS.chat + DEF_PATHS.practice + "/office/chat-conversation/create",
 }
 
 export const enum AUTH_ENDPOINT {

@@ -68,6 +68,8 @@ export type ChatRoomType = {
     __v: number
   }
   message?: string
+  isConfirmed: boolean
+  createdBy: string
 }
 export type MessageData = {
   messageDate: string
@@ -120,14 +122,25 @@ export type ChatPatientRoomData = {
   total: number
   currentPage: number
   dataLength?: number
+  createdBy: string
+  isConfirmed: boolean
 }
 export interface ChatLoadingType {
   loading: boolean
-  loadingProps?: { list?: boolean; room?: boolean }
+  loadingProps?: { list?: boolean; room?: boolean; accept_reject?: boolean }
 }
 export interface ChatNotFoundType {
   notFoundStatus: boolean
   notFoundProps?: { list?: boolean; room?: boolean }
+}
+export type OfficeUser = {
+  internalId: string
+  id: number
+  name: string
+  email: string
+  phone: string
+  existChat: ChatRoomType | null
+  notFound?: boolean
 }
 export type ChatAreaOptions = EnumValues<typeof ChatAreaType>
 export interface ChatContextType {
@@ -182,9 +195,17 @@ export interface ChatContextType {
   setNetworkStatus: Dispatch<SetStateAction<boolean>>
   playTune: boolean
   setPlayTune: Dispatch<SetStateAction<boolean>>
+  setChatOfficeUsers: Dispatch<SetStateAction<OfficeUser[]>>
+  chatOfficeUsers: OfficeUser[]
+  anchorElSearchInput: HTMLInputElement | null
+  setAnchorElSearchInput: Dispatch<SetStateAction<HTMLInputElement | null>>
+  updateChatRooms: boolean
+  setUpdateChatRooms: Dispatch<SetStateAction<boolean>>
 }
 export const ChatContextInitialVal: ChatContextType = {
   chatLoading: { loading: false },
+  chatOfficeUsers: [],
+  setChatOfficeUsers: () => {},
   setChatLoading: () => {},
   openChatDrawer: false,
   setOpenChatDrawer: () => {},
@@ -235,6 +256,10 @@ export const ChatContextInitialVal: ChatContextType = {
   setNetworkStatus: () => {},
   playTune: false,
   setPlayTune: () => {},
+  anchorElSearchInput: null,
+  setAnchorElSearchInput: () => {},
+  setUpdateChatRooms: () => {},
+  updateChatRooms: false,
 }
 const ChatContext = createContext<ChatContextType>(ChatContextInitialVal)
 
@@ -243,6 +268,10 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   const [currentUser, setCurrentUser] = useState<ChatContextType['currentUser']>(
     ChatContextInitialVal['currentUser'],
   )
+  const [updateChatRooms, setUpdateChatRooms] = useState<ChatContextType['updateChatRooms']>(
+    ChatContextInitialVal['updateChatRooms'],
+  )
+
   //Chat Rooms
   const [chatRooms, setChatRooms] = useState<ChatContextType['chatRooms']>(
     ChatContextInitialVal['chatRooms'],
@@ -268,6 +297,10 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   const handleCloseDrawer: ChatContextType['handleCloseDrawer'] = () => {
     setOpenChatDrawer(false)
   }
+  const [anchorElSearchInput, setAnchorElSearchInput] = useState<
+    ChatContextType['anchorElSearchInput']
+  >(ChatContextInitialVal['anchorElSearchInput'])
+
   //Active chat count
   const [count, setCount] = useState<ChatContextType['count']>(ChatContextInitialVal['count'])
   //Active scroll page
@@ -330,9 +363,16 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   const [playTune, setPlayTune] = useState<ChatContextType['playTune']>(
     ChatContextInitialVal['playTune'],
   )
+  const [chatOfficeUsers, setChatOfficeUsers] = useState<ChatContextType['chatOfficeUsers']>(
+    ChatContextInitialVal['chatOfficeUsers'],
+  )
   return (
     <ChatContext.Provider
       value={{
+        setUpdateChatRooms,
+        updateChatRooms,
+        anchorElSearchInput,
+        setAnchorElSearchInput,
         openChatDrawer,
         setOpenChatDrawer,
         handleCloseDrawer,
@@ -384,6 +424,8 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         setNetworkStatus,
         playTune,
         setPlayTune,
+        chatOfficeUsers,
+        setChatOfficeUsers,
       }}
     >
       {children}

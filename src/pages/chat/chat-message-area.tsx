@@ -399,16 +399,16 @@ const ChatMessageArea = (props: Props) => {
         <>
           <ChatMessageHeader />
           <ChatMessageSpace />
-          <ChatMessageInput />
+          {chatRoom.isConfirmed && <ChatMessageInput />}
           {scrollButton && (
-            <div className='w-max absolute bottom-[70px] right-5 bg-blue-main rounded-full self-end shadow-box-out'>
+            <div className='w-max z-10 absolute  bottom-[70px] right-5 bg-pink-main rounded-full self-end shadow-box-out'>
               <IconButton
                 onClick={() => {
                   waitForChatElement()
                 }}
               >
                 <Badge badgeContent={count} color='primary' max={99}>
-                  <KeyboardArrowDownIcon sx={{ color: theme.palette.mPink?.main }} />
+                  <KeyboardArrowDownIcon sx={{ color: theme.palette.mWhite?.main }} />
                 </Badge>
               </IconButton>
             </div>

@@ -82,8 +82,8 @@ axiosInstance.interceptors.response.use(
         draggable: false,
         progress: 0,
       })
-      localStorage.clear()
-      window.location.href = `${CONST_FRONTEND_URL}`
+      // localStorage.clear()
+      // window.location.href = `${CONST_FRONTEND_URL}`
     }
     return Promise.reject(error)
   },
