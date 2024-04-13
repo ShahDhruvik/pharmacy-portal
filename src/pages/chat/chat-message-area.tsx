@@ -20,6 +20,7 @@ import { PracticePatientChatUserTypeEnum } from '@/utils/constants'
 import socket from '@/socket/socket'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import { SOCKET_STRING } from '@/socket/socket-string'
+import ChatBoxActionConfirmation from './chat-box-confirmation'
 type Props = {}
 
 const ChatMessageArea = (props: Props) => {
@@ -351,6 +352,82 @@ const ChatMessageArea = (props: Props) => {
       }
     }
   })
+  //handle deleted message
+  //Delete
+  useEffect(() => {
+    const handleDelete = (data: any) => {
+      console.log('handleDelete', data)
+      if (chatRoom && data && !data.isActive && data.isDeleted) {
+        const mesDateFromBk = new Date(data.createdAt)
+        const dateThatHasMessage = chatRoom?.message
+          ?.map((mesD) => {
+            const mesDate = new Date(mesD.messageDate)
+            if (
+              mesDate.getDate() === mesDateFromBk.getDate() &&
+              mesDate.getMonth() === mesDateFromBk.getMonth() &&
+              mesDate.getFullYear() === mesDateFromBk.getFullYear()
+            ) {
+              const updateMessagesToDelete = mesD.records.filter((delM) => delM._id !== data?._id)
+              if (updateMessagesToDelete.length > 0) {
+                return { ...mesD, records: updateMessagesToDelete }
+              }
+            } else {
+              return mesD
+            }
+          })
+          .filter(Boolean)
+        if (dateThatHasMessage)
+          setChatRoom({
+            ...chatRoom,
+            message: dateThatHasMessage as MessageData[],
+          })
+      } else {
+        console.log('something wrong message delete functionality.')
+      }
+    }
+    socket.on(SOCKET_STRING.PRACTICE_OFFICE_DELETED_MESSAGE, handleDelete)
+    return () => {
+      socket.off(SOCKET_STRING.PRACTICE_OFFICE_DELETED_MESSAGE, handleDelete)
+    }
+  }, [socket, chatRoom])
+  //Update
+  useEffect(() => {
+    const handleUpdate = (data: any) => {
+      console.log('message update')
+
+      if (chatRoom && data && data.isActive && !data.isDeleted) {
+        const mesDateFromBk = new Date(data.createdAt)
+        const dateThatHasMessage = chatRoom?.message?.map((mesD) => {
+          const mesDate = new Date(mesD.messageDate)
+          if (
+            mesDate.getDate() === mesDateFromBk.getDate() &&
+            mesDate.getMonth() === mesDateFromBk.getMonth() &&
+            mesDate.getFullYear() === mesDateFromBk.getFullYear()
+          ) {
+            const updateMessagesToDelete = mesD.records.map((delM) => {
+              if (delM._id === data?._id) {
+                return { ...delM, message: data.message }
+              } else {
+                return delM
+              }
+            })
+            if (updateMessagesToDelete.length > 0) {
+              return { ...mesD, records: updateMessagesToDelete }
+            }
+          } else {
+            return mesD
+          }
+        })
+        setChatRoom({
+          ...chatRoom,
+          message: dateThatHasMessage as MessageData[],
+        })
+      } else {
+        console.log('something wrong message delete functionality.')
+      }
+    }
+    socket.on(SOCKET_STRING.PRACTICE_OFFICE_UPDATED_MESSAGE, handleUpdate)
+  }, [socket, chatRoom])
   return (
     <>
       <div className={`flex justify-between items-center sticky top-0 px-1 py-1`} id='header'>
@@ -418,6 +495,7 @@ const ChatMessageArea = (props: Props) => {
       {chatNotFound?.notFoundStatus && chatNotFound.notFoundProps?.room && !chatRoom && (
         <p className='p-2 text-lg font-bold'>Chat not available</p>
       )}
+      {isConfirmPopUp && <ChatBoxActionConfirmation />}
     </>
   )
 }
