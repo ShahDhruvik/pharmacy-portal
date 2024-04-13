@@ -99,6 +99,7 @@ const AuthForm = ({ open, handleClose, signType, setSignType }: Props) => {
         isFullScreen={isSmallScreen ? true : false}
       >
         <div>
+          <h1 className='flex justify-center font-bold text-xl'>Sign in</h1>
           <form
             onSubmit={handleSubmit(onSubmitHandle)}
             className={`bg-lightGray-main p-3 rounded-md`}
