@@ -84,20 +84,25 @@ const Banner = ({}: Props) => {
   }, [authParams?.isAuth])
 
   return (
-    <div className='min-h-screen'>
+    <div className='min-h-screen overflow-hidden'>
       <Header />
       <section className='bg-pink-main mt-2 mb-5'>
         <div>
-          <div className='py-5 text-white-main'>
-            <ul className='list-disc scrolling-text'>
-              {ribbon?.length > 0 && ribbon?.map((x) => <li key={x._id}>{x?.displayName}</li>)}
-            </ul>
-          </div>
+          <ul className='list-disc text-white-main h-16 flex items-center md:justify-between w-max gap-10 scrollable-list'>
+            {ribbon?.length > 0 && ribbon?.map((x) => <li key={x._id}>{x?.displayName}</li>)}
+          </ul>
         </div>
       </section>
       <section>
         <div>
-          <div className='flex justify-between flex-wrap'>
+          <div
+            className={`flex justify-center ${
+              appointmentDetails?.upcomingAppointments &&
+              appointmentDetails?.upcomingAppointments?.length > 1
+                ? ''
+                : 'items-center'
+            } md:justify-evenly lg:justify-between flex-wrap`}
+          >
             <AppointmentCard
               heading='Upcoming Appointments'
               upcoming={true}

@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { DrawerState, FieldProfState, HeadProfState } from '@/types/common'
 import { DRAWERSTATE } from '@/utils/constants'
 import ProfileEdit from './ProfileEdit'
+import { useDrawerWidth } from '@/components/DrawerWidth'
 type Props = {
   handleClose: () => void
   open: boolean
@@ -36,15 +37,15 @@ const Profilebar = ({ open, handleClose }: Props) => {
   ) => {
     setFieldName({ fieldName, data, headName })
   }
+  const drawerWidth = useDrawerWidth()
   return (
     <Drawer
       anchor='right'
       open={open}
       onClose={handleClose}
       sx={{
-        width: '25%',
         '& .MuiDrawer-paper': {
-          width: '25%',
+          width: drawerWidth,
           px: '20px',
           backgroundColor: theme.palette.mLightGray?.main,
         },

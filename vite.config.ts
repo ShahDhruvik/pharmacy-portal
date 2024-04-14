@@ -11,6 +11,7 @@ export default defineConfig({
     }),
   ],
   server: {
+    host: true,
     open: true,
     port: 4002,
     strictPort: true,

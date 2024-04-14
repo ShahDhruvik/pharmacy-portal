@@ -112,7 +112,7 @@ const AppointmentCard = ({
             slidesPerView={1}
             scrollbar={{ draggable: true }}
             autoplay={{ delay: 2000 }}
-            className=' max-w-xs lg:max-w-sm xl:max-w-md  '
+            className='md:max-w-sm xl:max-w-md max-w-xs'
           >
             {data && data?.length > 0 ? (
               data?.map((x) => (
@@ -125,7 +125,7 @@ const AppointmentCard = ({
                             <span className='rounded-md bg-darkBlue-main px-3'>
                               {x?.appointmentMode}
                             </span>
-                            <span className='rounded-md bg-green-main px-3'>
+                            <span className='rounded-md bg-green-main px-3 lg:block hidden'>
                               {x?.appointmentStatus?.enumType}
                             </span>
                             <span className='mr-3 rounded-md bg-darkGray-main px-3'>
@@ -138,7 +138,7 @@ const AppointmentCard = ({
                             <span className='rounded-md bg-blue-main px-3'>
                               {x?.appointmentMode}
                             </span>
-                            <span className='rounded-md bg-yellow-main px-3 text-black-main'>
+                            <span className='rounded-md bg-yellow-main px-3 text-black-main lg:block hidden'>
                               {x?.appointmentStatus?.enumType}
                             </span>
                             <span className='mr-3 rounded-md bg-darkGray-main px-3'>

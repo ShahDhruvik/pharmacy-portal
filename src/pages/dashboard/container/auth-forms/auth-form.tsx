@@ -1,8 +1,7 @@
-import { Box, Button, DialogTitle } from '@mui/material'
+import { Box, Button, DialogTitle, useMediaQuery } from '@mui/material'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Dispatch, SetStateAction, useRef, useState } from 'react'
 import { ALIGN_DIALOG, FORMTYPE, SITE_KEY } from '../../../../utils/constants'
-import PermissionForm from './permission-form'
 import { FormTypeArray } from '../../../../types/common'
 import { loginUser, verifyRecaptcha } from '@/lib/Auth'
 import { useLoading } from '@/context/LoadingContext'
@@ -58,6 +57,7 @@ const AuthForm = ({ open, handleClose, signType, setSignType }: Props) => {
       setSignType([FORMTYPE.OTP, FORMTYPE.SIGNIN])
     }
   }
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   return (
     <>
@@ -93,16 +93,18 @@ const AuthForm = ({ open, handleClose, signType, setSignType }: Props) => {
             </DialogTitle>
           ),
         }}
-        maxWidth={'md'}
+        maxWidth={isSmallScreen ? 'sm' : 'md'}
         disableClickAway={true}
         paddingOfContent='20px'
+        isFullScreen={isSmallScreen ? true : false}
       >
         <div>
+          <h1 className='flex justify-center font-bold text-xl'>Sign in</h1>
           <form
             onSubmit={handleSubmit(onSubmitHandle)}
             className={`bg-lightGray-main p-3 rounded-md`}
           >
-            <div className={`flex flex-col justify-center gap-5 min-w-[370px]`}>
+            <div className={`flex flex-col justify-center gap-6 py-1 my-1`}>
               <TxtInput
                 control={control}
                 name='userName'
@@ -111,6 +113,9 @@ const AuthForm = ({ open, handleClose, signType, setSignType }: Props) => {
                 validation={txtFieldValidation(true)}
                 label='User Name*'
                 isDisabled={signType.includes(FORMTYPE.OTP)}
+                sx={{
+                  minWidth: isSmallScreen ? 300 : 400,
+                }}
               />
               {/* <PermissionForm
                 signType={signType}
