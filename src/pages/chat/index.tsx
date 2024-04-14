@@ -51,6 +51,12 @@ const ChatDrawer = (props: Props) => {
           maxWidth: '40%',
           minWidth: '40%',
           background: theme.palette.mLightGray?.main,
+          px: 0,
+        },
+      }}
+      sx={{
+        '&.MuiDrawer-paper': {
+          px: 0,
         },
       }}
     >

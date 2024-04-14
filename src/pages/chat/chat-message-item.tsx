@@ -14,6 +14,7 @@ import {
 import { useState } from 'react'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import DeleteIcon from '@mui/icons-material/Delete'
+import EditIcon from '@mui/icons-material/Edit'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import { MessageData, useChat } from '@/context/ChatContext'
 import { MessageActions } from '@/utils/constants'
@@ -29,7 +30,7 @@ export const MessageActionSvGs: Record<string, any> = {
     />
   ),
   [MessageActions.Edit]: (
-    <DeleteIcon
+    <EditIcon
       sx={{
         fontSize: '20px',
       }}
