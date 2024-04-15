@@ -18,6 +18,7 @@ export const enum CHAT {
   getOne = DEF_PATHS.chat + DEF_PATHS.practice + "/office/chat-conversation/",
   update = DEF_PATHS.chat + DEF_PATHS.practice + "/office/chat-conversation/update/",
   delete = DEF_PATHS.chat + DEF_PATHS.practice + "/office/chat-conversation/delete/",
+  clear = DEF_PATHS.chat + DEF_PATHS.practice + "/office/chat-conversation/clear/",
   create = DEF_PATHS.chat + DEF_PATHS.practice + "/office/chat-conversation/create",
 }
 

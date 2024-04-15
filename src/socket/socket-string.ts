@@ -41,4 +41,7 @@ export const enum SOCKET_STRING {
     PRACTICE_OFFICE_UPDATE_ROOM_ACCEPT_OR_REJECT_RESPONSE = 'practice-office-update-room-accept-or-reject-response',
     PRACTICE_OFFICE_MESSAGE_UPDATE = 'practice-office-message-update',
     PRACTICE_OFFICE_UPDATED_MESSAGE = 'practice-office-updated-message',
+    PRACTICE_OFFICE_MESSAGES_CLEAR = 'practice-office-messages-clear',
+    PRACTICE_OFFICE_CLEARED_MESSAGES = 'practice-office-cleared-messages',
+
 }

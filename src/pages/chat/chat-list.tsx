@@ -114,6 +114,13 @@ const ChatList = (props: Props) => {
       socket.off(SOCKET_STRING.PRACTICE_OFFICE_UPDATE_ROOM_ACCEPT_OR_REJECT_RESPONSE, handleNewRoom)
     }
   }, [socket, updateChatRooms])
+  //clear message
+  useEffect(() => {
+    const handleUpdate = (data: any) => {
+      setUpdateChatRooms(!updateChatRooms)
+    }
+    socket.on(SOCKET_STRING.PRACTICE_OFFICE_CLEARED_MESSAGES, handleUpdate)
+  }, [socket, updateChatRooms])
   return (
     <List>
       {!loading.isLoading &&
