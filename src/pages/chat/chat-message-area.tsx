@@ -428,6 +428,21 @@ const ChatMessageArea = (props: Props) => {
     }
     socket.on(SOCKET_STRING.PRACTICE_OFFICE_UPDATED_MESSAGE, handleUpdate)
   }, [socket, chatRoom])
+  //clear message
+  useEffect(() => {
+    const handleUpdate = (data: any) => {
+      console.log('PRACTICE_OFFICE_CLEARED_MESSAGES')
+      if (chatRoom) {
+        setChatRoom({
+          ...chatRoom,
+          message: [],
+        })
+      } else {
+        console.log('something wrong message delete functionality.')
+      }
+    }
+    socket.on(SOCKET_STRING.PRACTICE_OFFICE_CLEARED_MESSAGES, handleUpdate)
+  }, [socket, chatRoom])
   return (
     <>
       <div className={`flex justify-between items-center sticky top-0 px-1 py-1`} id='header'>

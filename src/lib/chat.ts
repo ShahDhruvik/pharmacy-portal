@@ -142,6 +142,34 @@ export const deleteOfficeChatConversation = async (
         setLoading({ isLoading: false, isIndependentLoader: false, isPage: false })
     }
 };
+export const clearOfficeChatConversation = async (
+    setLoading: LoadingState["setLoading"],
+    chatConversationId: string,
+    toast: ShowToastFunction,
+) => {
+    try {
+        setLoading({ isLoading: true, isIndependentLoader: true, isPage: false })
+        const res = await axiosInstance.post(CHAT.clear + chatConversationId, {});
+        if (res) {
+            if (res.data?.success) {
+                return res.data?.success
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    } catch (error: any) {
+        console.log(error)
+        if (error.response.status === 404) {
+            toast('error', error.response.data.message)
+        } else {
+            toast('error', error.response.statusText)
+        }
+    } finally {
+        setLoading({ isLoading: false, isIndependentLoader: false, isPage: false })
+    }
+};
 export const createOfficeChatConversation = async (
     setLoading: LoadingState["setLoading"],
     orgUserInternalId: string,
@@ -170,6 +198,9 @@ export const createOfficeChatConversation = async (
         setLoading({ isLoading: false, isIndependentLoader: false, isPage: false })
     }
 };
+
+
+
 
 // export const getOnePatientChat = async (
 //     setLoading: LoadingContextType["setLoading"],

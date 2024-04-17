@@ -1,8 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 import CustomBackDrop from '@/components/CustomBackdrop'
-import { MessageData, useChat } from '@/context/ChatContext'
+import { ChatPatientRoomData, MessageData, useChat } from '@/context/ChatContext'
+import { useLoading } from '@/context/LoadingContext'
 import { theme } from '@/context/ThemeProvider'
+import { useToast } from '@/hooks/useToast'
+import { clearOfficeChatConversation } from '@/lib/chat'
 import socket from '@/socket/socket'
 import { messageDelete, messageUpdate } from '@/socket/socket-functions'
 import { SOCKET_STRING } from '@/socket/socket-string'
@@ -15,6 +18,8 @@ import { useForm } from 'react-hook-form'
 type Props = {}
 
 const ChatBoxActionConfirmation = (props: Props) => {
+  const { setLoading } = useLoading()
+  const showToast = useToast()
   const { control, register, trigger, formState, watch } = useForm({
     defaultValues: {
       message: '',
@@ -33,6 +38,7 @@ const ChatBoxActionConfirmation = (props: Props) => {
     chatRoom,
     setChatRoom,
     currentUser,
+    setChatLoading,
   } = useChat()
   const handleClose = () => {
     setIsConfirmPopUp(false)
@@ -69,6 +75,23 @@ const ChatBoxActionConfirmation = (props: Props) => {
       if (tig) {
         updateThisMessage((particularMessage as MessageData['records'][0])._id as string)
       }
+    }
+    if (messageActionType === MessageActions.ClearChatMessages) {
+      setChatLoading({ loading: true, loadingProps: { room: true } })
+      const res = await clearOfficeChatConversation(setLoading, chatRoom?._id as string, showToast)
+      if (res) {
+        setChatRoom({ ...chatRoom, message: [] } as ChatPatientRoomData)
+      }
+      socket.emit(SOCKET_STRING.PRACTICE_OFFICE_MESSAGES_CLEAR, {
+        currentUserId: currentUser?.internalId,
+        orgUserIds: chatRoom?.orgUserIds,
+        practiceOfficeChatConversationId: chatRoom?._id,
+      })
+      setChatLoading({
+        loading: false,
+        loadingProps: { room: false },
+      })
+      handleMessageActionSuccess()
     }
   }
   //Handle close on message action success
@@ -174,6 +197,8 @@ const ChatBoxActionConfirmation = (props: Props) => {
                 `Are you sure you want to delete this message?`}
               {messageActionType === MessageActions.Edit &&
                 `Are you sure you want to update this message?`}
+              {messageActionType === MessageActions.ClearChatMessages &&
+                `Are you sure you want to clear all messages?`}
             </p>
             {messageActionType === MessageActions.Edit && (
               <TextField

@@ -1,3 +1,4 @@
+import { EnumValues } from '@/types/common'
 import { format, parseISO } from 'date-fns'
 import { enUS } from 'date-fns/locale'
 
@@ -8,7 +9,12 @@ export const currencySymbol = '₹'
 export enum MessageActions {
   Delete = 'Delete',
   Edit = 'Edit',
+  ClearChatMessages = 'Clear chat messages',
 }
+export const individualMessageAction: EnumValues<typeof MessageActions>[] = [MessageActions.Delete, MessageActions.Edit]
+export const groupMessageAction: EnumValues<typeof MessageActions>[] = [MessageActions.ClearChatMessages]
+
+
 export const BlogPosts: Record<string, { title: string; description: string }> = {
   'first-blog-post': {
     title: 'First Blog Post',

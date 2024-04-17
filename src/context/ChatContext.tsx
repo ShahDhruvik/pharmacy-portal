@@ -144,6 +144,8 @@ export type OfficeUser = {
 }
 export type ChatAreaOptions = EnumValues<typeof ChatAreaType>
 export interface ChatContextType {
+  anchorElMenuHeader: HTMLDivElement | null
+  setAnchorElMenuHeader: Dispatch<SetStateAction<HTMLDivElement | null>>
   chatLoading: ChatLoadingType
   setChatLoading: Dispatch<SetStateAction<ChatLoadingType>>
   chatNotFound: ChatNotFoundType
@@ -203,6 +205,8 @@ export interface ChatContextType {
   setUpdateChatRooms: Dispatch<SetStateAction<boolean>>
 }
 export const ChatContextInitialVal: ChatContextType = {
+  anchorElMenuHeader: null,
+  setAnchorElMenuHeader: () => {},
   chatLoading: { loading: false },
   chatOfficeUsers: [],
   setChatOfficeUsers: () => {},
@@ -366,6 +370,9 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   const [chatOfficeUsers, setChatOfficeUsers] = useState<ChatContextType['chatOfficeUsers']>(
     ChatContextInitialVal['chatOfficeUsers'],
   )
+  const [anchorElMenuHeader, setAnchorElMenuHeader] = useState<
+    ChatContextType['anchorElMenuHeader']
+  >(ChatContextInitialVal['anchorElMenuHeader'])
   return (
     <ChatContext.Provider
       value={{
@@ -426,6 +433,8 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         setPlayTune,
         chatOfficeUsers,
         setChatOfficeUsers,
+        anchorElMenuHeader,
+        setAnchorElMenuHeader,
       }}
     >
       {children}

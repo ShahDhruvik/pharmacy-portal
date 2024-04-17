@@ -14,11 +14,13 @@ import {
 import { useState } from 'react'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import DeleteIcon from '@mui/icons-material/Delete'
+import EditIcon from '@mui/icons-material/Edit'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import { MessageData, useChat } from '@/context/ChatContext'
-import { MessageActions } from '@/utils/constants'
+import { MessageActions, individualMessageAction } from '@/utils/constants'
 import { formatCreatedAt } from '@/socket/chat-time-function'
 import { theme } from '@/context/ThemeProvider'
+import { EnumValues } from '@/types/common'
 
 export const MessageActionSvGs: Record<string, any> = {
   [MessageActions.Delete]: (
@@ -29,7 +31,7 @@ export const MessageActionSvGs: Record<string, any> = {
     />
   ),
   [MessageActions.Edit]: (
-    <DeleteIcon
+    <EditIcon
       sx={{
         fontSize: '20px',
       }}
@@ -109,33 +111,41 @@ const ChatMessageItem = ({
               >
                 <List disablePadding sx={{ minWidth: '150px' }}>
                   {Object.keys(MessageActions).map((x) => {
-                    return (
-                      <ListItemButton
-                        onClick={() => {
-                          handleActions(
-                            (MessageActions as Record<string, string>)[x] as MessageActions,
-                            mes,
-                          )
-                        }}
-                        key={(MessageActions as Record<string, string>)[x]}
-                        sx={{
-                          '&.MuiListItemButton-root': {
-                            px: 1,
-                            py: '3px',
-                            ':hover': { color: theme.palette.primary.main },
-                          },
-                          minWidth: '100%',
-                        }}
-                        divider
-                      >
-                        <div className='flex items-center gap-2 justify-start'>
-                          {MessageActionSvGs[(MessageActions as Record<string, string>)[x]]}
-                          <p className='font-bold'>
-                            {(MessageActions as Record<string, string>)[x]}
-                          </p>
-                        </div>
-                      </ListItemButton>
-                    )
+                    if (
+                      individualMessageAction.includes(
+                        (MessageActions as Record<string, string>)[x] as EnumValues<
+                          typeof MessageActions
+                        >,
+                      )
+                    ) {
+                      return (
+                        <ListItemButton
+                          onClick={() => {
+                            handleActions(
+                              (MessageActions as Record<string, string>)[x] as MessageActions,
+                              mes,
+                            )
+                          }}
+                          key={(MessageActions as Record<string, string>)[x]}
+                          sx={{
+                            '&.MuiListItemButton-root': {
+                              px: 1,
+                              py: '3px',
+                              ':hover': { color: theme.palette.primary.main },
+                            },
+                            minWidth: '100%',
+                          }}
+                          divider
+                        >
+                          <div className='flex items-center gap-2 justify-start'>
+                            {MessageActionSvGs[(MessageActions as Record<string, string>)[x]]}
+                            <p className='font-bold'>
+                              {(MessageActions as Record<string, string>)[x]}
+                            </p>
+                          </div>
+                        </ListItemButton>
+                      )
+                    }
                   })}
                 </List>
               </Paper>

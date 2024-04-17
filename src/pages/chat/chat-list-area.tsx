@@ -20,7 +20,6 @@ const ChatListArea = (props: Props) => {
             color: theme.palette.mMidBlue?.main,
             minWidth: 'max-content',
             fontSize: '1rem',
-
             height: 20,
           }}
           onClick={() => {
@@ -54,7 +53,7 @@ const ChatListArea = (props: Props) => {
       <div className='pr-1 pl-2 pt-5 pb-1'>
         <p className='text-xl pl-3 font-semibold '>Office Chat</p>
         <Divider
-          sx={{ width: '90%', border: '1px solid', mb: 2, borderColor: theme.palette.mBlack?.main }}
+          sx={{ width: '90%', border: '1px solid', borderColor: theme.palette.mBlack?.main }}
         />
         <ChatRoomSearchInput />
         <ChatList />
