@@ -82,7 +82,7 @@ const Header = ({}: Props) => {
   }, [notify])
   return (
     <>
-      <nav>
+      <nav className='sticky top-0 z-40 bg-white-main'>
         <div className='flex flex-row gap-3 min-[350px]:items-center md:gap-0 '>
           <div className='flex items-center gap-2 flex-1'>
             <img
@@ -176,7 +176,7 @@ const Header = ({}: Props) => {
                 id={id}
                 open={open}
                 anchorEl={anchorEl}
-                className='md:hidden '
+                className='md:hidden z-50'
                 placement='bottom-end'
                 sx={{
                   minWidth: 'max-content',

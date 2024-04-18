@@ -30,7 +30,7 @@ const Navbar = ({}: Props) => {
   const id = open ? 'simple-popper' : undefined
   return (
     <>
-      <nav>
+      <nav className='sticky top-0 z-40 bg-white-main'>
         <div className='flex flex-row gap-3 md:items-center items-start md:gap-0 '>
           <div className='flex items-center gap-2 flex-1 flex-wrap'>
             <img
@@ -92,7 +92,7 @@ const Navbar = ({}: Props) => {
                 id={id}
                 open={open}
                 anchorEl={anchorEl}
-                className='md:hidden '
+                className='md:hidden z-50'
                 placement='bottom-end'
                 sx={{
                   minWidth: 'max-content',
