@@ -80,7 +80,7 @@ const Welcome = ({}: Props) => {
             src={`${CONST_APP_IMAGE_URL}${data1?.image}`}
             alt=''
             className={`relative aspect-video ${
-              isMediumScreen || isSmallScreen ? 'h-full' : 'h-96'
+              isMediumScreen || isSmallScreen ? 'h-72 w-screen' : 'h-96'
             }`}
           />
           <img
