@@ -43,10 +43,11 @@ export const headerLinks: HeaderLinkType[] = [
   //   path: MAIN_PATH.ABOUT.split('/*')[0],
   // },
   // {
-  //   id: 3,
-  //   name: 'Help',
-  //   path: MAIN_PATH.USER.split('/*')[0],
-  // },
+  {
+    id: 3,
+    name: 'Help',
+    path: MAIN_PATH.HELP.split('/*')[0],
+  },
 ]
 
 export const countryCodes = ['+1', '+91', '+44']
@@ -192,9 +193,9 @@ export const headerData: HeaderLinkType[] = [
   //   name: 'Chat',
   //   path: MAIN_PATH.CHAT.split('/*')[0],
   // },
-  // {
-  //   id: 4,
-  //   name: 'Help',
-  //   path: MAIN_PATH.HELP.split('/*')[0],
-  // },
+  {
+    id: 4,
+    name: 'Help',
+    path: MAIN_PATH.HELP.split('/*')[0],
+  },
 ]

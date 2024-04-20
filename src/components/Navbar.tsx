@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Logo from '../assets/images/pink.png'
-import Text from '../assets/images/black-text.png'
+import Text from '../assets/images/Triaina-Health-New.png'
 import { headerLinks } from '../utils/data'
-import { IconButton, Popper } from '@mui/material'
+import { IconButton, Popper, useMediaQuery } from '@mui/material'
 import AuthForm from '../pages/dashboard/container/auth-forms/auth-form'
 import HomeIcon from '@mui/icons-material/Home'
 import { theme } from '@/context/ThemeProvider'
@@ -28,11 +28,12 @@ const Navbar = ({}: Props) => {
 
   const open = Boolean(anchorEl)
   const id = open ? 'simple-popper' : undefined
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down(408))
   return (
     <>
       <nav className='sticky top-0 z-40 bg-white-main'>
         <div className='flex flex-row gap-3 md:items-center items-start md:gap-0 '>
-          <div className='flex items-center gap-2 flex-1 flex-wrap'>
+          <div className={`flex items-center ${isSmallScreen ? '' : 'gap-2'} flex-1 flex-wrap`}>
             <img
               src={Logo}
               alt='Logo'
@@ -51,9 +52,11 @@ const Navbar = ({}: Props) => {
               onClick={() => {
                 nav('/')
               }}
-              className='cursor-pointer'
+              className='cursor-pointer sm:block hidden'
             />
-            <span className='text-lg text-black-main font-semibold'>
+            <span
+              className={`${isSmallScreen ? 'text-base' : 'text-lg'} text-black-main font-semibold`}
+            >
               EasyWeb: Provider Self-care
             </span>
           </div>
@@ -75,9 +78,9 @@ const Navbar = ({}: Props) => {
               <HomeIcon sx={{ color: theme.palette.mWhite?.main, fontSize: '15px', p: 0 }} />
             </button>
           </ul>
-          <div className='flex items-center gap-1 md:hidden md:pt-0 pt-3'>
+          <div className='flex items-center gap-1 md:hidden md:pt-0'>
             <div>
-              {/* <IconButton
+              <IconButton
                 aria-describedby={id}
                 type='button'
                 onClick={handleClick}
@@ -87,7 +90,7 @@ const Navbar = ({}: Props) => {
                 }}
               >
                 <MenuIcon />
-              </IconButton> */}
+              </IconButton>
               <Popper
                 id={id}
                 open={open}

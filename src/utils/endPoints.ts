@@ -13,13 +13,13 @@ export const enum DEF_PATHS {
   chat = '/chat',
 }
 export const enum CHAT {
-  listAll = DEF_PATHS.chat + DEF_PATHS.practice + "/office/chat-conversation",
-  userAll = DEF_PATHS.main + DEF_PATHS.provider + "/search-provider",
-  getOne = DEF_PATHS.chat + DEF_PATHS.practice + "/office/chat-conversation/",
-  update = DEF_PATHS.chat + DEF_PATHS.practice + "/office/chat-conversation/update/",
-  delete = DEF_PATHS.chat + DEF_PATHS.practice + "/office/chat-conversation/delete/",
-  clear = DEF_PATHS.chat + DEF_PATHS.practice + "/office/chat-conversation/clear/",
-  create = DEF_PATHS.chat + DEF_PATHS.practice + "/office/chat-conversation/create",
+  listAll = DEF_PATHS.chat + DEF_PATHS.practice + '/office/chat-conversation',
+  userAll = DEF_PATHS.main + DEF_PATHS.provider + '/search-provider',
+  getOne = DEF_PATHS.chat + DEF_PATHS.practice + '/office/chat-conversation/',
+  update = DEF_PATHS.chat + DEF_PATHS.practice + '/office/chat-conversation/update/',
+  delete = DEF_PATHS.chat + DEF_PATHS.practice + '/office/chat-conversation/delete/',
+  clear = DEF_PATHS.chat + DEF_PATHS.practice + '/office/chat-conversation/clear/',
+  create = DEF_PATHS.chat + DEF_PATHS.practice + '/office/chat-conversation/create',
 }
 
 export const enum AUTH_ENDPOINT {
@@ -66,7 +66,7 @@ export const enum INSURANCE_CALCULATOR {
 }
 
 export const enum FAQ {
-  GET = DEF_PATHS.common + '/patient/faq/list',
+  GET = DEF_PATHS.common + '/provider-care/faq/portal-list',
 }
 
 export const enum TASK {
