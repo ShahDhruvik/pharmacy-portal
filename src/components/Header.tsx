@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Logo from '../assets/images/pink.png'
-import Text from '../assets/images/black-text.png'
+import Text from '../assets/images/Triaina-Health-New.png'
 import { headerData } from '../utils/data'
 import { Avatar, Box, Divider, Drawer, IconButton, Popper } from '@mui/material'
 import { theme } from '@/context/ThemeProvider'
@@ -103,7 +103,7 @@ const Header = ({}: Props) => {
               onClick={() => {
                 nav('/')
               }}
-              className='cursor-pointer'
+              className='cursor-pointer sm:block hidden'
             />
             {/* <h1 className='text-3xl text-darkBlue-main font-semibold'>Triaina Health</h1> */}
           </div>
@@ -143,13 +143,13 @@ const Header = ({}: Props) => {
                 </Link>
               )
             })}
-            <a
+            {/* <a
               href={`https://help.oopchar.com`}
               target='_blank'
               className='hover:underline bg-white-main px-3 py-1 rounded-sm'
             >
               <span>Help</span>
-            </a>
+            </a> */}
             <button className='hover:underline' onClick={handleopenDrawer}>
               <AccountCircleIcon
                 sx={{
@@ -208,9 +208,9 @@ const Header = ({}: Props) => {
                         </>
                       )}
                     </button>
-                    <a href={`https://help.oopchar.com`} target='_blank'>
+                    {/* <a href={`https://help.oopchar.com`} target='_blank'>
                       Help
-                    </a>
+                    </a> */}
                     {headerData?.map((x) => {
                       return (
                         <Link to={x.path} key={x.id} onClick={handleClick}>
