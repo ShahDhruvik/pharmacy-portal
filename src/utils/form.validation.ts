@@ -183,14 +183,14 @@ export const txtFieldValidation = (
         return {
           required: 'required.',
           pattern: {
-            value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+            value: /^[a-z\d._-]+@([a-z\d.-]+\.)+[a-z]{2,4}$/,
             message: 'Please enter correct email ID',
           },
         }
       } else {
         return {
           pattern: {
-            value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+            value: /^[a-z\d._-]+@([a-z\d.-]+\.)+[a-z]{2,4}$/,
             message: 'Please enter correct email ID',
           },
         }
