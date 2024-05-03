@@ -4,17 +4,18 @@ import { Link, useNavigate } from 'react-router-dom'
 import Logo from '../assets/images/pink.png'
 import Text from '../assets/images/Triaina-Health-New.png'
 import { headerData } from '../utils/data'
-import { Avatar, Box, Divider, Drawer, IconButton, Popper } from '@mui/material'
+import { IconButton } from '@mui/material'
 import { theme } from '@/context/ThemeProvider'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import ProfileBar from '../pages/profile/Profilebar'
-import HomeIcon from '@mui/icons-material/Home'
 import TaskBar from '@/pages/task-bar/task-bar'
 import { useChat } from '@/context/ChatContext'
 import socket from '@/socket/socket'
 import { SOCKET_STRING } from '@/socket/socket-string'
 import ReactPlayer from 'react-player'
-import MenuIcon from '@mui/icons-material/Menu'
+import TelegramIcon from '@mui/icons-material/Telegram'
+import AllInboxIcon from '@mui/icons-material/AllInbox'
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 
 interface Props {}
 
@@ -88,12 +89,12 @@ const Header = ({}: Props) => {
             <img
               src={Logo}
               alt='Logo'
-              width={60}
-              height={60}
+              width={50}
+              height={50}
               onClick={() => {
                 nav('/')
               }}
-              className='cursor-pointer'
+              className='cursor-pointer block sm:hidden'
             />
             <img
               src={Text}
@@ -105,7 +106,6 @@ const Header = ({}: Props) => {
               }}
               className='cursor-pointer sm:block hidden'
             />
-            {/* <h1 className='text-3xl text-darkBlue-main font-semibold'>Triaina Health</h1> */}
           </div>
           <div
             role='button'
@@ -143,13 +143,6 @@ const Header = ({}: Props) => {
                 </Link>
               )
             })}
-            {/* <a
-              href={`https://help.oopchar.com`}
-              target='_blank'
-              className='hover:underline bg-white-main px-3 py-1 rounded-sm'
-            >
-              <span>Help</span>
-            </a> */}
             <button className='hover:underline' onClick={handleopenDrawer}>
               <AccountCircleIcon
                 sx={{
@@ -159,74 +152,48 @@ const Header = ({}: Props) => {
               />
             </button>
           </ul>
-          <div className='flex  items-center gap-1 md:hidden'>
-            <div>
-              <IconButton
-                aria-describedby={id}
-                type='button'
-                onClick={handleClick}
-                sx={{
-                  minWidth: 'max-content',
-                  padding: 0,
-                }}
-              >
-                <MenuIcon />
+          <div className='flex  items-center md:hidden'>
+            <div className='flex items-center'>
+              <IconButton onClick={handleOpenDrawerForTask}>
+                <AllInboxIcon />
               </IconButton>
-              <Popper
-                id={id}
-                open={open}
-                anchorEl={anchorEl}
-                className='md:hidden z-50'
-                placement='bottom-end'
-                sx={{
-                  minWidth: 'max-content',
+              <IconButton
+                onClick={() => {
+                  setOpenChatDrawer(true)
+                  setNotify(0)
                 }}
               >
-                <div className='bg-white-main shadow-2xl p-5 rounded-lg mt-2'>
-                  <ul className='flex flex-col gap-5 text-darkBlue-main font-medium'>
-                    <div role='button' onClick={handleOpenDrawerForTask}>
-                      Create Task
-                    </div>
-                    <button
-                      onClick={() => {
-                        setOpenChatDrawer(true)
-                        setNotify(0)
-                      }}
-                      className='flex items-center gap-2 bg-white-main'
-                    >
-                      <p className='hover:underline   rounded-sm'>{'Office Chat'}</p>
-                      {notify > 0 && (
-                        <>
-                          <ReactPlayer
-                            url='src/assets/tunes/beep.mp3'
-                            style={{ display: 'none' }}
-                            controls
-                            playing={playTune}
-                            onEnded={() => setPlayTune(false)}
-                          />
-                          <span className='w-2 h-2 text-white-main font-bold text-xs flex items-center justify-center  bg-green-main rounded-full animate-pulse '></span>
-                        </>
-                      )}
-                    </button>
-                    {/* <a href={`https://help.oopchar.com`} target='_blank'>
-                      Help
-                    </a> */}
-                    {headerData?.map((x) => {
-                      return (
-                        <Link to={x.path} key={x.id} onClick={handleClick}>
-                          <li> {x.name}</li>
-                        </Link>
-                      )
-                    })}
-                  </ul>
-                </div>
-              </Popper>
+                <TelegramIcon>
+                  {notify > 0 && (
+                    <>
+                      <ReactPlayer
+                        url='src/assets/tunes/beep.mp3'
+                        style={{ display: 'none' }}
+                        controls
+                        playing={playTune}
+                        onEnded={() => setPlayTune(false)}
+                      />
+                      <span className='w-2 h-2 text-white-main font-bold text-xs flex items-center justify-center  bg-green-main rounded-full animate-pulse '></span>
+                    </>
+                  )}
+                </TelegramIcon>
+              </IconButton>
+              <Link to={'Help'}>
+                <HelpOutlineIcon
+                  sx={{
+                    color: theme.palette.mDarkGray?.main,
+                    paddingLeft: '5px',
+                    paddingRight: '5px',
+                    fontSize: '35px',
+                  }}
+                />
+              </Link>
             </div>
             <IconButton onClick={handleopenDrawer}>
               <AccountCircleIcon
                 sx={{
-                  color: theme.palette.mBlack?.main,
-                  fontSize: '2rem',
+                  color: theme.palette.mDarkGray?.main,
+                  fontSize: '30px',
                 }}
               />
             </IconButton>

@@ -6,6 +6,7 @@ import ChatDrawer from '@/pages/chat'
 import { useChat } from '@/context/ChatContext'
 import { useEffect } from 'react'
 import socket from '@/socket/socket'
+import Header from '@/components/Header'
 
 type Props = {}
 
@@ -38,6 +39,7 @@ const Dashboard = ({}: Props) => {
     <>
       {authParams?.isAuth ? (
         <>
+          <Header />
           <Banner />
           <ChatDrawer />
         </>

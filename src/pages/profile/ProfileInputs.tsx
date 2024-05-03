@@ -317,7 +317,7 @@ const ProfileInputs = ({
                 }
               }}
             >
-              Send otp
+              Get OTP
             </Button>
           )}
         </div>
@@ -411,7 +411,7 @@ const ProfileInputs = ({
                 }
               }}
             >
-              Send otp
+              Get OTP
             </Button>
           )}
         </div>

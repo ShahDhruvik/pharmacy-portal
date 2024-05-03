@@ -9,6 +9,8 @@ import HomeIcon from '@mui/icons-material/Home'
 import { theme } from '@/context/ThemeProvider'
 import { FORMTYPE } from '@/utils/constants'
 import MenuIcon from '@mui/icons-material/Menu'
+import LockOpenIcon from '@mui/icons-material/LockOpen'
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 
 interface Props {}
 
@@ -29,6 +31,7 @@ const Navbar = ({}: Props) => {
   const open = Boolean(anchorEl)
   const id = open ? 'simple-popper' : undefined
   const isSmallScreen = useMediaQuery(theme.breakpoints.down(408))
+  const isMobile = useMediaQuery(theme.breakpoints.down(768))
   return (
     <>
       <nav className='sticky top-0 z-40 bg-white-main'>
@@ -37,12 +40,12 @@ const Navbar = ({}: Props) => {
             <img
               src={Logo}
               alt='Logo'
-              width={60}
-              height={60}
+              width={50}
+              height={50}
               onClick={() => {
                 nav('/')
               }}
-              className='cursor-pointer'
+              className='cursor-pointer block sm:hidden'
             />
             <img
               src={Text}
@@ -54,11 +57,14 @@ const Navbar = ({}: Props) => {
               }}
               className='cursor-pointer sm:block hidden'
             />
-            <span
-              className={`${isSmallScreen ? 'text-base' : 'text-lg'} text-black-main font-semibold`}
+            <div
+              className={`${
+                isSmallScreen ? 'text-base' : 'text-xl'
+              } text-black-main font-semibold flex gap-1 ml-1`}
             >
-              EasyWeb: Provider Self-care
-            </span>
+              <span className='md:block hidden'>EasyWeb: </span>
+              Provider Self-care
+            </div>
           </div>
           <ul className='hidden md:flex flex-row flex-wrap gap-5 text-darkBlue-main font-extralight'>
             {headerLinks?.map((x) => {
@@ -69,17 +75,17 @@ const Navbar = ({}: Props) => {
               )
             })}
             <button
-              className='hover:underline p-1 bg-darkGray-main rounded-full h-6 aspect-square flex items-center justify-center'
+              className='hover:underline p-1 text-darkGray-main rounded-full h-6 aspect-square flex items-center justify-center'
               onClick={() => {
                 setSignType([FORMTYPE.SIGNIN])
                 setOpenSign(true)
               }}
             >
-              <HomeIcon sx={{ color: theme.palette.mWhite?.main, fontSize: '15px', p: 0 }} />
+              <LockOpenIcon />
             </button>
           </ul>
           <div className='flex items-center gap-1 md:hidden md:pt-0'>
-            <div>
+            {/* <div>
               <IconButton
                 aria-describedby={id}
                 type='button'
@@ -113,15 +119,20 @@ const Navbar = ({}: Props) => {
                   </ul>
                 </div>
               </Popper>
+            </div> */}
+            <div className='flex items-center gap-5'>
+              <Link to={'Help'}>
+                <HelpOutlineIcon sx={{ color: theme.palette.mDarkGray?.main }} />
+              </Link>
             </div>
             <button
-              className='hover:underline p-1 bg-darkGray-main rounded-full h-8 aspect-square flex items-center justify-center'
+              className='hover:underline p-1 text-darkGray-main rounded-full h-8 aspect-square flex items-center justify-center'
               onClick={() => {
                 setSignType([FORMTYPE.SIGNIN])
                 setOpenSign(true)
               }}
             >
-              <HomeIcon />
+              <LockOpenIcon />
             </button>
           </div>
         </div>
@@ -139,110 +150,3 @@ const Navbar = ({}: Props) => {
 }
 
 export default Navbar
-
-{
-  /* <h1 className='text-3xl text-black-main font-semibold'>Triaina Health</h1> */
-}
-{
-  /* <nav>
-<div className='flex flex-row gap-3 min-[350px]:items-center md:gap-0 '>
-  <div className='flex items-center gap-2 flex-1 flex-wrap'>
-    <img
-      src={Logo}
-      alt='Logo'
-      width={60}
-      height={60}
-      onClick={() => {
-        nav('/')
-      }}
-      className='cursor-pointer'
-    />
-    <img
-      src={Text}
-      alt={'Triaina Health'}
-      width={130}
-      height={50}
-      onClick={() => {
-        nav('/')
-      }}
-      className='cursor-pointer'
-    />
-    <span className='text-lg text-black-main font-semibold'>
-      EasyWeb: Provider Self-care
-    </span>
-  </div>
-  <ul className='hidden md:flex  flex-row flex-wrap  gap-5 text-darkBlue-main font-extralight'>
-    {headerLinks?.map((x) => {
-      return (
-        <Link to={x.path} key={x.id}>
-          <li className='hover:underline text-darkGray-main font-medium'> {x.name}</li>
-        </Link>
-      )
-    })}
-    <button
-      className='hover:underline p-1 bg-darkGray-main rounded-full h-6 aspect-square flex items-center justify-center'
-      // onClick={handleOpenForm}
-      onClick={() => {
-        setSignType([FORMTYPE.SIGNIN])
-        setOpenSign(true)
-      }}
-    >
-      <HomeIcon sx={{ color: theme.palette.mWhite?.main, fontSize: '15px', p: 0 }} />
-    </button>
-  </ul>
-  <div className='flex  items-center gap-1 md:hidden'>
-    <div>
-      <IconButton
-        aria-describedby={id}
-        type='button'
-        onClick={handleClick}
-        sx={{
-          minWidth: 'max-content',
-          padding: 0,
-        }}
-      >
-        <HomeIcon />
-      </IconButton>
-      <Popper
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        className='md:hidden '
-        placement='bottom-end'
-        sx={{
-          minWidth: 'max-content',
-        }}
-      >
-        <div className='bg-white drop-shadow-xl p-5 rounded-lg border-black border-[1px] border-opacity-20 mt-2'>
-          <ul className='flex flex-col  gap-5 text-darkBlue-main font-extralight'>
-            {headerLinks.map((x) => {
-              return (
-                <Link to={x.path} key={x.id} onClick={handleClick}>
-                  <li> {x.name}</li>
-                </Link>
-              )
-            })}
-          </ul>
-        </div>
-      </Popper>
-    </div>
-    <IconButton
-      sx={{
-        minWidth: 'max-content',
-        padding: 1,
-        border: 1,
-        borderRadius: '100%',
-        bgcolor: theme.palette.mDarkGray?.main,
-        borderColor: theme.palette.mDarkGray?.main,
-      }}
-      onClick={() => {
-        setSignType([FORMTYPE.SIGNIN])
-        setOpenSign(true)
-      }}
-    >
-      <HomeIcon />
-    </IconButton>
-  </div>
-</div>
-</nav> */
-}

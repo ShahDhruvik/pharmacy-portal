@@ -66,17 +66,17 @@ const verifyOtp = async (
 const resendOtp = async (
   loading: LoadingState['setLoading'],
   toast: ShowToastFunction,
-  formData: string,
+  formData: any,
 ) => {
   try {
     loading({ isLoading: true, isPage: false })
     const data = {
-      contactNo: formData,
+      contactNo: formData?.phone,
     }
     const res = await axiosInstance.post(`${AUTH_ENDPOINT.PROVIDER_VERIFY_RESEND_OTP}`, data)
 
     if (res.data.success) {
-      toast('success', COMMON_MESSAGE.Login)
+      toast('success', COMMON_MESSAGE.Resend_otp)
       return res
     } else {
       toast('error', res.data.message)

@@ -13,6 +13,8 @@ import {
   FORMTYPE,
 } from '@/utils/constants'
 import AuthForm from './auth-forms/auth-form'
+import AppStore from '@/assets/images/app-store.png'
+import PlayStore from '@/assets/images/play-store.png'
 
 interface Props {}
 
@@ -67,7 +69,9 @@ const Welcome = ({}: Props) => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down(1280))
   const isMediumScreen = useMediaQuery(theme.breakpoints.between(1280, 1432))
   const isLargeScreen = useMediaQuery(theme.breakpoints.up(1600))
-
+  const isVerySmallScreen = useMediaQuery(theme.breakpoints.down(640))
+  const isForQr = useMediaQuery(theme.breakpoints.down(768))
+  const isSmallMediumScreen = useMediaQuery(theme.breakpoints.between(768, 1280))
   return (
     <>
       <div
@@ -79,9 +83,9 @@ const Welcome = ({}: Props) => {
           <img
             src={`${CONST_APP_IMAGE_URL}${data1?.image}`}
             alt=''
-            className={`relative aspect-video ${
-              isMediumScreen || isSmallScreen ? 'h-72 w-screen' : 'h-96'
-            }`}
+            className={`relative aspect-video ${isMediumScreen ? 'h-72 w-screen' : ''} ${
+              isSmallMediumScreen ? 'h-72 w-screen' : ''
+            } ${isForQr ? 'h-60 w-screen' : 'h-96'}`}
           />
           <img
             src={`${CONST_APP_IMAGE_URL}${data?.image}`}
@@ -99,17 +103,17 @@ const Welcome = ({}: Props) => {
             <div className='flex flex-col'>
               <a href={CONST_PRACTICE_URL} target='_blank' rel='noopener noreferrer'>
                 <Button
-                  variant='outlined'
-                  color='mBlack'
+                  variant='contained'
+                  color='mPink'
                   sx={{
                     maxWidth: 250,
                     minWidth: 250,
                     marginTop: '12px',
                     marginBottom: '4px',
-                    color: theme.palette.mBlack?.main,
+                    color: theme.palette.mWhite?.main,
                     borderColor: theme.palette.mBlack?.main,
                     borderWidth: '3px',
-                    fontWeight: 'bold',
+                    // fontWeight: 'bold',
                   }}
                 >
                   Sign In To The Practice
@@ -117,17 +121,17 @@ const Welcome = ({}: Props) => {
               </a>
               <a href={CONST_ABHA_URL} target='_blank' rel='noopener noreferrer'>
                 <Button
-                  variant='outlined'
-                  color='mBlack'
+                  variant='contained'
+                  color='mPink'
                   sx={{
                     maxWidth: 250,
                     minWidth: 250,
                     marginTop: '12px',
                     marginBottom: '4px',
-                    color: theme.palette.mBlack?.main,
+                    color: theme.palette.mWhite?.main,
                     borderColor: theme.palette.mBlack?.main,
                     borderWidth: '3px',
-                    fontWeight: 'bold',
+                    // fontWeight: 'bold',
                   }}
                 >
                   Create ABHA ID
@@ -136,7 +140,11 @@ const Welcome = ({}: Props) => {
             </div>
           </div>
           <div className='lg:border-l-[1px] border-gray-main lg:my-10 lg:mr-10'></div>
-          <div className='flex-1 my-auto mx-5 flex flex-col md:items-start lg:items-center items-center'>
+          <div
+            className={`flex-1 my-auto mx-5 flex flex-col md:items-start lg:items-center items-center ${
+              isVerySmallScreen ? 'py-5' : ''
+            }`}
+          >
             <h2 className='text-xl text-black-main font-semibold'>EasyWeb: Provider Self-care</h2>
             <Button
               variant='contained'
@@ -156,7 +164,9 @@ const Welcome = ({}: Props) => {
               <LockOutlinedIcon />
               Sign in
             </Button>
-            <h3 className='text-xl my-2'>Download Mobile App</h3>
+            <h3 className={`text-xl ${isVerySmallScreen ? 'mt-5 mb-1' : 'my-2'}`}>
+              Download Mobile App
+            </h3>
             <div className='flex'>
               <a
                 href={`https://www.apple.com/in/app-store/`}
@@ -164,14 +174,22 @@ const Welcome = ({}: Props) => {
                 rel='noopener noreferrer'
               >
                 <div className='flex flex-col items-center leading-[1px]'>
-                  <QrCode2Icon sx={{ height: '140px', width: '140px' }} />
-                  <span className='text-[12px]'>APPLE STORE</span>
+                  {isForQr ? (
+                    <img src={AppStore} alt='AppStore' className={`${'w-40 h-14'} `} />
+                  ) : (
+                    <QrCode2Icon sx={{ height: '140px', width: '140px' }} />
+                  )}
+                  {!isForQr && <span className='text-[12px]'>APPLE STORE</span>}
                 </div>
               </a>
               <a href={`https://play.google.com/store/`} target='_blank' rel='noopener noreferrer'>
                 <div className='flex flex-col items-center leading-[1px]'>
-                  <QrCode2Icon sx={{ height: '140px', width: '140px' }} />
-                  <span className='text-[12px]'>PLAY STORE</span>
+                  {isForQr ? (
+                    <img src={PlayStore} alt='PlayStore' className={`${'w-40 h-14'}`} />
+                  ) : (
+                    <QrCode2Icon sx={{ height: '140px', width: '140px' }} />
+                  )}
+                  {!isForQr && <span className='text-[12px]'>PLAY STORE</span>}
                 </div>
               </a>
             </div>

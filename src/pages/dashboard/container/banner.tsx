@@ -1,5 +1,4 @@
 import AppointmentCard from '@/components/AppointmentCard'
-import Header from '@/components/Header'
 import { theme } from '@/context/ThemeProvider'
 import { getAllAppointments } from '@/lib/Appointment'
 import { Divider } from '@mui/material'
@@ -10,6 +9,7 @@ import { useAuth } from '@/context/AuthContext'
 import img from '@/assets/images/Aspect_Ratio.jpg'
 import { RibbonField } from '@/types/ribbonTypes'
 import { getAllRibbon } from '@/lib/DashboardContent'
+import { subYears } from 'date-fns'
 
 interface Props {}
 
@@ -85,7 +85,6 @@ const Banner = ({}: Props) => {
 
   return (
     <div className='min-h-screen overflow-hidden'>
-      <Header />
       <section className='bg-pink-main mt-2 mb-5'>
         <div>
           <ul className='list-disc text-white-main h-16 flex items-center md:justify-between w-max gap-10 scrollable-list'>
@@ -138,8 +137,11 @@ const Banner = ({}: Props) => {
           <div className='w-full'>
             <img src={img} alt='img' className='w-full my-5 h-60' />
           </div>
-          <span className='flex justify-end font-extralight text-sm pt-4'>
-            Copyright © 2024 Triaina Health. All rights reserved.
+          <span className='flex justify-end font-light sm:text-sm text-xs pt-4 pb-2'>
+            {`Copyright © ${subYears(new Date(), 1).getFullYear()}-${new Date()
+              .getFullYear()
+              .toString()
+              .slice(-2)} Triaina Health. All rights reserved.`}
           </span>
         </div>
       </section>

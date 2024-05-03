@@ -228,7 +228,7 @@ const ProfileEdit = ({ handleDrawerState, fieldName, setFieldName }: Props) => {
                 <span>
                   <LoopIcon />
                 </span>
-                Resend otp
+                Resend OTP
               </button>
             </div>
           </div>

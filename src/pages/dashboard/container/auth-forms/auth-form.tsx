@@ -1,4 +1,4 @@
-import { Box, Button, DialogTitle, useMediaQuery } from '@mui/material'
+import { Box, Button, DialogTitle, Divider, useMediaQuery } from '@mui/material'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Dispatch, SetStateAction, useRef, useState } from 'react'
 import { ALIGN_DIALOG, FORMTYPE, SITE_KEY } from '../../../../utils/constants'
@@ -44,17 +44,20 @@ const AuthForm = ({ open, handleClose, signType, setSignType }: Props) => {
     }
   }
 
-  const { errors } = formState
-
   //form submission
   const onSubmitHandle: SubmitHandler<any> = async (data) => {
     const recaptchaRes = await verifyRecaptcha(setLoading, showToast, captchaToken)
-    const res = await loginUser(setLoading, showToast, data)
+    if (recaptchaRes) {
+      const res = await loginUser(setLoading, showToast, data)
+      if (res?.status === 200) {
+        localStorage.setItem('phone', getValues('userName'))
+        setSignType([FORMTYPE.OTP, FORMTYPE.SIGNIN])
+      } else {
+        setSignType([])
+      }
+    }
     if (recaptchaRes === undefined) {
       handleRetry()
-    }
-    if (res && recaptchaRes) {
-      setSignType([FORMTYPE.OTP, FORMTYPE.SIGNIN])
     }
   }
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
@@ -80,16 +83,21 @@ const AuthForm = ({ open, handleClose, signType, setSignType }: Props) => {
                 padding: '16px 24px 14px 24px',
               }}
             >
-              <div className='flex justify-end items-baseline -mt-2 -mr-4'>
+              <div className='flex'>
+                <h1 className='flex justify-between items-center font-bold text-xl w-full'>
+                  Sign in
+                </h1>
                 <button
                   onClick={() => {
                     handleClose()
                     setSignType([])
                   }}
+                  className='pb-1'
                 >
                   <HighlightOffIcon sx={{ fill: theme.palette.mDarkGray?.main }} />
                 </button>
               </div>
+              <Divider />
             </DialogTitle>
           ),
         }}
@@ -99,7 +107,6 @@ const AuthForm = ({ open, handleClose, signType, setSignType }: Props) => {
         isFullScreen={isSmallScreen ? true : false}
       >
         <div>
-          <h1 className='flex justify-center font-bold text-xl'>Sign in</h1>
           <form
             onSubmit={handleSubmit(onSubmitHandle)}
             className={`bg-lightGray-main p-3 rounded-md`}
@@ -117,18 +124,7 @@ const AuthForm = ({ open, handleClose, signType, setSignType }: Props) => {
                   minWidth: isSmallScreen ? 300 : 400,
                 }}
               />
-              {/* <PermissionForm
-                signType={signType}
-                roboName={'robo'}
-                tncName={'tNc'}
-                control={control}
-                errors={errors.tNc || errors.robo ? true : false}
-                handleClose={() => {}}
-                setValue={setValue}
-                trigger={trigger}
-                isDisabled={signType.includes(FORMTYPE.OTP)}
-              /> */}
-              {watch('userName') && (
+              {!signType.includes(FORMTYPE.OTP) && (
                 <ReCAPTCHA
                   ref={captchaRef}
                   sitekey={SITE_KEY}
@@ -136,14 +132,14 @@ const AuthForm = ({ open, handleClose, signType, setSignType }: Props) => {
                   onChange={handleCaptchaChange}
                 />
               )}
-              <Box display={'flex'} justifyContent={'end'} gap={1} marginTop={1}>
+              <Box display={'flex'} justifyContent={'end'} gap={1} marginTop={1} width={'100%'}>
                 <Button
                   variant='contained'
                   color='mPink'
                   sx={{
                     maxHeight: 27,
-                    maxWidth: 'max-content',
-                    minWidth: 'max-content',
+                    maxWidth: '200px',
+                    minWidth: '200px',
                   }}
                   type='submit'
                   disabled={signType.includes(FORMTYPE.OTP)}
