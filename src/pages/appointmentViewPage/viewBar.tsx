@@ -322,7 +322,7 @@ const ViewBar = ({
                           )}
                           <IconButton
                             onClick={() => {
-                              setChatArea(ChatAreaType.Message)
+                              // setChatArea(ChatAreaType.Message)
                               setOpenChatDrawer(true)
                             }}
                           >
@@ -422,7 +422,7 @@ const ViewBar = ({
                           <IconButton
                             onClick={() => {
                               handleClose()
-                              setChatArea(ChatAreaType.Message)
+                              // setChatArea(ChatAreaType.Message)
                               setOpenChatDrawer(true)
                             }}
                           >
@@ -522,8 +522,8 @@ const ViewBar = ({
                           <IconButton
                             onClick={() => {
                               handleClose()
-                              setChatArea(ChatAreaType.Message)
                               setOpenChatDrawer(true)
+                              // setChatArea(ChatAreaType.Message)
                             }}
                           >
                             <ChatOutlinedIcon

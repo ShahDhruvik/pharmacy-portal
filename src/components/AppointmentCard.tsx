@@ -244,8 +244,8 @@ const AppointmentCard = ({
                         )}
                         <IconButton
                           onClick={() => {
-                            setChatArea(ChatAreaType.Message)
                             setOpenChatDrawer(true)
+                            // setChatArea(ChatAreaType.Message)
                           }}
                         >
                           <ChatOutlinedIcon
