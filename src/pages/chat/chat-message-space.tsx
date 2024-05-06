@@ -15,7 +15,7 @@ const ChatMessageSpace = (props: Props) => {
   return (
     <>
       {message && message.length !== 0 && (
-        <div className=' max-h-[75%]  min-h-[75%] overflow-y-scroll qnaScroll pb-1' id='chat'>
+        <div className=' max-h-[75%]  min-h-[75%] overflow-y-scroll hideScroll pb-1' id='chat'>
           {messageLoading && (
             <div className='flex justify-center py-2 items-center gap-2  '>
               <CircularProgress
@@ -28,11 +28,11 @@ const ChatMessageSpace = (props: Props) => {
               <p className='text-darkestGray-main font-bold'>loading...</p>
             </div>
           )}
-          <div className='z-10   text-darkestGray-main px-2 flex-1  flex flex-col justify-end  gap-2 min-h-full '>
+          <div className='z-10 bg-white-main  text-darkestGray-main px-2 flex-1  flex flex-col justify-end  gap-2 min-h-full '>
             {message.map((y: MessageData) => {
               return (
                 <div key={Math.random()}>
-                  <div className='flex items-center justify-center my-3 gap-5'>
+                  <div className='flex items-center justify-center my-3 gap-5 text-xs'>
                     <div className='flex-1 max-w-sm'>
                       <Divider />
                     </div>
@@ -43,7 +43,7 @@ const ChatMessageSpace = (props: Props) => {
                   </div>
                   {y.records.map((rec, i) => {
                     return (
-                      <div key={Math.random()} id={rec._id} className='my-2'>
+                      <div key={Math.random()} id={rec._id}>
                         <ChatMessageItem
                           mes={rec}
                           right={rec.sentBy === String(currentUser?.internalId)}
@@ -59,13 +59,13 @@ const ChatMessageSpace = (props: Props) => {
         </div>
       )}
       {message && message.length === 0 && isConfirmed && (
-        <div className='z-10 bg-white-main text-darkestGray-main px-2 flex-1 max-h-[68vh] min-h-[68vh] flex flex-col items-center justify-center gap-2   overflow-y-scroll chatScroll pb-1'>
-          <p className='text-4xl'>Start chat here!</p>
+        <div className='z-10 bg-white-main text-darkestGray-main px-2 flex-1 min-h-[68vh] flex flex-col items-center justify-center gap-2   overflow-y-scroll hideScroll pb-1'>
+          <p className='text-lg'>It's quiet around here, lets chat!</p>
         </div>
       )}
       {message && message.length === 0 && !isConfirmed && <ChatAcceptRejectArea />}
       {!message && (
-        <div className=' bg-white-main text-darkestGray-main px-2 flex-1  flex flex-col items-center justify-center gap-2  max-h-[68vh] min-h-[68vh] overflow-y-scroll chatScroll pb-1'>
+        <div className=' bg-white-main text-darkestGray-main px-2 flex-1  flex flex-col items-center justify-center gap-2  overflow-y-scroll chatScroll pb-1'>
           <Spinner />
         </div>
       )}

@@ -81,16 +81,18 @@ const TaskBar = ({ open, handleClose }: Props) => {
   }, [open])
 
   const drpAssignedTo = async () => {
-    const res = await dropdownAssignedTo(setLoading, showToast)
-    if (res) {
-      setAssignedTo(res)
+    if (orgWatch._id !== '00') {
+      const res = await dropdownAssignedTo(setLoading, showToast, orgWatch?._id)
+      if (res) {
+        setAssignedTo(res)
+      }
     }
   }
   useEffect(() => {
     if (show) {
       drpAssignedTo()
     }
-  }, [show])
+  }, [show, orgWatch])
 
   const onSubmitHandle: SubmitHandler<any> = async (data) => {
     if (show) {
@@ -112,14 +114,14 @@ const TaskBar = ({ open, handleClose }: Props) => {
         '& .MuiDrawer-paper': {
           width: drawerWidth,
           px: '20px',
-          backgroundColor: theme.palette.mLightGray?.main,
+          backgroundColor: theme.palette.mWhite?.main,
         },
       }}
     >
       <div
         className={`flex ${
           !show ? 'justify-between' : 'justify-end'
-        } items-center mb-2 sticky top-0 z-10 py-[10px] bg-lightGray-main`}
+        } items-center mb-2 sticky top-0 z-10 py-[10px] bg-white-main`}
         id='header'
       >
         {!show && (
@@ -169,6 +171,15 @@ const TaskBar = ({ open, handleClose }: Props) => {
           clearErrors={clearErrors}
           validation={searchSelectValidation('Organization')}
           selectDefault={true}
+          handleOnChange={(e: any) => {
+            setData([])
+            if (tabIndex === 0) {
+              getData(0, e?._id)
+            }
+            if (tabIndex === 1) {
+              getData(1, e?._id)
+            }
+          }}
         />
       </div>
       {!show && (
@@ -208,8 +219,12 @@ const TaskBar = ({ open, handleClose }: Props) => {
                 <div className='px-3 py-2 h-24 min-h-24 flex flex-col justify-between'>
                   <div>{x?.description}</div>
                   <div className='flex justify-between items-center'>
-                    <div className='bg-darkGray-main rounded-full h-10 w-10 flex items-center justify-center text-white-main'>
-                      {x?.assignToName?.charAt(0).toUpperCase()}
+                    <div className='flex items-center gap-2'>
+                      <div className='bg-darkGray-main rounded-full h-10 w-10 flex items-center justify-center text-white-main'>
+                        {x?.assignToName?.charAt(0).toUpperCase()}
+                      </div>
+
+                      <span>{x?.assignToName}</span>
                     </div>
                     <span>{formatDate(x?.createdAt)}</span>
                   </div>
@@ -240,8 +255,12 @@ const TaskBar = ({ open, handleClose }: Props) => {
                 <div className='px-3 py-2 h-24 min-h-24 flex flex-col justify-between'>
                   <div>{x?.description}</div>
                   <div className='flex justify-between items-center'>
-                    <div className='bg-darkGray-main rounded-full h-10 w-10 flex items-center justify-center text-white-main'>
-                      {x?.assignToName?.charAt(0).toUpperCase()}
+                    <div className='flex items-center gap-2'>
+                      <div className='bg-darkGray-main rounded-full h-10 w-10 flex items-center justify-center text-white-main'>
+                        {x?.assignToName?.charAt(0).toUpperCase()}
+                      </div>
+
+                      <span>{x?.assignToName}</span>
                     </div>
                     <span>{formatDate(x?.createdAt)}</span>
                   </div>
@@ -259,7 +278,7 @@ const TaskBar = ({ open, handleClose }: Props) => {
         <form onSubmit={handleSubmit(onSubmitHandle)}>
           <div className='pt-5 flex flex-col gap-5 min-h-screen'>
             <div>
-              <p className='font-semibold text-xl ml-[6px] '>Add Task</p>
+              <p className='text-darkBlue-main font-semibold'>Add Task</p>
               <Divider
                 sx={{ borderColor: theme.palette.mMediumGray?.main, borderWidth: '1/2px' }}
               />
@@ -302,7 +321,7 @@ const TaskBar = ({ open, handleClose }: Props) => {
                 setError={setError}
               />
             </div>
-            <div className='sticky bottom-0 flex items-end justify-end bg-lightGray-main py-5 w-full gap-2'>
+            <div className='sticky bottom-0 flex items-end justify-end bg-white-main py-5 w-full gap-2'>
               <Button
                 color='mPink'
                 type='submit'

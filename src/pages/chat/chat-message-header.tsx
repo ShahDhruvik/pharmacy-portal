@@ -51,7 +51,7 @@ const ChatMessageHeader = (props: Props) => {
             <p>{chatRoom?._id === isTyping?.id && isTyping?.typing ? 'typing...' : ''}</p>
           </div>
           <div>
-            <p>
+            <p className='text-xs'>
               {!(chatRoom?._id === isTyping.id && isTyping.typing) &&
                 chatRoom?.lastSeen &&
                 `${
@@ -71,7 +71,7 @@ const ChatMessageHeader = (props: Props) => {
               }
             }}
           >
-            <MoreHorizIcon sx={{ color: theme.palette.mBlack?.main }} />
+            <MoreHorizIcon sx={{ color: theme.palette.mDarkBlue?.main }} />
           </IconButton>
           <ChatHeaderMenu />
         </div>

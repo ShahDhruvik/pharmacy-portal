@@ -79,7 +79,7 @@ const ChatHeaderMenu = (props: Props) => {
                       '&.MuiListItemButton-root': {
                         px: 1,
                         py: '3px',
-                        ':hover': { color: theme.palette.mBlack?.main },
+                        // ':hover': { color: theme.palette.mBlack?.main },
                       },
                       minWidth: '100%',
                     }}
@@ -87,7 +87,7 @@ const ChatHeaderMenu = (props: Props) => {
                   >
                     <div className='flex items-center gap-2 justify-start'>
                       {MessageActionSvGs[(MessageActions as Record<string, string>)[x]]}
-                      <p className='font-bold'>{(MessageActions as Record<string, string>)[x]}</p>
+                      <p>{(MessageActions as Record<string, string>)[x]}</p>
                     </div>
                   </ListItemButton>
                 )

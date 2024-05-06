@@ -22,6 +22,7 @@ import DuoIcon from '@mui/icons-material/Duo'
 import { debounce } from 'lodash'
 import Spinner from '@/components/spinner'
 import { useDrawerWidth } from '@/components/DrawerWidth'
+import { ChatAreaType, useChat } from '@/context/ChatContext'
 
 type Props = {
   handleClose: () => void
@@ -43,6 +44,7 @@ const ViewBar = ({
   cancel,
   manageState,
 }: Props) => {
+  const { setOpenChatDrawer, setChatArea } = useChat()
   const [newData, setNewData] = useState<any>(undefined)
   const { setLoading, loading } = useLoading()
   const showToast = useToast()
@@ -127,13 +129,13 @@ const ViewBar = ({
         '& .MuiDrawer-paper': {
           width: drawerWidth,
           px: '20px',
-          backgroundColor: theme.palette.mLightGray?.main,
+          backgroundColor: theme.palette.mWhite?.main,
         },
       }}
     >
       <div>
         <div
-          className={`flex justify-end items-end mb-2 sticky top-0 z-10 py-[10px] bg-lightGray-main`}
+          className={`flex justify-end items-end mb-2 sticky top-0 z-10 py-[10px] bg-white-main`}
           id='header'
         >
           <Button
@@ -142,7 +144,6 @@ const ViewBar = ({
             sx={{
               color: theme.palette.mMidBlue?.main,
               minWidth: 'max-content',
-              fontSize: '1rem',
               height: 20,
             }}
             onClick={() => {
@@ -162,29 +163,15 @@ const ViewBar = ({
             placeholder='Enter patient name, mobile#'
             validation={{}}
             label='Search*'
-            // handleOnChange={(e: any) => setSearch(e.target.value)}
             handleOnChange={(e) => handleSearch(e.target.value)}
           />
         </div>
         <div className='flex items-center justify-between my-2 '>
-          <span
-            className='max-mxs:text-sm text-darkBlue-main underline'
-            role='button'
-            // onClick={getAppDataForToday}
-          >
+          <span className='max-mxs:text-sm text-darkBlue-main underline' role='button'>
             Today
           </span>
           <button
             className='text-darkBlue-main font-normal text-sm max-mxs:text-sm text-end'
-            // variant='text'
-            // color='mMidBlue'
-            // sx={{
-            //   color: theme.palette?.mDarkBlue?.main,
-            //   minWidth: 'max-content',
-            //   marginLeft: 19,
-            //   fontWeight: 400,
-            //   fontSize: 15,
-            // }}
             onClick={() => setOpenPicker(!openPicker)}
             onKeyDown={() => setOpenPicker(true)}
           >
@@ -228,7 +215,7 @@ const ViewBar = ({
         </div>
         <div className='flex flex-col gap-5 mb-3'>
           <div>
-            <h2>{heading}</h2>
+            <h2 className='text-darkBlue-main font-semibold'>{heading}</h2>
             <Divider
               sx={{
                 borderColor: theme.palette.mMediumGray?.main,
@@ -249,22 +236,19 @@ const ViewBar = ({
                           <span className='rounded-md bg-darkBlue-main px-3'>
                             {x?.appointmentMode}
                           </span>
-                          <span className='rounded-md bg-green-main px-3 lg:block hidden'>
-                            {' '}
-                            {x?.appointmentStatus?.enumType}
-                          </span>
                           <span className='mr-3 rounded-md bg-darkGray-main px-3'>
-                            Sexual Health
+                            {x?.specialty[0]?.displayName}
                           </span>
                         </div>
                       </div>
                       <div className='flex items-center justify-between gap-5 p-5'>
                         <div className='flex w-4/5 flex-col gap-5'>
                           <div className='flex items-start gap-5 flex-1'>
-                            <div>
+                            <div className='bg-gray-main'>
                               <Avatar
-                                alt='Remy Sharp'
+                                alt={x?.practiceName}
                                 src={`${CONST_APP_IMAGE_URL}${x?.practiceLogo}`}
+                                sx={{ borderRadius: 0 }}
                               />
                             </div>
                             <div className='leading-5'>
@@ -278,10 +262,11 @@ const ViewBar = ({
                             </div>
                           </div>
                           <div className='flex items-start gap-5 flex-1'>
-                            <div>
+                            <div className='bg-gray-main'>
                               <Avatar
-                                alt='Remy Sharp'
+                                alt={x.patientFirstName}
                                 src={`${CONST_APP_IMAGE_URL}${x?.patientProfilePicture}`}
+                                sx={{ backgroundColor: theme.palette.mGray?.main, borderRadius: 0 }}
                               />
                             </div>
                             <div className='leading-5'>
@@ -309,6 +294,12 @@ const ViewBar = ({
                               rel='noopener noreferrer'
                             >
                               <IconButton
+                                onClick={() => {}}
+                                disabled={
+                                  x?.appointmentMode !== PracticeModeEnum.VIRTUAL_CARE
+                                    ? true
+                                    : false
+                                }
                                 sx={
                                   x?.appointmentMode !== PracticeModeEnum.VIRTUAL_CARE
                                     ? { cursor: 'not-allowed' }
@@ -318,7 +309,10 @@ const ViewBar = ({
                                 <DuoIcon
                                   sx={{
                                     color: theme.palette.mWhite?.main,
-                                    backgroundColor: theme.palette.mDarkGray?.main,
+                                    backgroundColor:
+                                      x?.appointmentMode !== PracticeModeEnum.VIRTUAL_CARE
+                                        ? theme.palette.mGray?.main
+                                        : theme.palette.mDarkBlue?.main,
                                     padding: '4px',
                                     borderRadius: '9999px',
                                   }}
@@ -326,24 +320,27 @@ const ViewBar = ({
                               </IconButton>
                             </a>
                           )}
-                          {/* {!upcoming && ( */}
-                          <IconButton>
+                          <IconButton
+                            onClick={() => {
+                              setChatArea(ChatAreaType.Message)
+                              setOpenChatDrawer(true)
+                            }}
+                          >
                             <ChatOutlinedIcon
                               sx={{
                                 color: theme.palette.mWhite?.main,
-                                backgroundColor: theme.palette.mDarkGray?.main,
+                                backgroundColor: theme.palette.mDarkBlue?.main,
                                 padding: '4px',
                                 borderRadius: '9999px',
                               }}
                             />
                           </IconButton>
-                          {/* )} */}
                           <a aria-label='gmail' href={`mailto:${x?.practiceEmail}`} target='_blank'>
                             <IconButton>
                               <EmailOutlinedIcon
                                 sx={{
                                   color: theme.palette.mWhite?.main,
-                                  backgroundColor: theme.palette.mDarkGray?.main,
+                                  backgroundColor: theme.palette.mDarkBlue?.main,
                                   padding: '4px',
                                   borderRadius: '9999px',
                                 }}
@@ -371,22 +368,22 @@ const ViewBar = ({
                     >
                       <div className='relative border-black'>
                         <div className='absolute inset-0 flex items-center justify-end md:gap-3 gap-1 leading-5 text-white-main text-[12px]'>
-                          <span className='rounded-md bg-blue-main px-3'>{x?.appointmentMode}</span>
-                          <span className='rounded-md bg-yellow-main px-3 text-black-main lg:block hidden'>
-                            {x?.appointmentStatus?.enumType}
+                          <span className='rounded-md bg-darkBlue-main px-3'>
+                            {x?.appointmentMode}
                           </span>
                           <span className='mr-3 rounded-md bg-darkGray-main px-3'>
-                            Sexual Health
+                            {x?.specialty[0]?.displayName}
                           </span>
                         </div>
                       </div>
                       <div className='flex items-center justify-between gap-5 p-5'>
                         <div className='flex w-4/5 flex-col gap-5'>
                           <div className='flex items-start gap-5 flex-1'>
-                            <div>
+                            <div className='bg-gray-main'>
                               <Avatar
-                                alt='Remy Sharp'
+                                alt={x?.practiceName}
                                 src={`${CONST_APP_IMAGE_URL}${x?.practiceLogo}`}
+                                sx={{ borderRadius: 0 }}
                               />
                             </div>
                             <div className='leading-5'>
@@ -400,10 +397,11 @@ const ViewBar = ({
                             </div>
                           </div>
                           <div className='flex items-start gap-5 flex-1'>
-                            <div>
+                            <div className='bg-gray-main'>
                               <Avatar
-                                alt='Remy Sharp'
+                                alt={x?.patientFirstName}
                                 src={`${CONST_APP_IMAGE_URL}${x?.patientProfilePicture}`}
+                                sx={{ backgroundColor: theme.palette.mGray?.main, borderRadius: 0 }}
                               />
                             </div>
                             <div className='leading-5'>
@@ -420,47 +418,35 @@ const ViewBar = ({
                             </div>
                           </div>
                         </div>
-                        <div className='flex flex-col gap-1'>
-                          <IconButton>
+                        <div className='flex flex-col gap-1 h-40 items-start justify-start'>
+                          <IconButton
+                            onClick={() => {
+                              handleClose()
+                              setChatArea(ChatAreaType.Message)
+                              setOpenChatDrawer(true)
+                            }}
+                          >
                             <ChatOutlinedIcon
                               sx={{
                                 color: theme.palette.mWhite?.main,
-                                backgroundColor: theme.palette.mDarkGray?.main,
+                                backgroundColor: theme.palette.mDarkBlue?.main,
                                 padding: '4px',
                                 borderRadius: '9999px',
                               }}
                             />
                           </IconButton>
-                          {/* <IconButton>
-                            <LocationOnOutlinedIcon
-                              sx={{
-                                color: theme.palette.mWhite?.main,
-                                backgroundColor: theme.palette.mDarkGray?.main,
-                                padding: '4px',
-                                borderRadius: '9999px',
-                              }}
-                            />
-                          </IconButton> */}
-                          <IconButton>
-                            <EmailOutlinedIcon
-                              sx={{
-                                color: theme.palette.mWhite?.main,
-                                backgroundColor: theme.palette.mDarkGray?.main,
-                                padding: '4px',
-                                borderRadius: '9999px',
-                              }}
-                            />
-                          </IconButton>
-                          {/* <IconButton>
-                            <ThumbUpOutlinedIcon
-                              sx={{
-                                color: theme.palette.mWhite?.main,
-                                backgroundColor: theme.palette.mBlue?.main,
-                                padding: '4px',
-                                borderRadius: '9999px',
-                              }}
-                            />
-                          </IconButton> */}
+                          <a aria-label='gmail' href={`mailto:${x?.practiceEmail}`} target='_blank'>
+                            <IconButton>
+                              <EmailOutlinedIcon
+                                sx={{
+                                  color: theme.palette.mWhite?.main,
+                                  backgroundColor: theme.palette.mDarkBlue?.main,
+                                  padding: '4px',
+                                  borderRadius: '9999px',
+                                }}
+                              />
+                            </IconButton>
+                          </a>
                         </div>
                       </div>
                     </div>
@@ -482,21 +468,22 @@ const ViewBar = ({
                     >
                       <div className='relative border-black'>
                         <div className='absolute inset-0 flex items-center justify-end md:gap-3 gap-1 leading-5 text-white-main text-[12px]'>
-                          <span className='rounded-md bg-orange-main px-3 lg:block hidden'>
+                          <span className='rounded-md bg-darkBlue-main px-3'>
                             {x?.appointmentStatus?.enumType}
                           </span>
                           <span className='mr-3 rounded-md bg-darkGray-main px-3'>
-                            Sexual Health
+                            {x?.specialty[0]?.displayName}
                           </span>
                         </div>
                       </div>
                       <div className='flex items-center justify-between gap-5 p-5'>
                         <div className='flex w-4/5 flex-col gap-5'>
                           <div className='flex items-start gap-5 flex-1'>
-                            <div>
+                            <div className='bg-gray-main'>
                               <Avatar
-                                alt='Remy Sharp'
+                                alt={x?.practiceName}
                                 src={`${CONST_APP_IMAGE_URL}${x?.practiceLogo}`}
+                                sx={{ borderRadius: 0 }}
                               />
                             </div>
                             <div className='leading-5'>
@@ -510,10 +497,11 @@ const ViewBar = ({
                             </div>
                           </div>
                           <div className='flex items-start gap-5 flex-1'>
-                            <div>
+                            <div className='bg-gray-main'>
                               <Avatar
-                                alt='Remy Sharp'
+                                alt={x.patientFirstName}
                                 src={`${CONST_APP_IMAGE_URL}${x?.patientProfilePicture}`}
+                                sx={{ backgroundColor: theme.palette.mGray?.main, borderRadius: 0 }}
                               />
                             </div>
                             <div className='leading-5'>
@@ -530,47 +518,35 @@ const ViewBar = ({
                             </div>
                           </div>
                         </div>
-                        <div className='flex flex-col gap-1'>
-                          <IconButton>
+                        <div className='flex flex-col gap-1 h-40 items-start justify-start'>
+                          <IconButton
+                            onClick={() => {
+                              handleClose()
+                              setChatArea(ChatAreaType.Message)
+                              setOpenChatDrawer(true)
+                            }}
+                          >
                             <ChatOutlinedIcon
                               sx={{
                                 color: theme.palette.mWhite?.main,
-                                backgroundColor: theme.palette.mDarkGray?.main,
+                                backgroundColor: theme.palette.mDarkBlue?.main,
                                 padding: '4px',
                                 borderRadius: '9999px',
                               }}
                             />
                           </IconButton>
-                          {/* <IconButton>
-                            <LocationOnOutlinedIcon
-                              sx={{
-                                color: theme.palette.mWhite?.main,
-                                backgroundColor: theme.palette.mDarkGray?.main,
-                                padding: '4px',
-                                borderRadius: '9999px',
-                              }}
-                            />
-                          </IconButton> */}
-                          <IconButton>
-                            <EmailOutlinedIcon
-                              sx={{
-                                color: theme.palette.mWhite?.main,
-                                backgroundColor: theme.palette.mDarkGray?.main,
-                                padding: '4px',
-                                borderRadius: '9999px',
-                              }}
-                            />
-                          </IconButton>
-                          {/* <IconButton>
-                            <MovieOutlinedIcon
-                              sx={{
-                                color: theme.palette.mWhite?.main,
-                                backgroundColor: theme.palette.mPink?.main,
-                                padding: '4px',
-                                borderRadius: '9999px',
-                              }}
-                            />
-                          </IconButton> */}
+                          <a aria-label='gmail' href={`mailto:${x?.practiceEmail}`} target='_blank'>
+                            <IconButton>
+                              <EmailOutlinedIcon
+                                sx={{
+                                  color: theme.palette.mWhite?.main,
+                                  backgroundColor: theme.palette.mDarkBlue?.main,
+                                  padding: '4px',
+                                  borderRadius: '9999px',
+                                }}
+                              />
+                            </IconButton>
+                          </a>
                         </div>
                       </div>
                     </div>

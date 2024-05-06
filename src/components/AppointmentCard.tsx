@@ -17,6 +17,7 @@ import Spinner from './spinner'
 import { useLoading } from '@/context/LoadingContext'
 import { useToast } from '@/hooks/useToast'
 import DuoIcon from '@mui/icons-material/Duo'
+import { ChatAreaType, useChat } from '@/context/ChatContext'
 interface Props {
   heading: string
   upcoming?: boolean
@@ -51,6 +52,8 @@ const AppointmentCard = ({
   full,
   data,
 }: Props) => {
+  const { setOpenChatDrawer, setChatArea } = useChat()
+
   const [openDrawer, setOpenDrawer] = useState(false)
   const { setLoading, loading } = useLoading()
   const showToast = useToast()
@@ -68,7 +71,9 @@ const AppointmentCard = ({
   if (!loading.isLoading && !loading.isAppointmentLoader) {
     return (
       <>
-        <div className={`w-full ${isMediumScreen || isFullCardScreen ? '' : 'max-w-[425px]'} `}>
+        <div
+          className={`w-full h-72 ${isMediumScreen || isFullCardScreen ? '' : 'max-w-[425px]'} `}
+        >
           {full && (
             <>
               {' '}
@@ -131,30 +136,30 @@ const AppointmentCard = ({
                               {x?.appointmentStatus?.enumType}
                             </span>
                             <span className='mr-3 rounded-md bg-darkGray-main px-3'>
-                              Sexual Health
+                              {x?.specialty[0]?.displayName}
                             </span>
                           </>
                         )}
                         {complete && (
                           <>
-                            <span className='rounded-md bg-blue-main px-3'>
+                            <span className='rounded-md bg-darkBlue-main px-3'>
                               {x?.appointmentMode}
                             </span>
-                            <span className='rounded-md bg-yellow-main px-3 text-black-main lg:block hidden'>
+                            <span className='rounded-md bg-blue-main px-3 lg:block hidden'>
                               {x?.appointmentStatus?.enumType}
                             </span>
                             <span className='mr-3 rounded-md bg-darkGray-main px-3'>
-                              Sexual Health
+                              {x?.specialty[0]?.displayName}{' '}
                             </span>
                           </>
                         )}
                         {cancel && (
                           <>
-                            <span className='rounded-md bg-orange-main px-3'>
+                            <span className='rounded-md bg-darkBlue-main px-3'>
                               {x?.appointmentMode}
                             </span>
                             <span className='mr-3 rounded-md bg-darkGray-main px-3'>
-                              Sexual Health
+                              {x?.specialty[0]?.displayName}
                             </span>
                           </>
                         )}
@@ -163,10 +168,11 @@ const AppointmentCard = ({
                     <div className='flex items-center justify-between gap-5 p-5'>
                       <div className='flex w-4/5 flex-col gap-5'>
                         <div className='flex items-start gap-5 flex-1'>
-                          <div>
+                          <div className='bg-gray-main'>
                             <Avatar
-                              alt='Remy Sharp'
+                              alt={x?.practiceName}
                               src={`${CONST_APP_IMAGE_URL}${x?.practiceLogo}`}
+                              sx={{ borderRadius: 0 }}
                             />
                           </div>
                           <div className='leading-5'>
@@ -180,10 +186,11 @@ const AppointmentCard = ({
                           </div>
                         </div>
                         <div className='flex items-start gap-5 flex-1'>
-                          <div>
+                          <div className='bg-gray-main'>
                             <Avatar
-                              alt='Remy Sharp'
+                              alt={x?.patientFirstName}
                               src={`${CONST_APP_IMAGE_URL}${x?.patientProfilePicture}`}
+                              sx={{ backgroundColor: theme.palette.mGray?.main, borderRadius: 0 }}
                             />
                           </div>
                           <div className='leading-5'>
@@ -224,7 +231,10 @@ const AppointmentCard = ({
                               <DuoIcon
                                 sx={{
                                   color: theme.palette.mWhite?.main,
-                                  backgroundColor: theme.palette.mDarkGray?.main,
+                                  backgroundColor:
+                                    x?.appointmentMode !== PracticeModeEnum.VIRTUAL_CARE
+                                      ? theme.palette.mGray?.main
+                                      : theme.palette.mDarkBlue?.main,
                                   padding: '4px',
                                   borderRadius: '9999px',
                                 }}
@@ -232,24 +242,27 @@ const AppointmentCard = ({
                             </IconButton>
                           </a>
                         )}
-                        {/* {!upcoming && ( */}
-                        <IconButton>
+                        <IconButton
+                          onClick={() => {
+                            setChatArea(ChatAreaType.Message)
+                            setOpenChatDrawer(true)
+                          }}
+                        >
                           <ChatOutlinedIcon
                             sx={{
                               color: theme.palette.mWhite?.main,
-                              backgroundColor: theme.palette.mDarkGray?.main,
+                              backgroundColor: theme.palette.mDarkBlue?.main,
                               padding: '4px',
                               borderRadius: '9999px',
                             }}
                           />
                         </IconButton>
-                        {/* )} */}
                         <a aria-label='gmail' href={`mailto:${x?.practiceEmail}`} target='_blank'>
                           <IconButton>
                             <EmailOutlinedIcon
                               sx={{
                                 color: theme.palette.mWhite?.main,
-                                backgroundColor: theme.palette.mDarkGray?.main,
+                                backgroundColor: theme.palette.mDarkBlue?.main,
                                 padding: '4px',
                                 borderRadius: '9999px',
                               }}
@@ -262,7 +275,11 @@ const AppointmentCard = ({
                 </SwiperSlide>
               ))
             ) : (
-              <div className='flex items-center justify-center border-black-main rounded-md border-[1px] bg-yellowLight-main h-[202px] mt-3'>
+              <div
+                className={`flex items-center justify-center border-black-main rounded-md border-[1px] bg-yellowLight-main h-[205px] mt-2 w-full ${
+                  isMediumScreen || isFullCardScreen ? '' : 'max-w-[425px]'
+                } min-w-[320px]`}
+              >
                 There is nothing to show here!
               </div>
             )}

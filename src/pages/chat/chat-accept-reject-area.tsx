@@ -79,7 +79,7 @@ const ChatAcceptRejectArea = (props: Props) => {
       return (
         <CustomBackDrop bgColor='rgba(0,0,0,0.4)'>
           <Paper elevation={5}>
-            <div className=' bg-white-main text-darkestGray-main px-2 flex-1  flex flex-col items-center justify-center gap-2 pb-3 '>
+            <div className=' bg-white-main text-darkestGray-main px-2 flex-1  flex flex-col items-center justify-center gap-2 pb-3 rounded-md'>
               <Button
                 variant='text'
                 color='mMidBlue'
@@ -99,7 +99,9 @@ const ChatAcceptRejectArea = (props: Props) => {
               >
                 Back
               </Button>
-              <p className='text-2xl '>Accept request to start conversation</p>
+              <p className='text-base text-center text-darkGray-main pb-5'>
+                Accept request to start conversation
+              </p>
               <div className='flex justify-between gap-5'>
                 <Button
                   color='mPink'
@@ -128,6 +130,9 @@ const ChatAcceptRejectArea = (props: Props) => {
                     setChatLoading({ loading: false, loadingProps: { accept_reject: false } })
                   }}
                   disabled={chatLoading.loading && chatLoading.loadingProps?.accept_reject}
+                  sx={{
+                    minWidth: '100px',
+                  }}
                 >
                   {chatLoading.loading && chatLoading.loadingProps?.accept_reject
                     ? 'Please wait'
@@ -156,6 +161,9 @@ const ChatAcceptRejectArea = (props: Props) => {
                     setChatLoading({ loading: false, loadingProps: { accept_reject: false } })
                   }}
                   disabled={chatLoading.loading && chatLoading.loadingProps?.accept_reject}
+                  sx={{
+                    minWidth: '100px',
+                  }}
                 >
                   {chatLoading.loading && chatLoading.loadingProps?.accept_reject
                     ? 'Please wait'
@@ -190,7 +198,9 @@ const ChatAcceptRejectArea = (props: Props) => {
               >
                 Back
               </Button>
-              <p className='text-2xl '>Waiting for user to accept the request.</p>
+              <p className='text-base text-center text-darkGray-main'>
+                The silence is palpable but lets wait for other party to accept your request..{' '}
+              </p>
             </div>
           </Paper>
         </CustomBackDrop>

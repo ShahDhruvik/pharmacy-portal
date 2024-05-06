@@ -192,11 +192,11 @@ const ChatBoxActionConfirmation = (props: Props) => {
         )}
         <Paper elevation={5} sx={{ p: 2 }}>
           <div className='flex flex-col items-center justify-center flex-1 px-3'>
-            <p className='text-xl font-bold text-center mb-5'>
+            <p className='text-base text-center mb-5'>
               {messageActionType === MessageActions.Delete &&
                 `Are you sure you want to delete this message?`}
               {messageActionType === MessageActions.Edit &&
-                `Are you sure you want to update this message?`}
+                `Are you sure you want to edit this message?`}
               {messageActionType === MessageActions.ClearChatMessages &&
                 `Are you sure you want to clear all messages?`}
             </p>
@@ -214,12 +214,12 @@ const ChatBoxActionConfirmation = (props: Props) => {
                 helperText={errors.message?.message ?? ''}
               />
             )}
-            <div className='flex gap-4'>
-              <Button color='primary' onClick={handleConfirm}>
-                Yes
+            <div className='flex gap-4 my-4'>
+              <Button color='mPink' sx={{ minWidth: '100px' }} onClick={handleClose}>
+                Cancel
               </Button>
-              <Button color='primary' onClick={handleClose}>
-                No
+              <Button color='mPink' sx={{ minWidth: '100px' }} onClick={handleConfirm}>
+                Confirm
               </Button>
             </div>
           </div>

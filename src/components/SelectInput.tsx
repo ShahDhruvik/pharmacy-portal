@@ -29,6 +29,7 @@ type Props = {
   handleChange?: () => void
   isDisabled?: boolean
   selectDefault?: boolean
+  handleOnChange?: any
 }
 
 const listBoxPropsDropdown = () => {
@@ -100,6 +101,7 @@ const SelectInput = ({
   sx,
   isDisabled,
   selectDefault,
+  handleOnChange,
 }: Props) => {
   const inputStyleProps: SxProps<Theme> = { ...sx, width: '100%' }
 
@@ -138,6 +140,9 @@ const SelectInput = ({
                 setValue(name, val)
                 if (handleChange) {
                   handleChange()
+                }
+                if (handleOnChange) {
+                  handleOnChange(val)
                 }
                 if (val._id === acDefaultValue._id) {
                   setError(name, { type: 'validate', message: `Select ${label}` })

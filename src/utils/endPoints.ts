@@ -49,6 +49,7 @@ export const enum DROPDOWN {
   drpAssignedTo = DEF_PATHS.main + DEF_PATHS.practice + '/practice-user/dropdown',
   drpPractice = DEF_PATHS.main + DEF_PATHS.practice + '/dropdown',
   drpOrg = DEF_PATHS.main + '/organization/get-all-by-provider',
+  drpOrgUser = DEF_PATHS.main + DEF_PATHS.provider + '/org-user-dropdown',
 }
 
 export const enum APPOINTMENT {

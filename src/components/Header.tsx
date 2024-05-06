@@ -122,7 +122,7 @@ const Header = ({}: Props) => {
               }}
               className='flex items-center gap-2 bg-white-main px-3 py-1'
             >
-              <p className='hover:underline   rounded-sm'>{'Office Chat'}</p>
+              <p className='hover:underline rounded-sm'>{'Office Chat'}</p>
               {notify > 0 && (
                 <>
                   <ReactPlayer

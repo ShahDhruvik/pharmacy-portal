@@ -168,7 +168,7 @@ const ChatRoomSearchInput = (props: Props) => {
       <Popper
         open={Boolean(anchorElSearchInput) && chatOfficeUsers.length > 0}
         anchorEl={anchorElSearchInput}
-        sx={{ zIndex: theme.zIndex.drawer + 1, minWidth: '39%' }}
+        sx={{ zIndex: theme.zIndex.drawer + 1 }}
       >
         <Paper elevation={1} sx={{ minWidth: '100%' }}>
           <List disablePadding>

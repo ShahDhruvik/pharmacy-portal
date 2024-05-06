@@ -445,15 +445,16 @@ const ChatMessageArea = (props: Props) => {
   }, [socket, chatRoom])
   return (
     <>
-      <div className={`flex justify-between items-center sticky top-0 px-1 py-1`} id='header'>
+      <div
+        className={`flex justify-between bg-white-main items-center sticky top-0 px-1 py-1`}
+        id='header'
+      >
         <Button
           variant='text'
           color='mMidBlue'
           sx={{
             color: theme.palette.mMidBlue?.main,
             minWidth: 'max-content',
-            fontSize: '1rem',
-
             height: 20,
           }}
           onClick={() => {
@@ -471,8 +472,6 @@ const ChatMessageArea = (props: Props) => {
           sx={{
             color: theme.palette.mMidBlue?.main,
             minWidth: 'max-content',
-            fontSize: '1rem',
-
             height: 20,
           }}
           disableRipple
@@ -486,14 +485,14 @@ const ChatMessageArea = (props: Props) => {
           Done
         </Button>
       </div>
-      <Divider />
+      {/* <Divider /> */}
       {!chatNotFound?.notFoundStatus && chatRoom && (
         <>
           <ChatMessageHeader />
           <ChatMessageSpace />
           {chatRoom.isConfirmed && <ChatMessageInput />}
           {scrollButton && (
-            <div className='w-max z-10 absolute  bottom-[70px] right-5 bg-pink-main rounded-full self-end shadow-box-out'>
+            <div className='w-max absolute bottom-[70px] right-5 bg-pink-main rounded-full self-end shadow-box-out'>
               <IconButton
                 onClick={() => {
                   waitForChatElement()

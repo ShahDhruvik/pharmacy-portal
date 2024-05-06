@@ -47,7 +47,7 @@ const Profilebar = ({ open, handleClose }: Props) => {
         '& .MuiDrawer-paper': {
           width: drawerWidth,
           px: '20px',
-          backgroundColor: theme.palette.mLightGray?.main,
+          backgroundColor: theme.palette.mWhite?.main,
         },
       }}
     >

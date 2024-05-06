@@ -130,24 +130,20 @@ const ChatListItem = ({ chatData }: Props) => {
       >
         <Avatar src='/' alt={chatData?.orgUsers[0]?.name ?? ''} />
         <div className='flex-col'>
-          <p className='text-lg text-darkBlue-main font-semibold'>
+          <p className='text-sm text-darkBlue-main flex gap-2 font-normal'>
             {chatData?.orgUsers[0]?.name ?? ''}
           </p>
-          {countCondition && (
-            <p className='text-base font-semibold text-darkGray-main'>
-              {chatData?.lastMessage?.message ?? '--'}
-            </p>
-          )}
+          {countCondition && <p className='text-base'>{chatData?.lastMessage?.message ?? '--'}</p>}
         </div>
       </div>
       {countCondition && (
-        <div className='w-10 aspect-square bg-green-main text-white-main flex items-center justify-center rounded-full'>
-          <p className='text-lg font-semibold'>{chatData?.unseenCount ?? 0}</p>
+        <div className='w-5 aspect-square bg-green-main text-white-main flex items-center justify-center rounded-full'>
+          <p className='text-xs'>{chatData?.unseenCount ?? 0}</p>
         </div>
       )}
       {!chatData?.isConfirmed && (
-        <p className='font-semibold text-xs bg-green-main px-3 py-1 text-white-main rounded-md'>
-          new request
+        <p className='font-normal text-xs bg-green-main px-3 py-1 text-white-main rounded-md text-center'>
+          Chat Now
         </p>
       )}
     </ListItemButton>

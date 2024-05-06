@@ -79,20 +79,11 @@ const ChatMessageItem = ({
     (chatRoom?.orgUsers && chatRoom?.orgUsers.length > 0 ? chatRoom?.orgUsers[0]?.name : '') ?? ''
   if (right) {
     return (
-      <div className={`flex flex-col justify-end `}>
+      <div className={`flex flex-col justify-end my-2`}>
         <div className='flex justify-end items-center  relative'>
-          <p className='self-end text-sm font-semibold italic'>
+          <p className='self-end text-[10px]'>
             {mes.createdAt ? formatCreatedAt(mes.createdAt) : ''}
           </p>
-          <IconButton
-            onClick={handleOpenMenu}
-            className='relative'
-            sx={{
-              p: 0,
-            }}
-          >
-            <MoreVertIcon sx={{ fontSize: '17px' }} />
-          </IconButton>
           <Popper
             open={Boolean(anchorEl)}
             anchorEl={anchorEl}
@@ -105,7 +96,7 @@ const ChatMessageItem = ({
                   right: '20px',
                   bottom: '5px',
                   minWidth: '30%',
-                  px: 0,
+                  px: 1,
                 }}
                 elevation={5}
               >
@@ -131,7 +122,6 @@ const ChatMessageItem = ({
                             '&.MuiListItemButton-root': {
                               px: 1,
                               py: '3px',
-                              ':hover': { color: theme.palette.primary.main },
                             },
                             minWidth: '100%',
                           }}
@@ -139,9 +129,7 @@ const ChatMessageItem = ({
                         >
                           <div className='flex items-center gap-2 justify-start'>
                             {MessageActionSvGs[(MessageActions as Record<string, string>)[x]]}
-                            <p className='font-bold'>
-                              {(MessageActions as Record<string, string>)[x]}
-                            </p>
+                            <p>{(MessageActions as Record<string, string>)[x]}</p>
                           </div>
                         </ListItemButton>
                       )
@@ -152,13 +140,22 @@ const ChatMessageItem = ({
             </ClickAwayListener>
           </Popper>
         </div>
-        <div className='flex items-center justify-end gap-3'>
+        <div className='flex items-start justify-end'>
           <div
-            className='bg-midGray-dark shadow-md  px-3 py-1 rounded-md rounded-br-none  font-semibold max-w-xl'
+            className='bg-darkBlue-main text-white-main text-xs px-3 py-1 rounded-md rounded-br-none max-w-xl'
             style={{ wordWrap: 'break-word' }}
           >
-            <p className='flex-1 '>{mes.message}</p>
+            <p className='flex-1'>{mes.message}</p>
           </div>
+          {/* <IconButton
+            onClick={handleOpenMenu}
+            className='relative'
+            sx={{
+              p: 0,
+            }}
+          >
+            <MoreVertIcon sx={{ fontSize: '17px' }} />
+          </IconButton> */}
           {/* <div className="self-end">
             {!noAvatar ? (
               <Avatar
@@ -174,10 +171,12 @@ const ChatMessageItem = ({
     )
   } else {
     return (
-      <div className={`flex flex-col  justify-start `}>
-        <p className='self-start ml-[7px] text-sm font-semibold italic'>{`${userName}, ${
-          mes.createdAt ? formatCreatedAt(mes.createdAt) : ''
-        }`}</p>
+      <div className={`flex flex-col  justify-start my-2`}>
+        <div className='flex justify-start items-center  relative'>
+          <p className='self-start text-[10px]'>{` ${
+            mes.createdAt ? formatCreatedAt(mes.createdAt) : ''
+          }`}</p>
+        </div>
         <div className='flex items-center justify-start gap-3'>
           {/* <div className="self-end">
             {!noAvatar ? (
@@ -191,7 +190,7 @@ const ChatMessageItem = ({
             )}
           </div> */}
           <div
-            className='bg-white-main shadow-md px-3 py-1 rounded-md rounded-br-none  font-semibold max-w-xl'
+            className='bg-lightGray-main text-xs px-3 py-1 rounded-md rounded-br-none max-w-xl'
             style={{ wordWrap: 'break-word' }}
           >
             <p className='flex-1 '>{mes.message}</p>

@@ -26,8 +26,8 @@ type Props = {
 export const Headers = ({ name }: { name: string }) => {
   return (
     <div className='mb-2'>
-      <p className='font-semibold text-xl ml-[6px] '>{name}</p>
-      <Divider sx={{ borderColor: theme.palette.mDarkGray?.main, borderWidth: '1.5px' }} />
+      <p className='font-semibold text-xl ml-[6px] text-darkBlue-main'>{name}</p>
+      <Divider sx={{ borderColor: theme.palette.mMediumGray?.main, borderWidth: '1/2px' }} />
     </div>
   )
 }
@@ -97,7 +97,7 @@ const Profile = ({ handleDrawerState, handleClose, handleField }: Props) => {
     return (
       <div>
         <div
-          className={`flex justify-between items-center mb-3 sticky top-0 z-10 bg-lightGray-main  py-[10px] `}
+          className={`flex justify-between items-center mb-3 sticky top-0 z-10 bg-white-main  py-[10px] `}
           id='header'
         >
           <Button
@@ -106,8 +106,6 @@ const Profile = ({ handleDrawerState, handleClose, handleField }: Props) => {
             sx={{
               color: theme.palette.mMidBlue?.main,
               minWidth: 'max-content',
-              fontSize: '1rem',
-
               height: 20,
             }}
             onClick={handleClose}
@@ -121,8 +119,6 @@ const Profile = ({ handleDrawerState, handleClose, handleField }: Props) => {
             sx={{
               color: theme.palette.mMidBlue?.main,
               minWidth: 'max-content',
-              fontSize: '1rem',
-
               height: 20,
             }}
             disableRipple

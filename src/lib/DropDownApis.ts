@@ -176,11 +176,14 @@ export const dropdownSpentOn = async (
 export const dropdownAssignedTo = async (
   loading: LoadingState['setLoading'],
   toast: ShowToastFunction,
+  id: number,
   isMulti?: SelectDDL,
 ) => {
   try {
     loading({ isLoading: true, isIndependentLoader: true, isPage: false })
-    const res = await axiosInstance.post(DROPDOWN.drpAssignedTo, {})
+    const res = await axiosInstance.post(DROPDOWN.drpOrgUser, {
+      organizationId: id,
+    })
     if (res && res.data.success && res.data) {
       const { data } = res
       const drpValues: any[] = []

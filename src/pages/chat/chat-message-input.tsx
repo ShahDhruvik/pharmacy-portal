@@ -8,6 +8,7 @@ import { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { PracticeOfficeMessageTypeEnum, PracticePatientChatUserTypeEnum } from '@/utils/constants'
 import { useToast } from '@/hooks/useToast'
+import { theme } from '@/context/ThemeProvider'
 
 type Props = {}
 
@@ -63,7 +64,7 @@ const ChatMessageInput = (props: Props) => {
     }
   }
   return (
-    <div className='m-2 p-2 rounded-lg shadow-cardShadow '>
+    <div className='py-2'>
       <form onSubmit={handleSubmit(onSubmitHandle)}>
         <TextField
           fullWidth
@@ -71,7 +72,7 @@ const ChatMessageInput = (props: Props) => {
           InputProps={{
             endAdornment: (
               <IconButton type='submit'>
-                <SendIcon />
+                <SendIcon sx={{ color: theme.palette.mDarkBlue?.main }} />
               </IconButton>
             ),
           }}

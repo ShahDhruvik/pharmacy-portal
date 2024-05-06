@@ -51,8 +51,8 @@ const ChatDrawer = (props: Props) => {
       sx={{
         '& .MuiDrawer-paper': {
           width: drawerWidth,
-          px: '20px',
-          backgroundColor: theme.palette.mLightGray?.main,
+          px: '10px',
+          backgroundColor: theme.palette.mWhite?.main,
         },
       }}
     >

@@ -150,7 +150,7 @@ const ChatList = (props: Props) => {
             alignItems: 'center',
           }}
         >
-          <p className='font-bold text-blue-main'>Not chat yet available</p>
+          <p className='text-darkGray-main text-base'>It's quiet around here, lets chat!</p>
         </ListItem>
       )}
     </List>
