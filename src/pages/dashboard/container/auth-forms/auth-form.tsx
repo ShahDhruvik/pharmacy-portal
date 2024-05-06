@@ -132,7 +132,7 @@ const AuthForm = ({ open, handleClose, signType, setSignType }: Props) => {
                   onChange={handleCaptchaChange}
                 />
               )}
-              <Box display={'flex'} justifyContent={'end'} gap={1} marginTop={1} width={'100%'}>
+              <Box display={'flex'} justifyContent={'center'} gap={1} marginTop={1} width={'100%'}>
                 <Button
                   variant='contained'
                   color='mPink'

@@ -71,6 +71,7 @@ export const DateInput = ({
               } else {
                 console.log(val, e)
                 clearErrors(name)
+                setOpenClender(false)
               }
             }}
             {...pickerProps}
@@ -83,7 +84,7 @@ export const DateInput = ({
                 InputLabelProps: { shrink: true },
                 onKeyDown: onKeyDown,
                 onClick: () => setOpenClender(!OpenClender),
-                placeholder: `Select ${label}`,
+                placeholder: `dd/mm/yyyy`,
                 disabled: isDisabled ?? false,
                 sx: inputStyleProps,
                 label: label,

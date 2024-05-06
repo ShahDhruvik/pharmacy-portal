@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Avatar, IconButton } from '@mui/material'
+import { Avatar, IconButton, useMediaQuery } from '@mui/material'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined'
@@ -62,11 +62,13 @@ const AppointmentCard = ({
   const handleOpenDrawer = () => {
     setOpenDrawer(true)
   }
+  const isMediumScreen = useMediaQuery(theme.breakpoints.between(1024, 1307))
+  const isFullCardScreen = useMediaQuery(theme.breakpoints.down(965))
 
   if (!loading.isLoading && !loading.isAppointmentLoader) {
     return (
       <>
-        <div className='w-[425px]'>
+        <div className={`w-full ${isMediumScreen || isFullCardScreen ? '' : 'max-w-[425px]'} `}>
           {full && (
             <>
               {' '}
@@ -112,7 +114,7 @@ const AppointmentCard = ({
             slidesPerView={1}
             scrollbar={{ draggable: true }}
             autoplay={{ delay: 2000 }}
-            className='md:max-w-sm xl:max-w-md max-w-xs'
+            // className='md:max-w-sm xl:max-w-md max-w-xs'
           >
             {data && data?.length > 0 ? (
               data?.map((x) => (
@@ -264,7 +266,7 @@ const AppointmentCard = ({
                 There is nothing to show here!
               </div>
             )}
-            {upcoming && full && (
+            {upcoming && full && data && data?.length > 1 && (
               <span className='flex justify-end text-darkBlue-main font-light'>
                 <button
                   onClick={() => {
@@ -276,7 +278,7 @@ const AppointmentCard = ({
                 </button>
               </span>
             )}
-            {complete && full && (
+            {complete && full && data && data?.length > 1 && (
               <span className='flex justify-end text-darkBlue-main font-light'>
                 <button
                   onClick={() => {
@@ -288,7 +290,7 @@ const AppointmentCard = ({
                 </button>
               </span>
             )}
-            {cancel && full && (
+            {cancel && full && data && data?.length > 1 && (
               <span className='flex justify-end text-darkBlue-main font-light'>
                 <button
                   onClick={() => {

@@ -48,17 +48,11 @@ const ChatDrawer = (props: Props) => {
         setChatRooms([])
       }}
       anchor='right'
-      PaperProps={{
-        sx: {
-          maxWidth: '40%',
-          minWidth: '40%',
-          background: theme.palette.mLightGray?.main,
-          px: 0,
-        },
-      }}
       sx={{
-        '&.MuiDrawer-paper': {
-          px: 0,
+        '& .MuiDrawer-paper': {
+          width: drawerWidth,
+          px: '20px',
+          backgroundColor: theme.palette.mLightGray?.main,
         },
       }}
     >

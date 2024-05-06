@@ -152,24 +152,24 @@ const Profile = ({ handleDrawerState, handleClose, handleField }: Props) => {
               editFunction={() => {
                 handleField(
                   PROF_FIELDS.COMMUNICATION_MOBILE,
-                  data && data.mobile,
+                  data && data?.mobile,
                   PROF_HEADER.PROFILE,
                 )
                 handleDrawerState(DRAWERSTATE.EDIT)
               }}
-              data={data && data[0].mobile}
+              data={data && data[0]?.mobile}
             />
             <FieldEdit
               name={PROF_FIELDS.COMMUNICATION_EMAIL}
               editFunction={() => {
                 handleField(
                   PROF_FIELDS.COMMUNICATION_EMAIL,
-                  data && data.email,
+                  data && data?.email,
                   PROF_HEADER.PROFILE,
                 )
                 handleDrawerState(DRAWERSTATE.EDIT)
               }}
-              data={data && data[0].email}
+              data={data && data[0]?.email}
             />
           </div>
         </div>

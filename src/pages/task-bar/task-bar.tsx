@@ -129,7 +129,6 @@ const TaskBar = ({ open, handleClose }: Props) => {
             sx={{
               color: theme.palette.mMidBlue?.main,
               minWidth: 'max-content',
-              fontSize: '1rem',
               height: 20,
             }}
             onClick={() => {
@@ -146,7 +145,6 @@ const TaskBar = ({ open, handleClose }: Props) => {
           sx={{
             color: theme.palette.mMidBlue?.main,
             minWidth: 'max-content',
-            fontSize: '1rem',
             height: 20,
           }}
           onClick={() => {
@@ -288,7 +286,7 @@ const TaskBar = ({ open, handleClose }: Props) => {
                 options={assignedTo as any}
                 name={'assignedTo'}
                 control={control}
-                label={'Assigned To*'}
+                label={'Assign To*'}
                 setValue={setValue}
                 setError={setError}
                 clearErrors={clearErrors}

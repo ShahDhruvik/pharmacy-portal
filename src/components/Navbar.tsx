@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import Logo from '../assets/images/pink.png'
+import Logo from '../assets/images/TH.png'
 import Text from '../assets/images/Triaina-Health-New.png'
 import { headerLinks } from '../utils/data'
 import { IconButton, Popper, useMediaQuery } from '@mui/material'
@@ -40,8 +40,8 @@ const Navbar = ({}: Props) => {
             <img
               src={Logo}
               alt='Logo'
-              width={50}
-              height={50}
+              width={40}
+              height={40}
               onClick={() => {
                 nav('/')
               }}
@@ -84,7 +84,7 @@ const Navbar = ({}: Props) => {
               <LockOpenIcon />
             </button>
           </ul>
-          <div className='flex items-center gap-1 md:hidden md:pt-0'>
+          <div className='flex items-center gap-1 md:hidden md:pt-0 pt-1'>
             {/* <div>
               <IconButton
                 aria-describedby={id}

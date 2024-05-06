@@ -2,7 +2,7 @@ import { theme } from '@/context/ThemeProvider'
 import { useMediaQuery } from '@mui/material'
 
 export const useDrawerWidth = () => {
-  const isLargeScreen = useMediaQuery(theme.breakpoints.up('lg'))
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up(1500))
   const isMediumScreen = useMediaQuery(theme.breakpoints.between('md', 'lg'))
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 

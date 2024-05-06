@@ -10,6 +10,7 @@ import img from '@/assets/images/Aspect_Ratio.jpg'
 import { RibbonField } from '@/types/ribbonTypes'
 import { getAllRibbon } from '@/lib/DashboardContent'
 import { subYears } from 'date-fns'
+import TriainaBanner from '@/assets/images/Triaina-Banner.png'
 
 interface Props {}
 
@@ -133,9 +134,8 @@ const Banner = ({}: Props) => {
               data={appointmentDetails?.cancelledAppointments?.slice(0, 5)}
             />
           </div>
-          {/* <Divider sx={{ borderBottom: '3px solid', borderColor: theme.palette.mDarkGray?.main }} /> */}
           <div className='w-full'>
-            <img src={img} alt='img' className='w-full my-5 h-60' />
+            <img src={TriainaBanner} alt='TriainaBanner' className='w-full my-5 h-60' />
           </div>
           <span className='flex justify-end font-light sm:text-sm text-xs pt-4 pb-2'>
             {`Copyright © ${subYears(new Date(), 1).getFullYear()}-${new Date()

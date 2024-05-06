@@ -216,7 +216,10 @@ export const ChatContextInitialVal: ChatContextType = {
   handleCloseDrawer: () => {},
   chatArea: ChatAreaType.List,
   setChatArea: () => {},
-  currentUser: JSON.parse(localStorage.getItem('user') as string) ?? undefined,
+  currentUser:
+    localStorage.getItem('user') !== 'undefined'
+      ? JSON.parse(localStorage.getItem('user') as string)
+      : undefined,
   setCurrentUser: () => {},
   chatRooms: [],
   setChatRooms: () => {},
