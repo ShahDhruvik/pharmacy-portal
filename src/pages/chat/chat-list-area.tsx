@@ -4,11 +4,13 @@ import ChatList from './chat-list'
 import { theme } from '@/context/ThemeProvider'
 import { ChatAreaType, useChat } from '@/context/ChatContext'
 import ChatRoomSearchInput from './chat-search-input'
+import ChatRequestArea from './chat-request-area'
 
 type Props = {}
 
 const ChatListArea = (props: Props) => {
-  const { handleCloseDrawer, currentUser, setChatArea, setChatRooms, setChatRoom } = useChat()
+  const { handleCloseDrawer, currentUser, setChatArea, setChatRooms, setChatRoom, createPopUp } =
+    useChat()
 
   return (
     <>
@@ -32,12 +34,16 @@ const ChatListArea = (props: Props) => {
           Done
         </Button>
       </div>
-      <div className='pb-1'>
-        <p className='text-darkBlue-main font-semibold'>Office Chat</p>
-        <Divider sx={{ mb: 2 }} />
-        <ChatRoomSearchInput />
-        <ChatList />
-      </div>
+      {!createPopUp.isOpen && (
+        <div className='pb-1'>
+          <p className='text-darkBlue-main font-semibold'>Office Chat</p>
+          <Divider sx={{ mb: 2 }} />
+          <ChatRoomSearchInput />
+          <ChatList />
+        </div>
+      )}
+
+      {createPopUp.isOpen && <ChatRequestArea />}
     </>
   )
 }

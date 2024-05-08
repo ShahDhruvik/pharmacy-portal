@@ -58,6 +58,7 @@ const ChatRoomSearchInput = (props: Props) => {
     anchorElSearchInput,
     setUpdateChatRooms,
     setChatArea,
+    setCreatePopUp,
   } = useChat()
   //search
   const getOrgUserList = async (val: string) => {
@@ -91,6 +92,7 @@ const ChatRoomSearchInput = (props: Props) => {
 
   //joinRoom
   const joinRoomEmit = (chatConversationId: string) => {
+    localStorage.setItem('lasVisitedChatConversationId', chatConversationId)
     console.log('room called join fnc ::::')
     socket.emit(SOCKET_STRING.PRACTICE_OFFICE_JOIN_ROOM, chatConversationId)
   }
@@ -150,6 +152,12 @@ const ChatRoomSearchInput = (props: Props) => {
       socket.on(SOCKET_STRING.PRACTICE_OFFICE_UPDATE_LAST_SEEN, handleOnline)
     }
   }, [socket, chatRoom])
+  useEffect(() => {
+    return () => {
+      setAnchorElSearchInput(null)
+      setChatOfficeUsers([])
+    }
+  }, [])
   return (
     <>
       <TextField
@@ -170,7 +178,15 @@ const ChatRoomSearchInput = (props: Props) => {
         anchorEl={anchorElSearchInput}
         sx={{ zIndex: theme.zIndex.drawer + 1 }}
       >
-        <Paper elevation={1} sx={{ minWidth: '100%' }}>
+        <Paper
+          elevation={1}
+          sx={{
+            minWidth:
+              (searchRef.current as HTMLInputElement)?.getBoundingClientRect()?.width ?? 300,
+            maxWidth:
+              (searchRef.current as HTMLInputElement)?.getBoundingClientRect()?.width ?? 300,
+          }}
+        >
           <List disablePadding>
             {chatOfficeUsers.map((x) => {
               return (
@@ -179,26 +195,32 @@ const ChatRoomSearchInput = (props: Props) => {
                   key={x.internalId}
                   onClick={async () => {
                     if (x.existChat === null && !x.notFound) {
-                      const res = await createOfficeChatConversation(
-                        setLoading,
-                        x?.internalId,
-                        showToast,
-                      )
-                      if (res) {
-                        console.log(res, 'create room')
-                        const emitData = {
-                          data: { ...res?.data?.data?.data },
-                          orgUserInternalId: currentUser?.internalId,
-                        }
-                        console.log(emitData)
-                        socket.emit(SOCKET_STRING.PRACTICE_OFFICE_ADD_ROOM, emitData)
-                        setUpdateChatRooms((prev) => !prev)
-                        if (searchRef.current) {
-                          // eslint-disable-next-line no-extra-semi
-                          ;(searchRef?.current as HTMLInputElement).value = ''
-                        }
-                        setChatOfficeUsers([])
-                      }
+                      setCreatePopUp({
+                        isOpen: true,
+                        internalId: x?.internalId,
+                      })
+                      ;(searchRef?.current as HTMLInputElement).value = ''
+                      setChatOfficeUsers([])
+                      // const res = await createOfficeChatConversation(
+                      //   setLoading,
+                      //   x?.internalId,
+                      //   showToast,
+                      // )
+                      // if (res) {
+                      //   console.log(res, 'create room')
+                      //   const emitData = {
+                      //     data: { ...res?.data?.data?.data },
+                      //     orgUserInternalId: currentUser?.internalId,
+                      //   }
+                      //   console.log(emitData)
+                      //   socket.emit(SOCKET_STRING.PRACTICE_OFFICE_ADD_ROOM, emitData)
+                      //   setUpdateChatRooms((prev) => !prev)
+                      //   if (searchRef.current) {
+                      //     // eslint-disable-next-line no-extra-semi
+                      //     ;(searchRef?.current as HTMLInputElement).value = ''
+                      //   }
+                      //   setChatOfficeUsers([])
+                      // }
                     } else {
                       if (chatRoom?._id !== x?.existChat?._id) {
                         setCurrentPage(1)

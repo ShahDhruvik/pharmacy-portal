@@ -117,7 +117,7 @@ const AuthForm = ({ open, handleClose, signType, setSignType }: Props) => {
                 name='userName'
                 handleChange={() => {}}
                 placeholder='Enter User Name'
-                validation={txtFieldValidation(true)}
+                validation={txtFieldValidation(true, 'Email')}
                 label='User Name*'
                 isDisabled={signType.includes(FORMTYPE.OTP)}
                 sx={{

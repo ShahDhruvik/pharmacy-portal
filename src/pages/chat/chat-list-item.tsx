@@ -41,6 +41,7 @@ const ChatListItem = ({ chatData }: Props) => {
   } = useChat()
   const joinRoomEmit = (chatConversationId: string) => {
     console.log('room called join fnc ::::')
+    localStorage.setItem('lasVisitedChatConversationId', chatConversationId)
     socket.emit(SOCKET_STRING.PRACTICE_OFFICE_JOIN_ROOM, chatConversationId)
   }
   const afterClickingRoom = (countCondition: boolean, x: ChatContextType['chatRooms'][0]) => {

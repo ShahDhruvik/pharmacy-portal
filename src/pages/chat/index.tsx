@@ -4,7 +4,7 @@ import { theme } from '@/context/ThemeProvider'
 import { Drawer } from '@mui/material'
 import ChatListArea from './chat-list-area'
 import ChatMessageArea from './chat-message-area'
-import { useLayoutEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 import useOnlineStatus from '@/hooks/useOnline'
 import Offline from '@/components/offline'
 import { useDrawerWidth } from '@/components/DrawerWidth'
@@ -38,6 +38,14 @@ const ChatDrawer = (props: Props) => {
     }
   }, [online])
   const drawerWidth = useDrawerWidth()
+  useEffect(() => {
+    return () => {
+      console.log('exist chat')
+      setChatRoom(undefined)
+      setChatRooms([])
+      localStorage.removeItem('lasVisitedChatConversationId')
+    }
+  }, [])
   return (
     <Drawer
       open={openChatDrawer}
