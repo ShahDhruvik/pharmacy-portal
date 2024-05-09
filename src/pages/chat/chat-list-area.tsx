@@ -14,7 +14,10 @@ const ChatListArea = (props: Props) => {
 
   return (
     <>
-      <div className={`flex justify-end items-center sticky top-0 px-1 py-1`} id='header'>
+      <div
+        className={`flex justify-end items-center sticky top-0 px-1 py-1 bg-white-main z-50`}
+        id='header'
+      >
         <Button
           variant='text'
           color='mMidBlue'
