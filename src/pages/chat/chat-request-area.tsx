@@ -46,6 +46,7 @@ const ChatRequestArea = (props: Props) => {
               console.log(emitData)
               socket.emit(SOCKET_STRING.PRACTICE_OFFICE_ADD_ROOM, emitData)
               setUpdateChatRooms((prev) => !prev)
+              setCreatePopUp({ isOpen: false })
             }
           }}
         >
