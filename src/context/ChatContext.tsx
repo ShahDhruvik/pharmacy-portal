@@ -2,6 +2,47 @@
 /* eslint-disable react-refresh/only-export-components */
 import { EnumValues } from '@/types/common'
 import { MessageActions } from '@/utils/constants'
+type OrganizationDataType = {
+  isNewRecord: boolean
+  id: number
+  countryId: number
+  maxInvestigationDiscount: number
+  minInvestigationDiscount: number
+  minPrescriptionDiscount: number
+  maxPrescriptionDiscount: number
+  address: string
+  officeId: string
+  addressLineTwo: string
+  masterCountryId: string
+  masterStateId: string
+  masterCityId: string
+  pinCode: string
+  user: string
+  logo: string
+  password: string
+  phone: string
+  mobile: string
+  fax: string
+  website: string
+  contactPerson: string
+  subscriptionId: string
+  resetPasswordToken: string | null
+  resetPasswordTokenTime: string | null
+  contactPersonEmail: string
+  contactPersonPhone: string
+  contactPersonMobile: string
+  subscriptionPrice: number
+  numberOfLicenses: number
+  name: string
+  createdAt: string
+  updatedAt: string
+  deletedAt: string | null
+  createdBy: string
+  updatedBy: string
+  deletedBy: string | null
+  isActive: boolean
+  isDeleted: boolean
+}
 import { ReactNode, createContext, useContext, useState, Dispatch, SetStateAction } from 'react'
 export const enum ChatAreaType {
   List = 'List',
@@ -70,6 +111,7 @@ export type ChatRoomType = {
   message?: string
   isConfirmed: boolean
   createdBy: string
+  organization: OrganizationDataType | null
 }
 export type MessageData = {
   messageDate: string

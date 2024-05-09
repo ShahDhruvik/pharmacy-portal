@@ -104,6 +104,12 @@ const ChatListItem = ({ chatData }: Props) => {
     }
   }, [socket, chatRoom])
   const countCondition = (chatData?.unseenCount as number) > 0 && chatData?._id !== chatRoom?._id
+  const orgName =
+    chatData?.orgUsers.length > 0 &&
+    chatData?.orgUsers[0].name.trim().toLowerCase() !==
+      chatData?.organization?.name.trim().toLowerCase()
+      ? chatData?.organization?.name
+      : ''
   return (
     <ListItemButton
       sx={{
@@ -134,6 +140,7 @@ const ChatListItem = ({ chatData }: Props) => {
           <p className='text-sm text-darkBlue-main flex gap-2 font-normal'>
             {chatData?.orgUsers[0]?.name ?? ''}
           </p>
+          <p className='text-xs text-darkGray-main'>{orgName ?? ''}</p>
           {countCondition && <p className='text-base'>{chatData?.lastMessage?.message ?? '--'}</p>}
         </div>
       </div>
