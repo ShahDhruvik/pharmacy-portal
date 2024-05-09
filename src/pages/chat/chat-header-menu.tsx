@@ -37,7 +37,7 @@ const ChatHeaderMenu = (props: Props) => {
     disable: boolean
   }[] = [
     {
-      name: 'Clear chat messages',
+      name: 'Clear messages',
       onClickFnc: async () => {},
       disable: chatLoading.loading && (chatLoading.loadingProps?.room as boolean),
     },

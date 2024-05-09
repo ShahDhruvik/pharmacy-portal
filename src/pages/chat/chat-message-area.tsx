@@ -505,7 +505,7 @@ const ChatMessageArea = (props: Props) => {
           <ChatMessageSpace />
           {chatRoom.isConfirmed && <ChatMessageInput />}
           {scrollButton && (
-            <div className='w-max absolute bottom-[70px] right-5 bg-pink-main rounded-full self-end shadow-box-out'>
+            <div className='w-max absolute bottom-[75px] right-2 bg-darkBlue-main rounded-md self-end shadow-box-out'>
               <IconButton
                 onClick={() => {
                   waitForChatElement()

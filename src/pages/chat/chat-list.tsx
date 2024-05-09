@@ -137,8 +137,8 @@ const ChatList = (props: Props) => {
             alignItems: 'center',
           }}
         >
-          <CircularProgress size={15} thickness={10} sx={{ color: theme.palette.mBlue?.main }} />
-          <p className='font-bold text-blue-main'>Initializing chat</p>
+          <CircularProgress size={15} thickness={6} sx={{ color: theme.palette.mDarkBlue?.main }} />
+          <p className='font-normal text-darkBlue-main'>Lets get you started here !</p>
         </ListItem>
       )}
       {!loading.isLoading && chatNotFound.notFoundStatus && chatNotFound?.notFoundProps?.list && (

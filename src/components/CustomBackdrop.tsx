@@ -21,8 +21,8 @@ const CustomBackDrop = ({ children, bgColor }: Props) => {
         justifyContent: 'center',
         alignItems: 'center',
         zIndex: theme.zIndex.drawer + 1,
-        color: bgColor ? bgColor : '#fff',
-        backgroundColor: bgColor ? bgColor : '#fff',
+        // color: bgColor ? bgColor : '#fff',
+        // backgroundColor: bgColor ? bgColor : '#fff',
         borderRadius: '6px',
       }}
     >

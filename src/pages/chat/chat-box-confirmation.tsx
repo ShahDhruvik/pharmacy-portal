@@ -177,7 +177,7 @@ const ChatBoxActionConfirmation = (props: Props) => {
   }, [socket, chatRoom])
   return (
     <CustomBackDrop bgColor='#ffffff'>
-      <div className='relative flex-1 flex flex-col items-center justify-center min-h-[560px]   border-l-[1px] border-darkestGray-main border-opacity-30 '>
+      <div className='relative flex-1 flex flex-col items-center justify-center min-h-[560px] border-l-[1px] border-darkestGray-main border-opacity-30 '>
         {messageActionLoading && (
           <CustomBackDrop bgColor='#ffffff'>
             <div className=' flex-1 flex flex-col items-center justify-center '>
@@ -194,11 +194,10 @@ const ChatBoxActionConfirmation = (props: Props) => {
           <div className='flex flex-col items-center justify-center flex-1 px-3'>
             <p className='text-base text-center mb-5'>
               {messageActionType === MessageActions.Delete &&
-                `Are you sure you want to delete this message?`}
-              {messageActionType === MessageActions.Edit &&
-                `Are you sure you want to edit this message?`}
+                `This action will delete the message.`}
+              {messageActionType === MessageActions.Edit && `This action will edit the message.`}
               {messageActionType === MessageActions.ClearChatMessages &&
-                `Are you sure you want to clear all messages?`}
+                `This action will clear all the messages.`}
             </p>
             {messageActionType === MessageActions.Edit && (
               <TextField
@@ -212,6 +211,9 @@ const ChatBoxActionConfirmation = (props: Props) => {
                 }}
                 error={errors.message ? true : false}
                 helperText={errors.message?.message ?? ''}
+                sx={{
+                  width: '100%',
+                }}
               />
             )}
             <div className='flex gap-4 my-4'>

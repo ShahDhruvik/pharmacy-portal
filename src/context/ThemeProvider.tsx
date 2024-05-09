@@ -58,6 +58,9 @@ declare module '@mui/material/styles' {
   interface Palette {
     mMidBlue?: PaletteColor
   }
+  interface Palette {
+    mChatBlue?: PaletteColor
+  }
   interface PaletteOptions {
     mPink?: PaletteColor
   }
@@ -108,6 +111,9 @@ declare module '@mui/material/styles' {
   }
   interface PaletteOptions {
     mMidBlue?: PaletteColor
+  }
+  interface PaletteOptions {
+    mChatBlue?: PaletteColor
   }
   interface TypographyVariants {
     btnTxt: React.CSSProperties
@@ -234,6 +240,11 @@ export const theme: Theme = createTheme({
       main: '#1A2428',
       light: '#1A2428',
       dark: '#1A2428',
+    },
+    mChatBlue: {
+      main: '#ADD8E6',
+      light: '#ADD8E6',
+      dark: '#ADD8E6',
     },
   },
   breakpoints: {

@@ -81,7 +81,7 @@ const ChatMessageItem = ({
     return (
       <div className={`flex flex-col justify-end my-2`}>
         <div className='flex justify-end items-center  relative'>
-          <p className='self-end text-[10px]'>
+          <p className='self-end text-[10px] mr-5'>
             {mes.createdAt ? formatCreatedAt(mes.createdAt) : ''}
           </p>
           <Popper
@@ -142,12 +142,12 @@ const ChatMessageItem = ({
         </div>
         <div className='flex items-start justify-end'>
           <div
-            className='bg-darkBlue-main text-white-main text-xs px-3 py-1 rounded-md rounded-br-none max-w-xl'
+            className='bg-darkBlue-main text-white-main text-xs px-3 py-1 rounded-md rounded-br-none max-w-[260px]'
             style={{ wordWrap: 'break-word' }}
           >
-            <p className='flex-1'>{mes.message}</p>
+            <p className='flex-1 '>{mes.message}</p>
           </div>
-          {/* <IconButton
+          <IconButton
             onClick={handleOpenMenu}
             className='relative'
             sx={{
@@ -155,7 +155,7 @@ const ChatMessageItem = ({
             }}
           >
             <MoreVertIcon sx={{ fontSize: '17px' }} />
-          </IconButton> */}
+          </IconButton>
           {/* <div className="self-end">
             {!noAvatar ? (
               <Avatar
@@ -190,7 +190,7 @@ const ChatMessageItem = ({
             )}
           </div> */}
           <div
-            className='bg-lightGray-main text-xs px-3 py-1 rounded-md rounded-br-none max-w-xl'
+            className='bg-lightGray-main text-xs px-3 py-1 rounded-md rounded-br-none max-w-[260px]'
             style={{ wordWrap: 'break-word' }}
           >
             <p className='flex-1 '>{mes.message}</p>
