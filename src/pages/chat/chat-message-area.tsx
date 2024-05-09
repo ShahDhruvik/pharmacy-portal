@@ -446,7 +446,7 @@ const ChatMessageArea = (props: Props) => {
   return (
     <>
       <div
-        className={`flex justify-between bg-white-main items-center sticky top-0 px-1 py-1`}
+        className={`flex justify-between bg-white-main items-center sticky top-0 px-1 py-1 z-50`}
         id='header'
       >
         <Button
