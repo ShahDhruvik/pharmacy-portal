@@ -144,6 +144,8 @@ export type OfficeUser = {
 }
 export type ChatAreaOptions = EnumValues<typeof ChatAreaType>
 export interface ChatContextType {
+  setCreatePopUp: Dispatch<SetStateAction<{ isOpen: boolean; internalId?: string }>>
+  createPopUp: { isOpen: boolean; internalId?: string }
   anchorElMenuHeader: HTMLDivElement | null
   setAnchorElMenuHeader: Dispatch<SetStateAction<HTMLDivElement | null>>
   chatLoading: ChatLoadingType
@@ -205,6 +207,8 @@ export interface ChatContextType {
   setUpdateChatRooms: Dispatch<SetStateAction<boolean>>
 }
 export const ChatContextInitialVal: ChatContextType = {
+  setCreatePopUp: () => {},
+  createPopUp: { isOpen: false },
   anchorElMenuHeader: null,
   setAnchorElMenuHeader: () => {},
   chatLoading: { loading: false },
@@ -271,6 +275,9 @@ export const ChatContextInitialVal: ChatContextType = {
 const ChatContext = createContext<ChatContextType>(ChatContextInitialVal)
 
 export function ChatProvider({ children }: { children: ReactNode }) {
+  const [createPopUp, setCreatePopUp] = useState<ChatContextType['createPopUp']>(
+    ChatContextInitialVal['createPopUp'],
+  )
   //User state
   const [currentUser, setCurrentUser] = useState<ChatContextType['currentUser']>(
     ChatContextInitialVal['currentUser'],
@@ -379,6 +386,8 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   return (
     <ChatContext.Provider
       value={{
+        createPopUp,
+        setCreatePopUp,
         setUpdateChatRooms,
         updateChatRooms,
         anchorElSearchInput,

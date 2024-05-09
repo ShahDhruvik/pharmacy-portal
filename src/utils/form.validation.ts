@@ -256,12 +256,12 @@ export const txtFieldValidation = (
         return {
           required: 'required.',
           minLength: { value: 1, message: 'Minimum 1 characters' },
-          maxLength: { value: 30, message: 'Maximum 30 characters allowed' },
+          maxLength: { value: 300, message: 'Maximum 300 characters allowed' },
         }
       } else {
         return {
           minLength: { value: 1, message: 'Minimum 1 characters' },
-          maxLength: { value: 30, message: 'Maximum 30 characters allowed' },
+          maxLength: { value: 300, message: 'Maximum 300 characters allowed' },
         }
       }
   }

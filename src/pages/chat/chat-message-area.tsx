@@ -443,6 +443,19 @@ const ChatMessageArea = (props: Props) => {
     }
     socket.on(SOCKET_STRING.PRACTICE_OFFICE_CLEARED_MESSAGES, handleUpdate)
   }, [socket, chatRoom])
+  useEffect(() => {
+    const handleInitialJoin = () => {
+      console.log('handleInitialJoin')
+      const id = localStorage.getItem('lasVisitedChatConversationId')
+      if (socket.connected && id !== null) {
+        socket.emit(SOCKET_STRING.PRACTICE_OFFICE_JOIN_ROOM, id)
+      }
+    }
+    socket.on('connect', handleInitialJoin)
+    return () => {
+      socket.off('connect', handleInitialJoin)
+    }
+  }, [socket])
   return (
     <>
       <div
