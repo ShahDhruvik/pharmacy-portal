@@ -38,6 +38,7 @@ const ChatAcceptRejectArea = (props: Props) => {
   //Accept-RejectResponse
   useEffect(() => {
     const handleNewRoom = async (data: any) => {
+      console.log('PRACTICE_OFFICE_UPDATE_ROOM_ACCEPT_OR_REJECT_RESPONSE')
       if (data.isAccepted) {
         setMessageId('')
         setInitialScroll(true)

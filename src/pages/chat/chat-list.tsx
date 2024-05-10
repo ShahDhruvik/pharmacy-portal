@@ -62,7 +62,7 @@ const ChatList = (props: Props) => {
   //update Room in roomList
   useEffect(() => {
     const handleNewRoom = (data: any) => {
-      console.log('count')
+      console.log('PRACTICE_OFFICE_LIST_UPDATE_MESSAGE_COUNT')
       const existingRoomIndex = chatRooms?.findIndex((room) => room?._id === data.response.data._id)
       if (existingRoomIndex !== -1 && data.response.success && data.response.data) {
         const previousRoom = chatRooms[existingRoomIndex]
@@ -107,6 +107,7 @@ const ChatList = (props: Props) => {
   //Accept-RejectResponse
   useEffect(() => {
     const handleNewRoom = async (data: any) => {
+      console.log('PRACTICE_OFFICE_UPDATE_ROOM_ACCEPT_OR_REJECT_RESPONSE')
       setUpdateChatRooms(!updateChatRooms)
     }
     socket.on(SOCKET_STRING.PRACTICE_OFFICE_UPDATE_ROOM_ACCEPT_OR_REJECT_RESPONSE, handleNewRoom)
@@ -117,9 +118,13 @@ const ChatList = (props: Props) => {
   //clear message
   useEffect(() => {
     const handleUpdate = (data: any) => {
+      console.log('PRACTICE_OFFICE_CLEARED_MESSAGES')
       setUpdateChatRooms(!updateChatRooms)
     }
     socket.on(SOCKET_STRING.PRACTICE_OFFICE_CLEARED_MESSAGES, handleUpdate)
+    return () => {
+      socket.off(SOCKET_STRING.PRACTICE_OFFICE_CLEARED_MESSAGES, handleUpdate)
+    }
   }, [socket, updateChatRooms])
   return (
     <List>

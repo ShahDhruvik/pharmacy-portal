@@ -13,14 +13,10 @@ const ChatHeaderMenu = (props: Props) => {
   const {
     setAnchorElMenuHeader,
     anchorElMenuHeader,
-    chatRoom,
-    setChatRoom,
-    setChatLoading,
     chatLoading,
     setMessageActionType,
     setIsConfirmPopUp,
   } = useChat()
-  const { setLoading } = useLoading()
   const handleCloseMenu = () => {
     setAnchorElMenuHeader(null)
   }
@@ -31,17 +27,7 @@ const ChatHeaderMenu = (props: Props) => {
       setIsConfirmPopUp(true)
     }
   }
-  const menuActions: {
-    name: string
-    onClickFnc: () => void
-    disable: boolean
-  }[] = [
-    {
-      name: 'Clear chat messages',
-      onClickFnc: async () => {},
-      disable: chatLoading.loading && (chatLoading.loadingProps?.room as boolean),
-    },
-  ]
+
   return (
     <Popper
       open={Boolean(anchorElMenuHeader)}

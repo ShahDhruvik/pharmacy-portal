@@ -81,13 +81,11 @@ const ChatMessageArea = (props: Props) => {
   }
   // handle message scroll at last message
   const waitForElement = async (mId: string) => {
-    console.log('last element')
     const maxAttempts = 10
     let attempts = 0
     const findElement = () => {
       const element = document.getElementById(mId)
       if (element) {
-        console.log('finding element ::')
         console.log('element found ', element, attempts)
         element.scrollIntoView({
           behavior: 'auto',
@@ -97,10 +95,8 @@ const ChatMessageArea = (props: Props) => {
       } else {
         attempts++
         if (attempts < maxAttempts) {
-          console.log('set Timeout ::')
           setTimeout(findElement, 100)
         } else {
-          console.log('Main chat scroll ::')
           waitForChatElement()
         }
       }
@@ -185,9 +181,7 @@ const ChatMessageArea = (props: Props) => {
   }
   //Chat Element
   useEffect(() => {
-    console.log('Chat Element ::')
     if (chatElement) {
-      console.log('Chat Element triggered::')
       setTimeout(() => {
         bottomScroll(chatElement)
       }, 100)
@@ -195,9 +189,7 @@ const ChatMessageArea = (props: Props) => {
   }, [chatElement, isScroll])
 
   useEffect(() => {
-    console.log('Last Message Element ::')
     if (initialScroll) {
-      console.log('Logic to scroll to the last message')
       waitForElement(messageId)
       setInitialScroll(false) // Set the initial scroll flag to false
     } else {
@@ -232,6 +224,7 @@ const ChatMessageArea = (props: Props) => {
   //New message
   useEffect(() => {
     const handleNewMessage = (record: any) => {
+      console.log('PRACTICE_OFFICE_NEW_MESSAGE')
       const todayMessages = chatRoom?.message.find((x) => {
         const givenDate = new Date(x.messageDate)
         const currentDate = new Date()
@@ -298,8 +291,6 @@ const ChatMessageArea = (props: Props) => {
           } as ChatPatientRoomData)
         }
       }
-      console.log(record?.chatConversationId)
-      console.log(currentUser?.internalId)
       chatPatientHistory({
         practiceOfficeChatConversationId: record?.practiceOfficeChatConversationId,
         lastSeen: new Date().toISOString(),
@@ -330,14 +321,11 @@ const ChatMessageArea = (props: Props) => {
   }, [socket, chatRoom])
   // handle infinite scroll
   useEffect(() => {
-    console.log('Checking for infinite scroll :::')
     const chatContainer = document.getElementById('chat')
     const handleScroll = () => {
       if (chatContainer) {
         const scrollPosition = Math.round(chatContainer.scrollTop)
         const isAtTop = scrollPosition === 0
-        console.log(isAtTop, '------atTop scroll true false')
-
         if (isAtTop) {
           setCurrentPage((prev) => prev + 1)
         }
@@ -356,7 +344,7 @@ const ChatMessageArea = (props: Props) => {
   //Delete
   useEffect(() => {
     const handleDelete = (data: any) => {
-      console.log('handleDelete', data)
+      console.log('PRACTICE_OFFICE_DELETED_MESSAGE')
       if (chatRoom && data && !data.isActive && data.isDeleted) {
         const mesDateFromBk = new Date(data.createdAt)
         const dateThatHasMessage = chatRoom?.message
@@ -393,8 +381,7 @@ const ChatMessageArea = (props: Props) => {
   //Update
   useEffect(() => {
     const handleUpdate = (data: any) => {
-      console.log('message update')
-
+      console.log('PRACTICE_OFFICE_UPDATED_MESSAGE')
       if (chatRoom && data && data.isActive && !data.isDeleted) {
         const mesDateFromBk = new Date(data.createdAt)
         const dateThatHasMessage = chatRoom?.message?.map((mesD) => {
@@ -427,6 +414,9 @@ const ChatMessageArea = (props: Props) => {
       }
     }
     socket.on(SOCKET_STRING.PRACTICE_OFFICE_UPDATED_MESSAGE, handleUpdate)
+    return () => {
+      socket.off(SOCKET_STRING.PRACTICE_OFFICE_UPDATED_MESSAGE, handleUpdate)
+    }
   }, [socket, chatRoom])
   //clear message
   useEffect(() => {
@@ -442,6 +432,9 @@ const ChatMessageArea = (props: Props) => {
       }
     }
     socket.on(SOCKET_STRING.PRACTICE_OFFICE_CLEARED_MESSAGES, handleUpdate)
+    return () => {
+      socket.off(SOCKET_STRING.PRACTICE_OFFICE_CLEARED_MESSAGES, handleUpdate)
+    }
   }, [socket, chatRoom])
   useEffect(() => {
     const handleInitialJoin = () => {

@@ -40,7 +40,6 @@ const ChatListItem = ({ chatData }: Props) => {
     currentUser,
   } = useChat()
   const joinRoomEmit = (chatConversationId: string) => {
-    console.log('room called join fnc ::::')
     localStorage.setItem('lasVisitedChatConversationId', chatConversationId)
     socket.emit(SOCKET_STRING.PRACTICE_OFFICE_JOIN_ROOM, chatConversationId)
   }
@@ -62,7 +61,7 @@ const ChatListItem = ({ chatData }: Props) => {
   }
   useEffect(() => {
     const handleRoomEntering = async (chatConversationId: string) => {
-      console.log('room called entering fnc ::::')
+      console.log('PRACTICE_OFFICE_ENTERED_ROOM')
       setChatLoading({ loading: true, loadingProps: { room: true } })
       const res = await getOneOfficeChatConversation(
         setLoading,
@@ -70,7 +69,6 @@ const ChatListItem = ({ chatData }: Props) => {
         currentPage,
         showToast,
       )
-      console.log(res, 'chatData')
       if (res) {
         const { message } = res as ChatPatientRoomData
         const messageLength = message?.reduce((acc, msgData) => acc + msgData?.records?.length, 0)
@@ -96,11 +94,14 @@ const ChatListItem = ({ chatData }: Props) => {
   }, [socket, chatRoom])
   //Last seen
   useEffect(() => {
-    if (chatRoom) {
-      const handleOnline = (data: any) => {
+    const handleOnline = (data: any) => {
+      if (chatRoom) {
         setChatRoom({ ...chatRoom, lastSeen: data })
       }
-      socket.on(SOCKET_STRING.PRACTICE_OFFICE_UPDATE_LAST_SEEN, handleOnline)
+    }
+    socket.on(SOCKET_STRING.PRACTICE_OFFICE_UPDATE_LAST_SEEN, handleOnline)
+    return () => {
+      socket.off(SOCKET_STRING.PRACTICE_OFFICE_UPDATE_LAST_SEEN, handleOnline)
     }
   }, [socket, chatRoom])
   const countCondition = (chatData?.unseenCount as number) > 0 && chatData?._id !== chatRoom?._id
