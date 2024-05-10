@@ -60,7 +60,6 @@ const ChatMessageHeader = (props: Props) => {
         <div className='flex items-center' ref={menuRef}>
           <IconButton
             onClick={() => {
-              console.log(Boolean(anchorElMenuHeader))
               if (Boolean(anchorElMenuHeader)) {
                 setAnchorElMenuHeader(null)
               } else {

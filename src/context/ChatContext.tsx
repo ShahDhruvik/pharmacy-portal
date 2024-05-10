@@ -186,6 +186,8 @@ export type OfficeUser = {
 }
 export type ChatAreaOptions = EnumValues<typeof ChatAreaType>
 export interface ChatContextType {
+  isMessageEdit: { id: string; edit: boolean }
+  setIsMessageEdit: Dispatch<SetStateAction<{ id: string; edit: boolean }>>
   setCreatePopUp: Dispatch<SetStateAction<{ isOpen: boolean; internalId?: string }>>
   createPopUp: { isOpen: boolean; internalId?: string }
   anchorElMenuHeader: HTMLDivElement | null
@@ -249,6 +251,8 @@ export interface ChatContextType {
   setUpdateChatRooms: Dispatch<SetStateAction<boolean>>
 }
 export const ChatContextInitialVal: ChatContextType = {
+  setIsMessageEdit: () => {},
+  isMessageEdit: { id: '', edit: false },
   setCreatePopUp: () => {},
   createPopUp: { isOpen: false },
   anchorElMenuHeader: null,
@@ -317,6 +321,9 @@ export const ChatContextInitialVal: ChatContextType = {
 const ChatContext = createContext<ChatContextType>(ChatContextInitialVal)
 
 export function ChatProvider({ children }: { children: ReactNode }) {
+  const [isMessageEdit, setIsMessageEdit] = useState<ChatContextType['isMessageEdit']>(
+    ChatContextInitialVal['isMessageEdit'],
+  )
   const [createPopUp, setCreatePopUp] = useState<ChatContextType['createPopUp']>(
     ChatContextInitialVal['createPopUp'],
   )
@@ -428,6 +435,8 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   return (
     <ChatContext.Provider
       value={{
+        isMessageEdit,
+        setIsMessageEdit,
         createPopUp,
         setCreatePopUp,
         setUpdateChatRooms,

@@ -25,6 +25,7 @@ const ChatHeaderMenu = (props: Props) => {
     if (type === MessageActions.ClearChatMessages) {
       setMessageActionType(type)
       setIsConfirmPopUp(true)
+      setAnchorElMenuHeader(null)
     }
   }
   return (
