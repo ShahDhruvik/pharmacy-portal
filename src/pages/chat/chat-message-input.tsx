@@ -24,15 +24,23 @@ const ChatMessageInput = (props: Props) => {
   }
   useEffect(() => {
     const handleRoomWhenTyping = (chatId: string) => {
+      console.log('PRACTICE_OFFICE_TYPING_RESPONSE')
       setIsTyping({ id: chatId, typing: true })
     }
     socket.on(SOCKET_STRING.PRACTICE_OFFICE_TYPING_RESPONSE, handleRoomWhenTyping)
+    return () => {
+      socket.off(SOCKET_STRING.PRACTICE_OFFICE_TYPING_RESPONSE, handleRoomWhenTyping)
+    }
   }, [setIsTyping, handleTyping])
   useEffect(() => {
     const handleRoomWhenStopTyping = (chatId: string) => {
+      console.log('PRACTICE_OFFICE_STOP_TYPING_RESPONSE')
       setIsTyping({ id: chatId, typing: false })
     }
     socket.on(SOCKET_STRING.PRACTICE_OFFICE_STOP_TYPING_RESPONSE, handleRoomWhenStopTyping)
+    return () => {
+      socket.off(SOCKET_STRING.PRACTICE_OFFICE_STOP_TYPING_RESPONSE, handleRoomWhenStopTyping)
+    }
   }, [setIsTyping, handleStopTyping])
 
   //Form
@@ -43,7 +51,6 @@ const ChatMessageInput = (props: Props) => {
       message: '',
     },
   })
-  const { isSubmitting } = formState
   //onSubmit
   const onSubmitHandle: SubmitHandler<{ message: string }> = async (data: any) => {
     if (chatRoom) {

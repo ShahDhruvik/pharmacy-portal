@@ -25,11 +25,14 @@ const ChatMessageHeader = (props: Props) => {
 
   //Last seen
   useEffect(() => {
-    if (chatRoom) {
-      const handleOnline = (data: any) => {
+    const handleOnline = (data: any) => {
+      if (chatRoom) {
         setChatRoom({ ...chatRoom, lastSeen: data })
       }
-      socket.on(SOCKET_STRING.PRACTICE_OFFICE_UPDATE_LAST_SEEN, handleOnline)
+    }
+    socket.on(SOCKET_STRING.PRACTICE_OFFICE_UPDATE_LAST_SEEN, handleOnline)
+    return () => {
+      socket.off(SOCKET_STRING.PRACTICE_OFFICE_UPDATE_LAST_SEEN, handleOnline)
     }
   }, [socket, chatRoom])
   //param
@@ -38,12 +41,6 @@ const ChatMessageHeader = (props: Props) => {
   const lastDate = chatRoom?.lastSeen ? new Date(chatRoom?.lastSeen?.lastSeen) : ''
   return (
     <>
-      {/* <div className='pr-1 pl-2 pt-5 pb-1'>
-        <p className='text-xl pl-3 font-semibold '>Practice Chat</p>
-        <Divider
-          sx={{ width: '90%', border: '1px solid', borderColor: theme.palette.mBlack?.main }}
-        />
-      </div> */}
       <div className=' p-2 flex justify-between'>
         <div>
           <p className='text-lg text-darkBlue-main font-semibold'>{userName}</p>

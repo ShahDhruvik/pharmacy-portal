@@ -111,7 +111,7 @@ const ChatRoomSearchInput = (props: Props) => {
   }
   useEffect(() => {
     const handleRoomEntering = async (chatConversationId: string) => {
-      console.log('room called entering fnc ::::')
+      console.log('PRACTICE_OFFICE_ENTERED_ROOM')
       setChatLoading({ loading: true, loadingProps: { room: true } })
       const res = await getOneOfficeChatConversation(
         setLoading,
@@ -123,7 +123,6 @@ const ChatRoomSearchInput = (props: Props) => {
         const { message } = res as ChatPatientRoomData
         const messageLength = message?.reduce((acc, msgData) => acc + msgData?.records?.length, 0)
         setChatRoom({ ...(res as ChatPatientRoomData), dataLength: messageLength })
-        console.log('room updated after tab click')
         setChatNotFound({
           notFoundStatus: false,
           notFoundProps: { room: true },
@@ -145,11 +144,14 @@ const ChatRoomSearchInput = (props: Props) => {
   }, [socket, chatRoom])
   //Last seen
   useEffect(() => {
-    if (chatRoom) {
-      const handleOnline = (data: any) => {
+    const handleOnline = (data: any) => {
+      if (chatRoom) {
         setChatRoom({ ...chatRoom, lastSeen: data })
       }
-      socket.on(SOCKET_STRING.PRACTICE_OFFICE_UPDATE_LAST_SEEN, handleOnline)
+    }
+    socket.on(SOCKET_STRING.PRACTICE_OFFICE_UPDATE_LAST_SEEN, handleOnline)
+    return () => {
+      socket.off(SOCKET_STRING.PRACTICE_OFFICE_UPDATE_LAST_SEEN, handleOnline)
     }
   }, [socket, chatRoom])
   useEffect(() => {

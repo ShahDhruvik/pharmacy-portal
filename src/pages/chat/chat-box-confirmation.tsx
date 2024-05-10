@@ -104,6 +104,7 @@ const ChatBoxActionConfirmation = (props: Props) => {
   //Delete
   useEffect(() => {
     const handleDelete = (data: any) => {
+      console.log('PRACTICE_OFFICE_DELETED_MESSAGE')
       if (chatRoom && data && !data.isActive && data.isDeleted) {
         const mesDateFromBk = new Date(data.createdAt)
         const dateThatHasMessage = chatRoom?.message
@@ -135,11 +136,14 @@ const ChatBoxActionConfirmation = (props: Props) => {
       }
     }
     socket.on(SOCKET_STRING.PRACTICE_OFFICE_DELETED_MESSAGE, handleDelete)
+    return () => {
+      socket.off(SOCKET_STRING.PRACTICE_OFFICE_DELETED_MESSAGE, handleDelete)
+    }
   }, [socket, chatRoom])
   //Update
   useEffect(() => {
     const handleUpdate = (data: any) => {
-      console.log('message update')
+      console.log('PRACTICE_OFFICE_UPDATED_MESSAGE')
       if (chatRoom && data && data.isActive && !data.isDeleted) {
         const mesDateFromBk = new Date(data.createdAt)
         const dateThatHasMessage = chatRoom?.message?.map((mesD) => {
@@ -174,6 +178,9 @@ const ChatBoxActionConfirmation = (props: Props) => {
       }
     }
     socket.on(SOCKET_STRING.PRACTICE_OFFICE_UPDATED_MESSAGE, handleUpdate)
+    return () => {
+      socket.off(SOCKET_STRING.PRACTICE_OFFICE_UPDATED_MESSAGE, handleUpdate)
+    }
   }, [socket, chatRoom])
   return (
     <CustomBackDrop bgColor='#ffffff'>

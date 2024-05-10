@@ -1,21 +1,8 @@
-import {
-  Avatar,
-  Box,
-  ClickAwayListener,
-  Dialog,
-  List,
-  ListItemButton,
-  Paper,
-  Button,
-  Popover,
-  IconButton,
-  Popper,
-} from '@mui/material'
+import { ClickAwayListener, IconButton, List, ListItemButton, Paper, Popper } from '@mui/material'
 import { useState } from 'react'
-import MoreVertIcon from '@mui/icons-material/MoreVert'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
-import HighlightOffIcon from '@mui/icons-material/HighlightOff'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { MessageData, useChat } from '@/context/ChatContext'
 import { MessageActions, individualMessageAction } from '@/utils/constants'
 import { formatCreatedAt } from '@/socket/chat-time-function'
