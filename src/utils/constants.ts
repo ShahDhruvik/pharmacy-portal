@@ -9,11 +9,15 @@ export const currencySymbol = '₹'
 export enum MessageActions {
   Delete = 'Delete',
   Edit = 'Edit',
-  ClearChatMessages = 'Clear chat messages',
+  ClearChatMessages = 'Clear messages',
 }
-export const individualMessageAction: EnumValues<typeof MessageActions>[] = [MessageActions.Delete, MessageActions.Edit]
-export const groupMessageAction: EnumValues<typeof MessageActions>[] = [MessageActions.ClearChatMessages]
-
+export const individualMessageAction: EnumValues<typeof MessageActions>[] = [
+  MessageActions.Delete,
+  MessageActions.Edit,
+]
+export const groupMessageAction: EnumValues<typeof MessageActions>[] = [
+  MessageActions.ClearChatMessages,
+]
 
 export const BlogPosts: Record<string, { title: string; description: string }> = {
   'first-blog-post': {

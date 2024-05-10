@@ -101,6 +101,11 @@ export default {
         light: '#FFFDD0',
         dark: '#FFFDD0',
       },
+      chatBlue: {
+        main: '#ADD8E6',
+        light: '#ADD8E6',
+        dark: '#ADD8E6',
+      },
     },
     extend: {
       spacing: {

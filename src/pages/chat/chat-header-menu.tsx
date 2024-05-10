@@ -27,7 +27,6 @@ const ChatHeaderMenu = (props: Props) => {
       setIsConfirmPopUp(true)
     }
   }
-
   return (
     <Popper
       open={Boolean(anchorElMenuHeader)}

@@ -178,17 +178,21 @@ const ChatAcceptRejectArea = (props: Props) => {
     } else {
       return (
         <CustomBackDrop bgColor='rgba(0,0,0,0.4)'>
-          <Paper elevation={2}>
-            <div className='rounded-md bg-white-main text-darkestGray-main px-2 flex-1  flex flex-col items-center justify-center gap-2   pb-1'>
+          <Paper elevation={2} sx={{ width: '90%' }}>
+            <div className='rounded-md bg-white-main text-darkestGray-main px-2 flex-1  flex flex-col items-center justify-center gap-2 pb-1'>
+              <p className='text-base text-center text-darkGray-main py-5'>
+                The silence is palpable but lets wait for other party to accept your request..{' '}
+              </p>
               <Button
-                variant='text'
-                color='mMidBlue'
+                variant='contained'
+                color='mPink'
                 sx={{
-                  color: theme.palette.mMidBlue?.main,
+                  // color: theme.palette.mMidBlue?.main,
                   minWidth: 'max-content',
-                  fontSize: '1rem',
                   alignSelf: 'end',
                   height: 20,
+                  marginBottom: '10px',
+                  marginRight: '5px',
                 }}
                 onClick={() => {
                   setChatArea(ChatAreaType.List)
@@ -197,11 +201,8 @@ const ChatAcceptRejectArea = (props: Props) => {
                 }}
                 disableRipple
               >
-                Back
+                Close
               </Button>
-              <p className='text-base text-center text-darkGray-main'>
-                The silence is palpable but lets wait for other party to accept your request..{' '}
-              </p>
             </div>
           </Paper>
         </CustomBackDrop>
