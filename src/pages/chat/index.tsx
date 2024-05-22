@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ChatAreaType, useChat } from '@/context/ChatContext'
+import { ChatAreaType, defaultChatControls, useChat } from '@/context/ChatContext'
 import { theme } from '@/context/ThemeProvider'
 import { Drawer } from '@mui/material'
 import ChatListArea from './chat-list-area'
@@ -21,6 +21,7 @@ const ChatDrawer = (props: Props) => {
     setChatArea,
     setChatRoom,
     setChatRooms,
+    setHandleControls,
   } = useChat()
   const online = useOnlineStatus()
   const firstUpdate = useRef(true)
@@ -43,6 +44,7 @@ const ChatDrawer = (props: Props) => {
       console.log('exist chat')
       setChatRoom(undefined)
       setChatRooms([])
+      setHandleControls(defaultChatControls)
       localStorage.removeItem('lasVisitedChatConversationId')
     }
   }, [])

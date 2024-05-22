@@ -20,6 +20,7 @@ export const enum CHAT {
   delete = DEF_PATHS.chat + DEF_PATHS.practice + '/office/chat-conversation/delete/',
   clear = DEF_PATHS.chat + DEF_PATHS.practice + '/office/chat-conversation/clear/',
   create = DEF_PATHS.chat + DEF_PATHS.practice + '/office/chat-conversation/create',
+  activeNew = DEF_PATHS.chat + DEF_PATHS.practice + '/office/chat-conversation/active-new/',
 }
 
 export const enum AUTH_ENDPOINT {

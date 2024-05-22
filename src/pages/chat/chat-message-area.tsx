@@ -4,6 +4,7 @@ import {
   ChatContextType,
   ChatPatientRoomData,
   MessageData,
+  defaultChatControls,
   useChat,
 } from '@/context/ChatContext'
 import ChatMessageHeader from './chat-message-header'
@@ -48,6 +49,7 @@ const ChatMessageArea = (props: Props) => {
     isConfirmPopUp,
     initialScroll,
     setInitialScroll,
+    setHandleControls,
   } = useChat()
   // bottom scroll function
   const bottomScroll = (chatBody: HTMLElement) => {
@@ -449,6 +451,7 @@ const ChatMessageArea = (props: Props) => {
       socket.off('connect', handleInitialJoin)
     }
   }, [socket])
+
   return (
     <>
       <div
@@ -467,6 +470,8 @@ const ChatMessageArea = (props: Props) => {
             setChatArea(ChatAreaType.List)
             setChatRooms([])
             setChatRoom(undefined)
+            setHandleControls(defaultChatControls)
+            localStorage.removeItem('lasVisitedChatConversationId')
           }}
           disableRipple
         >
@@ -486,6 +491,8 @@ const ChatMessageArea = (props: Props) => {
             setChatArea(ChatAreaType.List)
             setChatRooms([])
             setChatRoom(undefined)
+            setHandleControls(defaultChatControls)
+            localStorage.removeItem('lasVisitedChatConversationId')
           }}
         >
           Done

@@ -11,7 +11,23 @@ export type PaletteColor = {
 }
 export type EnumValues<T extends Record<string, string | number>> = T[keyof T];
 
-
+export type HandleControls = {
+  search: string;
+  currentPage: number;
+  limitPerPage: number;
+  sortParam: string;
+  sortOrder: string;
+};
+export type PageControls =
+  | {
+    from: number;
+    currentPage: number;
+    to: number;
+    pages: number;
+    total: number;
+    numberOfRecords: number;
+  }
+  | undefined;
 export type AuthState = {
   isAuthenticated: boolean
   setIsAuthenticated: Dispatch<SetStateAction<boolean>>

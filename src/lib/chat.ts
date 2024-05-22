@@ -1,14 +1,15 @@
-import { LoadingState, ShowToastFunction } from "@/types/common";
+import { HandleControls, LoadingState, ShowToastFunction } from "@/types/common";
 import { CHAT } from "@/utils/endPoints";
 import axiosInstance from "../../axiosInstance";
 
 export const getOfficeChatConversation = async (
     setLoading: LoadingState["setLoading"],
     toast: ShowToastFunction,
+    handleControls: HandleControls
 ) => {
     try {
-        setLoading({ isLoading: true, isIndependentLoader: true, isPage: false })
-        const res = await axiosInstance.post(CHAT.listAll);
+        setLoading({ isLoading: true, isIndependentLoader: true, isPage: false, })
+        const res = await axiosInstance.post(CHAT.listAll, handleControls);
         if (res) {
             if (res.data?.success) {
                 return res.data?.data
@@ -181,6 +182,34 @@ export const createOfficeChatConversation = async (
         if (res) {
             if (res.data?.success) {
                 return res
+            } else {
+                return undefined;
+            }
+        } else {
+            return undefined;
+        }
+    } catch (error: any) {
+        console.log(error)
+        if (error.response.status === 404) {
+            toast('error', error.response.data.message)
+        } else {
+            toast('error', error.response.statusText)
+        }
+    } finally {
+        setLoading({ isLoading: false, isIndependentLoader: false, isPage: false })
+    }
+};
+export const activeChatConversation = async (
+    setLoading: LoadingState["setLoading"],
+    chatConversationId: string,
+    toast: ShowToastFunction,
+) => {
+    try {
+        setLoading({ isLoading: true, isIndependentLoader: true, isPage: false })
+        const res = await axiosInstance.post(CHAT.activeNew + chatConversationId, {});
+        if (res) {
+            if (res.data?.success) {
+                return res?.data
             } else {
                 return undefined;
             }

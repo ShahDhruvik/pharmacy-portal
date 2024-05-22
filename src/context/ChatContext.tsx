@@ -1,7 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-refresh/only-export-components */
-import { EnumValues } from '@/types/common'
+import { EnumValues, HandleControls, PageControls } from '@/types/common'
 import { MessageActions } from '@/utils/constants'
+const limitOfChatList = 10
+export const defaultChatControls = {
+  search: '',
+  currentPage: 1,
+  limitPerPage: limitOfChatList,
+  sortParam: 'createdAt',
+  sortOrder: 'desc',
+}
 type OrganizationDataType = {
   isNewRecord: boolean
   id: number
@@ -72,6 +80,12 @@ interface OrgUserData {
   isDefault: boolean
   isDeleted: boolean
 }
+export type OfficeChatUser = {
+  id: number
+  internalId: string
+  name: string
+}
+
 export type ChatRoomType = {
   _id: string
   organizationId: number
@@ -111,6 +125,9 @@ export type ChatRoomType = {
   message?: string
   isConfirmed: boolean
   createdBy: string
+  requestedTo: string
+  requestedToObj: OfficeChatUser
+  createdByObj: OfficeChatUser
   organization: OrganizationDataType | null
 }
 export type MessageData = {
@@ -165,6 +182,9 @@ export type ChatPatientRoomData = {
   currentPage: number
   dataLength?: number
   createdBy: string
+  requestedTo: string
+  requestedToObj: OfficeChatUser
+  createdByObj: OfficeChatUser
   isConfirmed: boolean
 }
 export interface ChatLoadingType {
@@ -186,10 +206,16 @@ export type OfficeUser = {
 }
 export type ChatAreaOptions = EnumValues<typeof ChatAreaType>
 export interface ChatContextType {
+  handleControls: HandleControls
+  setHandleControls: Dispatch<SetStateAction<HandleControls>>
+  pageControls: PageControls
+  setPageControls: Dispatch<SetStateAction<PageControls>>
   isMessageEdit: { id: string; edit: boolean }
   setIsMessageEdit: Dispatch<SetStateAction<{ id: string; edit: boolean }>>
-  setCreatePopUp: Dispatch<SetStateAction<{ isOpen: boolean; internalId?: string }>>
-  createPopUp: { isOpen: boolean; internalId?: string }
+  setCreatePopUp: Dispatch<
+    SetStateAction<{ isOpen: boolean; internalId?: string; chatConversationId?: string }>
+  >
+  createPopUp: { isOpen: boolean; internalId?: string; chatConversationId?: string }
   anchorElMenuHeader: HTMLDivElement | null
   setAnchorElMenuHeader: Dispatch<SetStateAction<HTMLDivElement | null>>
   chatLoading: ChatLoadingType
@@ -251,6 +277,10 @@ export interface ChatContextType {
   setUpdateChatRooms: Dispatch<SetStateAction<boolean>>
 }
 export const ChatContextInitialVal: ChatContextType = {
+  handleControls: defaultChatControls,
+  pageControls: undefined,
+  setHandleControls: () => {},
+  setPageControls: () => {},
   setIsMessageEdit: () => {},
   isMessageEdit: { id: '', edit: false },
   setCreatePopUp: () => {},
@@ -333,6 +363,12 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   )
   const [updateChatRooms, setUpdateChatRooms] = useState<ChatContextType['updateChatRooms']>(
     ChatContextInitialVal['updateChatRooms'],
+  )
+  const [handleControls, setHandleControls] = useState<ChatContextType['handleControls']>(
+    ChatContextInitialVal['handleControls'],
+  )
+  const [pageControls, setPageControls] = useState<ChatContextType['pageControls']>(
+    ChatContextInitialVal['pageControls'],
   )
 
   //Chat Rooms
@@ -435,6 +471,10 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   return (
     <ChatContext.Provider
       value={{
+        handleControls,
+        pageControls,
+        setHandleControls,
+        setPageControls,
         isMessageEdit,
         setIsMessageEdit,
         createPopUp,

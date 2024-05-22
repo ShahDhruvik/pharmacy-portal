@@ -22,9 +22,9 @@ export const dropdownRelation = async (
     if (res && res.data.success && res.data) {
       const { data } = res
       const drpValues: SelectDDL[] = [isMulti ? isMulti : acDefaultValue]
-      ;(data.data as DrpType[]).map((x) => {
-        drpValues.push({ _id: String(x.id), label: x.displayName })
-      })
+        ; (data.data as DrpType[]).map((x) => {
+          drpValues.push({ _id: String(x.id), label: x.displayName })
+        })
       return drpValues
     } else {
       return []
@@ -52,13 +52,13 @@ export const dropdownFamily = async (
     if (res && res.data.success && res.data) {
       const { data } = res
       const drpValues: any[] = []
-      ;(data?.data as DrpType[]).map((x: any) => {
-        drpValues?.push({
-          _id: String(x?.account?.id),
-          label: x?.account?.firstName,
-          internalId: x?.account?.internalId,
+        ; (data?.data as DrpType[]).map((x: any) => {
+          drpValues?.push({
+            _id: String(x?.account?.id),
+            label: x?.account?.firstName,
+            internalId: x?.account?.internalId,
+          })
         })
-      })
       return drpValues
     } else {
       return []
@@ -87,9 +87,9 @@ export const dropdownClinic = async (
     if (res && res.data.success && res.data) {
       const { data } = res
       const drpValues: SelectDDL[] = [isMulti ? isMulti : acDefaultValue]
-      ;(data.data as DrpType[]).map((x) => {
-        drpValues.push({ _id: String(x.id), label: x.name })
-      })
+        ; (data.data as DrpType[]).map((x) => {
+          drpValues.push({ _id: String(x.id), label: x.name })
+        })
       drpValues.push({ _id: String(-1), label: 'Other' })
       return drpValues
     } else {
@@ -117,13 +117,12 @@ export const dropdownAddedCoverage = async (
     loading({ isLoading: true, isIndependentLoader: true, isPage: false })
     const res = await axiosInstance.post(DROPDOWN.drpCoverage, { accountInternalId: accountId })
     if (res && res.data.success && res.data) {
-      console.log(res, 'res')
 
       const { data } = res
       const drpValues: any[] = [isMulti ? isMulti : acDefaultValue]
-      ;(data.data as any[]).map((x) => {
-        drpValues.push({ _id: String(x.id), label: x.coverageType, internalId: x?.internalId })
-      })
+        ; (data.data as any[]).map((x) => {
+          drpValues.push({ _id: String(x.id), label: x.coverageType, internalId: x?.internalId })
+        })
       return drpValues
     } else {
       return []
@@ -154,9 +153,9 @@ export const dropdownSpentOn = async (
     if (res && res.data.success && res.data) {
       const { data } = res
       const drpValues: SelectDDL[] = [isMulti ? isMulti : acDefaultValue]
-      ;(data.data as DrpType[]).map((x) => {
-        drpValues.push({ _id: String(x.id), label: x.name })
-      })
+        ; (data.data as DrpType[]).map((x) => {
+          drpValues.push({ _id: String(x.id), label: x.name })
+        })
       return drpValues
     } else {
       return []
@@ -187,13 +186,13 @@ export const dropdownAssignedTo = async (
     if (res && res.data.success && res.data) {
       const { data } = res
       const drpValues: any[] = []
-      ;(data?.data as DrpType[]).map((x: any) => {
-        drpValues?.push({
-          _id: x?.id,
-          label: x?.name,
-          internalId: x?.internalId,
+        ; (data?.data as DrpType[]).map((x: any) => {
+          drpValues?.push({
+            _id: x?.id,
+            label: x?.name,
+            internalId: x?.internalId,
+          })
         })
-      })
       return drpValues
     } else {
       return []
@@ -221,13 +220,13 @@ export const dropdownPractice = async (
     if (res && res.data.success && res.data) {
       const { data } = res
       const drpValues: any[] = []
-      ;(data?.data as DrpType[]).map((x: any) => {
-        drpValues?.push({
-          _id: x?.id,
-          label: x?.name,
-          internalId: x?.internalId,
+        ; (data?.data as DrpType[]).map((x: any) => {
+          drpValues?.push({
+            _id: x?.id,
+            label: x?.name,
+            internalId: x?.internalId,
+          })
         })
-      })
       return drpValues
     } else {
       return []
@@ -255,9 +254,9 @@ export const dropdownOrg = async (
     if (res && res.data.success && res.data) {
       const { data } = res
       const drpValues: SelectDDL[] = [isMulti ? isMulti : acDefaultValue]
-      ;(data.data as DrpType[]).map((x) => {
-        drpValues.push({ _id: String(x.id), label: x.name })
-      })
+        ; (data.data as DrpType[]).map((x) => {
+          drpValues.push({ _id: String(x.id), label: x.name })
+        })
       // drpValues.push({ _id: String(-1), label: 'Other' })
       return drpValues
     } else {

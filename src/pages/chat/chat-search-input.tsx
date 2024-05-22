@@ -21,6 +21,7 @@ import {
   ChatPatientRoomData,
   ChatRoomType,
   useChat,
+  defaultChatControls,
 } from '@/context/ChatContext'
 import socket from '@/socket/socket'
 import { SOCKET_STRING } from '@/socket/socket-string'
@@ -59,107 +60,113 @@ const ChatRoomSearchInput = (props: Props) => {
     setUpdateChatRooms,
     setChatArea,
     setCreatePopUp,
+    setHandleControls,
   } = useChat()
   //search
-  const getOrgUserList = async (val: string) => {
-    const res = await getOfficeUsers(setLoading, val, showToast)
-    console.log(res)
-    if (res?.length !== 0) {
-      setChatOfficeUsers(res)
-    } else {
-      if (val?.length === 0) {
-        setChatOfficeUsers([])
-      } else {
-        setChatOfficeUsers([
-          {
-            email: 'email',
-            id: 1,
-            internalId: 'asas',
-            name: 'No such user found',
-            existChat: null,
-            phone: 'qwq',
-            notFound: true,
-          },
-        ])
-      }
-    }
-  }
+  // const getOrgUserList = async (val: string) => {
+  //   const res = await getOfficeUsers(setLoading, val, showToast)
+  //   console.log(res)
+  //   if (res?.length !== 0) {
+  //     setChatOfficeUsers(res)
+  //   } else {
+  //     if (val?.length === 0) {
+  //       setChatOfficeUsers([])
+  //     } else {
+  //       setChatOfficeUsers([
+  //         {
+  //           email: 'email',
+  //           id: 1,
+  //           internalId: 'asas',
+  //           name: 'No such user found',
+  //           existChat: null,
+  //           phone: 'qwq',
+  //           notFound: true,
+  //         },
+  //       ])
+  //     }
+  //   }
+  // }
   const delayedOfficeSearch = useRef(
     debounce((searchQuery) => {
-      getOrgUserList(searchQuery as string)
+      setChatRooms([])
+      setHandleControls({
+        ...defaultChatControls,
+        currentPage: 1,
+        search: searchQuery,
+      })
     }, 500),
   ).current
 
   //joinRoom
-  const joinRoomEmit = (chatConversationId: string) => {
-    localStorage.setItem('lasVisitedChatConversationId', chatConversationId)
-    console.log('room called join fnc ::::')
-    socket.emit(SOCKET_STRING.PRACTICE_OFFICE_JOIN_ROOM, chatConversationId)
-  }
-  const afterClickingRoom = (countCondition: boolean, x: ChatContextType['chatRooms'][0]) => {
-    if (countCondition) {
-      chatPatientHistory({
-        practiceOfficeChatConversationId: x?._id,
-        lastSeen: new Date().toISOString(),
-        practiceOfficeLastSeenMessageId: x?.lastMessage?._id,
-        orgUserId: String(currentUser?.internalId),
-      })
-      setMessageId(x?.lastSeenMessage ? x?.lastSeenMessage?._id : '')
-    } else {
-      setMessageId('')
-    }
-  }
-  useEffect(() => {
-    const handleRoomEntering = async (chatConversationId: string) => {
-      console.log('PRACTICE_OFFICE_ENTERED_ROOM')
-      setChatLoading({ loading: true, loadingProps: { room: true } })
-      const res = await getOneOfficeChatConversation(
-        setLoading,
-        chatConversationId,
-        currentPage,
-        showToast,
-      )
-      if (res) {
-        const { message } = res as ChatPatientRoomData
-        const messageLength = message?.reduce((acc, msgData) => acc + msgData?.records?.length, 0)
-        setChatRoom({ ...(res as ChatPatientRoomData), dataLength: messageLength })
-        setChatNotFound({
-          notFoundStatus: false,
-          notFoundProps: { room: true },
-        })
-      } else {
-        setChatNotFound({
-          notFoundStatus: true,
-          notFoundProps: { room: true },
-        })
-      }
-      setChatLoading({ loading: false, loadingProps: { room: true } })
-      setChatOfficeUsers([])
-      setChatArea(ChatAreaType.Message)
-    }
-    socket.on(SOCKET_STRING.PRACTICE_OFFICE_ENTERED_ROOM, handleRoomEntering)
-    return () => {
-      socket.off(SOCKET_STRING.PRACTICE_OFFICE_ENTERED_ROOM, handleRoomEntering)
-    }
-  }, [socket, chatRoom])
+  // const joinRoomEmit = (chatConversationId: string) => {
+  //   localStorage.setItem('lasVisitedChatConversationId', chatConversationId)
+  //   console.log('room called join fnc ::::')
+  //   socket.emit(SOCKET_STRING.PRACTICE_OFFICE_JOIN_ROOM, chatConversationId)
+  // }
+  // const afterClickingRoom = (countCondition: boolean, x: ChatContextType['chatRooms'][0]) => {
+  //   if (countCondition) {
+  //     chatPatientHistory({
+  //       practiceOfficeChatConversationId: x?._id,
+  //       lastSeen: new Date().toISOString(),
+  //       practiceOfficeLastSeenMessageId: x?.lastMessage?._id,
+  //       orgUserId: String(currentUser?.internalId),
+  //     })
+  //     setMessageId(x?.lastSeenMessage ? x?.lastSeenMessage?._id : '')
+  //   } else {
+  //     setMessageId('')
+  //   }
+  // }
+  // useEffect(() => {
+  //   const handleRoomEntering = async (chatConversationId: string) => {
+  //     console.log('PRACTICE_OFFICE_ENTERED_ROOM')
+  //     setChatLoading({ loading: true, loadingProps: { room: true } })
+  //     const res = await getOneOfficeChatConversation(
+  //       setLoading,
+  //       chatConversationId,
+  //       currentPage,
+  //       showToast,
+  //     )
+  //     if (res) {
+  //       const { message } = res as ChatPatientRoomData
+  //       const messageLength = message?.reduce((acc, msgData) => acc + msgData?.records?.length, 0)
+  //       setChatRoom({ ...(res as ChatPatientRoomData), dataLength: messageLength })
+  //       setChatNotFound({
+  //         notFoundStatus: false,
+  //         notFoundProps: { room: true },
+  //       })
+  //     } else {
+  //       setChatNotFound({
+  //         notFoundStatus: true,
+  //         notFoundProps: { room: true },
+  //       })
+  //     }
+  //     setChatLoading({ loading: false, loadingProps: { room: true } })
+  //     setChatOfficeUsers([])
+  //     setChatArea(ChatAreaType.Message)
+  //   }
+  //   socket.on(SOCKET_STRING.PRACTICE_OFFICE_ENTERED_ROOM, handleRoomEntering)
+  //   return () => {
+  //     socket.off(SOCKET_STRING.PRACTICE_OFFICE_ENTERED_ROOM, handleRoomEntering)
+  //   }
+  // }, [socket, chatRoom])
   //Last seen
-  useEffect(() => {
-    const handleOnline = (data: any) => {
-      if (chatRoom) {
-        setChatRoom({ ...chatRoom, lastSeen: data })
-      }
-    }
-    socket.on(SOCKET_STRING.PRACTICE_OFFICE_UPDATE_LAST_SEEN, handleOnline)
-    return () => {
-      socket.off(SOCKET_STRING.PRACTICE_OFFICE_UPDATE_LAST_SEEN, handleOnline)
-    }
-  }, [socket, chatRoom])
-  useEffect(() => {
-    return () => {
-      setAnchorElSearchInput(null)
-      setChatOfficeUsers([])
-    }
-  }, [])
+  // useEffect(() => {
+  //   const handleOnline = (data: any) => {
+  //     if (chatRoom) {
+  //       setChatRoom({ ...chatRoom, lastSeen: data })
+  //     }
+  //   }
+  //   socket.on(SOCKET_STRING.PRACTICE_OFFICE_UPDATE_LAST_SEEN, handleOnline)
+  //   return () => {
+  //     socket.off(SOCKET_STRING.PRACTICE_OFFICE_UPDATE_LAST_SEEN, handleOnline)
+  //   }
+  // }, [socket, chatRoom])
+  // useEffect(() => {
+  //   return () => {
+  //     setAnchorElSearchInput(null)
+  //     setChatOfficeUsers([])
+  //   }
+  // }, [])
   return (
     <>
       <TextField
@@ -169,13 +176,13 @@ const ChatRoomSearchInput = (props: Props) => {
         placeholder='Search by Name , Mobile# ,  . . . .'
         inputProps={{
           onChange: async (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-            setAnchorElSearchInput(searchRef?.current as HTMLInputElement)
+            // setAnchorElSearchInput(searchRef?.current as HTMLInputElement)
             delayedOfficeSearch((searchRef?.current as HTMLInputElement).value)
           },
         }}
         inputRef={searchRef}
       />
-      <Popper
+      {/* <Popper
         open={Boolean(anchorElSearchInput) && chatOfficeUsers.length > 0}
         anchorEl={anchorElSearchInput}
         sx={{ zIndex: theme.zIndex.drawer + 1 }}
@@ -261,7 +268,7 @@ const ChatRoomSearchInput = (props: Props) => {
             })}
           </List>
         </Paper>
-      </Popper>
+      </Popper> */}
     </>
   )
 }

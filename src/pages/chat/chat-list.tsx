@@ -6,7 +6,7 @@ import ChatListItem from './chat-list-item'
 import { useLoading } from '@/context/LoadingContext'
 import { getOfficeChatConversation } from '@/lib/chat'
 import { useToast } from '@/hooks/useToast'
-import { ChatRoomType, useChat } from '@/context/ChatContext'
+import { ChatRoomType, defaultChatControls, useChat } from '@/context/ChatContext'
 import { theme } from '@/context/ThemeProvider'
 import socket from '@/socket/socket'
 import { SOCKET_STRING } from '@/socket/socket-string'
@@ -39,14 +39,20 @@ const ChatList = (props: Props) => {
     setChatRooms,
     chatRooms,
     updateChatRooms,
+    setPageControls,
+    handleControls,
+    setHandleControls,
+    openChatDrawer,
   } = useChat()
   const { setLoading, loading } = useLoading()
   const showToast = useToast()
   const fetchChatList = async () => {
-    const res = await getOfficeChatConversation(setLoading, showToast)
+    const res = await getOfficeChatConversation(setLoading, showToast, handleControls)
     if (res) {
-      const dataWithOutSelf = filterRecordsAndRemoveOrgUsers(res, currentUser?.id)
-      setChatRooms(dataWithOutSelf)
+      const { records, ...rest } = res
+      const allData = [...chatRooms, ...res.records]
+      setPageControls({ ...rest, numberOfRecords: allData.length })
+      setChatRooms(allData)
       setChatNotFound({ notFoundStatus: false, notFoundProps: { list: true } })
     } else {
       setChatRooms([])
@@ -54,11 +60,10 @@ const ChatList = (props: Props) => {
     }
   }
   useEffect(() => {
-    fetchChatList()
-  }, [currentUser])
-  useEffect(() => {
-    fetchChatList()
-  }, [updateChatRooms])
+    if (openChatDrawer) {
+      fetchChatList()
+    }
+  }, [updateChatRooms, currentUser, handleControls, openChatDrawer])
   //update Room in roomList
   useEffect(() => {
     const handleNewRoom = (data: any) => {
@@ -78,36 +83,36 @@ const ChatList = (props: Props) => {
         console.log(data.response.data, 'lll')
         console.log(updatedRooms, 'aasda')
         setChatRooms(updatedRooms)
+      } else {
+        setChatRooms([])
+        setHandleControls(defaultChatControls)
+        setUpdateChatRooms(!updateChatRooms)
       }
     }
     socket.on(SOCKET_STRING.PRACTICE_OFFICE_LIST_UPDATE_MESSAGE_COUNT, handleNewRoom)
     return () => {
       socket.off(SOCKET_STRING.PRACTICE_OFFICE_LIST_UPDATE_MESSAGE_COUNT, handleNewRoom)
     }
-  }, [socket, chatRooms])
+  }, [socket, chatRooms, updateChatRooms])
   //Add new add rooms in roomList
   useEffect(() => {
     const handleNewRoom = async (data: any) => {
       console.log('PRACTICE_OFFICE_ADD_ROOM_NOTIFY')
-      const res = await getOfficeChatConversation(setLoading, showToast)
-      if (res) {
-        const dataWithOutSelf = filterRecordsAndRemoveOrgUsers(res, currentUser?.id)
-        setChatRooms(dataWithOutSelf)
-        setChatNotFound({ notFoundStatus: false, notFoundProps: { list: true } })
-      } else {
-        setChatRooms([])
-        setChatNotFound({ notFoundStatus: true, notFoundProps: { list: true } })
-      }
+      setChatRooms([])
+      setHandleControls(defaultChatControls)
+      setUpdateChatRooms(!updateChatRooms)
     }
     socket.on(SOCKET_STRING.PRACTICE_OFFICE_ADD_ROOM_NOTIFY, handleNewRoom)
     return () => {
       socket.off(SOCKET_STRING.PRACTICE_OFFICE_ADD_ROOM_NOTIFY, handleNewRoom)
     }
-  }, [socket, chatRooms])
+  }, [socket, updateChatRooms])
   //Accept-RejectResponse
   useEffect(() => {
     const handleNewRoom = async (data: any) => {
       console.log('PRACTICE_OFFICE_UPDATE_ROOM_ACCEPT_OR_REJECT_RESPONSE')
+      setChatRooms([])
+      setHandleControls(defaultChatControls)
       setUpdateChatRooms(!updateChatRooms)
     }
     socket.on(SOCKET_STRING.PRACTICE_OFFICE_UPDATE_ROOM_ACCEPT_OR_REJECT_RESPONSE, handleNewRoom)
@@ -119,6 +124,8 @@ const ChatList = (props: Props) => {
   useEffect(() => {
     const handleUpdate = (data: any) => {
       console.log('PRACTICE_OFFICE_CLEARED_MESSAGES')
+      setChatRooms([])
+      setHandleControls(defaultChatControls)
       setUpdateChatRooms(!updateChatRooms)
     }
     socket.on(SOCKET_STRING.PRACTICE_OFFICE_CLEARED_MESSAGES, handleUpdate)

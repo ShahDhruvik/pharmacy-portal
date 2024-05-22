@@ -1,8 +1,8 @@
-import { useChat } from '@/context/ChatContext'
+import { defaultChatControls, useChat } from '@/context/ChatContext'
 import { useLoading } from '@/context/LoadingContext'
 import { theme } from '@/context/ThemeProvider'
 import { useToast } from '@/hooks/useToast'
-import { createOfficeChatConversation } from '@/lib/chat'
+import { activeChatConversation, createOfficeChatConversation } from '@/lib/chat'
 import socket from '@/socket/socket'
 import { SOCKET_STRING } from '@/socket/socket-string'
 import { Button, Typography } from '@mui/material'
@@ -11,7 +11,15 @@ import React from 'react'
 type Props = {}
 
 const ChatRequestArea = (props: Props) => {
-  const { setCreatePopUp, setUpdateChatRooms, currentUser, createPopUp } = useChat()
+  const {
+    setCreatePopUp,
+    setUpdateChatRooms,
+    currentUser,
+    createPopUp,
+    setChatRooms,
+    setHandleControls,
+    updateChatRooms,
+  } = useChat()
   const { setLoading } = useLoading()
   const showToast = useToast()
   return (
@@ -32,20 +40,20 @@ const ChatRequestArea = (props: Props) => {
           color='mPink'
           sx={{ color: '#ffffff', minWidth: 120 }}
           onClick={async () => {
-            const res = await createOfficeChatConversation(
+            const res = await activeChatConversation(
               setLoading,
-              createPopUp?.internalId as string,
+              createPopUp?.chatConversationId as string,
               showToast,
             )
-            if (res) {
-              console.log(res, 'create room')
+            if (res?.success) {
               const emitData = {
-                data: { ...res?.data?.data?.data },
+                data: { ...res?.data },
                 orgUserInternalId: currentUser?.internalId,
               }
-              console.log(emitData)
               socket.emit(SOCKET_STRING.PRACTICE_OFFICE_ADD_ROOM, emitData)
-              setUpdateChatRooms((prev) => !prev)
+              setChatRooms([])
+              setHandleControls(defaultChatControls)
+              setUpdateChatRooms(!updateChatRooms)
               setCreatePopUp({ isOpen: false })
             }
           }}
@@ -57,6 +65,9 @@ const ChatRequestArea = (props: Props) => {
           color='mPink'
           sx={{ color: '#ffffff', minWidth: 120 }}
           onClick={() => {
+            setChatRooms([])
+            setHandleControls(defaultChatControls)
+            setUpdateChatRooms(!updateChatRooms)
             setCreatePopUp({ isOpen: false })
           }}
         >

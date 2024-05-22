@@ -10,7 +10,7 @@ import { useLoading } from '@/context/LoadingContext'
 import { useToast } from '@/hooks/useToast'
 import { getOneOfficeChatConversation } from '@/lib/chat'
 import socket from '@/socket/socket'
-import { chatPatientHistory } from '@/socket/socket-functions'
+import { chatPatientHistory, getNameAndOtherDetails } from '@/socket/socket-functions'
 import { SOCKET_STRING } from '@/socket/socket-string'
 import { PracticePatientChatUserTypeEnum } from '@/utils/constants'
 import { Avatar, Badge, ListItemButton } from '@mui/material'
@@ -38,7 +38,10 @@ const ChatListItem = ({ chatData }: Props) => {
     setCurrentPage,
     setCount,
     currentUser,
+    setCreatePopUp,
   } = useChat()
+  const details = getNameAndOtherDetails(chatData, currentUser?.internalId)
+
   const joinRoomEmit = (chatConversationId: string) => {
     localStorage.setItem('lasVisitedChatConversationId', chatConversationId)
     socket.emit(SOCKET_STRING.PRACTICE_OFFICE_JOIN_ROOM, chatConversationId)
@@ -105,12 +108,12 @@ const ChatListItem = ({ chatData }: Props) => {
     }
   }, [socket, chatRoom])
   const countCondition = (chatData?.unseenCount as number) > 0 && chatData?._id !== chatRoom?._id
-  const orgName =
-    chatData?.orgUsers.length > 0 &&
-    chatData?.orgUsers[0].name.trim().toLowerCase() !==
-      chatData?.organization?.name.trim().toLowerCase()
-      ? chatData?.organization?.name
-      : ''
+  // const orgName =
+  //   chatData?.orgUsers.length > 0 &&
+  //   chatData?.orgUsers[0].name.trim().toLowerCase() !==
+  //     chatData?.organization?.name.trim().toLowerCase()
+  //     ? chatData?.organization?.name
+  //     : ''
   return (
     <ListItemButton
       sx={{
@@ -121,12 +124,23 @@ const ChatListItem = ({ chatData }: Props) => {
       }}
       divider
       onClick={() => {
-        console.log('room called Click fnc ::::')
-        setCurrentPage(1)
-        setCount(0)
-        setChatRoom(undefined)
-        joinRoomEmit(chatData?._id)
-        afterClickingRoom(countCondition, chatData)
+        if (!details?.toBeRequested) {
+          setCurrentPage(1)
+          setCount(0)
+          setChatRoom(undefined)
+          setCreatePopUp({
+            isOpen: true,
+            internalId: currentUser?.internalId,
+            chatConversationId: chatData?._id,
+          })
+        } else {
+          console.log('room called Click fnc ::::')
+          setCurrentPage(1)
+          setCount(0)
+          setChatRoom(undefined)
+          joinRoomEmit(chatData?._id)
+          afterClickingRoom(countCondition, chatData)
+        }
       }}
     >
       <div
@@ -136,12 +150,12 @@ const ChatListItem = ({ chatData }: Props) => {
           chatData?.isConfirmed && 'min-w-[80%] max-w-[80%]',
         )}
       >
-        <Avatar src='/' alt={chatData?.orgUsers[0]?.name ?? ''} />
+        <Avatar src='/' alt={details?.nameOfUser ?? ''} />
         <div className='flex-col'>
           <p className='text-sm text-darkBlue-main flex gap-2 font-normal'>
-            {chatData?.orgUsers[0]?.name ?? ''}
+            {details?.nameOfUser ?? ''}
           </p>
-          <p className='text-xs text-darkGray-main'>{orgName ?? ''}</p>
+          {/* <p className='text-xs text-darkGray-main'>{orgName ?? ''}</p> */}
           {countCondition && <p className='text-base'>{chatData?.lastMessage?.message ?? '--'}</p>}
         </div>
       </div>
@@ -149,11 +163,6 @@ const ChatListItem = ({ chatData }: Props) => {
         <div className='w-5 aspect-square bg-green-main text-white-main flex items-center justify-center rounded-full'>
           <p className='text-xs'>{chatData?.unseenCount ?? 0}</p>
         </div>
-      )}
-      {!chatData?.isConfirmed && (
-        <p className='font-normal text-xs bg-green-main px-3 py-1 text-white-main rounded-md text-center'>
-          Chat Now
-        </p>
       )}
     </ListItemButton>
   )

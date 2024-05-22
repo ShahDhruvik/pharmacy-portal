@@ -20,7 +20,6 @@ export const getAllAppointments = async (
       //   practiceId: formData?.practiceId,
       // }
     )
-    console.log(res, 'res')
 
     if (res.data.success) {
       return res.data.data
@@ -50,7 +49,6 @@ export const getAllAppointmentsForViewBar = async (
       // practiceId: formData?.practiceId,
       search: formData?.search,
     })
-    console.log(res, 'res')
 
     if (res.data.success) {
       return res.data.data
