@@ -204,10 +204,9 @@ const ChatMessageArea = (props: Props) => {
         const scrollPosition = Math.round(chatContainer.scrollTop + chatContainer.clientHeight)
         const scrollHeight = chatContainer.scrollHeight
         const difference = scrollHeight - scrollPosition
-        const isNotAtBottom = difference === 0
-        setScrollButton(!isNotAtBottom)
-        if (isNotAtBottom) {
-          setScrollButton(false)
+        const atBottom = difference <= 20
+        setScrollButton(!atBottom)
+        if (atBottom) {
           setCount(0)
         }
       }
@@ -302,9 +301,10 @@ const ChatMessageArea = (props: Props) => {
         (chatContainer?.scrollHeight as number) > (chatContainer?.clientHeight as number)
       if (isScrollable) {
         if (record.sentBy === String(currentUser?.internalId)) {
-          bottomScroll(chatContainer as HTMLElement)
-          setCount(0)
-          setScrollButton(false)
+          waitForElement(record?._id)
+          // setScrollButton(false)
+          // setCount(0)
+          // bottomScroll(chatContainer as HTMLElement)
         } else {
           setCount((count) => count + 1)
           setScrollButton(true)

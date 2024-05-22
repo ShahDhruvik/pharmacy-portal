@@ -59,7 +59,7 @@ const ChatMessageItem = ({
     if (type === MessageActions.Edit) {
       setMessageActionType(type)
       setParticularMessage(message)
-      setIsConfirmPopUp(true)
+      // setIsConfirmPopUp(true)
     }
   }
   const userName =
@@ -71,6 +71,23 @@ const ChatMessageItem = ({
           <p className='self-end text-[10px] mr-5'>
             {mes.createdAt ? formatCreatedAt(mes.createdAt) : ''}
           </p>
+        </div>
+        <div className='flex items-start justify-end'>
+          <div
+            className='bg-darkBlue-main text-white-main text-xs px-3 py-1 rounded-md rounded-br-none max-w-[260px]'
+            style={{ wordWrap: 'break-word' }}
+          >
+            <p className='flex-1 '>{mes.message}</p>
+          </div>
+          <IconButton
+            onClick={handleOpenMenu}
+            className='relative'
+            sx={{
+              p: 0,
+            }}
+          >
+            <MoreVertIcon sx={{ fontSize: '17px' }} />
+          </IconButton>
           <Popper
             open={Boolean(anchorEl)}
             anchorEl={anchorEl}
@@ -126,33 +143,6 @@ const ChatMessageItem = ({
               </Paper>
             </ClickAwayListener>
           </Popper>
-        </div>
-        <div className='flex items-start justify-end'>
-          <div
-            className='bg-darkBlue-main text-white-main text-xs px-3 py-1 rounded-md rounded-br-none max-w-[260px]'
-            style={{ wordWrap: 'break-word' }}
-          >
-            <p className='flex-1 '>{mes.message}</p>
-          </div>
-          <IconButton
-            onClick={handleOpenMenu}
-            className='relative'
-            sx={{
-              p: 0,
-            }}
-          >
-            <MoreVertIcon sx={{ fontSize: '17px' }} />
-          </IconButton>
-          {/* <div className="self-end">
-            {!noAvatar ? (
-              <Avatar
-                src={"https://www.w3schools.com/howto/img_avatar.png"}
-                sx={{ width: 30, height: 30, cursor: "pointer" }}
-              />
-            ) : (
-              <Box sx={{ width: 30, height: 30 }} />
-            )}
-          </div> */}
         </div>
       </div>
     )
