@@ -9,10 +9,11 @@ import {
 import { useLoading } from '@/context/LoadingContext'
 import { useToast } from '@/hooks/useToast'
 import { getOneOfficeChatConversation } from '@/lib/chat'
+import { formatCreatedAt, formatMessageDate } from '@/socket/chat-time-function'
 import socket from '@/socket/socket'
 import { chatPatientHistory, getNameAndOtherDetails } from '@/socket/socket-functions'
 import { SOCKET_STRING } from '@/socket/socket-string'
-import { PracticePatientChatUserTypeEnum } from '@/utils/constants'
+import { PracticePatientChatUserTypeEnum, formatDate } from '@/utils/constants'
 import { Avatar, Badge, ListItemButton } from '@mui/material'
 import clsx from 'clsx'
 import React, { useEffect } from 'react'
@@ -39,9 +40,10 @@ const ChatListItem = ({ chatData }: Props) => {
     setCount,
     currentUser,
     setCreatePopUp,
+    currentOrg,
   } = useChat()
   const details = getNameAndOtherDetails(chatData, currentUser?.internalId)
-
+  console.log(details)
   const joinRoomEmit = (chatConversationId: string) => {
     localStorage.setItem('lasVisitedChatConversationId', chatConversationId)
     socket.emit(SOCKET_STRING.PRACTICE_OFFICE_JOIN_ROOM, chatConversationId)
@@ -108,18 +110,14 @@ const ChatListItem = ({ chatData }: Props) => {
     }
   }, [socket, chatRoom])
   const countCondition = (chatData?.unseenCount as number) > 0 && chatData?._id !== chatRoom?._id
-  // const orgName =
-  //   chatData?.orgUsers.length > 0 &&
-  //   chatData?.orgUsers[0].name.trim().toLowerCase() !==
-  //     chatData?.organization?.name.trim().toLowerCase()
-  //     ? chatData?.organization?.name
-  //     : ''
+  const normalMessageCondition =
+    (chatData?.unseenCount as number) === 0 && chatData?._id !== chatRoom?._id
   return (
     <ListItemButton
       sx={{
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'start',
+        justifyContent: 'space-between',
         gap: 5,
       }}
       divider
@@ -153,16 +151,43 @@ const ChatListItem = ({ chatData }: Props) => {
         <Avatar src='/' alt={details?.nameOfUser ?? ''} />
         <div className='flex-col'>
           <p className='text-sm text-darkBlue-main flex gap-2 font-normal'>
-            {details?.nameOfUser ?? ''}
+            {`${details?.nameOfUser ?? ''} [ ${currentOrg?.name ?? ''} ] `}
           </p>
-          {/* <p className='text-xs text-darkGray-main'>{orgName ?? ''}</p> */}
-          {countCondition && <p className='text-base'>{chatData?.lastMessage?.message ?? '--'}</p>}
+          {/* <p className='text-xs text-darkGray-main'>{currentOrg?.name ?? ''}</p> */}
+          {countCondition && details?.toBeRequested && details?.isConfirmed && (
+            <p className='text-base line-clamp-1'>{chatData?.lastMessage?.message ?? '--'}</p>
+          )}
+          {normalMessageCondition && details?.toBeRequested && details?.isConfirmed && (
+            <p className='text-base line-clamp-1'>{chatData?.lastSeenMessage?.message ?? '--'}</p>
+          )}
         </div>
       </div>
-      {countCondition && (
-        <div className='w-5 aspect-square bg-green-main text-white-main flex items-center justify-center rounded-full'>
-          <p className='text-xs'>{chatData?.unseenCount ?? 0}</p>
+      {countCondition && details?.toBeRequested && details?.isConfirmed && (
+        <div className='flex flex-col justify-between h-full'>
+          <p className='text-sm text-darkBlue-main uppercase font-normal '>
+            {chatData?.lastMessage?.createdAt
+              ? formatCreatedAt(chatData?.lastMessage?.createdAt as string)
+              : '--'}
+          </p>
+          <div className='w-5 aspect-square bg-green-main text-white-main flex items-center self-end justify-center rounded-full'>
+            <p className='text-xs'>{chatData?.unseenCount ?? 0}</p>
+          </div>
         </div>
+      )}
+      {normalMessageCondition && details?.toBeRequested && details?.isConfirmed && (
+        <p className='text-sm text-darkBlue-main uppercase self-start font-normal '>
+          {chatData?.lastSeenMessage?.createdAt
+            ? formatCreatedAt(chatData?.lastSeenMessage?.createdAt as string)
+            : '--'}
+        </p>
+      )}
+      {!details?.toBeRequested && (
+        <div className='p-1 bg-green-main text-white-main flex items-center justify-center rounded-md'>
+          <p className='text-xs'>{details?.status}</p>
+        </div>
+      )}
+      {details?.toBeRequested && !details?.isConfirmed && (
+        <p className='text-xs self-center'>{details?.status}</p>
       )}
     </ListItemButton>
   )

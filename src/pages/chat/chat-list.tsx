@@ -1,7 +1,7 @@
 /* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { CircularProgress, List, ListItem, ListItemButton, ListItemText } from '@mui/material'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import ChatListItem from './chat-list-item'
 import { useLoading } from '@/context/LoadingContext'
 import { getOfficeChatConversation } from '@/lib/chat'
@@ -31,6 +31,7 @@ function filterRecordsAndRemoveOrgUsers(
 }
 
 const ChatList = (props: Props) => {
+  const chatListRef = useRef<HTMLUListElement | null>(null)
   const {
     currentUser,
     chatNotFound,
@@ -43,18 +44,27 @@ const ChatList = (props: Props) => {
     handleControls,
     setHandleControls,
     openChatDrawer,
+    currentOrg,
+    pageControls,
   } = useChat()
   const { setLoading, loading } = useLoading()
   const showToast = useToast()
   const fetchChatList = async () => {
-    const res = await getOfficeChatConversation(setLoading, showToast, handleControls)
+    const res = await getOfficeChatConversation(
+      setLoading,
+      showToast,
+      handleControls,
+      currentOrg?.id,
+      currentUser?.internalId,
+    )
     if (res) {
       const { records, ...rest } = res
       const allData = [...chatRooms, ...res.records]
       setPageControls({ ...rest, numberOfRecords: allData.length })
       setChatRooms(allData)
-      setChatNotFound({ notFoundStatus: false, notFoundProps: { list: true } })
+      setChatNotFound({ notFoundStatus: allData.length === 0, notFoundProps: { list: true } })
     } else {
+      setPageControls(undefined)
       setChatRooms([])
       setChatNotFound({ notFoundStatus: true, notFoundProps: { list: true } })
     }
@@ -63,7 +73,7 @@ const ChatList = (props: Props) => {
     if (openChatDrawer) {
       fetchChatList()
     }
-  }, [updateChatRooms, currentUser, handleControls, openChatDrawer])
+  }, [updateChatRooms, currentUser, handleControls])
   //update Room in roomList
   useEffect(() => {
     const handleNewRoom = (data: any) => {
@@ -134,7 +144,26 @@ const ChatList = (props: Props) => {
     }
   }, [socket, updateChatRooms])
   return (
-    <List>
+    <List
+      ref={chatListRef}
+      style={{ maxHeight: '410px', overflow: 'auto' }}
+      onScrollCapture={() => {
+        const chatContainer = chatListRef.current
+        const scrollTop = Math.round((chatContainer as HTMLUListElement).scrollTop)
+        const clientHeight = (chatContainer as HTMLUListElement).clientHeight
+        const scrollHeight = (chatContainer as HTMLUListElement).scrollHeight
+        const isAtBottom = scrollTop + clientHeight >= scrollHeight
+        if (
+          isAtBottom &&
+          (pageControls?.numberOfRecords as number) < (pageControls?.total as number)
+        ) {
+          setHandleControls({
+            ...handleControls,
+            currentPage: (pageControls?.currentPage as number) + 1,
+          })
+        }
+      }}
+    >
       {!loading.isLoading &&
         !chatNotFound.notFoundStatus &&
         chatRooms.map((ch) => {

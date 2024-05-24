@@ -5,11 +5,13 @@ import axiosInstance from "../../axiosInstance";
 export const getOfficeChatConversation = async (
     setLoading: LoadingState["setLoading"],
     toast: ShowToastFunction,
-    handleControls: HandleControls
+    handleControls: HandleControls,
+    organizationId: number,
+    currentUserId: string
 ) => {
     try {
         setLoading({ isLoading: true, isIndependentLoader: true, isPage: false, })
-        const res = await axiosInstance.post(CHAT.listAll, handleControls);
+        const res = await axiosInstance.post(CHAT.listAll, { ...handleControls, organizationId, currentUserId });
         if (res) {
             if (res.data?.success) {
                 return res.data?.data

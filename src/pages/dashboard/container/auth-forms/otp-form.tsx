@@ -9,7 +9,7 @@ import { resendOtp, verifyOtp } from '@/lib/Auth'
 import { useLoading } from '@/context/LoadingContext'
 import { useToast } from '@/hooks/useToast'
 import { useAuth } from '@/context/AuthContext'
-import { getProfileAfterLogin } from '@/lib/Profile'
+import { getDrpOrg, getProfileAfterLogin } from '@/lib/Profile'
 import { useChat } from '@/context/ChatContext'
 import { useEffect, useState } from 'react'
 import { theme } from '@/context/ThemeProvider'
@@ -21,7 +21,7 @@ type Props = {
 }
 
 const OTPForm = ({ handleClose, email, maxWidth }: Props) => {
-  const { setCurrentUser } = useChat()
+  const { setCurrentUser, setCurrentOrg } = useChat()
   const { setLoading } = useLoading()
   const showToast = useToast()
   const { addStorage } = useAuth()
@@ -41,7 +41,6 @@ const OTPForm = ({ handleClose, email, maxWidth }: Props) => {
   const [disableResend, setDisableResend] = useState(false)
   useEffect(() => {
     let intervalId: any
-
     if (counter > 0) {
       intervalId = setInterval(() => {
         setCounter((prevCounter) => prevCounter - 1)
@@ -79,8 +78,15 @@ const OTPForm = ({ handleClose, email, maxWidth }: Props) => {
       const { accessToken, refreshToken } = res.data.data
       const resp = await getProfileAfterLogin(setLoading, showToast, accessToken, refreshToken)
       if (resp) {
-        localStorage.setItem('user', JSON.stringify(resp[0]))
-        setCurrentUser(resp[0])
+        localStorage.setItem('user', JSON.stringify(resp))
+        setCurrentUser(resp)
+        const resO = await getDrpOrg(setLoading, showToast, accessToken, refreshToken)
+        if (resO.length > 0) {
+          const defaultOrg = resO.find((x: any) => x.id === resp.organizationId)
+          const updatedOrg = { _id: defaultOrg?.id, label: defaultOrg?.name, ...defaultOrg }
+          localStorage.setItem('org', JSON.stringify(updatedOrg))
+          setCurrentOrg(updatedOrg)
+        }
       }
       addStorage(accessToken, refreshToken)
       handleClose()

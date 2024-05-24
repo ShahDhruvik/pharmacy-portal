@@ -230,6 +230,8 @@ export interface ChatContextType {
   setIsTyping: Dispatch<SetStateAction<{ id: string; typing: boolean }>>
   currentUser: any
   setCurrentUser: Dispatch<SetStateAction<any>>
+  currentOrg: any
+  setCurrentOrg: Dispatch<SetStateAction<any>>
   handleCloseDrawer: () => void
   chatRooms: ChatRoomType[]
   setChatRooms: Dispatch<SetStateAction<ChatRoomType[]>>
@@ -275,6 +277,8 @@ export interface ChatContextType {
   setAnchorElSearchInput: Dispatch<SetStateAction<HTMLInputElement | null>>
   updateChatRooms: boolean
   setUpdateChatRooms: Dispatch<SetStateAction<boolean>>
+  orgList: { _id: number; label: string; organizationUser: any }[]
+  setOrgList: Dispatch<SetStateAction<{ _id: number; label: string; organizationUser: any }[]>>
 }
 export const ChatContextInitialVal: ChatContextType = {
   handleControls: defaultChatControls,
@@ -301,8 +305,15 @@ export const ChatContextInitialVal: ChatContextType = {
       ? JSON.parse(localStorage.getItem('user') as string)
       : undefined,
   setCurrentUser: () => {},
+  currentOrg:
+    localStorage.getItem('org') !== 'undefined'
+      ? JSON.parse(localStorage.getItem('org') as string)
+      : undefined,
+  setCurrentOrg: () => {},
   chatRooms: [],
   setChatRooms: () => {},
+  orgList: [],
+  setOrgList: () => {},
   chatNotFound: { notFoundStatus: false },
   setChatNotFound: () => {},
   chatRoom: undefined,
@@ -360,6 +371,12 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   //User state
   const [currentUser, setCurrentUser] = useState<ChatContextType['currentUser']>(
     ChatContextInitialVal['currentUser'],
+  )
+  const [currentOrg, setCurrentOrg] = useState<ChatContextType['currentOrg']>(
+    ChatContextInitialVal['currentOrg'],
+  )
+  const [orgList, setOrgList] = useState<ChatContextType['orgList']>(
+    ChatContextInitialVal['orgList'],
   )
   const [updateChatRooms, setUpdateChatRooms] = useState<ChatContextType['updateChatRooms']>(
     ChatContextInitialVal['updateChatRooms'],
@@ -471,6 +488,10 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   return (
     <ChatContext.Provider
       value={{
+        orgList,
+        setOrgList,
+        currentOrg,
+        setCurrentOrg,
         handleControls,
         pageControls,
         setHandleControls,

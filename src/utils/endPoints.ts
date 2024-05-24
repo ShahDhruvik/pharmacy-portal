@@ -32,7 +32,7 @@ export const enum AUTH_ENDPOINT {
 }
 
 export const enum PROFILE {
-  GET = DEF_PATHS.main + DEF_PATHS.provider + '/profile-for-portal',
+  GET = DEF_PATHS.main + DEF_PATHS.practice + '/practice-user-by-id',
 }
 
 export const enum DASHBOARD_CONTENT {

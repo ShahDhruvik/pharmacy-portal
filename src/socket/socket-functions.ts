@@ -44,7 +44,6 @@ export const getNameAndOtherDetails = (
     personChat: ChatRoomType | ChatPatientRoomData,
     currentUserInternalId: string
 ) => {
-    // console.log(currentUserInternalId)
     const isChatCreatedByUser = personChat?.createdBy === currentUserInternalId;
     const toBeRequested = personChat?.isActive;
     const isConfirmed = personChat?.isConfirmed;

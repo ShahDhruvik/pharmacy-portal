@@ -23,6 +23,7 @@ const ChatDrawer = (props: Props) => {
     setChatRooms,
     setHandleControls,
   } = useChat()
+
   const online = useOnlineStatus()
   const firstUpdate = useRef(true)
   // online-offline

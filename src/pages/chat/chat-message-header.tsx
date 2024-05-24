@@ -1,6 +1,6 @@
 /* eslint-disable no-extra-boolean-cast */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ChatAreaType, useChat } from '@/context/ChatContext'
+import { ChatAreaType, ChatPatientRoomData, useChat } from '@/context/ChatContext'
 import { theme } from '@/context/ThemeProvider'
 import { getLastSeenTime } from '@/socket/chat-time-function'
 import socket from '@/socket/socket'
@@ -9,6 +9,7 @@ import { Button, Divider, IconButton } from '@mui/material'
 import React, { useEffect, useRef } from 'react'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import ChatHeaderMenu from './chat-header-menu'
+import { getNameAndOtherDetails } from '@/socket/socket-functions'
 
 type Props = {}
 
@@ -20,9 +21,11 @@ const ChatMessageHeader = (props: Props) => {
     isTyping,
     anchorElMenuHeader,
     setAnchorElMenuHeader,
+    currentOrg,
   } = useChat()
   const menuRef = useRef<HTMLInputElement | null>(null)
-
+  const details = getNameAndOtherDetails(chatRoom as ChatPatientRoomData, currentUser?.internalId)
+  console.log(details)
   //Last seen
   useEffect(() => {
     const handleOnline = (data: any) => {
@@ -43,7 +46,10 @@ const ChatMessageHeader = (props: Props) => {
     <>
       <div className=' p-2 flex justify-between'>
         <div>
-          <p className='text-lg text-darkBlue-main font-semibold'>{userName}</p>
+          <p className='text-lg text-darkBlue-main font-semibold'>
+            {`${details?.nameOfUser}`}
+            <span className='text-base text-darkBlue-main font-normal'>{` [ ${currentOrg?.name} ]`}</span>
+          </p>
           <div>
             <p>{chatRoom?._id === isTyping?.id && isTyping?.typing ? 'typing...' : ''}</p>
           </div>

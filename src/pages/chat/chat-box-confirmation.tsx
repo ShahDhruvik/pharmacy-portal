@@ -20,13 +20,6 @@ type Props = {}
 const ChatBoxActionConfirmation = (props: Props) => {
   const { setLoading } = useLoading()
   const showToast = useToast()
-  const { control, register, trigger, formState, watch } = useForm({
-    defaultValues: {
-      message: '',
-    },
-  })
-  const { errors } = formState
-  const mesW = watch('message')
   const {
     messageActionLoading,
     setIsConfirmPopUp,
@@ -55,26 +48,10 @@ const ChatBoxActionConfirmation = (props: Props) => {
       chatRoom?._id as string,
     )
   }
-  //update
-  const updateThisMessage = (messageId: string) => {
-    setMessageActionLoading(true)
-    messageUpdate(
-      messageId,
-      currentUser?.internalId,
-      chatRoom?.orgUserIds as string[],
-      chatRoom?._id as string,
-      mesW,
-    )
-  }
+
   const handleConfirm = async () => {
     if (messageActionType === MessageActions.Delete) {
       deleteThisMessage((particularMessage as MessageData['records'][0])._id as string)
-    }
-    if (messageActionType === MessageActions.Edit) {
-      const tig = await trigger('message')
-      if (tig) {
-        updateThisMessage((particularMessage as MessageData['records'][0])._id as string)
-      }
     }
     if (messageActionType === MessageActions.ClearChatMessages) {
       setChatLoading({ loading: true, loadingProps: { room: true } })
@@ -140,50 +117,9 @@ const ChatBoxActionConfirmation = (props: Props) => {
       socket.off(SOCKET_STRING.PRACTICE_OFFICE_DELETED_MESSAGE, handleDelete)
     }
   }, [socket, chatRoom])
-  //Update
-  useEffect(() => {
-    const handleUpdate = (data: any) => {
-      console.log('PRACTICE_OFFICE_UPDATED_MESSAGE')
-      if (chatRoom && data && data.isActive && !data.isDeleted) {
-        const mesDateFromBk = new Date(data.createdAt)
-        const dateThatHasMessage = chatRoom?.message?.map((mesD) => {
-          const mesDate = new Date(mesD.messageDate)
-          if (
-            mesDate.getDate() === mesDateFromBk.getDate() &&
-            mesDate.getMonth() === mesDateFromBk.getMonth() &&
-            mesDate.getFullYear() === mesDateFromBk.getFullYear()
-          ) {
-            const updateMessagesToDelete = mesD.records.map((delM) => {
-              if (delM._id === data?._id) {
-                return { ...delM, message: data.message }
-              } else {
-                return delM
-              }
-            })
-            if (updateMessagesToDelete.length > 0) {
-              return { ...mesD, records: updateMessagesToDelete }
-            }
-          } else {
-            return mesD
-          }
-        })
-        setChatRoom({
-          ...chatRoom,
-          message: dateThatHasMessage as MessageData[],
-        })
-        handleMessageActionSuccess()
-      } else {
-        handleMessageActionSuccess()
-        console.log('something wrong message delete functionality.')
-      }
-    }
-    socket.on(SOCKET_STRING.PRACTICE_OFFICE_UPDATED_MESSAGE, handleUpdate)
-    return () => {
-      socket.off(SOCKET_STRING.PRACTICE_OFFICE_UPDATED_MESSAGE, handleUpdate)
-    }
-  }, [socket, chatRoom])
+
   return (
-    <CustomBackDrop bgColor='#ffffff'>
+    <CustomBackDrop bgColor='rgba(0,0,0,0.4)'>
       <div className='relative flex-1 flex flex-col items-center justify-center min-h-[560px] border-l-[1px] border-darkestGray-main border-opacity-30 '>
         {messageActionLoading && (
           <CustomBackDrop bgColor='#ffffff'>
@@ -202,28 +138,10 @@ const ChatBoxActionConfirmation = (props: Props) => {
             <p className='text-base text-center mb-5'>
               {messageActionType === MessageActions.Delete &&
                 `This action will delete the message.`}
-              {messageActionType === MessageActions.Edit && `This action will edit the message.`}
               {messageActionType === MessageActions.ClearChatMessages &&
                 `This action will clear all the messages.`}
             </p>
-            {messageActionType === MessageActions.Edit && (
-              <TextField
-                inputProps={{
-                  ...register('message', {
-                    required: VALIDATION_MESSAGE.required,
-                    onChange: () => {
-                      trigger('message')
-                    },
-                  }),
-                }}
-                error={errors.message ? true : false}
-                helperText={errors.message?.message ?? ''}
-                sx={{
-                  width: '100%',
-                }}
-              />
-            )}
-            <div className='flex gap-4 my-4'>
+            <div className='flex gap-4'>
               <Button color='mPink' sx={{ minWidth: '100px' }} onClick={handleClose}>
                 Cancel
               </Button>

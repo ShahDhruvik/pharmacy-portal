@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { IconButton, TextField } from '@mui/material'
+import { ClickAwayListener, IconButton, TextField } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send'
 import EditIcon from '@mui/icons-material/Edit'
 import socket from '@/socket/socket'
@@ -166,30 +166,39 @@ const ChatMessageInput = (props: Props) => {
     }
   }, [mW])
   return (
-    <div className='py-2'>
-      <form onSubmit={handleSubmit(onSubmitHandle)}>
-        <TextField
-          fullWidth
-          placeholder='Type here...'
-          InputProps={{
-            endAdornment: (
-              <IconButton type='submit'>
-                {isMessageEdit.edit ? (
-                  <EditIcon sx={{ color: theme.palette.mDarkBlue?.main }} />
-                ) : (
-                  <SendIcon sx={{ color: theme.palette.mDarkBlue?.main }} />
-                )}
-              </IconButton>
-            ),
-          }}
-          sx={{
-            '.MuiOutlinedInput-root': { pr: 0 },
-          }}
-          inputProps={register('message', { onBlur: handleStopTyping })}
-          onKeyDown={handleTyping}
-        />
-      </form>
-    </div>
+    <ClickAwayListener
+      onClickAway={() => {
+        if (isMessageEdit.edit) {
+          setIsMessageEdit({ id: '', edit: false })
+          reset({ message: '' })
+        }
+      }}
+    >
+      <div className='py-2'>
+        <form onSubmit={handleSubmit(onSubmitHandle)}>
+          <TextField
+            fullWidth
+            placeholder='Type here...'
+            InputProps={{
+              endAdornment: (
+                <IconButton type='submit'>
+                  {isMessageEdit.edit ? (
+                    <EditIcon sx={{ color: theme.palette.mDarkBlue?.main }} />
+                  ) : (
+                    <SendIcon sx={{ color: theme.palette.mDarkBlue?.main }} />
+                  )}
+                </IconButton>
+              ),
+            }}
+            sx={{
+              '.MuiOutlinedInput-root': { pr: 0 },
+            }}
+            inputProps={register('message', { onBlur: handleStopTyping })}
+            onKeyDown={handleTyping}
+          />
+        </form>
+      </div>
+    </ClickAwayListener>
   )
 }
 

@@ -15,7 +15,7 @@ const ChatMessageSpace = (props: Props) => {
   return (
     <>
       {message && message.length !== 0 && (
-        <div className=' max-h-[75%]  min-h-[75%] overflow-y-scroll hideScroll pb-1' id='chat'>
+        <div className=' max-h-[75%]  min-h-[75%] overflow-y-scroll  pb-1' id='chat'>
           {messageLoading && (
             <div className='flex justify-center py-2 items-center gap-2  '>
               <CircularProgress

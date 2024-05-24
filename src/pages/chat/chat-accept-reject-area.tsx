@@ -81,7 +81,7 @@ const ChatAcceptRejectArea = (props: Props) => {
         <CustomBackDrop bgColor='rgba(0,0,0,0.4)'>
           <Paper elevation={5}>
             <div className=' bg-white-main text-darkestGray-main px-2 flex-1  flex flex-col items-center justify-center gap-2 pb-3 rounded-md'>
-              <Button
+              {/* <Button
                 variant='text'
                 color='mMidBlue'
                 sx={{
@@ -99,7 +99,7 @@ const ChatAcceptRejectArea = (props: Props) => {
                 disableRipple
               >
                 Back
-              </Button>
+              </Button> */}
               <p className='text-base text-center text-darkGray-main pb-5'>
                 Accept request to start conversation
               </p>

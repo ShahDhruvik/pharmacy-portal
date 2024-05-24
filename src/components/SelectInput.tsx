@@ -32,7 +32,7 @@ type Props = {
   handleOnChange?: any
 }
 
-const listBoxPropsDropdown = () => {
+export const listBoxPropsDropdown = () => {
   return {
     sx: {
       maxHeight: 300,
@@ -45,14 +45,14 @@ const listBoxPropsDropdown = () => {
     className: 'scrollBarNone',
   }
 }
-const ListItemDropdown = (
+export const ListItemDropdown = (
   props: React.HTMLAttributes<HTMLLIElement>,
   option: any,
   _id: string,
   isSplitTrue: boolean,
   length: number,
 ) => {
-  if (option.label.length < 13 || !isSplitTrue || isSplitTrue === undefined) {
+  if (option?.label?.length < 13 || !isSplitTrue || isSplitTrue === undefined) {
     return (
       <MenuItem
         {...props}

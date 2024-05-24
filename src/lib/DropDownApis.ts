@@ -247,17 +247,23 @@ export const dropdownOrg = async (
   loading: LoadingState['setLoading'],
   toast: ShowToastFunction,
   isMulti?: SelectDDL,
+  isDifferent?: boolean
 ) => {
   try {
     loading({ isLoading: true, isIndependentLoader: true, isPage: false })
     const res = await axiosInstance.post(DROPDOWN.drpOrg, {})
     if (res && res.data.success && res.data) {
       const { data } = res
-      const drpValues: SelectDDL[] = [isMulti ? isMulti : acDefaultValue]
+      let drpValues: SelectDDL[] = [isMulti ? isMulti : acDefaultValue]
         ; (data.data as DrpType[]).map((x) => {
           drpValues.push({ _id: String(x.id), label: x.name })
         })
       // drpValues.push({ _id: String(-1), label: 'Other' })
+      if (isDifferent) {
+        drpValues = data.data?.map((x: any) => {
+          return { _id: x?.id, label: x?.name, ...x }
+        })
+      }
       return drpValues
     } else {
       return []
