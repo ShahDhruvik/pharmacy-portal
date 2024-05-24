@@ -187,7 +187,13 @@ const ChatListItem = ({ chatData }: Props) => {
         </div>
       )}
       {details?.toBeRequested && !details?.isConfirmed && (
-        <p className='text-xs self-center'>{details?.status}</p>
+        <p
+          className={`text-xs self-center ${
+            details?.isChatCreatedByUser ? 'text-orange-main' : 'text-green-main'
+          }`}
+        >
+          {details?.status}
+        </p>
       )}
     </ListItemButton>
   )

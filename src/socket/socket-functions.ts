@@ -84,5 +84,6 @@ export const getNameAndOtherDetails = (
         status,
         statusColor,
         isConfirmed,
+        isChatCreatedByUser
     };
 };
