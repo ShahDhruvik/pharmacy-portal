@@ -29,7 +29,7 @@ const ChatRequestArea = (props: Props) => {
     <CustomBackDrop bgColor='rgba(0,0,0,0.4)'>
       <Paper elevation={5}>
         <div className=' flex flex-col items-center justify-center flex-1 px-3 py-3'>
-          <p className='text-base text-center text-darkGray-main pb-5 '>
+          <p className='text-base text-center text-darkGray-main pb-5'>
             Establish chat with the user by sending request.
           </p>
           <div className='flex gap-4'>
