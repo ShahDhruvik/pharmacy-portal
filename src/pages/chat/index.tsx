@@ -55,6 +55,7 @@ const ChatDrawer = (props: Props) => {
       onClose={() => {
         handleCloseDrawer()
         setChatArea(ChatAreaType.List)
+        setHandleControls(defaultChatControls)
         setChatRoom(undefined)
         setChatRooms([])
       }}
