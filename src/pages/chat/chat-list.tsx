@@ -90,8 +90,6 @@ const ChatList = (props: Props) => {
           ...chatRooms?.slice(0, existingRoomIndex),
           ...chatRooms?.slice(existingRoomIndex + 1),
         ]
-        console.log(data.response.data, 'lll')
-        console.log(updatedRooms, 'aasda')
         setChatRooms(updatedRooms)
       } else {
         setChatRooms([])

@@ -1,39 +1,10 @@
 /* eslint-disable no-extra-semi */
 /* eslint-disable no-unexpected-multiline */
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-  Button,
-  List,
-  ListItemButton,
-  ListItemText,
-  Paper,
-  Popover,
-  Popper,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { TextField } from '@mui/material'
 import React, { useEffect, useRef } from 'react'
-
 import { debounce } from 'lodash'
-import { useLoading } from '@/context/LoadingContext'
-import {
-  ChatAreaType,
-  ChatContextType,
-  ChatPatientRoomData,
-  ChatRoomType,
-  useChat,
-  defaultChatControls,
-} from '@/context/ChatContext'
-import socket from '@/socket/socket'
-import { SOCKET_STRING } from '@/socket/socket-string'
-import { chatPatientHistory } from '@/socket/socket-functions'
-import { theme } from '@/context/ThemeProvider'
-import {
-  createOfficeChatConversation,
-  getOfficeUsers,
-  getOneOfficeChatConversation,
-} from '@/lib/chat'
-import { useToast } from '@/hooks/useToast'
+import { useChat, defaultChatControls } from '@/context/ChatContext'
 
 type Props = {}
 
