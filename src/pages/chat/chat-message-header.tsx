@@ -54,7 +54,11 @@ const ChatMessageHeader = (props: Props) => {
             <p>{chatRoom?._id === isTyping?.id && isTyping?.typing ? 'typing...' : ''}</p>
           </div>
           <div>
-            <p className='text-xs'>
+            <p
+              className={`text-xs ${
+                chatRoom?.lastSeen?.isOnline ? 'text-green-main' : 'text-darkGray-main'
+              } `}
+            >
               {!(chatRoom?._id === isTyping.id && isTyping.typing) &&
                 chatRoom?.lastSeen &&
                 `${

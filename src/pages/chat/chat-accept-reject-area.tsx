@@ -81,29 +81,41 @@ const ChatAcceptRejectArea = (props: Props) => {
         <CustomBackDrop bgColor='rgba(0,0,0,0.4)'>
           <Paper elevation={5}>
             <div className=' bg-white-main text-darkestGray-main px-2 flex-1  flex flex-col items-center justify-center gap-2 pb-3 rounded-md'>
-              {/* <Button
-                variant='text'
-                color='mMidBlue'
-                sx={{
-                  color: theme.palette.mMidBlue?.main,
-                  minWidth: 'max-content',
-                  fontSize: '1rem',
-                  alignSelf: 'end',
-                  height: 20,
-                }}
-                onClick={() => {
-                  setChatArea(ChatAreaType.List)
-                  setChatRooms([])
-                  setChatRoom(undefined)
-                }}
-                disableRipple
-              >
-                Back
-              </Button> */}
               <p className='text-base text-center text-darkGray-main pb-5'>
                 Accept request to start conversation
               </p>
               <div className='flex justify-between gap-5'>
+                <Button
+                  color='mPink'
+                  onClick={async () => {
+                    setChatLoading({ loading: true, loadingProps: { accept_reject: true } })
+                    const res = await deleteOfficeChatConversation(
+                      setLoading,
+                      chatRoom?._id as string,
+                      showToast,
+                    )
+                    if (res) {
+                      socket.emit(
+                        SOCKET_STRING.PRACTICE_OFFICE_UPDATE_ROOM_AFTER_ACCEPT_OR_REJECT,
+                        {
+                          orgUserIds: chatRoom?.orgUserIds,
+                          orgUserInternalId: currentUser.internalId,
+                          isAccepted: false,
+                        },
+                      )
+                      setChatArea(ChatAreaType.List)
+                    }
+                    setChatLoading({ loading: false, loadingProps: { accept_reject: false } })
+                  }}
+                  disabled={chatLoading.loading && chatLoading.loadingProps?.accept_reject}
+                  sx={{
+                    minWidth: '100px',
+                  }}
+                >
+                  {chatLoading.loading && chatLoading.loadingProps?.accept_reject
+                    ? 'Please wait'
+                    : 'Cancel'}
+                </Button>
                 <Button
                   color='mPink'
                   onClick={async () => {
@@ -137,38 +149,7 @@ const ChatAcceptRejectArea = (props: Props) => {
                 >
                   {chatLoading.loading && chatLoading.loadingProps?.accept_reject
                     ? 'Please wait'
-                    : 'Accept'}
-                </Button>
-                <Button
-                  color='mPink'
-                  onClick={async () => {
-                    setChatLoading({ loading: true, loadingProps: { accept_reject: true } })
-                    const res = await deleteOfficeChatConversation(
-                      setLoading,
-                      chatRoom?._id as string,
-                      showToast,
-                    )
-                    if (res) {
-                      socket.emit(
-                        SOCKET_STRING.PRACTICE_OFFICE_UPDATE_ROOM_AFTER_ACCEPT_OR_REJECT,
-                        {
-                          orgUserIds: chatRoom?.orgUserIds,
-                          orgUserInternalId: currentUser.internalId,
-                          isAccepted: false,
-                        },
-                      )
-                      setChatArea(ChatAreaType.List)
-                    }
-                    setChatLoading({ loading: false, loadingProps: { accept_reject: false } })
-                  }}
-                  disabled={chatLoading.loading && chatLoading.loadingProps?.accept_reject}
-                  sx={{
-                    minWidth: '100px',
-                  }}
-                >
-                  {chatLoading.loading && chatLoading.loadingProps?.accept_reject
-                    ? 'Please wait'
-                    : 'Reject'}
+                    : 'Confirm'}
                 </Button>
               </div>
             </div>
