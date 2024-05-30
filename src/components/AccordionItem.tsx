@@ -37,7 +37,7 @@ const AccordianItem = ({ handleToggle, active, faq, isLastItem }: Props) => {
           ref={contentEl}
           className={`bg-grey-main bg-lightBlue-main relative h-0 overflow-hidden transition-all duration-500 ease-in-out w-full ${
             active === _id ? 'h-auto' : ''
-          } ${isLastItem ? 'rounded-b-lg' : 'border-b-2 border-gray-main'}`}
+          } ${isLastItem ? 'rounded-b-lg' : 'border-b-2 border-gray-main font-normal text-sm'}`}
           style={active === _id ? { height: contentEl?.current?.scrollHeight } : { height: '0px' }}
         >
           <div className='px-6 py-3'>
