@@ -116,9 +116,7 @@ const ChatListItem = ({ chatData }: Props) => {
     <ListItemButton
       sx={{
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        gap: 5,
+        flexDirection: 'column',
       }}
       divider
       onClick={() => {
@@ -141,60 +139,74 @@ const ChatListItem = ({ chatData }: Props) => {
         }
       }}
     >
-      <div
-        className={clsx(
-          'flex items-center gap-3',
-          !chatData?.isConfirmed && 'min-w-[70%] max-w-[70%]',
-          chatData?.isConfirmed && 'min-w-[80%] max-w-[80%]',
-        )}
-      >
-        <Avatar src='/' alt={details?.nameOfUser ?? ''} />
-        <div className='flex-col'>
-          <p className='text-sm text-darkBlue-main flex gap-2 font-normal'>
-            {`${details?.nameOfUser ?? ''} [ ${currentOrg?.name ?? ''} ] `}
-          </p>
-          {/* <p className='text-xs text-darkGray-main'>{currentOrg?.name ?? ''}</p> */}
-          {countCondition && details?.toBeRequested && details?.isConfirmed && (
-            <p className='text-base line-clamp-1'>{chatData?.lastMessage?.message ?? '--'}</p>
+      <div className='flex justify-between gap-5  w-full'>
+        <div
+          className={clsx(
+            'flex flex-1 items-center gap-3',
+            !chatData?.isConfirmed && 'min-w-[70%] max-w-[70%]',
+            chatData?.isConfirmed && 'min-w-[70%] max-w-[70%]',
           )}
-          {normalMessageCondition && details?.toBeRequested && details?.isConfirmed && (
-            <p className='text-base line-clamp-1'>{chatData?.lastSeenMessage?.message ?? '--'}</p>
-          )}
-        </div>
-      </div>
-      {countCondition && details?.toBeRequested && details?.isConfirmed && (
-        <div className='flex flex-col justify-between h-full'>
-          <p className='text-sm text-darkBlue-main uppercase font-normal '>
-            {chatData?.lastMessage?.createdAt
-              ? formatCreatedAt(chatData?.lastMessage?.createdAt as string)
-              : '--'}
-          </p>
-          <div className='w-5 aspect-square bg-green-main text-white-main flex items-center self-end justify-center rounded-full'>
-            <p className='text-xs'>{chatData?.unseenCount ?? 0}</p>
+        >
+          <Avatar src='/' alt={details?.nameOfUser ?? ''} />
+          <div className='flex-col'>
+            <p className='text-sm text-darkBlue-main flex gap-2 font-normal'>
+              {`${details?.nameOfUser ?? ''}`}
+            </p>
+            {countCondition && details?.toBeRequested && details?.isConfirmed && (
+              <p className='text-base line-clamp-1'>{chatData?.lastMessage?.message ?? '--'}</p>
+            )}
+            {normalMessageCondition && details?.toBeRequested && details?.isConfirmed && (
+              <p className='text-base line-clamp-1'>{chatData?.lastSeenMessage?.message ?? '--'}</p>
+            )}
           </div>
         </div>
-      )}
-      {normalMessageCondition && details?.toBeRequested && details?.isConfirmed && (
-        <p className='text-sm text-darkBlue-main uppercase self-start font-normal '>
-          {chatData?.lastSeenMessage?.createdAt
-            ? formatCreatedAt(chatData?.lastSeenMessage?.createdAt as string)
-            : '--'}
-        </p>
-      )}
-      {!details?.toBeRequested && (
-        <div className='p-1 bg-green-main text-white-main flex items-center justify-center rounded-md'>
-          <p className='text-xs'>{details?.status}</p>
-        </div>
-      )}
-      {details?.toBeRequested && !details?.isConfirmed && (
-        <p
-          className={`text-xs self-center ${
-            details?.isChatCreatedByUser ? 'text-orange-main' : 'text-green-main'
-          }`}
-        >
-          {details?.status}
-        </p>
-      )}
+        {countCondition && details?.toBeRequested && details?.isConfirmed && (
+          <div className='flex flex-col min-h-full gap-2'>
+            <p className='text-xs text-darkBlue-main self-start uppercase font-normal '>
+              {chatData?.lastMessage?.createdAt
+                ? formatCreatedAt(chatData?.lastMessage?.createdAt as string)
+                : '--'}
+            </p>
+            <div className='w-5 aspect-square   bg-green-main text-white-main flex items-center self-end justify-self-end justify-center rounded-full'>
+              <p className='text-xs'>{chatData?.unseenCount ?? 0}</p>
+            </div>
+          </div>
+        )}
+        {normalMessageCondition && details?.toBeRequested && details?.isConfirmed && (
+          <p className='text-xs text-darkBlue-main uppercase self-start font-normal '>
+            {chatData?.lastSeenMessage?.createdAt
+              ? formatCreatedAt(chatData?.lastSeenMessage?.createdAt as string)
+              : '--'}
+          </p>
+        )}
+        {!details?.toBeRequested && (
+          <div className='p-1 bg-green-main h-max self-center text-white-main flex items-center justify-center rounded-md'>
+            <p className='text-xs'>{details?.status}</p>
+          </div>
+        )}
+        {details?.toBeRequested && !details?.isConfirmed && (
+          <p
+            className={`text-xs self-center ${
+              details?.isChatCreatedByUser ? 'text-orange-main' : 'text-green-main'
+            }`}
+          >
+            {details?.status}
+          </p>
+        )}
+      </div>
+      {/* <div className='text-left w-full flex justify-between'>
+        {countCondition && details?.toBeRequested && details?.isConfirmed && (
+          <p className='text-base line-clamp-1'>{chatData?.lastMessage?.message ?? '--'}</p>
+        )}
+        {countCondition && details?.toBeRequested && details?.isConfirmed && (
+          <div className='w-5 aspect-square  bg-green-main text-white-main flex items-center self-end justify-center rounded-full'>
+            <p className='text-xs'>{chatData?.unseenCount ?? 0}</p>
+          </div>
+        )}
+        {normalMessageCondition && details?.toBeRequested && details?.isConfirmed && (
+          <p className='text-base line-clamp-1'>{chatData?.lastSeenMessage?.message ?? '--'}</p>
+        )}
+      </div> */}
     </ListItemButton>
   )
 }

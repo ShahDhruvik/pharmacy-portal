@@ -44,12 +44,10 @@ const ChatMessageHeader = (props: Props) => {
   const lastDate = chatRoom?.lastSeen ? new Date(chatRoom?.lastSeen?.lastSeen) : ''
   return (
     <>
-      <div className=' p-2 flex justify-between'>
+      <div className=' py-2 flex justify-between'>
         <div>
-          <p className='text-lg text-darkBlue-main font-semibold'>
-            {`${details?.nameOfUser}`}
-            <span className='text-base text-darkBlue-main font-normal'>{` [ ${currentOrg?.name} ]`}</span>
-          </p>
+          <p className='text-base text-darkBlue-main font-semibold'>{`${details?.nameOfUser}`}</p>
+          <p className='text-xs text-darkGray-main font-normal'>{` [ ${currentOrg?.name} ]`}</p>
           <div>
             <p>{chatRoom?._id === isTyping?.id && isTyping?.typing ? 'typing...' : ''}</p>
           </div>

@@ -1,6 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import CustomBackDrop from '@/components/CustomBackdrop'
-import { ChatAreaType, ChatContextType, ChatPatientRoomData, useChat } from '@/context/ChatContext'
+import {
+  ChatAreaType,
+  ChatContextType,
+  ChatPatientRoomData,
+  defaultChatControls,
+  useChat,
+} from '@/context/ChatContext'
 import { useLoading } from '@/context/LoadingContext'
 import { theme } from '@/context/ThemeProvider'
 import { useToast } from '@/hooks/useToast'
@@ -33,6 +39,7 @@ const ChatAcceptRejectArea = (props: Props) => {
     setChatNotFound,
     setUpdateChatRooms,
     setChatRooms,
+    setHandleControls,
   } = useChat()
 
   //Accept-RejectResponse
@@ -103,6 +110,8 @@ const ChatAcceptRejectArea = (props: Props) => {
                           isAccepted: false,
                         },
                       )
+                      setChatRooms([])
+                      setHandleControls(defaultChatControls)
                       setChatArea(ChatAreaType.List)
                     }
                     setChatLoading({ loading: false, loadingProps: { accept_reject: false } })
@@ -138,6 +147,8 @@ const ChatAcceptRejectArea = (props: Props) => {
                         },
                       )
                     } else {
+                      setChatRooms([])
+                      setHandleControls(defaultChatControls)
                       setChatArea(ChatAreaType.List)
                     }
                     setChatLoading({ loading: false, loadingProps: { accept_reject: false } })
