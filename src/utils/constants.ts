@@ -6,29 +6,8 @@ import { enUS } from 'date-fns/locale'
 export const x = 10
 
 export const currencySymbol = '₹'
-export enum MessageActions {
-  Delete = 'Delete',
-  Edit = 'Edit',
-  ClearChatMessages = 'Clear messages',
-}
-export const individualMessageAction: EnumValues<typeof MessageActions>[] = [
-  MessageActions.Delete,
-  MessageActions.Edit,
-]
-export const groupMessageAction: EnumValues<typeof MessageActions>[] = [
-  MessageActions.ClearChatMessages,
-]
 
-export const BlogPosts: Record<string, { title: string; description: string }> = {
-  'first-blog-post': {
-    title: 'First Blog Post',
-    description: 'Lorem ipsum dolor sit amet, consectetur adip.',
-  },
-  'second-blog-post': {
-    title: 'Second Blog Post',
-    description: 'Hello React Router v6',
-  },
-}
+
 
 //SERVER
 export const uuid = localStorage.getItem('uuid')
@@ -58,14 +37,7 @@ export const enum CACHE_KEYS {
   USER = 'user',
   TODO1 = 'todo1',
 }
-export enum PracticePatientChatUserTypeEnum {
-  organization = 'organization',
-  patient = 'patient',
-}
-export enum PracticeOfficeMessageTypeEnum {
-  media = 'media',
-  message = 'message',
-}
+
 
 export const enum TOAST_TYPES {
   SUCCESS = 'Success',
@@ -74,19 +46,8 @@ export const enum TOAST_TYPES {
   INFO = 'Info',
 }
 
-export const enum ASSESST_AREA {
-  AUTH = 'AUTH',
-  FAQ = 'FAQ',
-  QNA = 'QNA',
-  SLIDER = 'SLIDER',
-}
 
-export const enum FORMTYPE {
-  SIGNUP = 'SIGNUP',
-  SIGNIN = 'SIGNIN',
-  OTP = 'OTP',
-  GUEST = 'GUEST',
-}
+
 
 export const enum ALIGN_DIALOG {
   TOP_LEFT = 'top-left',
@@ -110,22 +71,8 @@ export const enum DRAWERSTATE {
   EDIT = 'EDIT',
 }
 
-export const enum PROF_HEADER {
-  PROFILE = 'Profile',
-  COMMUNICATION = 'Communication',
-  INSURANCE = 'Insurance info',
-  COUNTRY = 'Country',
-}
 
-export const enum PROF_FIELDS {
-  PROFILE_MOBILE = 'Profile Mobile Number',
-  PROFILE_EMAIL = 'Profile Email Address',
-  COMMUNICATION_MOBILE = 'Mobile Number',
-  COMMUNICATION_EMAIL = 'Email Address',
-  COMMUNICATION_PREFERENCE = 'Preference',
-  INSURANCE_FIELD = 'Whats App Message',
-  COUNTRY_FIELD = 'Country',
-}
+
 
 export const formatDate = (dateString: string) => {
   if (typeof dateString === 'string') {
@@ -135,30 +82,4 @@ export const formatDate = (dateString: string) => {
   } else {
     return ''
   }
-}
-
-export enum AppointmentStatusEnum {
-  Upcoming = 'Upcoming',
-  Completed = 'Completed',
-  Cancelled = 'Cancelled',
-}
-
-export enum MarketingReferenceEnum {
-  Facebook = 'Facebook',
-  Instagram = 'Instagram',
-  GoogleSearch = 'GoogleSearch',
-  GoogleAdds = 'GoogleAdds',
-  Oopchar = 'Oopchar',
-  ClientWebsite = 'ClientWebsite',
-  MobileAppAndroid = 'MobileAppAndroid',
-  MobileAppIOS = 'MobileAppIOS',
-  PatientPortal = 'PatientPortal',
-  PracticePortal = 'PracticePortal',
-  Default = 'Default',
-}
-
-export enum PracticeModeEnum {
-  VIRTUAL_CARE = 'Virtual Care',
-  IN_PERSON_CARE = 'In-person Care',
-  HYBRID_CARE = 'Hybrid Care',
 }
