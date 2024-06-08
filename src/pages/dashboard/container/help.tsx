@@ -1,5 +1,4 @@
-import img1 from '../../../../src/assets/images/Aspect_Ratio.jpg'
-// import { faqs } from '../../../utils/data'
+/* eslint-disable react-hooks/exhaustive-deps */
 import AccordionBox from '../../../components/AccordionBox'
 import { useLoading } from '@/context/LoadingContext'
 import { useToast } from '@/hooks/useToast'

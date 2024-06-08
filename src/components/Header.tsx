@@ -7,8 +7,6 @@ import { headerData } from '../utils/data'
 import { IconButton } from '@mui/material'
 import { theme } from '@/context/ThemeProvider'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
-import ProfileBar from '../pages/profile/Profilebar'
-import TaskBar from '@/pages/task-bar/task-bar'
 import { useChat } from '@/context/ChatContext'
 import socket from '@/socket/socket'
 import { SOCKET_STRING } from '@/socket/socket-string'
@@ -60,22 +58,7 @@ const Header = ({}: Props) => {
     setOpenDrawerForTask(true)
     setAnchorEl(null)
   }
-  useEffect(() => {
-    const handleListUpdate = (userId: string[]) => {
-      if (currentUser) {
-        console.log(userId.includes(String(currentUser?.internalId)) && !openChatDrawer)
-        if (userId.includes(String(currentUser?.internalId)) && !openChatDrawer) {
-          setNotify((prev) => prev + 1)
-        } else {
-          setNotify(0)
-        }
-      }
-    }
-    socket.on(SOCKET_STRING.PRACTICE_OFFICE_NOTIFY, handleListUpdate)
-    return () => {
-      socket.off(SOCKET_STRING.PRACTICE_OFFICE_NOTIFY, handleListUpdate)
-    }
-  }, [socket, currentUser, openChatDrawer])
+
   useEffect(() => {
     if (notify) {
       setPlayTune(true)
@@ -200,8 +183,6 @@ const Header = ({}: Props) => {
           </div>
         </div>
       </nav>
-      <ProfileBar handleClose={handleCloseDrawer} open={openDrawer} />
-      <TaskBar handleClose={handleCloseDrawerForTask} open={openDrawerForTask} />
     </>
   )
 }

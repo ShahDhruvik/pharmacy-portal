@@ -2,7 +2,6 @@
 import { useAuth } from '@/context/AuthContext'
 import Banner from './banner'
 import Welcome from './welcome'
-import ChatDrawer from '@/pages/chat'
 import { useChat } from '@/context/ChatContext'
 import { useEffect } from 'react'
 import socket from '@/socket/socket'
@@ -48,7 +47,6 @@ const Dashboard = ({}: Props) => {
         <>
           <Header />
           <Banner />
-          <ChatDrawer />
         </>
       ) : (
         <Welcome />

@@ -13,15 +13,7 @@ export const enum COMMON_PATH {
   DEFAULT = '/',
 }
 
-export const enum ABOUT_PATH {
-  CONTACT = '/contact',
-}
-
 export const enum AUTH_PATH {
   LOGIN = '/log-in',
   LOGOUT = '/log-out',
-}
-
-export const enum DASHBOARD_PATH {
-  TREE = '/tree',
 }

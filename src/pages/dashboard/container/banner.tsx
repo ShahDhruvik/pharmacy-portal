@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import AppointmentCard from '@/components/AppointmentCard'
 import { theme } from '@/context/ThemeProvider'
 import { getAllAppointments } from '@/lib/Appointment'
@@ -13,34 +14,6 @@ import { subYears } from 'date-fns'
 import TriainaBanner from '@/assets/images/Triaina-Banner.png'
 
 interface Props {}
-
-const arr = [
-  {
-    heading: [
-      {
-        title: 'In-Person',
-        color: '#D4D4D4',
-      },
-      {
-        title: 'Confirmed',
-        color: '#D4D4D4',
-      },
-      {
-        title: 'Sexual Health',
-        color: '#D4D4D4',
-      },
-    ],
-    img: 'img',
-    name: 'Dr Vageesh Sabharwal',
-    clinicName: 'Nakshtra Multi-speciality Clinic',
-    address: `3403 Fieldgate Drive,
-        Mississauga, ON, L4X 2J4`,
-    img1: 'string',
-    patientName: 'Yogi Pathare',
-    date: '19 July 2023',
-    time: '10:15 AM to 11:00 AM',
-  },
-]
 
 const enum SliderString {
   UP = 'up',
