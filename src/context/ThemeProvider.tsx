@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 // All the context regarding the web are defined here
 // This particular context states the override styles for MUI components and other sufficient style requirements
 'use client'
@@ -262,9 +263,6 @@ export const theme: Theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          minHeight: 30,
-          minWidth: 200,
-          maxWidth: 200,
           lineHeight: 2,
           textTransform: 'none',
           color: '#ffffff',
@@ -282,36 +280,36 @@ export const theme: Theme = createTheme({
     },
     MuiInputBase: {},
     MuiOutlinedInput: {
-      styleOverrides: {
-        root: {
-          '&.Mui-focused': {
-            '& .MuiOutlinedInput-notchedOutline': {
-              border: `2px solid black`,
-            },
-          },
-          '&.Mui-error': {
-            '& .MuiOutlinedInput-notchedOutline': {
-              border: `2px solid #de605d`,
-            },
-          },
-          '&.Mui-hover': {
-            '& .MuiOutlinedInput-notchedOutline': {
-              border: `1px solid black`,
-            },
-          },
-          '& .MuiInputBase-input::placeholder': {
-            fontSize: '12px',
-          },
-          borderRadius: '8px',
-        },
-        input: {
-          padding: '8px 10px',
-          width: '100%',
-        },
-        notchedOutline: {
-          border: `1px solid #787d78`,
-        },
-      },
+      // styleOverrides: {
+      //   root: {
+      //     '&.Mui-focused': {
+      //       '& .MuiOutlinedInput-notchedOutline': {
+      //         border: `2px solid black`,
+      //       },
+      //     },
+      //     '&.Mui-error': {
+      //       '& .MuiOutlinedInput-notchedOutline': {
+      //         border: `2px solid #de605d`,
+      //       },
+      //     },
+      //     '&.Mui-hover': {
+      //       '& .MuiOutlinedInput-notchedOutline': {
+      //         border: `1px solid black`,
+      //       },
+      //     },
+      //     '& .MuiInputBase-input::placeholder': {
+      //       fontSize: '12px',
+      //     },
+      //     borderRadius: '8px',
+      //   },
+      //   input: {
+      //     padding: '8px 10px',
+      //     width: '100%',
+      //   },
+      //   notchedOutline: {
+      //     border: `1px solid #787d78`,
+      //   },
+      // },
     },
     MuiAutocomplete: {
       styleOverrides: {

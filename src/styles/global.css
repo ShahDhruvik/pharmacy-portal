@@ -3,19 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  section {
-    & > div {
-      @apply p-container py-0 font-sans font-medium text-black-main;
-    }
-  }
-  nav {
-    & > div {
-      @apply p-container py-3 bg-lightGray-main font-sans font-medium;
-    }
-  }
-}
-
 .hideScroll::-webkit-scrollbar {
   display: none;
 }

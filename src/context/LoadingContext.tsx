@@ -1,17 +1,17 @@
-import { LoadingState } from '../../src/types/common'
+/* eslint-disable react-refresh/only-export-components */
+import { ContextMessage } from '../utils/commonMessages'
+import { LoadingContextType } from '../types/common'
 import { ReactNode, createContext, useContext, useState } from 'react'
 
-const LoadingContext = createContext<LoadingState | undefined>(undefined)
+const LoadingContext = createContext<LoadingContextType | undefined>(undefined)
 
 export function LoadingProvider({ children }: { children: ReactNode }) {
-  const [loading, setLoading] = useState<LoadingState['loading']>({
+  const [loading, setLoading] = useState<LoadingContextType['loading']>({
     isLoading: false,
-    isPage: false,
-    pageProps: undefined,
   })
-  const contextValue: LoadingState = {
-    loading: loading as LoadingState['loading'],
-    setLoading: setLoading as LoadingState['setLoading'],
+  const contextValue: LoadingContextType = {
+    loading: loading as LoadingContextType['loading'],
+    setLoading: setLoading as LoadingContextType['setLoading'],
   }
   return <LoadingContext.Provider value={contextValue}>{children}</LoadingContext.Provider>
 }
@@ -19,7 +19,7 @@ export function LoadingProvider({ children }: { children: ReactNode }) {
 export function useLoading() {
   const context = useContext(LoadingContext)
   if (!context) {
-    throw new Error('useLoading must be used within LoadingProvider')
+    throw new Error(ContextMessage.LoadingMessage)
   }
   return context
 }

@@ -10,7 +10,17 @@ export type PaletteColor = {
   contrastText?: string
 }
 export type EnumValues<T extends Record<string, string | number>> = T[keyof T];
-
+export type LoadingProps = {
+  isLoading: boolean;
+  loadingProps?: {
+    page?: boolean;
+    none?: boolean
+  };
+};
+export type LoadingContextType = {
+  loading: LoadingProps;
+  setLoading: Dispatch<SetStateAction<LoadingProps>>;
+};
 export type HandleControls = {
   search: string;
   currentPage: number;

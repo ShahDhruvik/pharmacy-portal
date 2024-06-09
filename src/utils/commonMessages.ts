@@ -15,3 +15,8 @@ export const enum VALIDATION_MESSAGE {
   checkBoxValidation = '*Please verify your response.',
   required = '*required',
 }
+
+export enum ContextMessage {
+  LoadingMessage = "useLoading must be used within LoadingProvider",
+  AuthMessage = "useAuth must be used within AuthProvider",
+}
