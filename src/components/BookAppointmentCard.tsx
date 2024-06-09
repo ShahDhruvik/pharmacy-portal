@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { theme } from '@/context/ThemeProvider'
 import { Button, Divider } from '@mui/material'
 import img1 from '@/assets/images/Aspect_Ratio.jpg'

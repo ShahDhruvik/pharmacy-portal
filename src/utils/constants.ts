@@ -71,9 +71,6 @@ export const enum DRAWERSTATE {
   EDIT = 'EDIT',
 }
 
-
-
-
 export const formatDate = (dateString: string) => {
   if (typeof dateString === 'string') {
     const parsedDate = parseISO(dateString)

@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { useEffect, useState } from 'react'
 import { Avatar, IconButton, useMediaQuery } from '@mui/material'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
@@ -10,8 +11,7 @@ import { Navigation } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/autoplay'
 import '@/styles/Manage-card-Slider.css'
-import ViewBar from '@/pages/appointmentViewPage/viewBar'
-import { CONST_APP_IMAGE_URL, PracticeModeEnum, uuid } from '@/utils/constants'
+import { CONST_APP_IMAGE_URL, uuid } from '@/utils/constants'
 import { format, parse } from 'date-fns'
 import Spinner from './spinner'
 import { useLoading } from '@/context/LoadingContext'
@@ -208,7 +208,7 @@ const AppointmentCard = ({
                         </div>
                       </div>
                       <div className='flex flex-col gap-1 h-40 items-start justify-start'>
-                        {upcoming && (
+                        {/* {upcoming && (
                           <a
                             href={
                               x?.appointmentMode === PracticeModeEnum.VIRTUAL_CARE &&
@@ -241,7 +241,7 @@ const AppointmentCard = ({
                               />
                             </IconButton>
                           </a>
-                        )}
+                        )} */}
                         <IconButton
                           onClick={() => {
                             setOpenChatDrawer(true)
@@ -321,7 +321,7 @@ const AppointmentCard = ({
             )}
           </Swiper>
         </div>
-        <ViewBar
+        {/* <ViewBar
           handleClose={handleCloseDrawer}
           open={openDrawer && manageState === MANAGE_STATE.UPCOMING}
           heading='Upcoming Appointments'
@@ -344,7 +344,7 @@ const AppointmentCard = ({
           cancel={true}
           // data={data}
           manageState={manageState}
-        />
+        /> */}
       </>
     )
   } else {

@@ -3,12 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import Logo from '../assets/images/TH.png'
 import Text from '../assets/images/Triaina-Health-New.png'
 import { headerLinks } from '../utils/data'
-import { IconButton, Popper, useMediaQuery } from '@mui/material'
-import AuthForm from '../pages/dashboard/container/auth-forms/auth-form'
-import HomeIcon from '@mui/icons-material/Home'
+import { useMediaQuery } from '@mui/material'
 import { theme } from '@/context/ThemeProvider'
-import { FORMTYPE } from '@/utils/constants'
-import MenuIcon from '@mui/icons-material/Menu'
 import LockOpenIcon from '@mui/icons-material/LockOpen'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 
@@ -76,10 +72,7 @@ const Navbar = ({}: Props) => {
             })}
             <button
               className='hover:underline p-1 text-darkGray-main rounded-full h-6 aspect-square flex items-center justify-center'
-              onClick={() => {
-                setSignType([FORMTYPE.SIGNIN])
-                setOpenSign(true)
-              }}
+              onClick={() => {}}
             >
               <LockOpenIcon />
             </button>
@@ -95,7 +88,6 @@ const Navbar = ({}: Props) => {
                   padding: 0,
                 }}
               >
-                <MenuIcon />
               </IconButton>
               <Popper
                 id={id}
@@ -127,24 +119,13 @@ const Navbar = ({}: Props) => {
             </div>
             <button
               className='hover:underline p-1 text-darkGray-main rounded-full h-8 aspect-square flex items-center justify-center'
-              onClick={() => {
-                setSignType([FORMTYPE.SIGNIN])
-                setOpenSign(true)
-              }}
+              onClick={() => {}}
             >
               <LockOpenIcon />
             </button>
           </div>
         </div>
       </nav>
-      {signType.includes(FORMTYPE.SIGNIN) && (
-        <AuthForm
-          open={openSign}
-          signType={signType}
-          setSignType={setSignType}
-          handleClose={handleCloseForm}
-        />
-      )}
     </>
   )
 }

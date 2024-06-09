@@ -11,7 +11,6 @@ import ReduxProvider from './store/provider'
 import { AuthProvider } from './context/AuthContext'
 import { ToastContainer } from 'react-toastify'
 import { LoadingProvider } from './context/LoadingContext'
-import { AssessmentProvider } from './context/AssessmentContext'
 import { ChatProvider } from './context/ChatContext'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
@@ -34,11 +33,9 @@ root.render(
                 theme='colored'
                 icon={false}
               />
-              <AssessmentProvider>
-                <ChatProvider>
-                  <App />
-                </ChatProvider>
-              </AssessmentProvider>
+              <ChatProvider>
+                <App />
+              </ChatProvider>
             </LoadingProvider>
           </AppThemeProvider>
         </ReduxProvider>

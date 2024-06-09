@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import AccordianItem from './AccordionItem'
 import { FAQData } from '../utils/data'
 import CustomBackDrop from './CustomBackdrop'
