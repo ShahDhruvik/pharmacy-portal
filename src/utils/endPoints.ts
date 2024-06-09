@@ -16,13 +16,13 @@ export const enum DefaultEndpoints {
 
 export const enum DashboardContent {
   get_main_image = DefaultEndpoints.common +
-  DefaultEndpoints.practice +
+  "/pharmacy-care" +
   "/portal-images-list",
   get_faqs = DefaultEndpoints.common +
-  DefaultEndpoints.practice +
+  "/pharmacy-care" +
   "/faq/portal-list",
   get_feature = DefaultEndpoints.common +
-  DefaultEndpoints.practice +
+  "/pharmacy-care" +
   "/portal-feature-list",
 }
 

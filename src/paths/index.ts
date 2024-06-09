@@ -12,6 +12,9 @@ export const enum COMMON_PATH {
   NOTFOUND = '*',
   DEFAULT = '/',
 }
+export const enum DASHBOARD_PATH {
+  help_and_faq = '/help-and-faq',
+}
 
 export const enum AUTH_PATH {
   LOGIN = '/log-in',

@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import { useAuth } from '@/context/AuthContext'
 import { useNavigate } from 'react-router-dom'
-import { AUTH_PATH, COMMON_PATH, MAIN_PATH } from '@/paths/index'
+import { AUTH_PATH, COMMON_PATH, DASHBOARD_PATH, MAIN_PATH } from '@/paths/index'
 import { useForm } from 'react-hook-form'
 import { LoadingButton } from '@mui/lab'
 import { useEffect, useState } from 'react'
@@ -383,6 +383,7 @@ export default function DashboardPage() {
                 type='submit'
                 fullWidth
                 variant='contained'
+                color='mPink'
                 sx={{ mt: 2, mb: 1 }}
                 loading={isLoading}
               >
@@ -418,7 +419,7 @@ export default function DashboardPage() {
           <div
             className={`flex-1 my-auto mx-5 flex flex-col md:items-start lg:items-center items-center `}
           >
-            <h3 className={`text-xl`}>Download Mobile App</h3>
+            <h3 className={`text-2xl font-semibold`}>Download Mobile App</h3>
             <div className='flex'>
               <a
                 href={`https://www.apple.com/in/app-store/`}
@@ -465,7 +466,7 @@ export default function DashboardPage() {
                 border: `2px solid ${theme.palette.mBlack?.main}`,
               }}
               onClick={() => {
-                // nav(MAIN_PATH.AUTH.split("/*")[0] + AUTH_PATH.HELP_AND_FAQ);
+                nav(DASHBOARD_PATH.help_and_faq)
               }}
             >
               Help and Faq
