@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { FAQData } from '../utils/data'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
-import { theme } from '@/context/ThemeProvider'
+import theme from '@/theme/defaultTheme'
 
 type Props = {
   handleToggle: (index: string) => void

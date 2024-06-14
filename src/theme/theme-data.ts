@@ -5,19 +5,24 @@ export enum ThemeOperator {
 
 // PaletteColors
 export enum PaletteColors {
-    blue = '#3498db',
-    white = '#ffffff',
-    black = '#000000',
-    gray = '#808080',
-    lightGray = '#bdbdbd',
-    green = '#2ecc71',
-    red = '#e74c3c',
-    yellow = '#f1c40f',
-    orange = '#e67e22',
-    purple = '#9b59b6',
-    teal = '#008080',
-    pink = '#e91e63',
-    brown = '#a52a2a'
+    mPink = '#e20074',
+    mDarkBlue = '#0a3876',
+    mBlue = '#00a1f1',
+    mLightBlue = '#d9e3f8',
+    mMidBlue = '#2466b5',
+    mLightGray = '#f4f4f4',
+    mGray = '#d4d4d4',
+    mMediumGray = '#c1c1c4',
+    mDarkGray = '#787d78',
+    mOrange = '#db4437',
+    mLightOrange = '#de605d',
+    mGreen = '#0f9d58',
+    mYellow = '#ffbb00',
+    mWhite = '#ffffff',
+    mLightBlack = '#2b2a2a',
+    mBlack = '#000000',
+    mDarkGreen = '#1A2428',
+    mRed = '#ff3333',
 }
 export const generatePalette = (paletteColors: Record<string, string>) => {
     const colorPalette: Record<string, { main: string; light: string; dark: string }> = {}

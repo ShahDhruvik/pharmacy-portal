@@ -1,5 +1,5 @@
 import Spinner from '@/components/spinner'
-import { theme } from '@/context/ThemeProvider'
+import theme from '@/theme/defaultTheme'
 import { Box } from '@mui/material'
 import { ReactNode } from 'react'
 

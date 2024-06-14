@@ -4,8 +4,8 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { Controller } from 'react-hook-form'
 import { enGB } from 'date-fns/locale'
 import { useState } from 'react'
-import { theme } from '../context/ThemeProvider'
 import { SxProps, Theme } from '@mui/material'
+import theme from '@/theme/defaultTheme'
 
 type Props = {
   name: string

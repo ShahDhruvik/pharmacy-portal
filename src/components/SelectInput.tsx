@@ -1,3 +1,5 @@
+/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Autocomplete, TextField, MenuItem, Tooltip, SxProps, Theme } from '@mui/material'
 import { acDefaultValue } from '../utils/form.validation'
 import {
@@ -11,8 +13,8 @@ import {
 import { splitDescription } from '../utils/constants'
 import { SelectDDL } from '../types/common'
 import ArrowCircleDownOutlinedIcon from '@mui/icons-material/ArrowCircleDownOutlined'
-import { theme } from '@/context/ThemeProvider'
 import { useEffect } from 'react'
+import theme from '@/theme/defaultTheme'
 
 type Props = {
   options: SelectDDL[]

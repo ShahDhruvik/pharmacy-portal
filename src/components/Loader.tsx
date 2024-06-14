@@ -1,7 +1,6 @@
 // import { theme } from '../context/ThemeProvider'
 import { LoadingState } from '../types/common'
 import { Backdrop, Dialog } from '@mui/material'
-import CustomDialog from './Dialog-custom'
 import { useLocation } from 'react-router-dom'
 import Spinner from './spinner'
 type Props = {
@@ -54,15 +53,7 @@ const Loader = ({ loading }: Props) => {
           }}
           open={loading.isLoading}
         >
-          <CustomDialog
-            open={true}
-            handleClose={() => {}}
-            action={{ isAction: false, component: null }}
-            maxWidth={'xs'}
-            header={{ isHeader: false, component: null }}
-          >
-            <Spinner />
-          </CustomDialog>
+          <Spinner />
         </Backdrop>
       )
     }

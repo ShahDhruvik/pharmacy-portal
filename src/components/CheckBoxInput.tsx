@@ -1,6 +1,5 @@
 import { Checkbox } from '@mui/material'
 import { Control, Controller, UseFormSetValue, UseFormTrigger } from 'react-hook-form'
-import SvgIcon from './SvgIcon'
 import { useToast } from '@/hooks/useToast'
 
 type Props = {
