@@ -4,17 +4,17 @@
 }
 
 .Toastify__toast-theme--colored.Toastify__toast--info {
-  @apply bg-blue-main text-darkBlue-main font-sans font-light text-lg;
+  @apply bg-mBlue-main text-darkBlue-main font-sans font-light text-lg;
 }
 
 .Toastify__toast-theme--colored.Toastify__toast--success {
-  @apply bg-green-main text-white-main font-sans font-light text-lg;
+  @apply bg-mGreen-main text-white-main font-sans font-light text-lg;
 }
 
 .Toastify__toast-theme--colored.Toastify__toast--error {
-  @apply bg-yellow-main text-darkBlue-main font-sans font-light text-lg;
+  @apply bg-mYellow-main text-darkBlue-main font-sans font-light text-lg;
 }
 
 .Toastify__toast-theme--colored.Toastify__toast--warning {
-  @apply bg-orange-main text-darkBlue-main font-sans font-light text-lg;
+  @apply bg-mOrange-main text-darkBlue-main font-sans font-light text-lg;
 }
