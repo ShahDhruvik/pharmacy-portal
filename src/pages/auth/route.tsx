@@ -1,4 +1,4 @@
-import RedirectToPrevious from '@/components/RedirectToPreviousRoute'
+import RedirectToPrevious from '@/components/other-components/RedirectToPreviousRoute'
 import RouteWrapper from '@/middleware/routeWrapper'
 import { AUTH_PATH } from '@/paths/index'
 import { Route } from 'react-router-dom'

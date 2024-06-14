@@ -8,7 +8,7 @@ import { useAuth } from '@/context/AuthContext'
 import { Search, SearchIconWrapper, StyledInputBase } from '@/components/MuiStyledComponents'
 import SearchIcon from '@mui/icons-material/Search'
 import AccordionBox from '@/components/AccordionBox'
-import VideoPlayer from '@/components/VideoPlayer'
+import VideoPlayer from '@/components/common-components/VideoPlayer'
 import { getAllFaqs } from '@/lib/auth-page-ui'
 import theme from '@/theme/defaultTheme'
 interface Props {}
