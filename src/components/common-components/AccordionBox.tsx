@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import AccordianItem from './AccordionItem'
-import { FAQData } from '../utils/data'
-import CustomBackDrop from './CustomBackdrop'
+import { FAQData } from '@/utils/data'
+import CustomBackDrop from '../other-components/CustomBackdrop'
 
 type Props = { faqs: FAQData[]; index: string }
 

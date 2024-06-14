@@ -42,3 +42,33 @@ export const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }))
+export const OrderSearchCover = styled('div')(({ theme }) => ({
+  position: 'relative',
+  border: '1px solid',
+  borderColor: theme.palette.mGray?.main,
+  borderRadius: '4px',
+  width: '100%',
+}))
+
+export const OrderSearchIconWrapper = styled(IconButton)(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  cursor: 'pointer',
+  pointerEvents: 'all',
+}))
+
+export const OrderStyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: '400px',
+    },
+  },
+}))

@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 export const acDefaultValue = { label: 'Select', _id: '00' }
 export const numberFieldValidation = (isRequired: boolean, type?: 'Phone' | 'Pincode' | 'Days') => {
   switch (type) {

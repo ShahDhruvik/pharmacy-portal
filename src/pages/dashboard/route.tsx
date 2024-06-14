@@ -1,7 +1,7 @@
 import RouteWrapper from '@/middleware/routeWrapper'
 import { Outlet, Route } from 'react-router-dom'
 import DashboardPage from './page'
-import DashBoardLayout from './dashboardLayout'
+import DashBoardLayout from './dashboard-layout'
 
 type Props = {}
 

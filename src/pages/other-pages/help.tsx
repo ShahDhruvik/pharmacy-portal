@@ -5,9 +5,13 @@ import { useToast } from '@/hooks/useToast'
 import { useEffect, useState } from 'react'
 import { debounce } from 'lodash'
 import { useAuth } from '@/context/AuthContext'
-import { Search, SearchIconWrapper, StyledInputBase } from '@/components/MuiStyledComponents'
+import {
+  Search,
+  SearchIconWrapper,
+  StyledInputBase,
+} from '@/components/other-components/MuiStyledComponents'
 import SearchIcon from '@mui/icons-material/Search'
-import AccordionBox from '@/components/AccordionBox'
+import AccordionBox from '@/components/common-components/AccordionBox'
 import VideoPlayer from '@/components/common-components/VideoPlayer'
 import { getAllFaqs } from '@/lib/auth-page-ui'
 import theme from '@/theme/defaultTheme'

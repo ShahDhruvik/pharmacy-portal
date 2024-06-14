@@ -1,7 +1,15 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Autocomplete, TextField, MenuItem, Tooltip, SxProps, Theme } from '@mui/material'
-import { acDefaultValue } from '../utils/form.validation'
+import {
+  Autocomplete,
+  TextField,
+  MenuItem,
+  Tooltip,
+  SxProps,
+  Theme,
+  TextFieldProps,
+} from '@mui/material'
+import { acDefaultValue } from '@/utils/form.validation'
 import {
   Control,
   Controller,
@@ -10,8 +18,8 @@ import {
   UseFormSetValue,
   useController,
 } from 'react-hook-form'
-import { splitDescription } from '../utils/constants'
-import { SelectDDL } from '../types/common'
+import { splitDescription } from '@/utils/constants'
+import { SelectDDL } from '@/types/common'
 import ArrowCircleDownOutlinedIcon from '@mui/icons-material/ArrowCircleDownOutlined'
 import { useEffect } from 'react'
 import theme from '@/theme/defaultTheme'
@@ -32,6 +40,7 @@ type Props = {
   isDisabled?: boolean
   selectDefault?: boolean
   handleOnChange?: any
+  size?: TextFieldProps['size']
 }
 
 export const listBoxPropsDropdown = () => {
@@ -104,6 +113,7 @@ const SelectInput = ({
   isDisabled,
   selectDefault,
   handleOnChange,
+  size,
 }: Props) => {
   const inputStyleProps: SxProps<Theme> = { ...sx, width: '100%' }
 
@@ -168,6 +178,7 @@ const SelectInput = ({
                 placeholder={`Select ${label}`}
                 helperText={fieldState.error ? fieldState.error.message : ''}
                 label={label}
+                {...(size && { size: size })}
               />
             )
           }}
@@ -181,11 +192,11 @@ const SelectInput = ({
               tooltip ? tooltip.length : 13,
             )
           }
-          popupIcon={
-            <ArrowCircleDownOutlinedIcon
-              sx={{ width: 24, height: 24, fill: theme.palette.mDarkGray?.main }}
-            />
-          }
+          // popupIcon={
+          //   <ArrowCircleDownOutlinedIcon
+          //     sx={{ width: 24, height: 24, fill: theme.palette.mDarkGray?.main }}
+          //   />
+          // }
         />
       )}
     />

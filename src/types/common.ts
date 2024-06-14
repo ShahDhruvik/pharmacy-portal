@@ -88,7 +88,7 @@ export type LoadingState = {
 }
 
 
-export type SelectDDL = { label: string; _id: string }
+export type SelectDDL = { label: string; _id: string, data?: any }
 
 export type DrawerState = DRAWERSTATE.EDIT | DRAWERSTATE.NORMAL
 

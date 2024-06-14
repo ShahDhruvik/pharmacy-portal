@@ -26,6 +26,9 @@ declare module '@mui/material/Button' {
     }
     interface ButtonPropsColorOverrides extends DynamicButtonPaletteOptions { }
 }
+declare module '@mui/material/AppBar' {
+    interface AppBarPropsColorOverrides extends DynamicButtonPaletteOptions { }
+}
 
 declare module '@mui/material/styles' {
     interface BreakpointOverrides extends DynamicBreakPointsOptions { }
