@@ -23,7 +23,7 @@ const AccordianItem = ({ handleToggle, active, faq, isLastItem }: Props) => {
         }`}
         onClick={() => handleToggle(_id)}
       >
-        <h5 className='relative text-sm text-black-main font-semibold mb-0 transition-all duration-700 '>
+        <h5 className='relative text-sm text-mBlack-main font-semibold mb-0 transition-all duration-700 '>
           {question}
         </h5>
         {active === _id ? (
@@ -35,9 +35,9 @@ const AccordianItem = ({ handleToggle, active, faq, isLastItem }: Props) => {
       <div className='flex items-center justify-center'>
         <div
           ref={contentEl}
-          className={`bg-grey-main bg-lightBlue-main relative h-0 overflow-hidden transition-all duration-500 ease-in-out w-full ${
+          className={`bg-grey-main bg-mLightBlue-main relative h-0 overflow-hidden transition-all duration-500 ease-in-out w-full ${
             active === _id ? 'h-auto' : ''
-          } ${isLastItem ? 'rounded-b-lg' : 'border-b-2 border-gray-main font-normal text-sm'}`}
+          } ${isLastItem ? 'rounded-b-lg' : 'border-b-2 border-mGray-main font-normal text-sm'}`}
           style={active === _id ? { height: contentEl?.current?.scrollHeight } : { height: '0px' }}
         >
           <div className='px-6 py-3'>

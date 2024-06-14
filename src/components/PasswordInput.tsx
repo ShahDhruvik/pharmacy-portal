@@ -9,8 +9,10 @@ import {
 import { Controller, Control } from 'react-hook-form'
 import { useState } from 'react'
 import Eye from '@/assets/icons/eye.svg?react'
-
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 type Props = {
+  label: string
   placeholder: string
   name: string
   control: Control<any> | undefined
@@ -19,7 +21,6 @@ type Props = {
   isDisabled?: boolean
   sx?: SxProps<Theme>
   multiline?: number
-  label?: string
   handleClick?: () => void
   readonly?: boolean
   size?: TextFieldProps['size']
@@ -82,7 +83,7 @@ const PasswordInput = ({
                       padding: 0,
                     }}
                   >
-                    <Eye />
+                    {showPassword ? <RemoveRedEyeIcon /> : <VisibilityOffIcon />}
                   </IconButton>
                 </InputAdornment>
               ),

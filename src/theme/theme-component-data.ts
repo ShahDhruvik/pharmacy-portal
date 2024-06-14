@@ -18,15 +18,11 @@ export const components: ThemeOptions['components'] = {
     MuiInputLabel: {
         styleOverrides: {
             root: {
-                color: PaletteColors.mDarkGray,
-                fontWeight: 700,
                 '&.Mui-focused': {
                     color: PaletteColors.mPink,
-                    fontWeight: 700,
                 },
                 '&.Mui-error': {
                     color: PaletteColors.mRed,
-                    fontWeight: 700,
                 },
 
             },
@@ -38,35 +34,32 @@ export const components: ThemeOptions['components'] = {
         styleOverrides: {
             root: {
                 '.MuiOutlinedInput-notchedOutline': {
-                    border: `2px solid ${PaletteColors.mDarkGray}`,
-                    color: PaletteColors.mDarkGray,
                 },
                 '&.Mui-focused': {
                     '& .MuiOutlinedInput-notchedOutline': {
                         border: `2px solid ${PaletteColors.mPink}`,
                     },
                     '& .MuiFormLabel-root.MuiInputLabel-root': {
-                        color: PaletteColors.mBlack,
+                        color: PaletteColors.mPink,
                     },
                 },
                 '&.Mui-error': {
                     '& .MuiOutlinedInput-notchedOutline': {
                         border: `2px solid ${PaletteColors.mRed}`,
                     },
+                    '& .MuiFormLabel-root.MuiInputLabel-root': {
+                        color: PaletteColors.mRed,
+                    },
                 },
                 '&.Mui-hover': {
-                    '& .MuiOutlinedInput-notchedOutline': {
-                        border: `1px solid ${PaletteColors.mRed}`,
-                    },
+
                 },
                 borderRadius: '4px',
             },
-            input: { color: PaletteColors.mBlack }
         },
     },
     MuiAutocomplete: {
         styleOverrides: {
-            input: { color: PaletteColors.mBlack, }
         },
     },
 

@@ -7,6 +7,7 @@ import {
 } from '@mui/material'
 import { Controller, Control } from 'react-hook-form'
 type Props = {
+  label: string
   placeholder: string
   name: string
   control: Control<any> | undefined
@@ -15,7 +16,6 @@ type Props = {
   isDisabled?: boolean
   sx?: SxProps<Theme>
   multiline?: number
-  label?: string
   handleOnChange?: (e: any) => void
   size?: TextFieldProps['size']
 }

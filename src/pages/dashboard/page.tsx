@@ -328,8 +328,13 @@ export default function DashboardPage() {
             </form>
           )}
           {!showChangePassword && !showForgotPassword && (
-            <form noValidate onSubmit={handleFormSubmit(onSubmit)} className='flex flex-col gap-3'>
+            <form
+              noValidate
+              onSubmit={handleFormSubmit(onSubmit)}
+              className='flex flex-col gap-4 mt-3'
+            >
               <TxtInput
+                label='Email*'
                 control={control}
                 handleChange={() => []}
                 name='email'
@@ -338,6 +343,7 @@ export default function DashboardPage() {
                 size='small'
               />
               <PasswordInput
+                label='Password*'
                 control={control}
                 handleChange={() => {}}
                 name='password'
@@ -346,6 +352,7 @@ export default function DashboardPage() {
                 size='small'
               />
               <TxtInput
+                label='Office Id *'
                 control={control}
                 handleChange={() => []}
                 name='officeId'

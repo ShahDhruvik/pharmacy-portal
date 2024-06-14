@@ -18,13 +18,13 @@ const AccordionBox = ({ faqs, index }: Props) => {
 
   return (
     <div
-      className={`relative rounded-lg  border-2 border-gray-main ${
+      className={`relative rounded-lg  border-2 border-mGray-main ${
         faqs.length === 0 && 'aspect-video mxs:aspect-[5/2] msm:aspect-[5/1]'
       }`}
     >
       {faqs.length === 0 && (
         <CustomBackDrop>
-          <p className='text-orange-main text-center '> No record Found</p>
+          <p className='text-mOrange-main text-center '> No record Found</p>
         </CustomBackDrop>
       )}
       {faqs?.slice(0, 5)?.map((faq, i) => {
