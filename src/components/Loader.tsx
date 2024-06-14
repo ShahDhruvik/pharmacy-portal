@@ -1,16 +1,15 @@
 // import { theme } from '../context/ThemeProvider'
-import { LoadingState } from '../types/common'
+import { LoadingContextType, LoadingState } from '../types/common'
 import { Backdrop, Dialog } from '@mui/material'
 import { useLocation } from 'react-router-dom'
 import Spinner from './spinner'
 type Props = {
-  loading: LoadingState['loading']
+  loading: LoadingContextType['loading']
 }
 
 const Loader = ({ loading }: Props) => {
-  const location = useLocation()
   if (loading.isLoading) {
-    if (loading.isPage) {
+    if (loading.loadingProps?.page) {
       return (
         <Dialog
           open={loading.isLoading}
@@ -27,22 +26,16 @@ const Loader = ({ loading }: Props) => {
             <div className='flex flex-col items-center justify-center h-full w-full gap-btw-container'>
               <Spinner />
               <div className='flex flex-col sm:flex-row items-center gap-btw-container mt-5'>
-                <img src={loading.pageProps?.image} alt='loading' width={300} height={300} />
+                <img src={'/'} alt='loading' width={300} height={300} />
                 <div className='max-w-xs'>
-                  <p className='max-sm:text-center text-2xl text-darkBlue-main'>
-                    {loading.pageProps?.pageTxt}
-                  </p>
+                  <p className='max-sm:text-center text-2xl text-mDarkBlue-main'>{'Loading...'}</p>
                 </div>
               </div>
             </div>
           </section>
         </Dialog>
       )
-    } else if (
-      loading.isIndependentLoader ||
-      loading.isAppointmentLoader ||
-      loading.isCoverageLoader
-    ) {
+    } else if (loading.loadingProps?.none) {
       return null
     } else {
       return (

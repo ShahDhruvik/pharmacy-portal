@@ -6,6 +6,7 @@ export const enum MAIN_PATH {
   HELP = '/help/*',
   UNAUTHORIZED = '/unauthorized',
   CONTACT_US = '/contactUs/*',
+  HELP_AND_FAQ = '/help-and-faq'
 }
 
 export const enum COMMON_PATH {
@@ -13,7 +14,7 @@ export const enum COMMON_PATH {
   DEFAULT = '/',
 }
 export const enum DASHBOARD_PATH {
-  help_and_faq = '/help-and-faq',
+  user = '/user',
 }
 
 export const enum AUTH_PATH {
