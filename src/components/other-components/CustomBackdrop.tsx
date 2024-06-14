@@ -1,4 +1,4 @@
-import Spinner from '@/components/spinner'
+import Spinner from '@/components/other-components/spinner'
 import theme from '@/theme/defaultTheme'
 import { Box } from '@mui/material'
 import { ReactNode } from 'react'

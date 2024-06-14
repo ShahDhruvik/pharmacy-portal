@@ -25,9 +25,9 @@ import { useToast } from '@/hooks/useToast'
 import { useLoading } from '@/context/LoadingContext'
 import { getAllFeature, getAllImage } from '@/lib/auth-page-ui'
 import theme from '@/theme/defaultTheme'
-import TxtInput from '@/components/TxtInput'
+import TxtInput from '@/components/form-inputs/TxtInput'
 import { txtFieldValidation } from '@/utils/form.validation'
-import PasswordInput from '@/components/PasswordInput'
+import PasswordInput from '@/components/form-inputs/PasswordInput'
 
 function Copyright(props: any) {
   return (
@@ -203,7 +203,7 @@ export default function LoginPage() {
                       <div className='grid grid-cols-2 grid-rows-2 gap-5 px-3   mx-auto '>
                         {feature[x as any]?.map((x: any) => (
                           <div className='flex items-center gap-5 w-max' key={x._id}>
-                            <div className='border-2 rounded-full  border-gray-main p-1 aspect-square'>
+                            <div className='border-2 rounded-full  border-mGray-main p-1 aspect-square'>
                               <Box padding={1}>
                                 <Avatar
                                   src={

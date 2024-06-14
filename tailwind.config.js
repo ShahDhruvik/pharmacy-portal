@@ -15,11 +15,11 @@ export default {
       spacing: {
         container: `max(
             1rem,
-            calc((100vw - calc(1440px - 1rem * 2)) / 2)
+            calc((100vw - calc(1680px - 1rem * 2)) / 2)
             )`,
         'btw-container': `max(
               1rem,
-              calc((100vw - calc(1440px - 0.5rem * 2)) / 2)
+              calc((100vw - calc(1680px - 0.5rem * 2)) / 2)
               )`,
       },
       animation: {

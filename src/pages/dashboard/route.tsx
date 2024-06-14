@@ -1,13 +1,22 @@
 import RouteWrapper from '@/middleware/routeWrapper'
-import { Route } from 'react-router-dom'
+import { Outlet, Route } from 'react-router-dom'
 import DashboardPage from './page'
+import DashBoardLayout from './dashboardLayout'
 
 type Props = {}
 
 const DashboardRoutes = (props: Props) => {
   return (
     <RouteWrapper>
-      <Route index element={<DashboardPage />} />
+      <Route
+        element={
+          <DashBoardLayout>
+            <Outlet />
+          </DashBoardLayout>
+        }
+      >
+        <Route index element={<DashboardPage />} />
+      </Route>
     </RouteWrapper>
   )
 }
