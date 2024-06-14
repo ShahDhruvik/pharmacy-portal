@@ -31,6 +31,7 @@ export default defineConfig({
       '@/utils': `${path.resolve(__dirname, './src/utils/')}`,
       '@/styles': `${path.resolve(__dirname, './src/styles/')}`,
       '@/socket': `${path.resolve(__dirname, './src/socket/')}`,
+      '@/theme': `${path.resolve(__dirname, './src/theme/')}`,
     },
   },
 })

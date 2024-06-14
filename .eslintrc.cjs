@@ -16,5 +16,6 @@ module.exports = {
     '@typescript-eslint/ban-types': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
     'no-case-declarations': 'off',
+    'eslint-disable no-extra-semi': 'off',
   },
 }
