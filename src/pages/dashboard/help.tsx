@@ -6,11 +6,11 @@ import { useEffect, useState } from 'react'
 import { debounce } from 'lodash'
 import { useAuth } from '@/context/AuthContext'
 import { Search, SearchIconWrapper, StyledInputBase } from '@/components/MuiStyledComponents'
-import { theme } from '@/context/ThemeProvider'
 import SearchIcon from '@mui/icons-material/Search'
 import AccordionBox from '@/components/AccordionBox'
 import VideoPlayer from '@/components/VideoPlayer'
 import { getAllFaqs } from '@/lib/auth-page-ui'
+import theme from '@/theme/defaultTheme'
 interface Props {}
 
 const Help = ({}: Props) => {

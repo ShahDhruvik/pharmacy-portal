@@ -20,11 +20,11 @@ import { Alert, IconButton, InputAdornment } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { CONST_IMAGE_URL, VITE_APP_IMAGE_URL } from '@/utils/envVariables'
 import Slider from 'react-slick'
-import { theme } from '@/context/ThemeProvider'
 import Text from '@/assets/images/Triaina-Health-New.png'
 import { useToast } from '@/hooks/useToast'
 import { useLoading } from '@/context/LoadingContext'
 import { getAllFeature, getAllImage } from '@/lib/auth-page-ui'
+import theme from '@/theme/defaultTheme'
 
 function Copyright(props: any) {
   return (
