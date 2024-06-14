@@ -5,12 +5,9 @@ import { DashboardContent } from "../utils/endPoints";
 import { CONST_API_URL, VITE_APP_API_URL } from "../utils/envVariables";
 
 export const getAllImage = async (
-    setLoading: LoadingContextType["setLoading"],
     formData: any,
-    loadingProps?: LoadingContextType["loading"]["loadingProps"]
 ) => {
     try {
-        setLoading({ isLoading: true, loadingProps: { none: true } })
         const res = await axios.post((CONST_API_URL || VITE_APP_API_URL) + DashboardContent.get_main_image, formData)
         if (res.data.success) {
             return res.data.data
@@ -25,19 +22,16 @@ export const getAllImage = async (
             //   toast('error', error.response.statusText)
         }
         return null
-    } finally {
-        setLoading({ isLoading: false, loadingProps: { none: true } })
     }
-
 }
 export const getAllFaqs = async (
     setLoading: LoadingContextType["setLoading"],
-    formData: any,
     loadingProps?: LoadingContextType["loading"]["loadingProps"]
 ) => {
     try {
-        setLoading({ isLoading: true, loadingProps: { none: true } })
-        const res = await axios.post((CONST_API_URL || VITE_APP_API_URL) + DashboardContent.get_faqs, formData)
+
+        setLoading({ isLoading: true, loadingProps: { page: true } })
+        const res = await axios.post((CONST_API_URL || VITE_APP_API_URL) + DashboardContent.get_faqs,)
         if (res.data.success) {
             return res.data.data
         } else {
@@ -52,17 +46,15 @@ export const getAllFaqs = async (
         }
         return null
     } finally {
-        setLoading({ isLoading: false, loadingProps: { none: true } })
+        setLoading({ isLoading: false, loadingProps: { page: true } })
     }
 
 }
 
 export const getAllFeature = async (
-    setLoading: LoadingContextType["setLoading"],
-    loadingProps?: LoadingContextType["loading"]["loadingProps"]
+
 ) => {
     try {
-        setLoading({ isLoading: true, loadingProps: { none: true } })
         const res = await axios.post((CONST_API_URL || VITE_APP_API_URL) + DashboardContent.get_feature)
         if (res.data.success) {
             return res.data.data
@@ -76,7 +68,5 @@ export const getAllFeature = async (
             // toast('error', error.response.statusText)
         }
         return []
-    } finally {
-        setLoading({ isLoading: false, loadingProps: { none: true } })
     }
 }

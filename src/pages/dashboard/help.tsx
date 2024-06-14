@@ -21,7 +21,7 @@ const Help = ({}: Props) => {
   const [searchTerm, setSearchTerm] = useState<string>('')
 
   const getData = async () => {
-    const res = await getAllFaqs(setLoading, showToast)
+    const res = await getAllFaqs(setLoading)
     if (res) {
       setData(res)
     }

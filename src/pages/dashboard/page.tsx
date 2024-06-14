@@ -102,13 +102,9 @@ export default function DashboardPage() {
   }
   const getData = async () => {
     setIsImageLoading({ isLoading: true, notFound: false })
-    const response = await getAllImage(
-      setLoading,
-      {
-        type: undefined,
-      },
-      undefined,
-    )
+    const response = await getAllImage({
+      type: undefined,
+    })
     if (response) {
       const small = response.find((x: any) => x.type === 'SMALL')
       const large = response.find((x: any) => x.type === 'LARGE')
@@ -121,7 +117,7 @@ export default function DashboardPage() {
   }
   const getFeature = async () => {
     setIsFeatureLoading({ isLoading: true, notFound: false })
-    const response = await getAllFeature(setLoading)
+    const response = await getAllFeature()
     if (response.length > 0) {
       const groupedItems = groupArrayIntoObject(response)
       setFeature(groupedItems)
