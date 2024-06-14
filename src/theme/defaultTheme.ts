@@ -5,12 +5,6 @@ import { components } from './theme-component-data'
 
 const theme: Theme = createTheme({
     palette: { ...generatePalette(PaletteColors) as DynamicPaletteOptions },
-    typography: {
-        fontFamily: [
-            'Nunito',
-            'serif',
-        ].join(','),
-    },
     breakpoints: generateBreakPoints(ThemeOperator.MuiOp, BreakPoints) as Record<string, number>,
     components: components
 

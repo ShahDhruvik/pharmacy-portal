@@ -25,6 +25,9 @@ import { useToast } from '@/hooks/useToast'
 import { useLoading } from '@/context/LoadingContext'
 import { getAllFeature, getAllImage } from '@/lib/auth-page-ui'
 import theme from '@/theme/defaultTheme'
+import TxtInput from '@/components/TxtInput'
+import { txtFieldValidation } from '@/utils/form.validation'
+import PasswordInput from '@/components/PasswordInput'
 
 function Copyright(props: any) {
   return (
@@ -68,7 +71,7 @@ export default function DashboardPage() {
   const showToast = useToast()
   const nav = useNavigate()
   const { loading, setLoading } = useLoading()
-  const { register, handleSubmit: handleFormSubmit, setValue } = useForm()
+  const { register, handleSubmit: handleFormSubmit, setValue, control } = useForm()
   const [data, setData] = useState<any>(null)
   const [data1, setData1] = useState<any>(null)
   const [feature, setFeature] = useState<Record<number, any[]> | undefined>(undefined)
@@ -325,56 +328,31 @@ export default function DashboardPage() {
             </form>
           )}
           {!showChangePassword && !showForgotPassword && (
-            <form noValidate onSubmit={handleFormSubmit(onSubmit)}>
-              <TextField
-                margin='normal'
-                required
-                fullWidth
-                id='email'
-                label='Email Address'
-                {...register('email')}
-                autoComplete='email'
-                autoFocus
+            <form noValidate onSubmit={handleFormSubmit(onSubmit)} className='flex flex-col gap-3'>
+              <TxtInput
+                control={control}
+                handleChange={() => []}
+                name='email'
+                placeholder='Email'
+                validation={txtFieldValidation(true, 'Email')}
                 size='small'
               />
-              <TextField
-                margin='normal'
-                required
-                fullWidth
-                {...register('password')}
-                label='Password'
-                type={showPassword ? 'text' : 'password'}
-                id='password'
-                autoComplete='current-password'
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position='end'>
-                      <IconButton
-                        aria-label='toggle password visibility'
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
+              <PasswordInput
+                control={control}
+                handleChange={() => {}}
+                name='password'
+                placeholder='Password'
+                validation={txtFieldValidation(true)}
                 size='small'
               />
-              <TextField
-                margin='normal'
-                required
-                fullWidth
-                {...register('officeId')}
-                label='Office Id'
-                type='text'
-                id='Office Id'
+              <TxtInput
+                control={control}
+                handleChange={() => []}
+                name='officeId'
+                placeholder='Office Id'
+                validation={txtFieldValidation(true)}
                 size='small'
               />
-              {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
               <Alert severity='info'>
                 By logging in, you acknowlege and accepts the terms and conditions outlined by
                 Triaina Health
@@ -384,7 +362,7 @@ export default function DashboardPage() {
                 fullWidth
                 variant='contained'
                 color='mPink'
-                sx={{ mt: 2, mb: 1 }}
+                sx={{ mt: 2, mb: 1, color: theme.palette.mWhite.main }}
                 loading={isLoading}
               >
                 Sign In

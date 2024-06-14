@@ -1,4 +1,10 @@
-import { SxProps, TextField, Theme } from '@mui/material'
+import {
+  SxProps,
+  TextField,
+  TextFieldProps,
+  TextFieldPropsSizeOverrides,
+  Theme,
+} from '@mui/material'
 import { Controller, Control } from 'react-hook-form'
 type Props = {
   placeholder: string
@@ -11,6 +17,7 @@ type Props = {
   multiline?: number
   label?: string
   handleOnChange?: (e: any) => void
+  size?: TextFieldProps['size']
 }
 
 const TxtInput = ({
@@ -24,6 +31,7 @@ const TxtInput = ({
   multiline,
   label,
   handleOnChange,
+  size,
 }: Props) => {
   const inputStyleProps: SxProps<Theme> = { ...sx, width: '100%' }
   return (
@@ -51,6 +59,7 @@ const TxtInput = ({
             minRows={multiline ?? 0}
             InputLabelProps={{ shrink: true }}
             label={label}
+            {...(size && { size: size })}
           />
         )
       }}

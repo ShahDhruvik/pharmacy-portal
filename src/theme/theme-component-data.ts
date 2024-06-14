@@ -18,7 +18,7 @@ export const components: ThemeOptions['components'] = {
     MuiInputLabel: {
         styleOverrides: {
             root: {
-                color: PaletteColors.mBlack,
+                color: PaletteColors.mDarkGray,
                 fontWeight: 700,
                 '&.Mui-focused': {
                     color: PaletteColors.mPink,
@@ -28,7 +28,9 @@ export const components: ThemeOptions['components'] = {
                     color: PaletteColors.mRed,
                     fontWeight: 700,
                 },
+
             },
+            shrink: false
 
         },
     },
@@ -36,8 +38,8 @@ export const components: ThemeOptions['components'] = {
         styleOverrides: {
             root: {
                 '.MuiOutlinedInput-notchedOutline': {
-                    border: `2px solid ${PaletteColors.mBlack}`,
-                    color: PaletteColors.mBlack,
+                    border: `2px solid ${PaletteColors.mDarkGray}`,
+                    color: PaletteColors.mDarkGray,
                 },
                 '&.Mui-focused': {
                     '& .MuiOutlinedInput-notchedOutline': {
@@ -59,12 +61,12 @@ export const components: ThemeOptions['components'] = {
                 },
                 borderRadius: '4px',
             },
-            input: { color: PaletteColors.mBlack, fontWeight: '600' }
+            input: { color: PaletteColors.mBlack }
         },
     },
     MuiAutocomplete: {
         styleOverrides: {
-            input: { color: PaletteColors.mBlack, fontWeight: '600' }
+            input: { color: PaletteColors.mBlack, }
         },
     },
 

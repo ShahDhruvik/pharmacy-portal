@@ -1,4 +1,11 @@
-import { IconButton, InputAdornment, SxProps, TextField, Theme } from '@mui/material'
+import {
+  IconButton,
+  InputAdornment,
+  SxProps,
+  TextField,
+  TextFieldProps,
+  Theme,
+} from '@mui/material'
 import { Controller, Control } from 'react-hook-form'
 import { useState } from 'react'
 import Eye from '@/assets/icons/eye.svg?react'
@@ -15,6 +22,7 @@ type Props = {
   label?: string
   handleClick?: () => void
   readonly?: boolean
+  size?: TextFieldProps['size']
 }
 
 const PasswordInput = ({
@@ -29,6 +37,7 @@ const PasswordInput = ({
   label,
   handleClick,
   readonly,
+  size,
 }: Props) => {
   //Hide and show passowrd
   const [showPassword, setShowPassword] = useState(false)
@@ -79,6 +88,7 @@ const PasswordInput = ({
               ),
             }}
             label={label}
+            {...(size && { size: size })}
           />
         )
       }}
