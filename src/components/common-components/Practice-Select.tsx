@@ -11,16 +11,16 @@ type Props = {}
 const PracticeSelect = (props: Props) => {
   const { control, clearErrors, setError, setValue } = useForm<PracticeConfigurationType>({
     defaultValues: {
-      selectedPractice: acDefaultValue,
+      selectedPractice: { _id: acDefaultValue._id, label: 'Select Practice' },
     },
   })
   return (
     <SelectInput
       control={control}
       clearErrors={clearErrors}
-      label='Select Practice'
+      label=''
       name='selectedPractice'
-      options={[acDefaultValue]}
+      options={[{ _id: acDefaultValue._id, label: 'Select Practice' }]}
       setError={setError}
       setValue={setValue}
       validation={{}}
@@ -29,6 +29,7 @@ const PracticeSelect = (props: Props) => {
         minWidth: '300px',
         maxWidth: '300px',
       }}
+      notRequired={true}
     />
   )
 }

@@ -11,16 +11,16 @@ type Props = {}
 const OrderSearch = (props: Props) => {
   const { control, clearErrors, setError, setValue } = useForm<OrderSearchType>({
     defaultValues: {
-      selectedPatient: acDefaultValue,
+      selectedPatient: { _id: acDefaultValue._id, label: 'Select Patient' },
     },
   })
   return (
     <SelectInput
       control={control}
       clearErrors={clearErrors}
-      label='Select Patient'
+      label=''
       name='selectedPatient'
-      options={[acDefaultValue]}
+      options={[{ _id: acDefaultValue._id, label: 'Select Patient' }]}
       setError={setError}
       setValue={setValue}
       validation={{}}
@@ -29,6 +29,7 @@ const OrderSearch = (props: Props) => {
         minWidth: '300px',
         maxWidth: '300px',
       }}
+      notRequired={true}
     />
   )
 }
