@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { ContextMessage } from '../utils/commonMessages'
-import { LoadingContextType } from '../utils/types/common'
+import { LoadingContextType } from '../types/common'
 import { ReactNode, createContext, useContext, useState } from 'react'
 
 const LoadingContext = createContext<LoadingContextType | undefined>(undefined)

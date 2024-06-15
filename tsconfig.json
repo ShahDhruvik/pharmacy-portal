@@ -28,7 +28,7 @@
       "@/pages/*": ["./src/pages/*"],
       "@/paths/*": ["src/paths/*"],
       "@/store/*": ["./src/store/*"],
-      "@/types/*": ["src/utils/types/*"],
+      "@/types/*": ["src/types/*"],
       "@/utils/*": ["./src/utils/*"],
       "@/styles/*": ["./src/styles/*"],
       "@/socket/*": ["./src/socket/*"],
