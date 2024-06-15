@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-refresh/only-export-components */
-import { EnumValues, HandleControls, PageControls } from '@/utils/types/common'
+import { EnumValues, HandleControls, PageControls } from '@/types/common'
 const limitOfChatList = 10
 export const defaultChatControls = {
   search: '',
