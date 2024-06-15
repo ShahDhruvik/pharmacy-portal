@@ -8,10 +8,12 @@ import TriainaHealth from '@/assets/images/Triaina-Health-New.png'
 import theme from '@/theme/defaultTheme'
 import OrderSearch from './Order-search'
 import PracticeSelect from './Practice-Select'
+import { useSidebar } from '@/context/SidebarContext'
 type Props = {}
 
 const Header = (props: Props) => {
   const nav = useNavigate()
+  const { setOpenMenu, openMenu } = useSidebar()
   return (
     <AppBar color='mWhite'>
       <Toolbar>
@@ -21,7 +23,9 @@ const Header = (props: Props) => {
           color='inherit'
           aria-label='open drawer'
           sx={{ mr: 2 }}
-          onClick={() => {}}
+          onClick={() => {
+            setOpenMenu(true)
+          }}
         >
           <MenuIcon sx={{ color: theme.palette.mBlack.main }} />
         </IconButton>

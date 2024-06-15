@@ -1,5 +1,5 @@
 import { COMMON_PATH, MAIN_PATH } from '../paths'
-import { HeaderLinkType } from '../types/common'
+import { HeaderLinkType } from './types/common'
 import { CONST_OOPCHAR_IN_PERSON_CONSULTATION_URL } from './constants'
 type PlantTree = {
   icon?: string

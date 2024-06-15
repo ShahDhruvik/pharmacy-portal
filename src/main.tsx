@@ -12,6 +12,7 @@ import { AuthProvider } from './context/AuthContext'
 import { ToastContainer } from 'react-toastify'
 import { LoadingProvider } from './context/LoadingContext'
 import { ChatProvider } from './context/ChatContext'
+import { SidebarProvider } from './context/SidebarContext'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
@@ -33,9 +34,9 @@ root.render(
                 theme='colored'
                 icon={false}
               />
-              <ChatProvider>
+              <SidebarProvider>
                 <App />
-              </ChatProvider>
+              </SidebarProvider>
             </LoadingProvider>
           </AppThemeProvider>
         </ReduxProvider>

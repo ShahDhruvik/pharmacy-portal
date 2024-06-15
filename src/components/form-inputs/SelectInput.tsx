@@ -19,7 +19,7 @@ import {
   useController,
 } from 'react-hook-form'
 import { splitDescription } from '@/utils/constants'
-import { SelectDDL } from '@/types/common'
+import { SelectDDL } from '@/utils/types/common'
 import ArrowCircleDownOutlinedIcon from '@mui/icons-material/ArrowCircleDownOutlined'
 import { useEffect } from 'react'
 import theme from '@/theme/defaultTheme'

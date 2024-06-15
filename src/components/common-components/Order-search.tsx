@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 import SelectInput from '../form-inputs/SelectInput'
 import { acDefaultValue } from '@/utils/form.validation'
-import { SelectDDL } from '@/types/common'
+import { SelectDDL } from '@/utils/types/common'
 
 type OrderSearchType = {
   selectedPatient: SelectDDL

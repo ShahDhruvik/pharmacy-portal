@@ -1,7 +1,7 @@
 // Definition of the user state that is to be used
 import { createSlice } from '@reduxjs/toolkit';
 import _ from 'lodash';
-import { CacheType } from '../../../types/common';
+import { CacheType } from '../../../utils/types/common';
 
 
 

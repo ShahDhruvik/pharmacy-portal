@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-refresh/only-export-components */
-import { EnumValues, HandleControls, PageControls } from '@/types/common'
-import { MessageActions } from '@/utils/constants'
+import { EnumValues, HandleControls, PageControls } from '@/utils/types/common'
 const limitOfChatList = 10
 export const defaultChatControls = {
   search: '',
@@ -261,8 +260,8 @@ export interface ChatContextType {
   setMenuOpen: Dispatch<SetStateAction<boolean>>
   chatElement: HTMLElement | null
   setChatElement: Dispatch<SetStateAction<HTMLElement | null>>
-  messageActionType: MessageActions | undefined
-  setMessageActionType: Dispatch<SetStateAction<MessageActions | undefined>>
+  messageActionType: undefined
+  setMessageActionType: Dispatch<SetStateAction<undefined>>
   particularMessage: MessageData['records'][0] | undefined
   setParticularMessage: Dispatch<SetStateAction<MessageData['records'][0] | undefined>>
   notify: number

@@ -1,6 +1,6 @@
 import { createTheme, Theme } from '@mui/material/styles'
 import { BreakPoints, generateBreakPoints, generatePalette, PaletteColors, ThemeOperator } from './theme-data'
-import { DynamicPaletteOptions } from '@/types/mui.types'
+import { DynamicPaletteOptions } from '@/utils/types/mui.types'
 import { components } from './theme-component-data'
 
 const theme: Theme = createTheme({

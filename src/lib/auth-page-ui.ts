@@ -1,6 +1,6 @@
 import axios from "axios";
 import axiosInstance from "../../axiosInstance";
-import { LoadingContextType } from "../types/common";
+import { LoadingContextType } from "../utils/types/common";
 import { DashboardContent } from "../utils/endPoints";
 import { CONST_API_URL, VITE_APP_API_URL } from "../utils/envVariables";
 

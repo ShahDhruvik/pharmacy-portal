@@ -1,5 +1,5 @@
 import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useState } from 'react'
-import { AuthParams } from '../types/common'
+import { AuthParams } from '../utils/types/common'
 
 interface AuthContextType {
   authParams: AuthParams | undefined

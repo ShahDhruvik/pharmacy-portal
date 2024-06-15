@@ -1,7 +1,7 @@
 // Definition of the user state that is to be used
 import { createSlice } from '@reduxjs/toolkit';
 import _ from 'lodash';
-import { Todo } from '../../../types/todo';
+import { Todo } from '../../../utils/types/todo';
 
 export const todoSlice = createSlice({
     name: 'todo',

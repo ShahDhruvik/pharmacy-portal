@@ -8,32 +8,27 @@ import {
   ListItemText,
   ListSubheader,
 } from '@mui/material'
-import DashboardIcon from '@mui/icons-material/Dashboard'
 import ExpandLess from '@mui/icons-material/ExpandLess'
 import ExpandMore from '@mui/icons-material/ExpandMore'
+import { sidebarList } from '@/utils/sidebar-data'
+import { useSidebar } from '@/context/SidebarContext'
 type Props = {}
-const ListArray: Record<
-  string,
-  { icon: ReactNode; name: string; subgroup: { icon: ReactNode; name: string }[] }[]
-> = {
-  Organization: [
-    {
-      icon: <DashboardIcon />,
-      name: 'Dashboard',
-      subgroup: [{ icon: <DashboardIcon />, name: 'Dashboard Child' }],
-    },
-    { icon: <DashboardIcon />, name: 'User', subgroup: [] },
-  ],
-}
+
 const Sidebar = (props: Props) => {
-  const [expandMenu, setExpandMenu] = useState<{ grpName: string; index: number } | undefined>(
-    undefined,
-  )
+  const { expandMenu, setExpandMenu, openMenu, setOpenMenu } = useSidebar()
   return (
-    <SwipeableDrawer open={true} onClose={() => {}} onOpen={() => {}}>
-      {Object.keys(ListArray).map((group) => {
+    <SwipeableDrawer
+      open={openMenu}
+      onClose={() => {
+        setOpenMenu(false)
+        setExpandMenu(undefined)
+      }}
+      onOpen={() => {}}
+    >
+      {Object.keys(sidebarList).map((group) => {
         return (
           <List
+            disablePadding
             key={Math.random()}
             sx={{ width: '100%', minWidth: 360, bgcolor: 'background.paper' }}
             subheader={
@@ -42,12 +37,12 @@ const Sidebar = (props: Props) => {
               </ListSubheader>
             }
           >
-            {ListArray[group].map((groupItems, groupIndex) => {
+            {sidebarList[group].map((groupItems, groupIndex) => {
               const expandCondition =
                 expandMenu?.grpName.toLocaleLowerCase().trim() ===
                   group?.toLocaleLowerCase().trim() && expandMenu?.index === groupIndex
               return (
-                <List key={Math.random()}>
+                <List key={Math.random()} disablePadding>
                   <ListItemButton
                     onClick={() => {
                       if (groupItems?.subgroup?.length > 0) {
@@ -60,12 +55,13 @@ const Sidebar = (props: Props) => {
                         } else {
                           setExpandMenu({ grpName: group, index: groupIndex })
                         }
+                      } else {
+                        setOpenMenu(false)
                       }
                     }}
                   >
                     <ListItemIcon>{groupItems?.icon}</ListItemIcon>
                     <ListItemText primary={groupItems?.name} />
-                    {/* {true ? <ExpandLess /> : <ExpandMore />} */}
                     {groupItems?.subgroup?.length > 0 ? (
                       expandCondition ? (
                         <ExpandLess />
@@ -76,7 +72,7 @@ const Sidebar = (props: Props) => {
                   </ListItemButton>
                   {groupItems?.subgroup?.length > 0 && (
                     <Collapse in={expandCondition}>
-                      <List>
+                      <List disablePadding>
                         {groupItems?.subgroup?.map((subGroupItem) => {
                           return (
                             <ListItemButton key={Math.random()} sx={{ pl: 4 }}>

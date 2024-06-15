@@ -1,4 +1,4 @@
-import { SelectDDL } from '@/types/common'
+import { SelectDDL } from '@/utils/types/common'
 import { acDefaultValue } from '@/utils/form.validation'
 import React from 'react'
 import { useForm } from 'react-hook-form'
