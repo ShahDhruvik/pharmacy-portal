@@ -33,3 +33,6 @@ declare module '@mui/material/AppBar' {
 declare module '@mui/material/styles' {
     interface BreakpointOverrides extends DynamicBreakPointsOptions { }
 }
+declare module '@mui/material/Tabs' {
+    interface TabsPropsIndicatorColorOverrides extends DynamicButtonPaletteOptions { }
+}

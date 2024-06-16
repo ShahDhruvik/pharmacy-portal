@@ -1,5 +1,5 @@
 // All the common types are defined here
-import { SetStateAction, Dispatch } from 'react'
+import { SetStateAction, Dispatch, ReactNode } from 'react'
 import { ALIGN_DIALOG, DRAWERSTATE, } from '@/utils/constants'
 import { ToastOptions } from 'react-toastify'
 // Other types regarding the individual entity will have separate file (ex: user.types.ts)
@@ -22,6 +22,14 @@ export type LoadingContextType = {
   loading: LoadingProps;
   setLoading: Dispatch<SetStateAction<LoadingProps>>;
 };
+export type TabPropsType = {
+  handleTabChange: (value: string) => void,
+  tabList: {
+    tabValue: string
+    tabName: string,
+    tabElement: ReactNode,
+  }[]
+}
 export type HandleControls = {
   search: string;
   currentPage: number;

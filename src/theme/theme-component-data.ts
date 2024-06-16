@@ -1,5 +1,6 @@
 import { ThemeOptions } from "@mui/material";
 import { PaletteColors } from "./theme-data";
+import theme from "./defaultTheme";
 export const components: ThemeOptions['components'] = {
     MuiButton: {
         styleOverrides: {
@@ -62,5 +63,6 @@ export const components: ThemeOptions['components'] = {
         styleOverrides: {
         },
     },
+
 
 }

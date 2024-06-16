@@ -13,6 +13,7 @@ import { ToastContainer } from 'react-toastify'
 import { LoadingProvider } from './context/LoadingContext'
 import { ChatProvider } from './context/ChatContext'
 import { SidebarProvider } from './context/SidebarContext'
+import { TabProvider } from './context/TabContext'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
@@ -34,9 +35,11 @@ root.render(
                 theme='colored'
                 icon={false}
               />
-              <SidebarProvider>
-                <App />
-              </SidebarProvider>
+              <TabProvider>
+                <SidebarProvider>
+                  <App />
+                </SidebarProvider>
+              </TabProvider>
             </LoadingProvider>
           </AppThemeProvider>
         </ReduxProvider>
