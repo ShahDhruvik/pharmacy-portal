@@ -12,10 +12,12 @@ import ExpandLess from '@mui/icons-material/ExpandLess'
 import ExpandMore from '@mui/icons-material/ExpandMore'
 import { sidebarList } from '@/utils/sidebar-data'
 import { useSidebar } from '@/context/SidebarContext'
+import { useNavigate } from 'react-router-dom'
 type Props = {}
 
 const Sidebar = (props: Props) => {
   const { expandMenu, setExpandMenu, openMenu, setOpenMenu } = useSidebar()
+  const nav = useNavigate()
   return (
     <SwipeableDrawer
       open={openMenu}
@@ -56,6 +58,7 @@ const Sidebar = (props: Props) => {
                           setExpandMenu({ grpName: group, index: groupIndex })
                         }
                       } else {
+                        nav(groupItems?.path)
                         setOpenMenu(false)
                       }
                     }}
