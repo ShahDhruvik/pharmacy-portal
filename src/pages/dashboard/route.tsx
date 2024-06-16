@@ -1,7 +1,9 @@
+/* eslint-disable react-refresh/only-export-components */
 import RouteWrapper from '@/middleware/routeWrapper'
 import { Outlet, Route } from 'react-router-dom'
 import DashboardPage from './page'
 import DashBoardLayout from './dashboard-layout'
+import withAuth from '@/middleware/auth.middleware'
 
 type Props = {}
 
@@ -21,4 +23,4 @@ const DashboardRoutes = (props: Props) => {
   )
 }
 
-export default DashboardRoutes
+export default withAuth(DashboardRoutes)

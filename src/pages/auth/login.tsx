@@ -23,7 +23,7 @@ import Slider from 'react-slick'
 import Text from '@/assets/images/Triaina-Health-New.png'
 import { useToast } from '@/hooks/useToast'
 import { useLoading } from '@/context/LoadingContext'
-import { getAllFeature, getAllImage } from '@/lib/auth-page-ui'
+import { getAllFeature, getAllImage, loginPharmacy } from '@/lib/auth-page-ui'
 import theme from '@/theme/defaultTheme'
 import TxtInput from '@/components/form-inputs/TxtInput'
 import { txtFieldValidation } from '@/utils/form.validation'
@@ -87,6 +87,10 @@ export default function LoginPage() {
   }
   const onSubmit = async (data: any) => {
     console.log(data)
+    const res = await loginPharmacy(setLoading, data, showToast, { btnLoading: true })
+    if (res) {
+      console.log(res)
+    }
   }
   const onSubmitChangePassword = async (data: any) => {
     console.log(data)
@@ -129,7 +133,6 @@ export default function LoginPage() {
   useEffect(() => {
     getData()
     getFeature()
-    // getSourceUuid()
   }, [])
   return (
     <Grid container component='main' sx={{ height: '100vh' }}>

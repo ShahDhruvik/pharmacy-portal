@@ -1,14 +1,14 @@
-import axios from "axios";
-import axiosInstance from "../../axiosInstance";
-import { LoadingContextType } from "../utils/types/common";
-import { DashboardContent } from "../utils/endPoints";
-import { CONST_API_URL, VITE_APP_API_URL } from "../utils/envVariables";
+import axios from 'axios'
+import { LoadingContextType, ShowToastFunction } from '../types/common'
+import { AuthEndPoints, DashboardContent } from '../utils/endPoints'
+import { CONST_API_URL, VITE_APP_API_URL } from '../utils/envVariables'
 
-export const getAllImage = async (
-    formData: any,
-) => {
+export const getAllImage = async (formData: any) => {
     try {
-        const res = await axios.post((CONST_API_URL || VITE_APP_API_URL) + DashboardContent.get_main_image, formData)
+        const res = await axios.post(
+            (CONST_API_URL || VITE_APP_API_URL) + DashboardContent.get_main_image,
+            formData,
+        )
         if (res.data.success) {
             return res.data.data
         } else {
@@ -25,13 +25,12 @@ export const getAllImage = async (
     }
 }
 export const getAllFaqs = async (
-    setLoading: LoadingContextType["setLoading"],
-    loadingProps?: LoadingContextType["loading"]["loadingProps"]
+    setLoading: LoadingContextType['setLoading'],
+    loadingProps?: LoadingContextType['loading']['loadingProps'],
 ) => {
     try {
-
         setLoading({ isLoading: true, loadingProps: { page: true } })
-        const res = await axios.post((CONST_API_URL || VITE_APP_API_URL) + DashboardContent.get_faqs,)
+        const res = await axios.post((CONST_API_URL || VITE_APP_API_URL) + DashboardContent.get_faqs)
         if (res.data.success) {
             return res.data.data
         } else {
@@ -48,12 +47,9 @@ export const getAllFaqs = async (
     } finally {
         setLoading({ isLoading: false, loadingProps: { page: true } })
     }
-
 }
 
-export const getAllFeature = async (
-
-) => {
+export const getAllFeature = async () => {
     try {
         const res = await axios.post((CONST_API_URL || VITE_APP_API_URL) + DashboardContent.get_feature)
         if (res.data.success) {
@@ -68,5 +64,31 @@ export const getAllFeature = async (
             // toast('error', error.response.statusText)
         }
         return []
+    }
+}
+
+export const loginPharmacy = async (setLoading: LoadingContextType['setLoading'], formData: any, toast: ShowToastFunction, loadingProps: LoadingContextType['loading']['loadingProps']) => {
+    try {
+        setLoading({ isLoading: true, loadingProps: loadingProps })
+        const res = await axios.post(
+            (CONST_API_URL || VITE_APP_API_URL) + AuthEndPoints.login,
+            formData,
+        )
+        if (res.data.success) {
+            return res.data.data
+        } else {
+            return null
+        }
+    } catch (error: any) {
+        console.log(error)
+        if (error.response.status === 404) {
+            toast('error', error.response.data.message)
+        } else {
+            toast('error', error.response.statusText)
+        }
+        return null
+    } finally {
+        setLoading({ isLoading: false })
+
     }
 }

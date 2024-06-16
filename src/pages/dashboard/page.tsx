@@ -8,5 +8,4 @@ const DashboardMainPage = (props: Props) => {
   return <div>DashboardMainPage</div>
 }
 
-// export default withAuth(DashboardMainPage)
 export default DashboardMainPage

@@ -1,6 +1,6 @@
 // All the common types are defined here
 import { SetStateAction, Dispatch } from 'react'
-import { ALIGN_DIALOG, DRAWERSTATE, } from '../constants'
+import { ALIGN_DIALOG, DRAWERSTATE, } from '@/utils/constants'
 import { ToastOptions } from 'react-toastify'
 // Other types regarding the individual entity will have separate file (ex: user.types.ts)
 export type PaletteColor = {
@@ -15,6 +15,7 @@ export type LoadingProps = {
   loadingProps?: {
     page?: boolean;
     none?: boolean
+    btnLoading?: boolean
   };
 };
 export type LoadingContextType = {

@@ -25,5 +25,11 @@ export const enum DashboardContent {
   "/pharmacy-care" +
   "/portal-feature-list",
 }
+export const enum AuthEndPoints {
+  login = DefaultEndpoints.auth +
+  "/pharmacy" +
+  "/login",
+
+}
 
 

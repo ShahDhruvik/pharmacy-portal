@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useState } from 'react'
 import { AuthParams } from '../types/common'
 
