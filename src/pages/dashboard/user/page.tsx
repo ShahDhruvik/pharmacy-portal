@@ -1,8 +1,6 @@
+import DataGridComponent from '@/components/common-components/DataGridComponent'
 import TabComponent from '@/components/common-components/TabComponent'
 import { TabPropsType } from '@/types/common'
-import { TabContext, TabList, TabPanel, TabPanelProps } from '@mui/lab'
-import { Box, Tab, Tabs } from '@mui/material'
-import React from 'react'
 
 type Props = {}
 
@@ -16,7 +14,7 @@ const UserPage = (props: Props) => {
         tabValue: '0',
       },
       {
-        tabElement: <div>Users</div>,
+        tabElement: <DataGridComponent />,
         tabName: 'Users',
         tabValue: '1',
       },
