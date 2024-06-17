@@ -30,6 +30,7 @@ export type TabPropsType = {
     tabElement: ReactNode,
   }[]
 }
+export const LimitPerPageOptions = [5, 10, 15, 20, 100]
 export type HandleControls = {
   search: string;
   currentPage: number;

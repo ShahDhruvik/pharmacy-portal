@@ -1,6 +1,6 @@
 import { useTab } from '@/context/TabContext'
 import theme from '@/theme/defaultTheme'
-import { TabPropsType } from '@/types/common'
+import { PageControls, TabPropsType } from '@/types/common'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
 import { Box, Tab } from '@mui/material'
 
