@@ -8,6 +8,7 @@ export const enum DefaultEndpoints {
   main = '/main',
   common = '/common',
   patient = '/patient',
+  pharmacy = '/pharmacy',
   practice = '/practice',
   provider = '/provider',
   chat = '/chat',
@@ -31,12 +32,12 @@ export const enum AuthEndPoints {
   "/login",
 }
 export const enum RoleEndPoints {
-  create = DefaultEndpoints.main + '/pharmacy-role/create',
-  delete = DefaultEndpoints.main + '/pharmacy-role/delete/:id',
-  inActive = DefaultEndpoints.main + '/pharmacy-role/inActive/:id',
-  edit = DefaultEndpoints.main + '/pharmacy-role/edit/:id',
-  listAll = DefaultEndpoints.main + '/pharmacy-role',
-  dropdown = DefaultEndpoints.main + '/pharmacy-role/dropdown',
+  create = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-role/create',
+  delete = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-role/delete/:id',
+  inActive = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-role/inActive/:id',
+  edit = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-role/edit/:id',
+  listAll = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-role',
+  dropdown = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-role/dropdown',
 }
 
 

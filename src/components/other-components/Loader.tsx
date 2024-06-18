@@ -12,6 +12,8 @@ const Loader = ({ loading }: Props) => {
   if (loading.isLoading) {
     if (loading.loadingProps?.none) {
       return null
+    } else if (loading.loadingProps?.table) {
+      return null
     } else {
       return (
         <Backdrop

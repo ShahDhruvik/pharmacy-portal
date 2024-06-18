@@ -8,6 +8,6 @@ export const getRoles = async (
     if (res && res?.success) {
         return res?.data
     } else {
-        return []
+        return undefined
     }
 }

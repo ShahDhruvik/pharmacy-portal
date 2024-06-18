@@ -3,10 +3,12 @@ import { HandleControls, PageControls } from '@/types/common'
 import { LoadingButton } from '@mui/lab'
 import { Alert, Box } from '@mui/material'
 import { GridColDef } from '@mui/x-data-grid'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import RoleForm from './role-form'
 import { getRoles } from '@/lib/role'
 import { useLoading } from '@/context/LoadingContext'
+import { Role } from '@/types/role.types'
+import { Tables } from '@/utils/constants'
 
 type Props = {}
 
@@ -15,7 +17,7 @@ const RoleList = (props: Props) => {
     currentPage: 1,
     limitPerPage: 5,
     search: '',
-    sortOrder: 'firstName',
+    sortOrder: 'createdAt',
     sortParam: 'asc',
   }
   const defaultPageControls: PageControls = {
@@ -26,49 +28,40 @@ const RoleList = (props: Props) => {
     total: 0,
   }
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 90 },
     {
-      field: 'firstName',
+      field: 'displayName',
       headerName: 'First name',
-      width: 150,
+      width: 200,
       editable: true,
     },
     {
-      field: 'lastName',
+      field: 'description',
       headerName: 'Last name',
-      width: 150,
+      width: 200,
       editable: true,
-    },
-    {
-      field: 'age',
-      headerName: 'Age',
-      type: 'number',
-      width: 110,
-      editable: true,
-    },
-    {
-      field: 'fullName',
-      headerName: 'Full name',
-      description: 'This column has a value getter and is not sortable.',
-      sortable: false,
-      width: 160,
-      valueGetter: (value: any, row: any) => `${row.firstName || ''} ${row.lastName || ''}`,
     },
   ]
-  const { setLoading } = useLoading()
+  const { setLoading, loading } = useLoading()
   const [openFormDrawer, setOpenFormDrawer] = useState<boolean>(false)
+  const [dataNotFound, setDataNotFound] = useState<boolean>(false)
   const [handleControls, setHandleControls] = useState<HandleControls>(defaultHandleControls)
   const [pageControls, setPageControls] = useState<PageControls>(defaultPageControls)
-  const [data, setData] = useState<any[]>([])
-  const [entity, setEntity] = useState<any | undefined>(undefined)
+  const [data, setData] = useState<Role[]>([])
+  const [entity, setEntity] = useState<Role | undefined>(undefined)
 
   const fetchRoles = async () => {
+    setLoading({ isLoading: true, loadingProps: { table: Tables?.Role } })
     const res = await getRoles(handleControls)
-    setData(res)
+    if (res) {
+      const { records, ...rest } = res
+      setData(records)
+      setPageControls(rest)
+      setDataNotFound(records?.length === 0)
+    }
+    setLoading({ isLoading: false })
   }
-
   useEffect(() => {
-    console.log('role useEffect')
+    fetchRoles()
   }, [])
   return (
     <Box>
@@ -92,6 +85,8 @@ const RoleList = (props: Props) => {
         rows={data}
         pageControls={pageControls}
         handleControls={handleControls}
+        loading={loading}
+        tableName={Tables?.Role}
       />
       <RoleForm openFormDrawer={openFormDrawer} setOpenFormDrawer={setOpenFormDrawer} />
     </Box>

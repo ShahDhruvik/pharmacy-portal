@@ -1,4 +1,11 @@
-import { HandleControls, LimitPerPageOptions, PageControls } from '@/types/common'
+import {
+  EnumValues,
+  HandleControls,
+  LimitPerPageOptions,
+  LoadingContextType,
+  PageControls,
+} from '@/types/common'
+import { Tables } from '@/utils/constants'
 import { Box } from '@mui/material'
 import { DataGrid, GridCallbackDetails, GridColDef, GridPaginationModel } from '@mui/x-data-grid'
 
@@ -7,11 +14,21 @@ type Props = {
   rows: any[]
   pageControls: PageControls
   handleControls: HandleControls
+  loading: LoadingContextType['loading']
+  tableName: EnumValues<typeof Tables>
 }
 
-const DataGridComponent = ({ columns, rows, pageControls, handleControls }: Props) => {
+const DataGridComponent = ({
+  columns,
+  rows,
+  pageControls,
+  handleControls,
+  loading,
+  tableName,
+}: Props) => {
+  console.log(pageControls)
   return (
-    <Box>
+    <div style={{ height: 300, width: '100%' }}>
       <DataGrid
         rows={rows}
         columns={columns}
@@ -32,9 +49,10 @@ const DataGridComponent = ({ columns, rows, pageControls, handleControls }: Prop
         sortingMode='server'
         filterMode='server'
         paginationMode='server'
-        loading={true}
+        loading={loading?.isLoading && loading?.loadingProps?.table === tableName}
+        localeText={{ noRowsLabel: 'There is nothing to show here.' }}
       />
-    </Box>
+    </div>
   )
 }
 

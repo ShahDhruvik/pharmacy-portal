@@ -10,7 +10,7 @@ export type PaletteColor = {
   contrastText?: string
 }
 export type EnumValues<T extends Record<string, string | number>> = T[keyof T];
-export type TablesOptions = keyof typeof Tables;
+export type TablesOptions = EnumValues<typeof Tables>;
 
 export type LoadingProps = {
   isLoading: boolean;
