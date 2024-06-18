@@ -29,7 +29,14 @@ export const enum AuthEndPoints {
   login = DefaultEndpoints.auth +
   "/pharmacy" +
   "/login",
-
+}
+export const enum RoleEndPoints {
+  create = DefaultEndpoints.main + '/pharmacy-role/create',
+  delete = DefaultEndpoints.main + '/pharmacy-role/delete/:id',
+  inActive = DefaultEndpoints.main + '/pharmacy-role/inActive/:id',
+  edit = DefaultEndpoints.main + '/pharmacy-role/edit/:id',
+  listAll = DefaultEndpoints.main + '/pharmacy-role',
+  dropdown = DefaultEndpoints.main + '/pharmacy-role/dropdown',
 }
 
 

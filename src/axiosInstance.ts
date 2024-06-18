@@ -1,7 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse, CancelTokenSource } from 'axios'
-import { VITE_APP_API_URL } from '@/utils/envVariables'
-import { CONST_API_URL } from '@/utils/constants'
-import { CONST_FRONTEND_URL } from './src/utils/constants'
+import { VITE_APP_API_URL, CONST_API_URL } from './utils/envVariables'
 import { toast } from 'react-toastify'
 
 //Cancel Token

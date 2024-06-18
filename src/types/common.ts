@@ -1,6 +1,6 @@
 // All the common types are defined here
 import { SetStateAction, Dispatch, ReactNode } from 'react'
-import { ALIGN_DIALOG, DRAWERSTATE, } from '@/utils/constants'
+import { ALIGN_DIALOG, DRAWERSTATE, Tables, } from '@/utils/constants'
 import { ToastOptions } from 'react-toastify'
 // Other types regarding the individual entity will have separate file (ex: user.types.ts)
 export type PaletteColor = {
@@ -10,11 +10,14 @@ export type PaletteColor = {
   contrastText?: string
 }
 export type EnumValues<T extends Record<string, string | number>> = T[keyof T];
+export type TablesOptions = keyof typeof Tables;
+
 export type LoadingProps = {
   isLoading: boolean;
   loadingProps?: {
     none?: boolean
     btnLoading?: boolean
+    table?: TablesOptions;
   };
 };
 export type LoadingContextType = {

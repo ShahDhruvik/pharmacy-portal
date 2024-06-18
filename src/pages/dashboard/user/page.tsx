@@ -1,6 +1,7 @@
 import TabComponent from '@/components/common-components/TabComponent'
 import { TabPropsType } from '@/types/common'
 import UserList from './container/user-list'
+import RoleList from './role/role-list'
 
 type Props = {}
 
@@ -9,7 +10,7 @@ const UserPage = (props: Props) => {
     handleTabChange: (value: string) => {},
     tabList: [
       {
-        tabElement: <div>Roles</div>,
+        tabElement: <RoleList />,
         tabName: 'Roles',
         tabValue: '0',
       },

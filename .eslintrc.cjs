@@ -17,5 +17,6 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'off',
     'no-case-declarations': 'off',
     'eslint-disable no-extra-semi': 'off',
+    'react-hooks/exhaustive-deps': 'off',
   },
 }

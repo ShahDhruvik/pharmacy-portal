@@ -29,7 +29,7 @@ export const getAllFaqs = async (
     loadingProps?: LoadingContextType['loading']['loadingProps'],
 ) => {
     try {
-        setLoading({ isLoading: true, loadingProps: { page: true } })
+        setLoading({ isLoading: true, })
         const res = await axios.post((CONST_API_URL || VITE_APP_API_URL) + DashboardContent.get_faqs)
         if (res.data.success) {
             return res.data.data
@@ -45,7 +45,7 @@ export const getAllFaqs = async (
         }
         return null
     } finally {
-        setLoading({ isLoading: false, loadingProps: { page: true } })
+        setLoading({ isLoading: false, })
     }
 }
 

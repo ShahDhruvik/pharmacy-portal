@@ -32,7 +32,8 @@
       "@/utils/*": ["./src/utils/*"],
       "@/styles/*": ["./src/styles/*"],
       "@/socket/*": ["./src/socket/*"],
-      "@/theme/*": ["./src/theme/*"]
+      "@/theme/*": ["./src/theme/*"],
+      "@/axiosInstance": ["./src/axiosInstance"]
     }
   },
   "include": ["src/**/*"],

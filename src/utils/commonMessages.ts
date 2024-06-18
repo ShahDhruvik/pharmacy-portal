@@ -9,7 +9,10 @@ export const enum COMMON_MESSAGE {
   Cancel = 'Canceled',
   Change_Password = 'A password reset link has been sent to your registered email address.',
   Resend_otp = 'Your OTP has been successfully resent.',
-  loadingMessage = 'You and me, both have memories.'
+  loadingMessage = 'You and me, both have memories.',
+  UnAuthorized = 'UnAuthorized',
+  NotFound = 'not found',
+  InternalServerError = 'Internal Server Error'
 }
 
 export const enum VALIDATION_MESSAGE {

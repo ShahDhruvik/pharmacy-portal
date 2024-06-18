@@ -18,7 +18,9 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+
       '@/components': `${path.resolve(__dirname, './src/components/')}`,
+      '@/axiosInstance': `${path.resolve(__dirname, './src/axiosInstance/')}`,
       '@/assets': `${path.resolve(__dirname, './src/assets/')}`,
       '@/context': `${path.resolve(__dirname, './src/context/')}`,
       '@/hooks': `${path.resolve(__dirname, './src/hooks/')}`,

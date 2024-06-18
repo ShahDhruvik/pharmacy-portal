@@ -7,10 +7,6 @@ import React, { useEffect, useState } from 'react'
 type Props = {}
 
 const DashboardMainPage = (props: Props) => {
-  const { setLoading } = useLoading()
-  useEffect(() => {
-    setLoading({ isLoading: true })
-  }, [])
   return <div>DashboardMainPage</div>
 }
 

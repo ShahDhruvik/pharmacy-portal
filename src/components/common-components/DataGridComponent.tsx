@@ -29,7 +29,10 @@ const DataGridComponent = ({ columns, rows, pageControls, handleControls }: Prop
           console.log(details)
         }}
         disableRowSelectionOnClick
+        sortingMode='server'
+        filterMode='server'
         paginationMode='server'
+        loading={true}
       />
     </Box>
   )
