@@ -34,7 +34,11 @@ const TabComponent = ({ tabProps }: Props) => {
           </TabList>
         </Box>
         {tabProps.tabList.map((tab) => {
-          return <TabPanel value={tab?.tabValue}>{tab?.tabElement}</TabPanel>
+          return (
+            <TabPanel value={tab?.tabValue} key={Math.random()}>
+              {tab?.tabElement}
+            </TabPanel>
+          )
         })}
       </TabContext>
     </Box>

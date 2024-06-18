@@ -45,7 +45,6 @@ export type PageControls =
     to: number;
     pages: number;
     total: number;
-    numberOfRecords: number;
   }
   | undefined;
 export type AuthState = {

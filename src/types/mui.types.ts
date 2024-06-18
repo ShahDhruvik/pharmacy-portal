@@ -36,3 +36,6 @@ declare module '@mui/material/styles' {
 declare module '@mui/material/Tabs' {
     interface TabsPropsIndicatorColorOverrides extends DynamicButtonPaletteOptions { }
 }
+declare module '@mui/material/CircularProgress' {
+    interface CircularProgressPropsColorOverrides extends DynamicButtonPaletteOptions { }
+}
