@@ -26,9 +26,9 @@ const DataGridComponent = ({
   loading,
   tableName,
 }: Props) => {
-  console.log(pageControls)
+  const loadingCondition = loading?.isLoading && loading?.loadingProps?.table === tableName
   return (
-    <div style={{ height: 300, width: '100%' }}>
+    <div style={{ height: loadingCondition ? 300 : 'auto', width: '100%' }}>
       <DataGrid
         rows={rows}
         columns={columns}
@@ -49,7 +49,7 @@ const DataGridComponent = ({
         sortingMode='server'
         filterMode='server'
         paginationMode='server'
-        loading={loading?.isLoading && loading?.loadingProps?.table === tableName}
+        loading={loadingCondition}
         localeText={{ noRowsLabel: 'There is nothing to show here.' }}
       />
     </div>

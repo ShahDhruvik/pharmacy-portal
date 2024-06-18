@@ -9,9 +9,18 @@ type Props = {
   trigger: UseFormTrigger<any>
   handleToggle?: (checked: boolean) => void
   isDisabled?: boolean
+  notRequired?: boolean
 }
 
-const CheckBoxInput = ({ control, name, handleToggle, setValue, trigger, isDisabled }: Props) => {
+const CheckBoxInput = ({
+  control,
+  name,
+  handleToggle,
+  setValue,
+  trigger,
+  isDisabled,
+  notRequired,
+}: Props) => {
   const shoeToast = useToast()
   return (
     <Controller
@@ -33,9 +42,13 @@ const CheckBoxInput = ({ control, name, handleToggle, setValue, trigger, isDisab
           />
         )
       }}
-      rules={{
-        validate: (val) => val || 'Check the conditions',
-      }}
+      rules={
+        !notRequired
+          ? {
+              validate: (val) => val || 'Check the conditions',
+            }
+          : {}
+      }
     />
   )
 }

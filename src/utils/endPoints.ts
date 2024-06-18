@@ -35,9 +35,13 @@ export const enum RoleEndPoints {
   create = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-role/create',
   delete = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-role/delete/:id',
   inActive = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-role/inActive/:id',
-  edit = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-role/edit/:id',
+  edit = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-role/edit/',
   listAll = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-role',
   dropdown = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-role/dropdown',
 }
 
-
+export const enum FileEndPoints {
+  uploadMain = DefaultEndpoints.main + "/upload",
+  uploadCommon = DefaultEndpoints.common + "/upload",
+  uploadCommonEditor = DefaultEndpoints.main + "/editor-upload",
+}

@@ -12,7 +12,8 @@ export const enum COMMON_MESSAGE {
   loadingMessage = 'You and me, both have memories.',
   UnAuthorized = 'UnAuthorized',
   NotFound = 'not found',
-  InternalServerError = 'Internal Server Error'
+  InternalServerError = 'Internal Server Error',
+  DataArrayValidation = 'At least one data needs to be added'
 }
 
 export const enum VALIDATION_MESSAGE {

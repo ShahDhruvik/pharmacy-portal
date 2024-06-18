@@ -18,3 +18,20 @@ export interface Role {
     isActive: boolean;
     isDeleted: boolean;
 }
+
+export interface RoleFormFields {
+    name: string;
+    displayName: string;
+    description: string;
+    color: string | null;
+    icon: { file: File | null, url: string };
+    active: boolean
+    data: {
+        name: string;
+        displayName: string;
+        description: string;
+        color: string | null;
+        active: boolean;
+        icon: { file: File | null, url: string };
+    }[]
+}

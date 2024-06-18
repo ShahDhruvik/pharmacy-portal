@@ -11,6 +11,7 @@ export type PaletteColor = {
 }
 export type EnumValues<T extends Record<string, string | number>> = T[keyof T];
 export type TablesOptions = EnumValues<typeof Tables>;
+export type FileData = { file: string; name: string; originalName: string };
 
 export type LoadingProps = {
   isLoading: boolean;

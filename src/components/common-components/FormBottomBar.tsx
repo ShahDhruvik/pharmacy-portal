@@ -1,10 +1,14 @@
+import { LoadingContextType } from '@/types/common'
 import { LoadingButton } from '@mui/lab'
 import { CircularProgress, Divider } from '@mui/material'
 import React from 'react'
 
-type Props = {}
+type Props = {
+  loading: LoadingContextType['loading']
+  handleClick: () => void
+}
 
-const FormBottomBar = (props: Props) => {
+const FormBottomBar = ({ handleClick, loading }: Props) => {
   return (
     <div className='sticky bottom-0 bg-mWhite-main'>
       <Divider />
@@ -14,8 +18,8 @@ const FormBottomBar = (props: Props) => {
           color='mPink'
           sx={{ fontSize: '14px', textTransform: 'uppercase' }}
           loadingIndicator={<CircularProgress color='mPink' size={15} thickness={5} />}
-          type='submit'
-          role='button'
+          loading={loading?.isLoading && loading?.loadingProps?.btnLoading}
+          onClick={handleClick}
         >
           Save
         </LoadingButton>

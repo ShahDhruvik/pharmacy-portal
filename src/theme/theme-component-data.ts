@@ -8,7 +8,7 @@ export const components: ThemeOptions['components'] = {
                 textTransform: 'none',
                 ':disabled': {
                     backgroundColor: PaletteColors.mLightGray,
-                    color: PaletteColors.mBlack,
+                    color: PaletteColors.mMediumGray,
                     cursor: 'not-allowed',
                     pointerEvents: 'all',
                     fontWeight: 700,
@@ -55,7 +55,6 @@ export const components: ThemeOptions['components'] = {
                 '&.Mui-hover': {
 
                 },
-                borderRadius: '4px',
             },
         },
     },

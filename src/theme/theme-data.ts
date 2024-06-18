@@ -23,6 +23,7 @@ export enum PaletteColors {
     mBlack = '#000000',
     mDarkGreen = '#1A2428',
     mRed = '#ff3333',
+    mLightWhite = '#F6F9F7',
 }
 export const generatePalette = (paletteColors: Record<string, string>) => {
     const colorPalette: Record<string, { main: string; light: string; dark: string }> = {}
