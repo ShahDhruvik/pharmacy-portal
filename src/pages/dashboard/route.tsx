@@ -26,4 +26,4 @@ const DashboardRoutes = (props: Props) => {
   )
 }
 
-export default DashboardRoutes
+export default withAuth(DashboardRoutes)

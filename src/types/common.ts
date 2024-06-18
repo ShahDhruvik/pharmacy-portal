@@ -13,7 +13,6 @@ export type EnumValues<T extends Record<string, string | number>> = T[keyof T];
 export type LoadingProps = {
   isLoading: boolean;
   loadingProps?: {
-    page?: boolean;
     none?: boolean
     btnLoading?: boolean
   };
@@ -54,7 +53,6 @@ export type AuthState = {
 
 export type AuthParams = {
   isAuth: boolean
-  role: string
 }
 
 export type CacheType = {

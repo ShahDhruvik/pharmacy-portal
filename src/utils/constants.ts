@@ -1,4 +1,4 @@
-import { EnumValues } from '@/utils/types/common'
+import { EnumValues } from '@/types/common'
 import { format, parseISO } from 'date-fns'
 import { enUS } from 'date-fns/locale'
 

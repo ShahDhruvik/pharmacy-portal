@@ -86,10 +86,10 @@ export default function LoginPage() {
     cssEase: 'linear',
   }
   const onSubmit = async (data: any) => {
-    console.log(data)
     const res = await loginPharmacy(setLoading, data, showToast, { btnLoading: true })
     if (res) {
-      console.log(res)
+      addStorage(res?.accessToken, res?.refreshToken, res?.from)
+      nav('/')
     }
   }
   const onSubmitChangePassword = async (data: any) => {
