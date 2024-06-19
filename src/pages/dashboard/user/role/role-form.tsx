@@ -26,18 +26,29 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import theme from '@/theme/defaultTheme'
 import { useLoading } from '@/context/LoadingContext'
 import { COMMON_MESSAGE } from '@/utils/commonMessages'
-import { createRole, editRole } from '@/lib/role'
+import { createRole, dropdownRoles, editRole } from '@/lib/role'
 import { VITE_APP_IMAGE_URL } from '@/utils/envVariables'
 import { CONST_APP_IMAGE_URL } from '@/utils/constants'
+import { HandleControls, SelectDDL } from '@/types/common'
 
 type Props = {
   openFormDrawer: boolean
   setOpenFormDrawer: Dispatch<SetStateAction<boolean>>
   entity: Role | undefined
+  handleReFetch: () => void
 }
 
-const UserForm = ({ openFormDrawer, setOpenFormDrawer, entity }: Props) => {
+const RoleForm = ({ openFormDrawer, setOpenFormDrawer, entity, handleReFetch }: Props) => {
   const { loading, setLoading } = useLoading()
+  const defaultValues = {
+    name: '',
+    color: '#ff0000',
+    data: [],
+    description: '',
+    displayName: '',
+    icon: { file: null, url: '' },
+    active: true,
+  }
   const {
     control,
     setValue,
@@ -47,15 +58,7 @@ const UserForm = ({ openFormDrawer, setOpenFormDrawer, entity }: Props) => {
     register,
     formState: { errors },
   } = useForm<RoleFormFields>({
-    defaultValues: {
-      name: '',
-      color: '#ff0000',
-      data: [],
-      description: '',
-      displayName: '',
-      icon: { file: null, url: '' },
-      active: true,
-    },
+    defaultValues: defaultValues,
   })
   const fieldW = watch()
   const { append, remove, fields } = useFieldArray({
@@ -63,7 +66,6 @@ const UserForm = ({ openFormDrawer, setOpenFormDrawer, entity }: Props) => {
     name: 'data',
     rules: { validate: (val) => val?.length !== 0 || COMMON_MESSAGE.DataArrayValidation },
   })
-
   const onSubmitHandle = async () => {
     setLoading({ isLoading: true, loadingProps: { btnLoading: true } })
     if (!entity) {
@@ -72,16 +74,16 @@ const UserForm = ({ openFormDrawer, setOpenFormDrawer, entity }: Props) => {
         const res = await createRole(fieldW)
         if (res) {
           setOpenFormDrawer(false)
+          handleReFetch()
         }
       }
     } else {
-      console.log('object')
       const tigEdit = await trigger(['name', 'displayName'])
-      console.log(tigEdit)
       if (tigEdit) {
         const res = await editRole(entity?.internalId, entity?.icon as string, fieldW)
         if (res) {
           setOpenFormDrawer(false)
+          handleReFetch()
         }
       }
     }
@@ -104,12 +106,16 @@ const UserForm = ({ openFormDrawer, setOpenFormDrawer, entity }: Props) => {
       }
       console.log('set Edit Fields')
     } else {
-      reset()
+      reset(defaultValues)
     }
   }, [openFormDrawer, entity])
   return (
     <FormDrawer openFormDrawer={openFormDrawer} setOpenFormDrawer={setOpenFormDrawer} width='50%'>
-      <FormTopBar entityName='User' setOpenFormDrawer={setOpenFormDrawer} />
+      <FormTopBar
+        entityName='User'
+        setOpenFormDrawer={setOpenFormDrawer}
+        handleReFetch={handleReFetch}
+      />
       <div className='flex-1 p-container'>
         <div className='bg-mLightWhite-main p-container shadow-cardShadow flex flex-col gap-3'>
           <div className='flex gap-3'>
@@ -252,4 +258,4 @@ const UserForm = ({ openFormDrawer, setOpenFormDrawer, entity }: Props) => {
   )
 }
 
-export default UserForm
+export default RoleForm

@@ -33,11 +33,19 @@ export const enum AuthEndPoints {
 }
 export const enum RoleEndPoints {
   create = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-role/create',
-  delete = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-role/delete/:id',
-  inActive = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-role/inActive/:id',
+  delete = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-role/delete/',
+  inActive = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-role/inActive/',
   edit = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-role/edit/',
   listAll = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-role',
   dropdown = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-role/dropdown',
+}
+export const enum UserEndPoints {
+  create = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-user/create',
+  delete = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-user/delete/',
+  inActive = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-user/inActive/',
+  edit = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-user/edit/',
+  listAll = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-user',
+  dropdown = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-user/dropdown',
 }
 
 export const enum FileEndPoints {

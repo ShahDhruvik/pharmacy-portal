@@ -1,70 +1,196 @@
 import DataGridComponent from '@/components/common-components/DataGridComponent'
 import { HandleControls, PageControls } from '@/types/common'
 import { LoadingButton } from '@mui/lab'
-import { Alert, Box } from '@mui/material'
-import { GridColDef } from '@mui/x-data-grid'
-import { useState } from 'react'
+import { Alert, Avatar, Box, IconButton, Switch } from '@mui/material'
+import { GridColDef, useGridApiRef } from '@mui/x-data-grid'
+import { useEffect, useState } from 'react'
 import UserForm from './user-form'
+import { deleteUser, getUsers, inactiveUser } from '@/lib/user'
+import { useLoading } from '@/context/LoadingContext'
+import { User, UserFormFields } from '@/types/user.types'
+import { CONST_APP_IMAGE_URL, Tables, limitPerPage } from '@/utils/constants'
+import { VITE_APP_IMAGE_URL } from '@/utils/envVariables'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
+import ConfirmationPopUp from '@/components/common-components/confirm-popup'
+import { useAskConfirmation } from '@/context/ConfirmContext'
+import { COMMON_MESSAGE } from '@/utils/commonMessages'
+import { Role } from '@/types/role.types'
+import { dropdownRoles } from '@/lib/role'
 
 type Props = {}
 
 const UserList = (props: Props) => {
-  const [openFormDrawer, setOpenFormDrawer] = useState<boolean>(false)
-  const pageControls: PageControls = {
+  const defaultHandleControls: HandleControls = {
     currentPage: 1,
-    from: 1,
-    pages: 3,
-    to: 5,
-    total: 12,
-  }
-  const handleControls: HandleControls = {
-    currentPage: 1,
-    limitPerPage: 5,
+    limitPerPage: limitPerPage,
     search: '',
-    sortOrder: 'firstName',
+    sortOrder: 'createdAt',
     sortParam: 'asc',
   }
+  const defaultPageControls: PageControls = {
+    currentPage: 0,
+    from: 0,
+    pages: 0,
+    to: 0,
+    total: 0,
+  }
+
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 50,
+  })
+  const { setLoading, loading } = useLoading()
+  const { setAskConfirmation } = useAskConfirmation()
+  const [openFormDrawer, setOpenFormDrawer] = useState<boolean>(false)
+  const [dataNotFound, setDataNotFound] = useState<boolean>(false)
+  const [handleControls, setHandleControls] = useState<HandleControls>(defaultHandleControls)
+  const [pageControls, setPageControls] = useState<PageControls>(defaultPageControls)
+  const [data, setData] = useState<User[]>([])
+  const [entity, setEntity] = useState<User | undefined>(undefined)
+  const getRolesDrp = async () => {
+    const res = await dropdownRoles()
+  }
+  const fetchUsers = async () => {
+    setLoading({ isLoading: true, loadingProps: { table: Tables?.User } })
+    // const res = await getUsers(handleControls)
+    // if (res) {
+    //   const { records, ...rest } = res
+    //   setData(records)
+    //   setPageControls(rest)
+    //   setPaginationModel({ page: rest?.currentPage, pageSize: handleControls?.limitPerPage })
+    //   setDataNotFound(records?.length === 0)
+    // }
+    setLoading({ isLoading: false })
+  }
+  const removeUser = async (entity: User) => {
+    setLoading({ isLoading: true, loadingProps: { btnLoading: true } })
+    const res = await deleteUser(entity?.internalId)
+    if (res) {
+      const { records, ...rest } = res
+      setData(records)
+      setPageControls(rest)
+      setPaginationModel({ page: rest?.currentPage, pageSize: handleControls?.limitPerPage })
+      setDataNotFound(records?.length === 0)
+    }
+    setLoading({ isLoading: false })
+  }
+  const handleReFetch = () => {
+    setData([])
+    setHandleControls(defaultHandleControls)
+  }
+  useEffect(() => {
+    fetchUsers()
+  }, [handleControls])
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 90 },
     {
-      field: 'firstName',
-      headerName: 'First name',
-      width: 150,
+      field: 'icon',
+      headerName: 'Icon',
+      width: 70,
+      editable: true,
+      renderCell: (params) => {
+        const row = params?.row
+        return (
+          <div className='flex items-center h-full'>
+            <Avatar src={(VITE_APP_IMAGE_URL || CONST_APP_IMAGE_URL) + row?.icon} />
+          </div>
+        )
+      },
+    },
+    {
+      field: 'name',
+      headerName: 'Name',
+      width: 200,
       editable: true,
     },
     {
-      field: 'lastName',
-      headerName: 'Last name',
-      width: 150,
+      field: 'displayName',
+      headerName: 'DisplayName',
+      width: 200,
       editable: true,
     },
     {
-      field: 'age',
-      headerName: 'Age',
-      type: 'number',
-      width: 110,
+      field: 'description',
+      headerName: 'Description',
+      width: 200,
       editable: true,
     },
     {
-      field: 'fullName',
-      headerName: 'Full name',
-      description: 'This column has a value getter and is not sortable.',
-      sortable: false,
-      width: 160,
-      valueGetter: (value: any, row: any) => `${row.firstName || ''} ${row.lastName || ''}`,
+      field: '',
+      headerName: 'Actions',
+      width: 200,
+      editable: true,
+      renderCell: (params) => {
+        const row = params?.row
+        return (
+          <div className='flex items-center h-full'>
+            <IconButton
+              onClick={() => {
+                setEntity(row)
+                setOpenFormDrawer(true)
+              }}
+            >
+              <EditIcon />
+            </IconButton>
+            <LoadingButton
+              color='mDarkGray'
+              onClick={() => {
+                setAskConfirmation({
+                  isConfirmation: true,
+                  confirmProps: {
+                    confirmationText: COMMON_MESSAGE.DeleteConfirmation,
+                    handleCancel: () => {
+                      setAskConfirmation({ confirmProps: undefined, isConfirmation: false })
+                    },
+                    handleConfirm: async () => {
+                      setLoading({ isLoading: true, loadingProps: { btnLoading: true } })
+                      const res = await deleteUser(row?.internalId)
+                      if (res) {
+                        handleReFetch()
+                        setAskConfirmation({ confirmProps: undefined, isConfirmation: false })
+                      }
+                      setLoading({ isLoading: false })
+                    },
+                  },
+                })
+              }}
+            >
+              <DeleteIcon />
+            </LoadingButton>
+            <Switch
+              checked={row?.isActive}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                setAskConfirmation({
+                  isConfirmation: true,
+                  confirmProps: {
+                    confirmationText: row?.isActive
+                      ? COMMON_MESSAGE.InActiveConfirmation
+                      : COMMON_MESSAGE.ActiveConfirmation,
+                    handleCancel: () => {
+                      setAskConfirmation({ confirmProps: undefined, isConfirmation: false })
+                    },
+                    handleConfirm: async () => {
+                      setLoading({ isLoading: true, loadingProps: { btnLoading: true } })
+                      const res = await inactiveUser(row?.internalId, row?.isActive)
+                      if (res) {
+                        handleReFetch()
+                        setAskConfirmation({ confirmProps: undefined, isConfirmation: false })
+                      }
+                      setLoading({ isLoading: false })
+                    },
+                  },
+                })
+              }}
+            />
+          </div>
+        )
+      },
     },
-  ]
-  const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 14 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 31 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 31 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 11 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
   ]
   return (
     <Box>
       <Alert className='mb-3' severity='info'>
-        By configuring roles effectively, you can ensure that users have the appropriate level of
+        By configuring Users effectively, you can ensure that Users have the appropriate level of
         access
       </Alert>
       <Box display={'flex'} justifyContent={'end'}>
@@ -72,6 +198,7 @@ const UserList = (props: Props) => {
           variant='text'
           color='mPink'
           onClick={() => {
+            setEntity(undefined)
             setOpenFormDrawer(true)
           }}
         >
@@ -80,11 +207,20 @@ const UserList = (props: Props) => {
       </Box>
       <DataGridComponent
         columns={columns}
-        rows={rows}
+        rows={data}
         pageControls={pageControls}
         handleControls={handleControls}
+        loading={loading}
+        tableName={Tables?.User}
+        setHandleControls={setHandleControls}
       />
-      <UserForm openFormDrawer={openFormDrawer} setOpenFormDrawer={setOpenFormDrawer} />
+      <UserForm
+        openFormDrawer={openFormDrawer}
+        setOpenFormDrawer={setOpenFormDrawer}
+        entity={entity as User}
+        handleReFetch={handleReFetch}
+      />
+      <ConfirmationPopUp />
     </Box>
   )
 }

@@ -14,6 +14,7 @@ import { LoadingProvider } from './context/LoadingContext'
 import { ChatProvider } from './context/ChatContext'
 import { SidebarProvider } from './context/SidebarContext'
 import { TabProvider } from './context/TabContext'
+import { AskConfirmationProvider } from './context/ConfirmContext'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
@@ -35,11 +36,13 @@ root.render(
                 theme='colored'
                 icon={false}
               />
-              <TabProvider>
-                <SidebarProvider>
-                  <App />
-                </SidebarProvider>
-              </TabProvider>
+              <AskConfirmationProvider>
+                <TabProvider>
+                  <SidebarProvider>
+                    <App />
+                  </SidebarProvider>
+                </TabProvider>
+              </AskConfirmationProvider>
             </LoadingProvider>
           </AppThemeProvider>
         </ReduxProvider>

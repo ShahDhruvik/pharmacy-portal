@@ -18,6 +18,7 @@ type Props = {
   multiline?: number
   handleOnChange?: (e: any) => void
   size?: TextFieldProps['size']
+  type?: TextFieldProps['type']
 }
 
 const TxtInput = ({
@@ -32,6 +33,7 @@ const TxtInput = ({
   label,
   handleOnChange,
   size,
+  type,
 }: Props) => {
   const inputStyleProps: SxProps<Theme> = { ...sx, width: '100%' }
   return (
@@ -60,6 +62,7 @@ const TxtInput = ({
             InputLabelProps={{ shrink: true }}
             label={label}
             {...(size && { size: size })}
+            {...(type && { type: type })}
           />
         )
       }}

@@ -1,12 +1,12 @@
 import { FileData, HandleControls, LoadingContextType } from '@/types/common'
 import { apiRequest } from '@/middleware/axios-api-request'
-import { RoleEndPoints } from '@/utils/endPoints'
-import { RoleFormFields } from '@/types/role.types'
+import { UserEndPoints } from '@/utils/endPoints'
+import { UserFormFields } from '@/types/user.types'
 import { fileUpdate, fileUpload } from './common'
-export const getRoles = async (
+export const getUsers = async (
     handleControls: HandleControls,
 ) => {
-    const res = await apiRequest('POST', RoleEndPoints.listAll, handleControls)
+    const res = await apiRequest('POST', UserEndPoints.listAll, handleControls)
     if (res && res?.success) {
         return res?.data
     } else {
@@ -14,22 +14,27 @@ export const getRoles = async (
     }
 }
 
-export const createRole = async (
-    formData: RoleFormFields,
+export const createUser = async (
+    formData: UserFormFields,
 ) => {
     const reqData: any = [];
     for (const x of formData.data) {
-        const { active, icon, ...rest } = x;
+        const { active, icon, roleId, pharmacyIds, name, mobile, email, phone } = x;
         const uploadedFile: FileData = await fileUpload(icon.file);
         reqData.push({
-            ...rest,
             icon: uploadedFile.file,
             isActive: active,
+            roleId: Number(roleId?._id),
+            pharmacyIds: '',
+            name: name,
+            phone,
+            mobile,
+            email
         });
     }
     const res = await apiRequest(
         "POST",
-        RoleEndPoints.create,
+        UserEndPoints.create,
         { data: reqData },
     );
     if (res && res.success) {
@@ -38,25 +43,33 @@ export const createRole = async (
     return false;
 };
 
-export const editRole = async (
+export const editUser = async (
     entityInternalId: string,
     existingFileName: string,
-    formData: RoleFormFields,
+    formData: UserFormFields,
 ) => {
-    const { icon, data, active, ...rest } = formData
-    const reqData = { ...rest }
-    if (formData?.icon?.file !== null) {
-        if (formData?.icon?.url === '') {
-            (reqData as any)['icon'] = ''
-        } else {
-            const updateFile = await fileUpdate(formData?.icon?.file, existingFileName);
-            (reqData as any)['icon'] = updateFile?.file
-
-        }
+    const { icon, data, active, roleId, name, phone, email, mobile } = formData
+    const reqData = {
+        isActive: active,
+        roleId: Number(roleId?._id),
+        pharmacyIds: '',
+        name: name,
+        phone,
+        mobile,
+        email
     }
+    // if (formData?.icon?.file !== null) {
+    //     if (formData?.icon?.url === '') {
+    //         (reqData as any)['icon'] = ''
+    //     } else {
+    //         const updateFile = await fileUpdate(formData?.icon?.file, existingFileName);
+    //         (reqData as any)['icon'] = updateFile?.file
+
+    //     }
+    // }
     const res = await apiRequest(
         "PUT",
-        RoleEndPoints.edit + entityInternalId,
+        UserEndPoints.edit + entityInternalId,
         reqData,
     );
     if (res && res.success) {
@@ -64,13 +77,13 @@ export const editRole = async (
     }
     return false;
 };
-export const deleteRole = async (
+export const deleteUser = async (
     entityInternalId: string,
 ) => {
 
     const res = await apiRequest(
         "PUT",
-        RoleEndPoints.delete + entityInternalId,
+        UserEndPoints.delete + entityInternalId,
         {},
     );
     if (res && res.success) {
@@ -78,14 +91,14 @@ export const deleteRole = async (
     }
     return false;
 };
-export const inactiveRole = async (
+export const inactiveUser = async (
     entityInternalId: string,
     entityIsActive: boolean
 ) => {
 
     const res = await apiRequest(
         "PUT",
-        RoleEndPoints.inActive + entityInternalId,
+        UserEndPoints.inActive + entityInternalId,
         { isActive: entityIsActive },
     );
     if (res && res.success) {
@@ -93,11 +106,11 @@ export const inactiveRole = async (
     }
     return false;
 };
-export const dropdownRoles = async (
+export const dropdownUsers = async (
 ) => {
     const res = await apiRequest(
         "GET",
-        RoleEndPoints.dropdown,
+        UserEndPoints.dropdown,
         {},
     );
     if (res && res.success) {

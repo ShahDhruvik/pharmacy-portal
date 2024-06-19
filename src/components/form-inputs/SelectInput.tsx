@@ -8,6 +8,7 @@ import {
   SxProps,
   Theme,
   TextFieldProps,
+  CircularProgress,
 } from '@mui/material'
 import { acDefaultValue } from '@/utils/form.validation'
 import {
@@ -18,8 +19,8 @@ import {
   UseFormSetValue,
   useController,
 } from 'react-hook-form'
-import { splitDescription } from '@/utils/constants'
-import { SelectDDL } from '@/utils/types/common'
+import { Dropdowns, splitDescription } from '@/utils/constants'
+import { DropDownOptions, EnumValues, LoadingContextType, SelectDDL } from '@/types/common'
 import ArrowCircleDownOutlinedIcon from '@mui/icons-material/ArrowCircleDownOutlined'
 import { useEffect } from 'react'
 import theme from '@/theme/defaultTheme'
@@ -32,6 +33,8 @@ type Props = {
   setValue: UseFormSetValue<any>
   setError: UseFormSetError<any>
   clearErrors: UseFormClearErrors<any>
+  loading: LoadingContextType['loading']
+  drpName: DropDownOptions
   validation: any
   notRequired?: boolean
   tooltip?: { isTooltip: boolean; length: number }
@@ -114,9 +117,10 @@ const SelectInput = ({
   selectDefault,
   handleOnChange,
   size,
+  drpName,
+  loading,
 }: Props) => {
   const inputStyleProps: SxProps<Theme> = { ...sx, width: '100%' }
-
   const { field, fieldState } = useController({
     name,
     control,
@@ -127,13 +131,12 @@ const SelectInput = ({
   useEffect(() => {
     if (selectDefault && options && options.length > 0) {
       const isCurrentValueDefault = field?.value && field?.value?._id === acDefaultValue?._id
-
       if (isCurrentValueDefault) {
         setValue(name, options[1])
       }
     }
   }, [selectDefault, options, field.value])
-
+  const loadingCondition = loading?.isLoading && loading?.loadingProps?.dropdown === drpName
   return (
     <Controller
       name={name}
@@ -169,6 +172,19 @@ const SelectInput = ({
               }
             }
           }}
+          loading={loadingCondition}
+          loadingText='loading...'
+          {...(loadingCondition && {
+            popupIcon: (
+              <CircularProgress
+                size={size && size === 'small' ? 15 : 25}
+                thickness={size && size === 'small' ? 3 : 5}
+                sx={{
+                  color: theme.palette.mPink.dark,
+                }}
+              />
+            ),
+          })}
           value={field.value || null}
           renderInput={(params) => {
             return (

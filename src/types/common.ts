@@ -1,6 +1,6 @@
 // All the common types are defined here
 import { SetStateAction, Dispatch, ReactNode } from 'react'
-import { ALIGN_DIALOG, DRAWERSTATE, Tables, } from '@/utils/constants'
+import { ALIGN_DIALOG, DRAWERSTATE, Dropdowns, Tables, } from '@/utils/constants'
 import { ToastOptions } from 'react-toastify'
 // Other types regarding the individual entity will have separate file (ex: user.types.ts)
 export type PaletteColor = {
@@ -11,6 +11,7 @@ export type PaletteColor = {
 }
 export type EnumValues<T extends Record<string, string | number>> = T[keyof T];
 export type TablesOptions = EnumValues<typeof Tables>;
+export type DropDownOptions = EnumValues<typeof Dropdowns>;
 export type FileData = { file: string; name: string; originalName: string };
 
 export type LoadingProps = {
@@ -19,6 +20,7 @@ export type LoadingProps = {
     none?: boolean
     btnLoading?: boolean
     table?: TablesOptions;
+    dropdown?: DropDownOptions;
   };
 };
 export type LoadingContextType = {
@@ -33,7 +35,6 @@ export type TabPropsType = {
     tabElement: ReactNode,
   }[]
 }
-export const LimitPerPageOptions = [5, 10, 15, 20, 100]
 export type HandleControls = {
   search: string;
   currentPage: number;

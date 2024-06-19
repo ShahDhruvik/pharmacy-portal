@@ -9,9 +9,17 @@ export const currencySymbol = '₹'
 
 export enum Tables {
   Role = "Role",
+  User = "User",
 
 }
+export const tooltipLength = 20;
 
+export enum Dropdowns {
+  Role = "Role",
+  Pharmacy = "Pharmacy",
+}
+export const LimitPerPageOptions = [5, 10, 15, 20, 100]
+export const limitPerPage = 10
 export enum ResponseStatus {
   RS200 = 200,
   RS300 = 300,

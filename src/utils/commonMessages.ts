@@ -13,7 +13,10 @@ export const enum COMMON_MESSAGE {
   UnAuthorized = 'UnAuthorized',
   NotFound = 'not found',
   InternalServerError = 'Internal Server Error',
-  DataArrayValidation = 'At least one data needs to be added'
+  DataArrayValidation = 'At least one data needs to be added',
+  DeleteConfirmation = 'Are you sure you want to delete.',
+  ActiveConfirmation = 'Are you sure you want to active.',
+  InActiveConfirmation = 'Are you sure you want to In-Active.',
 }
 
 export const enum VALIDATION_MESSAGE {
