@@ -23,8 +23,8 @@ const RoleList = (props: Props) => {
     currentPage: 1,
     limitPerPage: limitPerPage,
     search: '',
-    sortOrder: 'createdAt',
-    sortParam: 'asc',
+    sortOrder: 'asc',
+    sortParam: 'createdAt',
   }
   const defaultPageControls: PageControls = {
     currentPage: 0,

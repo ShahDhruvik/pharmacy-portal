@@ -53,7 +53,7 @@ export const editUser = async (
         isActive: active,
         roleId: Number(roleId?._id),
         pharmacyIds: '',
-        name: name,
+        name,
         phone,
         mobile,
         email

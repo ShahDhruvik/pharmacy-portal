@@ -102,7 +102,7 @@ const UserForm = ({ openFormDrawer, setOpenFormDrawer, entity, handleReFetch }: 
         }
       }
     } else {
-      const tigEdit = await trigger(['roleId', 'pharmacyIds'])
+      const tigEdit = await trigger(['roleId', 'pharmacyIds', 'name', 'phone', 'mobile', 'email'])
       if (tigEdit) {
         const res = await editUser(entity?.internalId, (entity?.icon as string) ?? '', fieldW)
         if (res) {
@@ -133,7 +133,13 @@ const UserForm = ({ openFormDrawer, setOpenFormDrawer, entity, handleReFetch }: 
           phone: entity?.phone,
           mobile: entity?.mobile,
           email: entity?.email,
-          roleId: acDefaultValue,
+          roleId: entity?.PharmaOrgRole
+            ? {
+                _id: String(entity?.PharmaOrgRole?.id),
+                label: entity?.PharmaOrgRole?.displayName,
+                data: entity?.PharmaOrgRole,
+              }
+            : acDefaultValue,
           pharmacyIds: [],
           icon: {
             file: emptyFile,

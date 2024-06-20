@@ -25,8 +25,8 @@ const UserList = (props: Props) => {
     currentPage: 1,
     limitPerPage: limitPerPage,
     search: '',
-    sortOrder: 'createdAt',
-    sortParam: 'asc',
+    sortOrder: 'asc',
+    sortParam: 'createdAt',
   }
   const defaultPageControls: PageControls = {
     currentPage: 0,
@@ -53,14 +53,14 @@ const UserList = (props: Props) => {
   }
   const fetchUsers = async () => {
     setLoading({ isLoading: true, loadingProps: { table: Tables?.User } })
-    // const res = await getUsers(handleControls)
-    // if (res) {
-    //   const { records, ...rest } = res
-    //   setData(records)
-    //   setPageControls(rest)
-    //   setPaginationModel({ page: rest?.currentPage, pageSize: handleControls?.limitPerPage })
-    //   setDataNotFound(records?.length === 0)
-    // }
+    const res = await getUsers(handleControls)
+    if (res) {
+      const { records, ...rest } = res
+      setData(records)
+      setPageControls(rest)
+      setPaginationModel({ page: rest?.currentPage, pageSize: handleControls?.limitPerPage })
+      setDataNotFound(records?.length === 0)
+    }
     setLoading({ isLoading: false })
   }
   const removeUser = async (entity: User) => {
@@ -92,7 +92,7 @@ const UserList = (props: Props) => {
         const row = params?.row
         return (
           <div className='flex items-center h-full'>
-            <Avatar src={(VITE_APP_IMAGE_URL || CONST_APP_IMAGE_URL) + row?.icon} />
+            <Avatar src={(VITE_APP_IMAGE_URL || CONST_APP_IMAGE_URL) + row?.icon} alt={row?.name} />
           </div>
         )
       },
@@ -104,19 +104,30 @@ const UserList = (props: Props) => {
       editable: true,
     },
     {
-      field: 'displayName',
-      headerName: 'DisplayName',
+      field: 'mobile',
+      headerName: 'Mobile',
       width: 200,
       editable: true,
     },
     {
-      field: 'description',
-      headerName: 'Description',
+      field: 'email',
+      headerName: 'Email',
       width: 200,
       editable: true,
     },
     {
-      field: '',
+      field: 'PharmaOrgRole',
+      headerName: 'Role',
+      width: 200,
+      editable: true,
+      renderCell: (params) => {
+        const row = params?.row
+        return <p>{row?.PharmaOrgRole?.displayName}</p>
+      },
+    },
+
+    {
+      field: 'isActive',
       headerName: 'Actions',
       width: 200,
       editable: true,
