@@ -39,10 +39,10 @@ type Props = {
   notRequired?: boolean
   tooltip?: { isTooltip: boolean; length: number }
   sx?: SxProps<Theme>
-  handleChange?: () => void
+  handleChange?: (val: SelectDDL) => void
   isDisabled?: boolean
   selectDefault?: boolean
-  handleOnChange?: any
+  handleOnChange?: (val: SelectDDL) => void
   size?: TextFieldProps['size']
 }
 
@@ -154,7 +154,7 @@ const SelectInput = ({
               if (!notRequired) {
                 setValue(name, val)
                 if (handleChange) {
-                  handleChange()
+                  handleChange(val)
                 }
                 if (handleOnChange) {
                   handleOnChange(val)
@@ -166,7 +166,7 @@ const SelectInput = ({
                 }
               } else {
                 if (handleChange) {
-                  handleChange()
+                  handleChange(val)
                 }
                 setValue(name, val)
               }

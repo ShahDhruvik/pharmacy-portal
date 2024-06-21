@@ -18,7 +18,7 @@ export const sidebarList: Record<
       icon: <DashboardIcon />,
       name: 'Pharmacy Management',
       subgroup: [],
-      path: '/',
+      path: DASHBOARD_PATH.pharmacy_management,
     },
     { icon: <DashboardIcon />, name: 'User', subgroup: [], path: DASHBOARD_PATH.user },
   ],

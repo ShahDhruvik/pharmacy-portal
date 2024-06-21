@@ -17,7 +17,24 @@ export const tooltipLength = 20;
 export enum Dropdowns {
   Role = "Role",
   Pharmacy = "Pharmacy",
+  Country = "Country",
+  State = "State",
+  City = "City",
 }
+export const formatDateYYYYMMDD = (dateString: string): string => {
+  if (typeof dateString === 'string') {
+    try {
+      const parsedDate = parseISO(dateString);
+      const formattedDate = format(parsedDate, 'yyyy-MM-dd');
+      return formattedDate;
+    } catch (error) {
+      console.error("Invalid date format:", error);
+      return "";
+    }
+  } else {
+    return "";
+  }
+};
 export const LimitPerPageOptions = [5, 10, 15, 20, 100]
 export const limitPerPage = 10
 export enum ResponseStatus {

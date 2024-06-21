@@ -15,6 +15,7 @@ export const enum COMMON_PATH {
 }
 export const enum DASHBOARD_PATH {
   user = '/user',
+  pharmacy_management = '/pharmacy-management',
 }
 
 export const enum AUTH_PATH {

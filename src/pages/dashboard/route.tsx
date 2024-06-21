@@ -6,6 +6,7 @@ import DashBoardLayout from './container/dashboard-layout'
 import withAuth from '@/middleware/auth.middleware'
 import { DASHBOARD_PATH } from '@/paths/index'
 import UserPage from './user/page'
+import PharmacyManagement from './pharmacy-management/page'
 
 type Props = {}
 
@@ -21,6 +22,7 @@ const DashboardRoutes = (props: Props) => {
       >
         <Route index element={<DashboardPage />} />
         <Route path={DASHBOARD_PATH.user} element={<UserPage />} />
+        <Route path={DASHBOARD_PATH.pharmacy_management} element={<PharmacyManagement />} />
       </Route>
     </RouteWrapper>
   )

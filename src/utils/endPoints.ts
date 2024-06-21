@@ -47,6 +47,25 @@ export const enum UserEndPoints {
   listAll = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-user',
   dropdown = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-user/dropdown',
 }
+export const enum PharmacyEndPoints {
+  onBoarding = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/onboarding',
+  delete = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-user/delete/',
+  inActive = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-user/inActive/',
+  edit = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-user/edit/',
+  listAll = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-user',
+  dropdown = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-user/dropdown',
+}
+export const enum LocationEndPoints {
+  country = DefaultEndpoints.common +
+  DefaultEndpoints.practice +
+  "/country-ddl",
+  state = DefaultEndpoints.common + DefaultEndpoints.practice + "/state-ddl",
+  city = DefaultEndpoints.common + DefaultEndpoints.practice + "/city-ddl",
+  pinCode = DefaultEndpoints.common +
+  DefaultEndpoints.practice +
+  "/pinCode-ddl",
+}
+
 
 export const enum FileEndPoints {
   uploadMain = DefaultEndpoints.main + "/upload",

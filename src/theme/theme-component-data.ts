@@ -58,6 +58,15 @@ export const components: ThemeOptions['components'] = {
             },
         },
     },
+    MuiStepIcon: {
+        styleOverrides: {
+            root: {
+                '&.Mui-active': {
+                    color: PaletteColors.mPink,
+                },
+            },
+        },
+    },
     MuiAutocomplete: {
         styleOverrides: {
         },
