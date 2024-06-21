@@ -15,6 +15,7 @@ import { ChatProvider } from './context/ChatContext'
 import { SidebarProvider } from './context/SidebarContext'
 import { TabProvider } from './context/TabContext'
 import { AskConfirmationProvider } from './context/ConfirmContext'
+import { PharmacyProvider } from './context/pharmacyContext'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
@@ -36,13 +37,15 @@ root.render(
                 theme='colored'
                 icon={false}
               />
-              <AskConfirmationProvider>
-                <TabProvider>
-                  <SidebarProvider>
-                    <App />
-                  </SidebarProvider>
-                </TabProvider>
-              </AskConfirmationProvider>
+              <PharmacyProvider>
+                <AskConfirmationProvider>
+                  <TabProvider>
+                    <SidebarProvider>
+                      <App />
+                    </SidebarProvider>
+                  </TabProvider>
+                </AskConfirmationProvider>
+              </PharmacyProvider>
             </LoadingProvider>
           </AppThemeProvider>
         </ReduxProvider>

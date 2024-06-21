@@ -9,11 +9,15 @@ import theme from '@/theme/defaultTheme'
 import OrderSearch from './Order-search'
 import PracticeSelect from './Practice-Select'
 import { useSidebar } from '@/context/SidebarContext'
+import { useAuth } from '@/context/AuthContext'
+import { AUTH_PATH, DASHBOARD_PATH, MAIN_PATH } from '@/paths/index'
 type Props = {}
 
 const Header = (props: Props) => {
   const nav = useNavigate()
   const { setOpenMenu, openMenu } = useSidebar()
+  const { clearStorage } = useAuth()
+
   return (
     <AppBar color='mWhite'>
       <Toolbar>
@@ -50,7 +54,15 @@ const Header = (props: Props) => {
             <IconButton size='large' aria-label='show 17 new notifications' color='inherit'>
               <ChatIcon />
             </IconButton>
-            <IconButton size='large' aria-label='show 17 new notifications' color='inherit'>
+            <IconButton
+              size='large'
+              aria-label='show 17 new notifications'
+              color='inherit'
+              onClick={() => {
+                clearStorage()
+                nav(MAIN_PATH.AUTH.split('/*')[0] + AUTH_PATH.LOGIN)
+              }}
+            >
               <Logout />
             </IconButton>
           </div>

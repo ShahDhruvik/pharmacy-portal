@@ -4,7 +4,12 @@ import { AuthParams } from '../types/common'
 
 interface AuthContextType {
   authParams: AuthParams | undefined
-  addStorage: (accessToken: string, refreshToken: string, from: string) => void | undefined
+  addStorage: (
+    accessToken: string,
+    refreshToken: string,
+    from: string,
+    selectedPharmacy: any,
+  ) => void | undefined
   clearStorage: () => void | undefined
   setAuthParams: Dispatch<SetStateAction<AuthParams | undefined>>
 }
@@ -17,9 +22,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.getItem('accessToken') !== null && localStorage.getItem('refreshToken') !== null,
   })
 
-  const addStorage = (accessToken: string, refreshToken: string, from: string) => {
+  const addStorage = (
+    accessToken: string,
+    refreshToken: string,
+    from: string,
+    selectedPharmacy: any,
+  ) => {
     localStorage.setItem('accessToken', accessToken)
     localStorage.setItem('refreshToken', refreshToken)
+    localStorage.setItem('selectedPharmacy', selectedPharmacy)
     localStorage.setItem('from', from)
     setAuthParams({ isAuth: true })
   }

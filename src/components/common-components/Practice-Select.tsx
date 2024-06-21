@@ -1,17 +1,20 @@
-import { SelectDDL } from '@/utils/types/common'
+import { SelectDDL } from '@/types/common'
 import { acDefaultValue } from '@/utils/form.validation'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import SelectInput from '@/components/form-inputs/SelectInput'
+import { usePharmacy } from '@/context/pharmacyContext'
+import { Dropdowns } from '@/utils/constants'
 type PracticeConfigurationType = {
   selectedPractice: SelectDDL
 }
 type Props = {}
 
 const PracticeSelect = (props: Props) => {
+  const { pharmacyList, selectedPharmacy, setPharmacyList, setSelectedPharmacy } = usePharmacy()
   const { control, clearErrors, setError, setValue } = useForm<PracticeConfigurationType>({
     defaultValues: {
-      selectedPractice: { _id: acDefaultValue._id, label: 'Select Practice' },
+      selectedPractice: selectedPharmacy,
     },
   })
   return (
@@ -20,7 +23,7 @@ const PracticeSelect = (props: Props) => {
       clearErrors={clearErrors}
       label=''
       name='selectedPractice'
-      options={[{ _id: acDefaultValue._id, label: 'Select Practice' }]}
+      options={pharmacyList}
       setError={setError}
       setValue={setValue}
       validation={{}}
@@ -30,6 +33,8 @@ const PracticeSelect = (props: Props) => {
         maxWidth: '300px',
       }}
       notRequired={true}
+      drpName={Dropdowns?.Pharmacy}
+      loading={{ isLoading: false }}
     />
   )
 }

@@ -52,7 +52,7 @@ export const editUser = async (
     const reqData = {
         isActive: active,
         roleId: Number(roleId?._id),
-        pharmacyIds: pharmacyIds?.map(x => { return x._id }).join(','),
+        pharmacyIds: pharmacyIds?.length > 0 ? pharmacyIds?.map(x => { return x._id }).join(',') : '',
         name,
         phone,
         mobile,

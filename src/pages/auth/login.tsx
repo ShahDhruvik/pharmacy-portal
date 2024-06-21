@@ -28,6 +28,7 @@ import theme from '@/theme/defaultTheme'
 import TxtInput from '@/components/form-inputs/TxtInput'
 import { txtFieldValidation } from '@/utils/form.validation'
 import PasswordInput from '@/components/form-inputs/PasswordInput'
+import { usePharmacy } from '@/context/pharmacyContext'
 
 function Copyright(props: any) {
   return (
@@ -54,6 +55,7 @@ function groupArrayIntoObject(array: any[], groupSize = 4) {
 }
 
 export default function LoginPage() {
+  const { setPharmacyList, setSelectedPharmacy } = usePharmacy()
   const [isImageLoading, setIsImageLoading] = useState<{
     isLoading: boolean
     notFound: boolean
@@ -88,7 +90,19 @@ export default function LoginPage() {
   const onSubmit = async (data: any) => {
     const res = await loginPharmacy(setLoading, data, showToast, { btnLoading: true })
     if (res) {
-      addStorage(res?.accessToken, res?.refreshToken, res?.from)
+      const pharmacyOp = {
+        _id: res?.selectedPharmacy?.id,
+        label: res?.selectedPharmacy?.name,
+        data: res?.selectedPharmacy,
+      }
+      setSelectedPharmacy(pharmacyOp)
+      setPharmacyList([pharmacyOp])
+      addStorage(
+        res?.accessToken,
+        res?.refreshToken,
+        res?.from,
+        JSON.stringify(res?.selectedPharmacy),
+      )
       nav('/')
     }
   }
