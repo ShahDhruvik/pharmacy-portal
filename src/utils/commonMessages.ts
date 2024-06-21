@@ -12,6 +12,7 @@ export const enum COMMON_MESSAGE {
   loadingMessage = 'You and me, both have memories.',
   UnAuthorized = 'UnAuthorized',
   NotFound = 'not found',
+  Nothing = 'There is nothing to show here',
   InternalServerError = 'Internal Server Error',
   DataArrayValidation = 'At least one data needs to be added',
   DeleteConfirmation = 'Are you sure you want to delete.',

@@ -13,7 +13,7 @@ import {
 import { LoadingContextType, SelectDDL } from '@/types/common'
 import ImageForm from './images-form'
 import { error } from 'console'
-import TimingsForm from './timings-form'
+import TimingsForm from '../timings-form'
 
 type Props = {
   control: Control<any>

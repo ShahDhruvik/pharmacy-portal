@@ -22,10 +22,10 @@ export const createUser = async (
         const { active, icon, roleId, pharmacyIds, name, mobile, email, phone } = x;
         const uploadedFile: FileData = await fileUpload(icon.file);
         reqData.push({
-            icon: uploadedFile.file,
+            profilePic: uploadedFile.file,
             isActive: active,
             roleId: Number(roleId?._id),
-            pharmacyIds: '',
+            pharmacyIds: pharmacyIds?.map(x => { return x?._id }).join(','),
             name: name,
             phone,
             mobile,
@@ -48,25 +48,25 @@ export const editUser = async (
     existingFileName: string,
     formData: UserFormFields,
 ) => {
-    const { icon, data, active, roleId, name, phone, email, mobile } = formData
+    const { icon, data, active, roleId, name, phone, email, mobile, pharmacyIds } = formData
     const reqData = {
         isActive: active,
         roleId: Number(roleId?._id),
-        pharmacyIds: '',
+        pharmacyIds: pharmacyIds?.map(x => { return x._id }).join(','),
         name,
         phone,
         mobile,
         email
     }
-    // if (formData?.icon?.file !== null) {
-    //     if (formData?.icon?.url === '') {
-    //         (reqData as any)['icon'] = ''
-    //     } else {
-    //         const updateFile = await fileUpdate(formData?.icon?.file, existingFileName);
-    //         (reqData as any)['icon'] = updateFile?.file
+    if (formData?.icon?.file !== null) {
+        if (formData?.icon?.url === '') {
+            (reqData as any)['profilePic'] = ''
+        } else {
+            const updateFile = await fileUpdate(formData?.icon?.file, existingFileName);
+            (reqData as any)['profilePic'] = updateFile?.file
 
-    //     }
-    // }
+        }
+    }
     const res = await apiRequest(
         "PUT",
         UserEndPoints.edit + entityInternalId,

@@ -40,6 +40,7 @@ import SelectInput from '@/components/form-inputs/SelectInput'
 import { dropdownRoles } from '@/lib/role'
 import { Role } from '@/types/role.types'
 import MultiSelectInput from '@/components/form-inputs/MultiSelectInput'
+import { dropdownPharmacys } from '@/lib/pharmacy'
 
 type Props = {
   openFormDrawer: boolean
@@ -104,7 +105,7 @@ const UserForm = ({ openFormDrawer, setOpenFormDrawer, entity, handleReFetch }: 
     } else {
       const tigEdit = await trigger(['roleId', 'pharmacyIds', 'name', 'phone', 'mobile', 'email'])
       if (tigEdit) {
-        const res = await editUser(entity?.internalId, (entity?.icon as string) ?? '', fieldW)
+        const res = await editUser(entity?.internalId, (entity?.profilePic as string) ?? '', fieldW)
         if (res) {
           setOpenFormDrawer(false)
           handleReFetch()
@@ -123,9 +124,20 @@ const UserForm = ({ openFormDrawer, setOpenFormDrawer, entity, handleReFetch }: 
     }
     setRoles(drpValues)
   }
+  const getPharmacyDrp = async () => {
+    const drpValues: SelectDDL[] = []
+    const res = await dropdownPharmacys()
+    if (res?.length > 0) {
+      res?.map((phr: Role) => {
+        drpValues.push({ _id: String(phr?.id), label: phr?.name, data: phr })
+      })
+    }
+    setPharmacy(drpValues)
+  }
   useEffect(() => {
     if (openFormDrawer) {
       getRolesDrp()
+      getPharmacyDrp()
       if (entity) {
         const emptyFile = new File([], 'emptyFile.txt', { type: 'text/plain' })
         reset({
@@ -140,10 +152,15 @@ const UserForm = ({ openFormDrawer, setOpenFormDrawer, entity, handleReFetch }: 
                 data: entity?.PharmaOrgRole,
               }
             : acDefaultValue,
-          pharmacyIds: [],
+          pharmacyIds:
+            entity?.pharmacyData.length > 0
+              ? (entity?.pharmacyData?.map((x) => {
+                  return { _id: x?.id, label: x?.name }
+                }) as unknown as SelectDDL[])
+              : [],
           icon: {
             file: emptyFile,
-            url: (VITE_APP_IMAGE_URL || CONST_APP_IMAGE_URL) + entity?.icon ?? '',
+            url: (VITE_APP_IMAGE_URL || CONST_APP_IMAGE_URL) + entity?.profilePic ?? '',
           },
         })
       }
@@ -181,7 +198,7 @@ const UserForm = ({ openFormDrawer, setOpenFormDrawer, entity, handleReFetch }: 
               fields={pharmacyArray.fields}
               label='Pharmacy*'
               name='pharmacyIds'
-              options={[]}
+              options={pharmacy}
               replace={pharmacyArray.replace}
               trigger={trigger}
               errors={errors.pharmacyIds?.root}

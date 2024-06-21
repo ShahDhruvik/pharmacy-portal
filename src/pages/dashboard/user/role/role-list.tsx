@@ -33,11 +33,6 @@ const RoleList = (props: Props) => {
     to: 0,
     total: 0,
   }
-
-  const [paginationModel, setPaginationModel] = useState({
-    page: 0,
-    pageSize: 50,
-  })
   const { setLoading, loading } = useLoading()
   const { setAskConfirmation } = useAskConfirmation()
   const [openFormDrawer, setOpenFormDrawer] = useState<boolean>(false)
@@ -54,7 +49,6 @@ const RoleList = (props: Props) => {
       const { records, ...rest } = res
       setData(records)
       setPageControls(rest)
-      setPaginationModel({ page: rest?.currentPage, pageSize: handleControls?.limitPerPage })
       setDataNotFound(records?.length === 0)
     }
     setLoading({ isLoading: false })
@@ -66,7 +60,6 @@ const RoleList = (props: Props) => {
       const { records, ...rest } = res
       setData(records)
       setPageControls(rest)
-      setPaginationModel({ page: rest?.currentPage, pageSize: handleControls?.limitPerPage })
       setDataNotFound(records?.length === 0)
     }
     setLoading({ isLoading: false })

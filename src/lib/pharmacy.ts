@@ -161,7 +161,7 @@ export const inactivePharmacy = async (
 export const dropdownPharmacys = async (
 ) => {
     const res = await apiRequest(
-        "GET",
+        "POST",
         PharmacyEndPoints.dropdown,
         {},
     );

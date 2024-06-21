@@ -50,10 +50,10 @@ export const enum UserEndPoints {
 export const enum PharmacyEndPoints {
   onBoarding = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/onboarding',
   delete = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-user/delete/',
-  inActive = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-user/inActive/',
+  inActive = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/inActive/',
   edit = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-user/edit/',
-  listAll = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-user',
-  dropdown = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/pharmacy-user/dropdown',
+  listAll = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/list',
+  dropdown = DefaultEndpoints.main + DefaultEndpoints.pharmacy + '/dropdown',
 }
 export const enum LocationEndPoints {
   country = DefaultEndpoints.common +

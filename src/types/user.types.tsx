@@ -3,6 +3,7 @@ import { SelectDDL } from './common'
 export interface User {
   id: number
   organizationId: number
+  profilePic: string
   name: string
   resetPasswordTokenTime: string
   internalId: string
@@ -25,7 +26,7 @@ export interface User {
   icon: string
   isDeleted: boolean
   PharmaOrgRole: PharmaOrgRole
-  pharmacyData: any[] // You can replace `any` with the actual type if you have one for pharmacy data
+  pharmacyData: UserPharmacys[]
 }
 
 interface CreatedBy {
@@ -40,6 +41,12 @@ interface PharmaOrgRole {
   internalId: string
   name: string
   displayName: string
+}
+interface UserPharmacys {
+  isNewRecord: boolean
+  id: number
+  internalId: string
+  name: string
 }
 
 export interface UserFormFields {

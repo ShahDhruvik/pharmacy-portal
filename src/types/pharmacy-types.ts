@@ -67,3 +67,118 @@ export type PharmacyFormFields = {
         endTime: Date | null
     }[]
 }
+
+type UserType = {
+    userType: string;
+    userRole: string;
+    userId: number;
+    userName: string;
+};
+
+type Image = {
+    id: number;
+    organizationId: number;
+    name: string;
+    image: string;
+    pharmacyId: number;
+    internalId: string;
+    createdAt: string;
+    updatedAt: string;
+    deletedAt: string | null;
+    createdBy: string; // JSON string of UserType
+    updatedBy: string | null;
+    deletedBy: string | null;
+    isActive: boolean;
+    isDeleted: boolean;
+};
+
+type Timing = {
+    id: number;
+    organizationId: number;
+    day: string;
+    startTime: string;
+    endTime: string;
+    lunchTimeStart: string;
+    lunchTimeEnd: string;
+    offDay: boolean;
+    pharmacyId: number;
+    internalId: string;
+    createdAt: string;
+    updatedAt: string;
+    deletedAt: string | null;
+    createdBy: string; // JSON string of UserType
+    updatedBy: string | null;
+    deletedBy: string | null;
+    isActive: boolean;
+    isDeleted: boolean;
+};
+
+type Country = {
+    name: string;
+    shortName: string;
+    isActive: boolean;
+    isDeleted: boolean;
+    id: string;
+};
+
+type State = {
+    name: string;
+    shortName: string;
+    isActive: boolean;
+    isDeleted: boolean;
+    id: string;
+};
+
+type City = {
+    name: string;
+    shortName: string;
+    isActive: boolean;
+    isDeleted: boolean;
+    id: string;
+};
+
+export type Pharmacy = {
+    isNewRecord: boolean;
+    id: number;
+    organizationId: number;
+    name: string;
+    sqLogo: string;
+    rectLogo: string;
+    phone: string;
+    email: string;
+    mobile: string;
+    lat: number;
+    long: number;
+    fax: string;
+    website: string;
+    type: string;
+    mode: string;
+    addressLineOne: string;
+    addressLineTwo: string;
+    countryId: string;
+    stateId: string;
+    cityId: string;
+    pinCode: string;
+    contactPerson: string;
+    contactPersonEmail: string;
+    contactPersonPhone: string;
+    contactPersonMobile: string;
+    tncAccept: boolean;
+    internalId: string;
+    license: string;
+    isDefault: boolean;
+    createdAt: string;
+    updatedAt: string;
+    deletedAt: string | null;
+    createdBy: string; // JSON string of UserType
+    updatedBy: string | null;
+    deletedBy: string | null;
+    isActive: boolean;
+    isDeleted: boolean;
+    PharmacyImages: Image[];
+    PharmacyTimings: Timing[];
+    PharmacyBreakTimes: any[]; // Assuming it's an array but not defined in the given JSON
+    country: Country;
+    state: State;
+    city: City;
+};

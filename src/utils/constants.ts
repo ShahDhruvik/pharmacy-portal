@@ -10,6 +10,7 @@ export const currencySymbol = '₹'
 export enum Tables {
   Role = "Role",
   User = "User",
+  Pharmacy = "Pharmacy",
 
 }
 export const tooltipLength = 20;

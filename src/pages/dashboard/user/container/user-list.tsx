@@ -1,7 +1,7 @@
 import DataGridComponent from '@/components/common-components/DataGridComponent'
 import { HandleControls, PageControls } from '@/types/common'
 import { LoadingButton } from '@mui/lab'
-import { Alert, Avatar, Box, IconButton, Switch } from '@mui/material'
+import { Alert, Avatar, Box, Chip, IconButton, Switch } from '@mui/material'
 import { GridColDef, useGridApiRef } from '@mui/x-data-grid'
 import { useEffect, useState } from 'react'
 import UserForm from './user-form'
@@ -92,7 +92,10 @@ const UserList = (props: Props) => {
         const row = params?.row
         return (
           <div className='flex items-center h-full'>
-            <Avatar src={(VITE_APP_IMAGE_URL || CONST_APP_IMAGE_URL) + row?.icon} alt={row?.name} />
+            <Avatar
+              src={(VITE_APP_IMAGE_URL || CONST_APP_IMAGE_URL) + row?.profilePic}
+              alt={row?.name}
+            />
           </div>
         )
       },
@@ -123,6 +126,24 @@ const UserList = (props: Props) => {
       renderCell: (params) => {
         const row = params?.row
         return <p>{row?.PharmaOrgRole?.displayName}</p>
+      },
+    },
+    {
+      field: 'pharmacyData',
+      headerName: `Pharmacy's`,
+      width: 200,
+      editable: true,
+      renderCell: (params) => {
+        const row = params?.row
+        return (
+          <div>
+            {row?.pharmacyData?.map((x: any) => {
+              return (
+                <Chip size='small' label={x?.name} avatar={<Avatar>{x?.name?.charAt(0)}</Avatar>} />
+              )
+            })}
+          </div>
+        )
       },
     },
 

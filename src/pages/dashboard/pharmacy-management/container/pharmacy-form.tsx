@@ -7,10 +7,10 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useLoading } from '@/context/LoadingContext'
 import { LoadingButton } from '@mui/lab'
-import ImagesForm from './images-form'
-import InfoForm from './info-form'
+import ImagesForm from './sub-forms/images-form'
+import InfoForm from './sub-forms/info-form'
 import TimingsForm from './timings-form'
-import SummaryForm from './summary-form'
+import SummaryForm from './sub-forms/summary-form'
 import {
   PharmacyFormFields,
   pharmacyModesOptions,
